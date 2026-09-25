@@ -1526,7 +1526,10 @@
         const asset = this.backgroundAssets && this.backgroundAssets[assetKey];
         if (!asset || !asset.loaded || !asset.img) return false;
         const ctx = this.ctx;
-        const drawHeight = h * heightRatio;
+        // Extend drawHeight so the background reaches down past the bottom of the canvas without leaving a bottom gap
+        const minHeightRatio = 1.05 - topRatio;
+        const effectiveHeightRatio = Math.max(heightRatio, minHeightRatio);
+        const drawHeight = h * effectiveHeightRatio;
         const drawWidth = drawHeight * (asset.tileAspect || asset.width / asset.height);
         if (!drawWidth || !drawHeight) return false;
         const offset = ((scroll % drawWidth) + drawWidth) % drawWidth;
@@ -1542,6 +1545,21 @@
           } else {
             ctx.drawImage(asset.img, x, y, drawWidth, drawHeight);
           }
+        }
+        if (y + drawHeight < h) {
+          // Double-defense safety floor: fill sub-skirt using bottom edge color to prevent any sky leak
+          const skirtColors = {
+            biome1Distant: '#3e93de',
+            biome1Midground: '#8b8d61',
+            biome2Distant: '#548a63',
+            biome2Midground: '#598b66',
+            biome3Distant: '#5b93c5',
+            biome3Midground: '#35686d',
+            biome4Distant: '#41697f',
+            biome4Midground: '#2b5b68'
+          };
+          ctx.fillStyle = skirtColors[assetKey] || '#35686d';
+          ctx.fillRect(0, y + drawHeight - 1, w, h - (y + drawHeight) + 2);
         }
         return true;
       }
@@ -1928,6 +1946,25 @@
           ctx.restore();
           return;
         }
+
+        // Odd biomes (1: Pesisir Pantura, 3: Lembah Sawah, 5: Puncak Gn. Ciremai, 7: Pemukiman)
+        // are open panoramic vistas whose authentic artwork is already fully rendered by
+        // drawDistantParallaxLayer (e.g. biome3Distant for Mt Ciremai).
+        // They do NOT have a secondary midground layer and must NEVER draw a duplicate procedural
+        // mountain silhouette or cartoon overlay on top of the authentic background.
+        if (biomeId % 2 === 1) {
+          ctx.restore();
+          return;
+        }
+
+        // Furthermore, if the distant background image for this biome is loaded and visible,
+        // do not draw procedural cartoon shapes over it.
+        const distantKey = (biomeId <= 2 ? 'biome1Distant' : biomeId <= 4 ? 'biome2Distant' : biomeId <= 6 ? 'biome3Distant' : 'biome4Distant');
+        if (this.backgroundAssets && this.backgroundAssets[distantKey] && this.backgroundAssets[distantKey].loaded) {
+          ctx.restore();
+          return;
+        }
+
         if (biomeId === 1 || biomeId === 2) {
           // Coconut palms & Warteg Bahari roadside stalls
           for (let i = 0; i < 5; i++) {

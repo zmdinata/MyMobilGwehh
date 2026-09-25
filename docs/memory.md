@@ -127,3 +127,32 @@ Pada setiap level panjang (3.000m - 25.000m), ditempatkan 1 hingga 4 titik Pos T
    - Di Windows, direktori `public/assets` dibuat sebagai junction (`mklink /J public\assets assets`) agar Next.js dapat menyajikan aset secara statis dari URL `/assets/...` tanpa menduplikasi storage disk.
 4. **Keamanan & Kredensial**:
    - Jangan pernah melakukan commit file kredensial, token API, `.env`, atau data billing.
+
+---
+
+## 7. Perbaikan Celah Bawah Background (Bottom Gap) & Pencegahan Siluet Ganda
+
+### A. Akar Masalah Celah Bawah (Bottom Gap / "Warna Biru Bolong")
+1. **Hard Capping Vertikal**: Lapisan `drawMidgroundParallaxLayer` sebelumnya dirender dengan `topRatio = 0.12` dan `heightRatio = 0.68`, yang menyebabkan gambar ilustrasi terpotong di $y = 0.80 \times h$ (hanya mencapai 80% tinggi kanvas).
+2. **Dinamika Kamera & Lembah/Jurang**: Saat kendaraan menuruni lereng atau melewati lembah tanah ($y > 0.80 \times h$), terdapat celah kosong selebar 10–20% layar antara bagian bawah ilustrasi kebun teh/bukit hijau dengan permukaan tanah cokelat.
+3. **Penyebab Warna Biru**: Di balik lapisan tengah terdapat gradien skybox kanvas dan baris terbawah `biome3Distant` (kabut gunung) yang memiliki rona biru muda (`[91, 147, 197]`). Hal ini menciptakan ilusi visual seolah bukit "melayang" dan ada lubang/celah air biru di bawah bukit.
+4. **Solusi & Mitigasi**:
+   - `drawTiledBackground` secara dinamis menghitung `effectiveHeightRatio = Math.max(heightRatio, 1.05 - topRatio)`, sehingga tinggi render otomatis ditarik melampaui dasar kanvas ($105\%$ tinggi layar) tanpa mengubah proporsi horizontal landmark.
+   - Ditambahkan lapisan pengaman cadangan (*safety skirt floor*) `skirtColors` yang mengisi celah di bawah gambar dengan warna dasar tanah bioma terkait (misal hijau tua pinus `#35686d` untuk pegunungan, hijau padi `#548a63` untuk sawah), mencegah kebocoran warna biru langit dalam kondisi kamera seekstrem apa pun.
+
+### B. Akar Masalah Siluet Gunung Menumpuk (Duplicate Mountain Silhouette)
+1. **Mismatch Arsitektur 8 Bioma vs Fallback Prosedural**:
+   - Setiap Bioma (1 s.d. 8) merupakan panorama mandiri dengan aset ilustrasi resmi masing-masing (`biome1Distant` s.d. `biome4Midground`).
+   - Bioma ganjil (1: Pesisir Pantura, 3: Lembah Sawah, 5: Puncak Gn. Ciremai, 7: Pemukiman) adalah panorama alam terbuka tanpa layer tengah terpisah.
+2. **Pemicu Siluet Ganda**:
+   - Pada Bioma 5 ("Puncak Siluet Gn. Ciremai"), `drawDistantParallaxLayer(5)` berhasil merender ilustrasi megah Gunung Ciremai dari `biome3Distant.webp`.
+   - Namun, fungsi `drawMidgroundParallaxLayer(5)` dipanggil setelahnya dan karena `midMap[5]` tidak memiliki aset midground, eksekusi jatuh (*fall-through*) ke kode kanvas lama:
+     ```javascript
+     ctx.fillStyle = 'rgba(21, 128, 61, 0.5)';
+     ctx.lineTo(x, ty); // Gelombang sinus hijau siluet gunung
+     ```
+   - Akibatnya, siluet bukit kartun hijau semi-transparan digambar menimpa ilustrasi fotorealistik Gunung Ciremai yang sudah ada di latar belakang.
+3. **Solusi & Mitigasi**:
+   - Menambahkan pengecekan eksplisit pada `drawMidgroundParallaxLayer`: jika bioma berstatus panorama ganjil (`biomeId % 2 === 1`), fungsi langsung keluar (*early return*) tanpa merender elemen prosedural apa pun.
+   - Jika aset background utama bioma sudah termuat dengan sukses (`asset.loaded === true`), dilarang keras merender bentuk geometris/kartun prosedural di atasnya. Prosedural murni hanya aktif jika terjadi kegagalan muat aset jaringan (*true offline fallback*).
+
