@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="420" viewBox="0 0 1024 420" fill="none" shape-rendering="geometricPrecision"><title>Biome 4 roadside scenery</title>
+          <path d="M0 326H1024V420H0Z" fill="#a1b39d"/>
+          <path d="M86 326V255H156V326M298 326V245H369V326M610 326V252H683V326M843 326V242H921V326" fill="#e8deca" stroke="#637778" stroke-width="5"/>
+          <path d="M72 258L121 218L171 258M284 248L333 208L383 248M596 255L646 216L697 255M829 246L881 203L935 246" fill="#bd5a56" stroke="#75494a" stroke-width="5"/>
+          <g fill="#6aa9ab"><rect x="101" y="273" width="18" height="26"/><rect x="131" y="273" width="18" height="26"/><rect x="315" y="264" width="18" height="27"/><rect x="345" y="264" width="18" height="27"/><rect x="630" y="270" width="18" height="26"/><rect x="660" y="270" width="18" height="26"/></g>
+          <path d="M0 220H1024" stroke="#596871" stroke-width="4"/><path d="M95 220V328M373 220V328M705 220V328M936 220V328" stroke="#596871" stroke-width="4"/>
+          <path d="M96 222V257M374 222V257M706 222V257M937 222V257" stroke="#d84c52" stroke-width="11"/><path d="M96 259V294M374 259V294M706 259V294M937 259V294" stroke="#fff6e8" stroke-width="11"/>
+        </svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" shape-rendering="geometricPrecision"><title>Golden nutrition coin</title>
+      <circle cx="32" cy="32" r="27" fill="#edaa28" stroke="#9a5d13" stroke-width="5"/>
+      <circle cx="32" cy="32" r="21" fill="#ffd85d" stroke="#fff0a3" stroke-width="3"/>
+      <path d="M40 20Q35 16 28 19Q18 23 23 31Q26 35 35 36Q43 38 40 44Q36 50 25 46" stroke="#885019" stroke-width="5" stroke-linecap="round"/>
+      <path d="M31 14V50" stroke="#885019" stroke-width="3" opacity=".7"/>
+      <path d="M15 20L18 13L21 20L28 23L21 26L18 33L15 26L8 23Z" fill="#fff7c2"/>
+    </svg>

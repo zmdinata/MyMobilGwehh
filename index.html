@@ -116,8 +116,8 @@
   <!-- Main Game Canvas -->
   <canvas id="gameCanvas" class="absolute inset-0 w-full h-full z-0"></canvas>
 
-  <!-- CRT Scanline Aesthetic Overlay (Subtle) -->
-  <div class="scanlines absolute inset-0 z-10 pointer-events-none opacity-40"></div>
+  <!-- Clean Canvas Atmosphere Layer (Scanlines removed for crystal-clear visuals) -->
+  <div id="vibrantAtmosphere" class="absolute inset-0 z-10 pointer-events-none"></div>
 
   <!-- IN-GAME HUD OVERLAY -->
   <div id="hud" class="absolute inset-0 z-20 pointer-events-none flex flex-col justify-between p-2 sm:p-4">
@@ -225,51 +225,50 @@
       TELOLET MANIA! 📢
     </div>
 
-    <!-- Bottom Controls Row: Mobile Pedals & Horn (Visible on Touch/All Devices) -->
-    <div class="flex items-end justify-between w-full pointer-events-none px-2 sm:px-6 pb-2">
+    <!-- Bottom Controls Row: Sleek Glassmorphism Mobile Pedals & Horn (Visible on Touch/All Devices) -->
+    <div class="flex items-end justify-between w-full pointer-events-none px-3 sm:px-8 pb-3">
       <!-- Left Pedal: BRAKE / REVERSE -->
       <div class="pointer-events-auto flex flex-col items-center">
-        <button id="pedalBrake" class="pedal-btn relative w-24 h-32 sm:w-32 sm:h-40 rounded-2xl bg-gradient-to-b from-red-600 via-red-700 to-red-900 border-2 border-red-400/80 flex flex-col items-center justify-between p-3 select-none">
-          <!-- Metallic Grip Ribs -->
-          <div class="w-full flex flex-col gap-1.5 opacity-60 mt-1">
-            <div class="h-2 bg-slate-900 rounded-sm"></div>
-            <div class="h-2 bg-slate-900 rounded-sm"></div>
-            <div class="h-2 bg-slate-900 rounded-sm"></div>
-            <div class="h-2 bg-slate-900 rounded-sm"></div>
+        <button id="pedalBrake" class="pedal-btn group relative w-24 h-32 sm:w-28 sm:h-36 rounded-3xl bg-gradient-to-b from-red-600/85 via-red-800/90 to-slate-950/95 backdrop-blur-md border-2 border-red-400/80 shadow-[0_8px_25px_rgba(220,38,38,0.45)] flex flex-col items-center justify-between p-3 select-none active:scale-95 transition-all">
+          <!-- Tactile Grip Dots -->
+          <div class="w-full flex justify-center gap-1.5 opacity-80 mt-1">
+            <span class="w-2 h-2 rounded-full bg-red-300 shadow-sm"></span>
+            <span class="w-2 h-2 rounded-full bg-red-300 shadow-sm"></span>
+            <span class="w-2 h-2 rounded-full bg-red-300 shadow-sm"></span>
+            <span class="w-2 h-2 rounded-full bg-red-300 shadow-sm"></span>
           </div>
           <div class="text-center">
-            <span class="block font-fredoka text-lg sm:text-2xl text-white tracking-wider drop-shadow">BRAKE</span>
-            <span class="block text-[9px] sm:text-[11px] font-mono text-red-200">REM / MUNDUR / PITCH ▼</span>
+            <span class="block font-fredoka text-xl sm:text-2xl text-white tracking-wider drop-shadow group-hover:scale-105 transition-transform">REM</span>
+            <span class="block text-[9px] sm:text-[10px] font-mono text-red-200 uppercase font-semibold">Mundur / Pitch ▼</span>
           </div>
-          <span class="text-[10px] text-red-300/80 font-mono hidden sm:inline">[A] / [←]</span>
+          <span class="text-[9px] text-red-300/80 font-mono hidden sm:inline">[A] / [←]</span>
         </button>
       </div>
 
       <!-- Center: Telolet Horn Button -->
       <div class="pointer-events-auto flex flex-col items-center pb-1">
-        <button id="hornBtn" class="pedal-btn relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-b from-amber-400 via-amber-500 to-yellow-600 border-2 border-yellow-200 shadow-lg flex flex-col items-center justify-center p-1 active:scale-90">
-          <span class="text-2xl sm:text-3xl">🎺</span>
+        <button id="hornBtn" class="pedal-btn relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-b from-amber-400/95 via-amber-500/95 to-yellow-600/95 backdrop-blur-md border-2 border-amber-200 shadow-[0_8px_20px_rgba(245,158,11,0.5)] flex flex-col items-center justify-center p-1 active:scale-90 transition-transform">
+          <span class="text-2xl sm:text-3xl filter drop-shadow">🎺</span>
           <span class="font-fredoka text-[10px] sm:text-xs text-slate-950 font-bold tracking-tight">TELOLET</span>
-          <span class="text-[8px] text-amber-900 font-mono hidden sm:inline">[H] / [Spasi]</span>
+          <span class="text-[8px] text-amber-950 font-mono hidden sm:inline font-bold">[H] / [Spasi]</span>
         </button>
       </div>
 
       <!-- Right Pedal: GAS / ACCELERATE -->
       <div class="pointer-events-auto flex flex-col items-center">
-        <button id="pedalGas" class="pedal-btn relative w-24 h-36 sm:w-32 sm:h-44 rounded-2xl bg-gradient-to-b from-blue-500 via-blue-700 to-blue-950 border-2 border-sky-300/80 flex flex-col items-center justify-between p-3 select-none">
-          <!-- Metallic Grip Ribs -->
-          <div class="w-full flex flex-col gap-1.5 opacity-60 mt-1">
-            <div class="h-2 bg-slate-900 rounded-sm"></div>
-            <div class="h-2 bg-slate-900 rounded-sm"></div>
-            <div class="h-2 bg-slate-900 rounded-sm"></div>
-            <div class="h-2 bg-slate-900 rounded-sm"></div>
-            <div class="h-2 bg-slate-900 rounded-sm"></div>
+        <button id="pedalGas" class="pedal-btn group relative w-24 h-36 sm:w-28 sm:h-40 rounded-3xl bg-gradient-to-b from-cyan-500/85 via-blue-600/90 to-slate-950/95 backdrop-blur-md border-2 border-cyan-300/80 shadow-[0_8px_25px_rgba(6,182,212,0.45)] flex flex-col items-center justify-between p-3 select-none active:scale-95 transition-all">
+          <!-- Tactile Grip Dots -->
+          <div class="w-full flex justify-center gap-1.5 opacity-80 mt-1">
+            <span class="w-2 h-2 rounded-full bg-cyan-200 shadow-sm"></span>
+            <span class="w-2 h-2 rounded-full bg-cyan-200 shadow-sm"></span>
+            <span class="w-2 h-2 rounded-full bg-cyan-200 shadow-sm"></span>
+            <span class="w-2 h-2 rounded-full bg-cyan-200 shadow-sm"></span>
           </div>
           <div class="text-center">
-            <span class="block font-fredoka text-xl sm:text-3xl text-white tracking-wider drop-shadow">GAS</span>
-            <span class="block text-[9px] sm:text-[11px] font-mono text-emerald-200">MAJU / AKSELERASI / PITCH ▲</span>
+            <span class="block font-fredoka text-2xl sm:text-3xl text-white tracking-wider drop-shadow group-hover:scale-105 transition-transform">GAS</span>
+            <span class="block text-[9px] sm:text-[10px] font-mono text-cyan-200 uppercase font-semibold">Maju / Pitch ▲</span>
           </div>
-          <span class="text-[10px] text-emerald-300/80 font-mono hidden sm:inline">[D] / [→]</span>
+          <span class="text-[9px] text-cyan-300/80 font-mono hidden sm:inline">[D] / [→]</span>
         </button>
       </div>
     </div>
@@ -302,7 +301,7 @@
       <!-- Story Narrative Box -->
       <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 text-xs sm:text-sm text-slate-300 leading-relaxed text-left space-y-2 mb-4 w-full">
         <p>
-          <b class="text-amber-300">Kisah Mang Ucup:</b> Mantan supir elf balap trayek Cirebon–Kuningan yang tobat dan beralih profesi jadi kurir logistik gizi nomor wahid!
+          <b class="text-cyan-300">Kisah Mas Tion:</b> Driver muda tangguh armada MBG yang berjuang mengantar <b>500 porsi</b> paket gizi hangat demi Bu Yulie dan siswa-siswi <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b>, didampingi petuah bijak sang legenda supir elf Pantura, <b>Mang Ucup</b>!
         </p>
         <p>
           🎯 <b class="text-white">Misi Kamu:</b> Antar <b>500 porsi paket gizi hangat</b> (nasi pulen, ayam serundeng, tahu-tempe orek, sayur lodeh, dan susu murni) menuju kawasan sekolah fiktif <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b> sebelum bel masuk berbunyi tepat pukul <b>09:45 WIB!</b>
@@ -415,7 +414,7 @@
       </div>
 
       <p class="text-xs text-slate-300 mb-4 italic">
-        "Siswa-siswi bersorak mengacungkan sendok dan piring gizi! Mang Ucup dianugerahi gelar Pahlawan Elf Gizi Pantura!"
+        "Siswa-siswi bersorak gembira mengacungkan sendok gizi! Bu Yulie tersenyum bangga menyambut Mas Tion sang pahlawan katering MBG binaan Mang Ucup!"
       </p>
 
       <!-- Victory Score Card -->
@@ -468,7 +467,7 @@
   <div id="pauseModal" class="hidden absolute inset-0 z-40 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 rounded-3xl p-6 text-center max-w-xs w-full shadow-2xl">
       <h3 class="font-fredoka text-2xl text-cyan-300 mb-3">GAME DI-JEDA ⏸️</h3>
-      <p class="text-xs text-slate-400 mb-5 font-mono">Mang Ucup sedang istirahat ngopi di warteg...</p>
+      <p class="text-xs text-slate-400 mb-5 font-mono">Mas Tion sedang mengatur napas dan memeriksa ikatan rantang gizi...</p>
       <button id="resumeBtn" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-fredoka text-base mb-2">
         LANJUTKAN [ESC]
       </button>
@@ -494,7 +493,7 @@
         </span>
       </div>
 
-      <img src="assets/refresh/v3/ui/logo.svg" alt="" class="w-56 sm:w-72 h-auto max-h-20 object-contain mb-1" />
+      <img id="mainMenuLogo" src="assets/refresh/v11/sprites/logo.png" alt="MBG: Road To School" class="w-48 sm:w-56 h-auto max-h-32 object-contain drop-shadow-[0_8px_20px_rgba(13,43,82,0.6)] mb-2" />
       <h1 class="font-fredoka text-2xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-amber-300 drop-shadow mb-1">
         MBG: Road To School
       </h1>
@@ -528,7 +527,7 @@
         </button>
 
         <button id="btnHowToPlay" class="w-full py-2.5 rounded-xl bg-slate-800/70 hover:bg-slate-700 text-slate-400 font-fredoka text-xs sm:text-sm border border-slate-700 active:scale-95 transition-all">
-          📖 PANDUAN KONTROL & KISAH MANG UCUP
+          📖 PANDUAN KONTROL & KISAH MAS TION
         </button>
       </div>
     </div>
@@ -4130,7 +4129,7 @@
         if (reason === 'ROLLOVER') {
           goIcon.innerText = '💥';
           if (goSubtitle) goSubtitle.innerText = 'Omprengmu telah tumpah!';
-          goDesc.innerText = 'MOBIL GWEH TERGULING! Atap truk menghantam tanah, boks toska ambyar, 500 botol susu meletus, kuah sayur lodeh tumpah ambyar ke layar kaca, dan Mang Ucup keluar meratapi nasib sambil memegang rantang kosong!';
+          goDesc.innerText = 'MOBIL GWEH TERGULING! Atap truk menghantam tanah, boks toska ambyar, 500 botol susu meletus, kuah sayur lodeh tumpah ambyar ke layar kaca, dan Mas Tion terduduk lemas meratapi rantang gizi yang berserakan di depan Mang Ucup!';
           if (this.renderer) {
             this.renderer.isLodehActive = true;
             this.renderer.lodehTimer = 3.5;
@@ -4142,7 +4141,7 @@
         } else if (reason === 'DEADLINE') {
           goIcon.innerText = '⏰';
           if (goSubtitle) goSubtitle.innerText = 'TELAT! BEL SEKOLAH SUDAH BUNYI!';
-          goDesc.innerText = 'Waktu habis tepat pukul 09:45 WIB! Siswa lemas kelaparan di depan gerbang, dan video Mang Ucup ngadem di bawah pohon jati viral di medsos!';
+          goDesc.innerText = 'Waktu habis tepat pukul 09:45 WIB! Siswa lemas kelaparan di depan gerbang Puspa Bangsa, dan Mas Tion harus menanggung malu di hadapan Bu Yulie!';
         } else {
           goIcon.innerText = '🍲';
           if (goSubtitle) goSubtitle.innerText = 'PAKET GIZI HANCUR LEBUR!';

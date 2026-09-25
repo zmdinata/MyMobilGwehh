@@ -1,0 +1,37 @@
+{
+  "name": "game",
+  "version": "1.0.0",
+  "description": "Game side-scrolling 2D tentang Mas Tion yang mengantar 500 porsi paket gizi hangat menuju sekolah fiktif SD, SMP, dan SMA Puspa Bangsa, Cirebon, didampingi wejangan Mang Ucup.",
+  "main": "game_core.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zmdinata/MyMobilGwehh.git"
+  },
+  "keywords": [],
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/zmdinata/MyMobilGwehh/issues"
+  },
+  "homepage": "https://github.com/zmdinata/MyMobilGwehh#readme",
+  "dependencies": {
+    "next": "^16.3.6",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "autoprefixer": "^10.6.1",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3"
+  }
+}

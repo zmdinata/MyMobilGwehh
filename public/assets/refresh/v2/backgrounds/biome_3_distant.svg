@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="420" viewBox="0 0 1024 420" fill="none" shape-rendering="geometricPrecision"><title>Biome 3 distant landscape</title>
+          <path d="M0 303Q150 175 310 273T620 230T1024 269V420H0Z" fill="#7f9fa4"/>
+          <path d="M0 327Q190 247 388 319T760 294T1024 304V420H0Z" fill="#628f79" opacity=".83"/>
+          <path d="M0 358Q250 305 510 351T1024 340V420H0Z" fill="#87ae86" opacity=".75"/>
+        </svg>

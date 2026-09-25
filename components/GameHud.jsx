@@ -1,0 +1,168 @@
+// components/GameHud.jsx
+'use client';
+
+import React from 'react';
+
+export default function GameHud({
+  level = 1,
+  targetDist = 1000,
+  currentDist = 0,
+  cargoIntegrity = 100,
+  speedKmh = 0,
+  coins = 0,
+  fuelPercent = 100,
+  biomeName = 'Pesisir Pantai Pantura',
+  timeRemaining = 90,
+  isAudioMuted = false,
+  onToggleAudio = () => {},
+  onPause = () => {},
+  centerNotice = null
+}) {
+  const progressRatio = Math.min(100, Math.max(0, (currentDist / targetDist) * 100));
+
+  const formatClock = (seconds) => {
+    const s = Math.max(0, Math.floor(seconds));
+    const mins = Math.floor(s / 60);
+    const secs = s % 60;
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  };
+
+  return (
+    <div id="hud" className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-between p-2 sm:p-4">
+      {/* Top HUD Row */}
+      <div id="topHudRow" className="flex items-start justify-between gap-2 w-full">
+        {/* Left: Cargo Health & Speed */}
+        <div id="cargoHud" className="flex flex-col gap-1 pointer-events-auto bg-slate-900/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-2.5 shadow-xl min-w-[150px] sm:min-w-[190px]">
+          <div className="flex items-center justify-between text-xs sm:text-sm font-bold">
+            <span className="flex items-center gap-1.5 text-emerald-400">
+              <img
+                id="cargoParcelIcon"
+                src="/assets/refresh/v11/sprites/food_parcel.png"
+                alt="Parcel"
+                className="h-5 w-5 object-contain"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              />
+              KARGO GIZI
+            </span>
+            <span id="cargoVal" className="text-emerald-300 font-mono">{Math.round(cargoIntegrity)}%</span>
+          </div>
+
+          {/* Cargo Bar */}
+          <div className="w-full h-3 sm:h-3.5 bg-slate-800 rounded-full overflow-hidden p-0.5 border border-slate-700">
+            <div
+              id="cargoBar"
+              className="h-full bg-gradient-to-r from-blue-700 via-blue-500 to-sky-300 rounded-full transition-all duration-100"
+              style={{ width: `${Math.max(0, Math.min(100, cargoIntegrity))}%` }}
+            />
+          </div>
+
+          {/* Speed & Coins */}
+          <div className="flex items-center justify-between text-[11px] sm:text-xs text-slate-300 pt-0.5">
+            <span className="font-mono">KECEPATAN: <b id="speedVal" className="text-white text-xs sm:text-sm">{Math.round(speedKmh)}</b> km/h</span>
+            <span className="text-amber-400 font-bold flex items-center gap-0.5">
+              🪙 <span id="coinVal" className="font-mono">{coins}</span>
+            </span>
+          </div>
+        </div>
+
+        {/* Center: Track Progress Bar with Biome Badges */}
+        <div id="progressHud" className="flex-1 max-w-xs sm:max-w-md md:max-w-xl mx-2 pointer-events-auto bg-slate-900/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-2 sm:p-2.5 shadow-xl flex flex-col justify-center">
+          <div className="flex justify-between items-center text-[10px] sm:text-xs font-bold text-slate-300 mb-1 px-1">
+            <div className="flex items-center gap-1.5 overflow-hidden">
+              <span className="bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold">
+                LVL <span id="hudLevelVal">{level}</span>
+              </span>
+              <span id="biomeLabel" className="text-cyan-300 uppercase tracking-wider truncate">
+                {biomeName}
+              </span>
+            </div>
+            <span className="font-mono text-slate-300">
+              <span id="distVal" className="text-amber-300 font-bold">{Math.round(currentDist)}</span> / <span id="hudTargetDist">{targetDist}</span>m
+            </span>
+          </div>
+
+          {/* Progress track container */}
+          <div className="relative w-full h-4 sm:h-5 bg-slate-950 rounded-full p-0.5 border border-slate-700 overflow-visible flex items-center">
+            {/* Dynamic progress bar fill */}
+            <div
+              id="progressFill"
+              className="h-full bg-gradient-to-r from-cyan-400 via-emerald-400 to-amber-400 rounded-full transition-all duration-75 relative z-0"
+              style={{ width: `${progressRatio}%` }}
+            />
+            {/* Truck marker */}
+            <div
+              id="truckMarker"
+              className="absolute z-10 -top-1 transform -translate-x-1/2 transition-all duration-75 pointer-events-none text-base sm:text-lg"
+              style={{ left: `${progressRatio}%` }}
+            >
+              🚚
+            </div>
+            {/* Finish Gate Flag */}
+            <div className="absolute right-0.5 z-10 text-xs sm:text-sm">
+              🏁
+            </div>
+          </div>
+
+          {/* Biome tick marks */}
+          <div id="biomeTicks" className="flex justify-between text-[8px] sm:text-[9px] text-slate-400 mt-1 px-1 font-mono">
+            <span>0m Pesisir</span>
+            <span>Rute Perjalanan</span>
+            <span title="Garis Finis SD · SMP · SMA Puspa Bangsa">SD · SMP · SMA</span>
+          </div>
+        </div>
+
+        {/* Right: Fuel Status & Action Controls */}
+        <div id="rightHud" className="flex items-start gap-2">
+          {/* Fuel Widget */}
+          <div id="fuelWidget" className="flex flex-col gap-1 pointer-events-auto bg-slate-900/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-2.5 shadow-xl min-w-[130px] sm:min-w-[160px]">
+            <div className="flex items-center justify-between text-xs sm:text-sm font-bold">
+              <span className="flex items-center gap-1.5 text-amber-400">
+                ⛽ BENSIN
+              </span>
+              <span id="fuelVal" className="text-amber-300 font-mono">{Math.round(fuelPercent)}%</span>
+            </div>
+            <div className="w-full h-3 sm:h-3.5 bg-slate-800 rounded-full overflow-hidden p-0.5 border border-slate-700">
+              <div
+                id="fuelBar"
+                className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full transition-all duration-100"
+                style={{ width: `${Math.max(0, Math.min(100, fuelPercent))}%` }}
+              />
+            </div>
+            {/* Countdown Clock */}
+            <div className="flex items-center justify-between text-[11px] sm:text-xs pt-0.5">
+              <span className="text-slate-400">TARGET: <b className="text-white font-mono">09:45</b></span>
+              <span id="clockVal" className="font-mono font-bold text-red-400 text-xs sm:text-sm">{formatClock(timeRemaining)}</span>
+            </div>
+          </div>
+
+          {/* Audio & Pause Buttons */}
+          <div id="hudActions" className="flex flex-col gap-1.5 pointer-events-auto">
+            <button
+              id="audioBtn"
+              onClick={onToggleAudio}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-800/90 border border-slate-700 hover:bg-slate-700 active:scale-95 flex items-center justify-center text-base sm:text-lg shadow-lg"
+              title="Toggle Audio"
+            >
+              {isAudioMuted ? '🔇' : '🔊'}
+            </button>
+            <button
+              id="pauseBtn"
+              onClick={onPause}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-800/90 border border-slate-700 hover:bg-slate-700 active:scale-95 flex items-center justify-center text-sm font-bold shadow-lg"
+              title="Jeda Permainan"
+            >
+              ⏸️
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Center Floating Screen Notification / Telolet Floaters */}
+      {centerNotice && (
+        <div id="centerNotice" className="text-center font-fredoka text-xl sm:text-3xl text-amber-300 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] transition-opacity duration-300 pointer-events-none">
+          {centerNotice}
+        </div>
+      )}
+    </div>
+  );
+}
