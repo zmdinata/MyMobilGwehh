@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="300" viewBox="0 0 420 300" fill="none" shape-rendering="geometricPrecision"><title>Fictional Cirebon campus finish gate</title>
+      <!-- fictional Cirebon school campus and welcome arch -->
+      <path d="M105 174V55L206 20L307 55V174Z" fill="#f8f1dd" stroke="#344b60" stroke-width="7"/>
+      <path d="M95 57L206 13L317 57" stroke="#317b80" stroke-width="13" stroke-linejoin="round"/>
+      <path d="M125 75H287V91H125Z" fill="#2ba99a"/>
+      <g fill="#94d8e4" stroke="#526b7a" stroke-width="3">
+        <rect x="127" y="104" width="36" height="42" rx="3"/><rect x="188" y="104" width="36" height="42" rx="3"/><rect x="249" y="104" width="36" height="42" rx="3"/>
+      </g>
+      <path d="M63 180V111H77V180M341 180V111H355V180M52 111H367V130H52Z" fill="#cf4c55" stroke="#732e3e" stroke-width="4"/>
+      <path d="M56 114H363" stroke="#ffe8ae" stroke-width="4"/>
+      <!-- flag finish pole -->
+      <path d="M371 180V31" stroke="#384657" stroke-width="5"/>
+      <path d="M376 32H410V66H376Z" fill="#fff"/>
+      <path d="M376 32H410V49H376Z" fill="#df4b50"/>
+      <!-- four welcoming students -->
+      <g stroke="#554a44" stroke-width="2">
+        <g transform="translate(99 193)"><circle cy="-32" r="9" fill="#b87550"/><path d="M-12 -38Q0 -52 12 -38Z" fill="#333d55"/><path d="M-10 -21H10L14 0H-14Z" fill="#f1f4ee"/><path d="M-14 0H14L11 14H-11Z" fill="#c64b55"/></g>
+        <g transform="translate(145 193)"><circle cy="-32" r="9" fill="#cf9265"/><path d="M-12 -39Q0 -49 12 -37L9 -32H-10Z" fill="#75523c"/><path d="M-10 -21H10L14 0H-14Z" fill="#f1f4ee"/><path d="M-14 0H14L11 14H-11Z" fill="#2c7783"/></g>
+        <g transform="translate(191 193)"><circle cy="-32" r="9" fill="#a96a4e"/><path d="M-12 -38Q0 -51 12 -38Z" fill="#303d5a"/><path d="M-10 -21H10L14 0H-14Z" fill="#f1f4ee"/><path d="M-14 0H14L11 14H-11Z" fill="#c64b55"/></g>
+        <g transform="translate(237 193)"><circle cy="-32" r="9" fill="#d59a6c"/><path d="M-12 -39Q0 -48 12 -37L9 -31H-10Z" fill="#80543b"/><path d="M-10 -21H10L14 0H-14Z" fill="#f1f4ee"/><path d="M-14 0H14L11 14H-11Z" fill="#2c7783"/></g>
+      </g>
+      <g fill="#ffd25d" stroke="#9a7023" stroke-width="2"><ellipse cx="273" cy="170" rx="13" ry="5"/><ellipse cx="312" cy="176" rx="13" ry="5"/></g>
+      <path d="M0 212H420" stroke="#71806f" stroke-width="4"/>
+      <path d="M20 226H55V243H20ZM364 224H399V242H364Z" fill="#bd4b54"/>
+      <path d="M25 230H50M369 228H394" stroke="#fff" stroke-width="5"/>
+    </svg>

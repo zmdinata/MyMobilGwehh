@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="208" viewBox="0 0 400 208" fill="none" shape-rendering="geometricPrecision"><title>Cartoon mint nutrition delivery truck, side view</title>
+      <defs>
+        <linearGradient id="box" x2="0" y2="1"><stop stop-color="#72e6d2"/><stop offset="1" stop-color="#20a99b"/></linearGradient>
+        <linearGradient id="cab" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#dbe5ee"/></linearGradient>
+      </defs>
+      <!-- cargo body -->
+      <path d="M20 36Q20 27 30 27H252V163H20Z" fill="url(#box)" stroke="#155e59" stroke-width="7"/>
+      <path d="M26 139H248V158H26Z" fill="#0f766e" opacity=".48"/>
+      <path d="M37 31V159M244 31V159" stroke="#d7f6ed" stroke-width="7"/>
+      <path d="M29 45H247M29 151H247" stroke="#e9fffa" stroke-width="5"/>
+      <path d="M52 58H224" stroke="#a5f3e6" stroke-width="3" opacity=".8"/>
+      <!-- simple original nutrition mark, no external emblem -->
+      <circle cx="137" cy="93" r="39" fill="#fff8db" stroke="#f4b942" stroke-width="5"/>
+      <path d="M116 104Q138 71 158 103Q140 117 116 104Z" fill="#d88a22"/>
+      <path d="M134 77L140 66L146 78M156 98L170 94L160 106" stroke="#bf5a32" stroke-width="5" stroke-linecap="round"/>
+      <path d="M118 111Q137 99 156 111" stroke="#168978" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="128" cy="91" r="2.8" fill="#20343a"/>
+      <path d="M103 129H170" stroke="#0f766e" stroke-width="4" stroke-linecap="round"/>
+      <!-- cab -->
+      <path d="M254 35H305L359 94L372 158H253Z" fill="url(#cab)" stroke="#334155" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M267 46H301L339 91H267Z" fill="#17324b" stroke="#0f172a" stroke-width="4"/>
+      <path d="M308 50L342 91H309Z" fill="#28526c" opacity=".8"/>
+      <!-- driver silhouette -->
+      <circle cx="295" cy="77" r="10" fill="#b96c42"/>
+      <path d="M285 76Q287 62 300 66L305 73Z" fill="#f4c542"/>
+      <path d="M290 81H301" stroke="#33251c" stroke-width="2"/>
+      <path d="M354 108H369V130H354Z" fill="#ffe889" stroke="#bc8c27" stroke-width="3"/>
+      <path d="M351 156H389V170H350Z" fill="#e74d4d" stroke="#a92e35" stroke-width="4"/>
+      <path d="M21 163H370" stroke="#172435" stroke-width="13" stroke-linecap="round"/>
+      <path d="M26 174H360" stroke="#536477" stroke-width="7"/>
+      <!-- black wheel arches leave room for independently animated wheels -->
+      <path d="M22 177A54 54 0 0 1 130 177M252 177A54 54 0 0 1 360 177" fill="#111d2c" stroke="#334155" stroke-width="5"/>
+      <rect x="174" y="164" width="82" height="19" rx="7" fill="#475569" stroke="#1e293b" stroke-width="4"/>
+      <path d="M181 169H248" stroke="#94a3b8" stroke-width="4"/>
+      <rect x="174" y="12" width="44" height="15" rx="5" fill="#f6a924" stroke="#a76219" stroke-width="3"/>
+    </svg>

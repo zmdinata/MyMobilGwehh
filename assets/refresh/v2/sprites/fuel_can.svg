@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="72" height="84" viewBox="0 0 72 84" fill="none" shape-rendering="geometricPrecision"><title>Red fuel can collectible</title>
+      <path d="M23 16H51L58 27V69Q58 76 51 76H19Q13 76 13 69V28Q13 21 19 21H23Z" fill="#dc4045" stroke="#8f2430" stroke-width="5"/>
+      <path d="M26 16V9H48V16M45 10H57V19H48" fill="#26364a" stroke="#152236" stroke-width="4"/>
+      <path d="M21 34H50V53H21Z" fill="#be2b38" stroke="#9b2631" stroke-width="3"/>
+      <path d="M25 38L46 49M46 38L25 49" stroke="#eb6262" stroke-width="2"/>
+      <path d="M20 61H51" stroke="#ffd95f" stroke-width="4" stroke-linecap="round"/>
+      <path d="M54 29Q66 34 62 52" stroke="#f4b942" stroke-width="4" stroke-linecap="round"/>
+    </svg>

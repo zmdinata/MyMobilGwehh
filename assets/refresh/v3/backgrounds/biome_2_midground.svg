@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="420" viewBox="0 0 1024 420" fill="none" shape-rendering="geometricPrecision"><title>Biome 2 roadside scenery</title>
+          <path d="M0 237H1024V420H0Z" fill="#5ba94f"/>
+          <path d="M0 285Q150 264 310 285T630 280T1024 286V420H0Z" fill="#87c75a"/>
+          <path d="M0 340Q190 318 380 339T760 334T1024 339V420H0Z" fill="#3e9149"/>
+          <path d="M0 296Q150 275 310 296M0 350Q190 328 380 350" stroke="#d6dc82" stroke-width="7" opacity=".8"/>
+          <g stroke="#775738" stroke-width="7"><path d="M773 333V228M845 333V245"/></g>
+          <g fill="#2f8850"><path d="M773 237Q718 201 739 184Q767 194 775 223Q791 182 814 192Q811 218 780 239Z"/><path d="M845 252Q808 218 829 205Q848 212 847 239Q866 202 887 216Q880 239 852 254Z"/></g>
+        </svg>

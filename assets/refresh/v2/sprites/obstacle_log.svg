@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" fill="none" shape-rendering="geometricPrecision"><title>Fallen log obstacle</title>
+      <ellipse cx="48" cy="48" rx="40" ry="32" fill="#80502e" stroke="#3f2c25" stroke-width="6"/>
+      <ellipse cx="48" cy="48" rx="32" ry="25" fill="#c08a4e" stroke="#633e28" stroke-width="3"/>
+      <ellipse cx="48" cy="48" rx="29" ry="20.9" fill="none" stroke="#a66b31" stroke-width="3"/><ellipse cx="48" cy="48" rx="21" ry="15.1" fill="none" stroke="#bd8448" stroke-width="3"/><ellipse cx="48" cy="48" rx="12" ry="8.6" fill="none" stroke="#8e5223" stroke-width="3"/><ellipse cx="48" cy="48" rx="5" ry="4" fill="#754823"/>
+      <path d="M14 27Q29 17 39 21M59 72Q71 76 80 65" stroke="#55a65c" stroke-width="8" stroke-linecap="round"/>
+      <path d="M26 14L34 21M67 77L74 72" stroke="#263b2d" stroke-width="3"/>
+    </svg>

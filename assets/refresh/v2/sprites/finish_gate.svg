@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="300" viewBox="0 0 420 300" fill="none" shape-rendering="geometricPrecision"><title>Fictional Cirebon SD SMP SMA school finish gate</title>
+      <!-- fictional school grounds for SD, SMP and SMA in Cirebon -->
+      <path d="M24 173V82L75 49L126 82V173Z" fill="#f8f1dd" stroke="#344b60" stroke-width="5"/>
+      <path d="M19 83L75 44L131 83" stroke="#d66c51" stroke-width="9" stroke-linejoin="round"/>
+      <path d="M147 173V58L208 22L269 58V173Z" fill="#fff5dd" stroke="#344b60" stroke-width="5"/>
+      <path d="M140 60L208 17L276 60" stroke="#317b80" stroke-width="10" stroke-linejoin="round"/>
+      <path d="M287 173V83L339 49L391 83V173Z" fill="#f8f1dd" stroke="#344b60" stroke-width="5"/>
+      <path d="M281 83L339 44L397 83" stroke="#d7a53c" stroke-width="9" stroke-linejoin="round"/>
+      <g fill="#94d8e4" stroke="#526b7a" stroke-width="3">
+        <rect x="41" y="103" width="25" height="30" rx="3"/><rect x="83" y="103" width="25" height="30" rx="3"/>
+        <rect x="165" y="79" width="29" height="33" rx="3"/><rect x="222" y="79" width="29" height="33" rx="3"/>
+        <rect x="305" y="103" width="25" height="30" rx="3"/><rect x="347" y="103" width="25" height="30" rx="3"/>
+      </g>
+      <g font-family="Arial,sans-serif" font-weight="bold" text-anchor="middle" font-size="13" fill="#183b49">
+        <rect x="39" y="85" width="69" height="17" rx="5" fill="#fff8df" stroke="#536875"/><text x="73.5" y="98">SD</text>
+        <rect x="164" y="62" width="88" height="17" rx="5" fill="#fff8df" stroke="#536875"/><text x="208" y="75">SMP</text>
+        <rect x="304" y="85" width="70" height="17" rx="5" fill="#fff8df" stroke="#536875"/><text x="339" y="98">SMA</text>
+      </g>
+      <path d="M63 180V111H77V180M341 180V111H355V180M52 111H367V130H52Z" fill="#cf4c55" stroke="#732e3e" stroke-width="4"/>
+      <path d="M56 114H363" stroke="#ffe8ae" stroke-width="4"/>
+      <!-- flag finish pole -->
+      <path d="M371 180V31" stroke="#384657" stroke-width="5"/>
+      <path d="M376 32H410V66H376Z" fill="#fff"/>
+      <path d="M376 32H410V49H376Z" fill="#df4b50"/>
+      <!-- four welcoming students -->
+      <g stroke="#554a44" stroke-width="2">
+        <g transform="translate(99 193)"><circle cy="-32" r="9" fill="#b87550"/><path d="M-12 -38Q0 -52 12 -38Z" fill="#333d55"/><path d="M-10 -21H10L14 0H-14Z" fill="#f1f4ee"/><path d="M-14 0H14L11 14H-11Z" fill="#c64b55"/></g>
+        <g transform="translate(145 193)"><circle cy="-32" r="9" fill="#cf9265"/><path d="M-12 -39Q0 -49 12 -37L9 -32H-10Z" fill="#75523c"/><path d="M-10 -21H10L14 0H-14Z" fill="#f1f4ee"/><path d="M-14 0H14L11 14H-11Z" fill="#2c7783"/></g>
+        <g transform="translate(191 193)"><circle cy="-32" r="9" fill="#a96a4e"/><path d="M-12 -38Q0 -51 12 -38Z" fill="#303d5a"/><path d="M-10 -21H10L14 0H-14Z" fill="#f1f4ee"/><path d="M-14 0H14L11 14H-11Z" fill="#c64b55"/></g>
+        <g transform="translate(237 193)"><circle cy="-32" r="9" fill="#d59a6c"/><path d="M-12 -39Q0 -48 12 -37L9 -31H-10Z" fill="#80543b"/><path d="M-10 -21H10L14 0H-14Z" fill="#f1f4ee"/><path d="M-14 0H14L11 14H-11Z" fill="#2c7783"/></g>
+      </g>
+      <g fill="#ffd25d" stroke="#9a7023" stroke-width="2"><ellipse cx="273" cy="170" rx="13" ry="5"/><ellipse cx="312" cy="176" rx="13" ry="5"/></g>
+      <path d="M0 212H420" stroke="#71806f" stroke-width="4"/>
+      <path d="M20 226H55V243H20ZM364 224H399V242H364Z" fill="#bd4b54"/>
+      <path d="M25 230H50M369 228H394" stroke="#fff" stroke-width="5"/>
+    </svg>

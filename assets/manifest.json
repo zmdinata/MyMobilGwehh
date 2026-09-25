@@ -1,0 +1,170 @@
+{
+  "version": 11,
+  "format": "mixed",
+  "assets": {
+    "truckBody": {
+      "src": "assets/refresh/v11/sprites/truck_body.png",
+      "fallback": null,
+      "width": 320,
+      "height": 160,
+      "pivot": {
+        "x": 160,
+        "y": 80
+      }
+    },
+    "truckWheel": {
+      "src": "assets/refresh/v11/sprites/truck_wheel.png",
+      "fallback": "assets/refresh/v3/sprites/truck_wheel.svg",
+      "width": 192,
+      "height": 192,
+      "pivot": {
+        "x": 96,
+        "y": 96
+      }
+    },
+    "fuelCan": {
+      "src": "assets/refresh/v11/sprites/fuel_can.png",
+      "fallback": "assets/refresh/v3/sprites/fuel_can.svg",
+      "width": 120,
+      "height": 160,
+      "pivot": {
+        "x": 60,
+        "y": 80
+      }
+    },
+    "coinGizi": {
+      "src": "assets/refresh/v11/sprites/coin_gizi.png",
+      "fallback": "assets/refresh/v3/sprites/coin_gizi.svg",
+      "width": 96,
+      "height": 96,
+      "pivot": {
+        "x": 48,
+        "y": 48
+      }
+    },
+    "obstacleLog": {
+      "src": "assets/refresh/v11/sprites/obstacle_log.png",
+      "fallback": "assets/refresh/v3/sprites/obstacle_log.svg",
+      "width": 192,
+      "height": 192,
+      "pivot": {
+        "x": 96,
+        "y": 96
+      }
+    },
+    "finishGate": {
+      "src": "assets/refresh/v3/sprites/finish_gate.svg",
+      "fallback": null,
+      "width": 420,
+      "height": 300,
+      "pivot": {
+        "x": 0,
+        "y": 300
+      }
+    },
+    "gameLogo": {
+      "src": "assets/refresh/v3/ui/logo.svg",
+      "fallback": null,
+      "width": 720,
+      "height": 200,
+      "pivot": {
+        "x": 360,
+        "y": 100
+      }
+    },
+    "biome1Distant": {
+      "src": "assets/refresh/v11/backgrounds/biome1Distant.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 533,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "biome1Midground": {
+      "src": "assets/refresh/v11/backgrounds/biome1Midground.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 309,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      },
+      "tileAspect": 3.0
+    },
+    "biome2Distant": {
+      "src": "assets/refresh/v11/backgrounds/biome2Distant.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 533,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "biome2Midground": {
+      "src": "assets/refresh/v11/backgrounds/biome2Midground.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 341,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      },
+      "tileAspect": 3.0
+    },
+    "biome3Distant": {
+      "src": "assets/refresh/v11/backgrounds/biome3Distant.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 533,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "biome3Midground": {
+      "src": "assets/refresh/v11/backgrounds/biome3Midground.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 325,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      },
+      "tileAspect": 3.0
+    },
+    "biome4Distant": {
+      "src": "assets/refresh/v11/backgrounds/biome4Distant.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 598,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "biome4Midground": {
+      "src": "assets/refresh/v11/backgrounds/biome4Midground.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 437,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      },
+      "tileAspect": 3.0
+    },
+    "foodParcel": {
+      "src": "assets/refresh/v11/sprites/food_parcel.png",
+      "fallback": null,
+      "width": 160,
+      "height": 160,
+      "pivot": {
+        "x": 80,
+        "y": 80
+      }
+    }
+  }
+}

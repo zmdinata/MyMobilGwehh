@@ -1,0 +1,2665 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>MBG (My Mobil Gweh): Road To School</title>
+
+  <!-- Tailwind CSS v3 via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mbg: {
+              tosca: '#2dd4bf',
+              toscaDark: '#0f766e',
+              toscaLight: '#99f6e4',
+              cab: '#f8fafc',
+              gold: '#fbbf24',
+              accentRed: '#ef4444',
+              asphalt: '#1e293b'
+            }
+          },
+          fontFamily: {
+            fredoka: ['"Fredoka One"', 'cursive', 'sans-serif'],
+            chakra: ['"Chakra Petch"', 'sans-serif'],
+            rajdhani: ['"Rajdhani"', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Google Fonts: Fredoka One, Chakra Petch, Rajdhani -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;800&family=Fredoka+One&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #0b1120;
+      touch-action: none;
+    }
+    canvas {
+      display: block;
+      touch-action: none;
+    }
+    /* Custom Pedal styling */
+    .pedal-btn {
+      touch-action: none;
+      transition: transform 0.08s ease, filter 0.08s ease;
+      box-shadow: 0 8px 0 #0f172a, 0 12px 20px rgba(0, 0, 0, 0.5);
+    }
+    .pedal-btn:active, .pedal-btn.active-touch {
+      transform: translateY(6px);
+      box-shadow: 0 2px 0 #0f172a, 0 4px 10px rgba(0, 0, 0, 0.4);
+      filter: brightness(1.25);
+    }
+    .scanlines {
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+      background-size: 100% 2px, 3px 100%;
+      pointer-events: none;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 4px #ef4444); }
+      50% { filter: drop-shadow(0 0 14px #ef4444); }
+    }
+    .low-fuel-pulse {
+      animation: pulseGlow 0.8s infinite;
+    }
+    @keyframes hornBounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15) rotate(-6deg); }
+    }
+    .horn-honking {
+      animation: hornBounce 0.25s infinite;
+    }
+    @media (max-width: 480px) {
+      #hud { padding: 6px; }
+      #topHudRow {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 34px;
+        grid-template-areas: "cargo fuel actions" "progress progress progress";
+        align-items: start;
+        gap: 6px;
+      }
+      #cargoHud { grid-area: cargo; min-width: 0; padding: 6px; border-radius: 12px; }
+      #progressHud { grid-area: progress; width: 100%; max-width: none; margin: 0; padding: 6px; border-radius: 12px; }
+      #rightHud { display: contents; }
+      #fuelWidget { grid-area: fuel; min-width: 0; padding: 6px; border-radius: 12px; }
+      #hudActions { grid-area: actions; display: flex; flex-direction: column; gap: 4px; }
+      #hudActions button { width: 30px; height: 30px; border-radius: 9px; }
+      #biomeTicks { font-size: 8px; gap: 2px; }
+      #biomeTicks span:last-child { text-align: right; }
+    }
+  </style>
+</head>
+<body class="relative w-full h-full font-chakra text-white select-none">
+
+  <!-- Main Game Canvas -->
+  <canvas id="gameCanvas" class="absolute inset-0 w-full h-full z-0"></canvas>
+
+  <!-- CRT Scanline Aesthetic Overlay (Subtle) -->
+  <div class="scanlines absolute inset-0 z-10 pointer-events-none opacity-40"></div>
+
+  <!-- IN-GAME HUD OVERLAY -->
+  <div id="hud" class="absolute inset-0 z-20 pointer-events-none flex flex-col justify-between p-2 sm:p-4">
+    <!-- Top HUD Row -->
+    <div id="topHudRow" class="flex items-start justify-between gap-2 w-full">
+      <!-- Left: Cargo Health & Speed -->
+      <div id="cargoHud" class="flex flex-col gap-1 pointer-events-auto bg-slate-900/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-2.5 shadow-xl min-w-[150px] sm:min-w-[190px]">
+        <div class="flex items-center justify-between text-xs sm:text-sm font-bold">
+          <span class="flex items-center gap-1.5 text-emerald-400">
+            <img id="cargoParcelIcon" alt="" aria-hidden="true" class="hidden h-5 w-5 object-contain" />
+            <svg id="cargoParcelFallback" class="w-4 h-4 text-emerald-400 inline" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+              <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+            </svg>
+            KARGO GIZI
+          </span>
+          <span id="cargoVal" class="text-emerald-300 font-mono">100%</span>
+        </div>
+        <!-- Cargo Bar -->
+        <div class="w-full h-3 sm:h-3.5 bg-slate-800 rounded-full overflow-hidden p-0.5 border border-slate-700">
+          <div id="cargoBar" class="h-full bg-gradient-to-r from-blue-700 via-blue-500 to-sky-300 rounded-full transition-all duration-100" style="width: 100%;"></div>
+        </div>
+        <!-- Speed & Coins -->
+        <div class="flex items-center justify-between text-[11px] sm:text-xs text-slate-300 pt-0.5">
+          <span class="font-mono">KECEPATAN: <b id="speedVal" class="text-white text-xs sm:text-sm">0</b> km/h</span>
+          <span class="text-amber-400 font-bold flex items-center gap-0.5">
+            🪙 <span id="coinVal" class="font-mono">0</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Center: Track Progress Bar with Biome Badges -->
+      <div id="progressHud" class="flex-1 max-w-xs sm:max-w-md md:max-w-xl mx-2 pointer-events-auto bg-slate-900/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-2 sm:p-2.5 shadow-xl flex flex-col justify-center">
+        <div class="flex justify-between items-center text-[10px] sm:text-xs font-bold text-slate-300 mb-1 px-1">
+          <span id="biomeLabel" class="text-cyan-300 uppercase tracking-wider truncate">Pantura Coastline</span>
+          <span class="font-mono text-slate-300"><span id="distVal" class="text-amber-300 font-bold">0</span> / 4500m</span>
+        </div>
+        <!-- Progress track container -->
+        <div class="relative w-full h-4 sm:h-5 bg-slate-950 rounded-full p-0.5 border border-slate-700 overflow-visible flex items-center">
+          <!-- 4 Biome segments indicators -->
+          <div class="absolute inset-0 flex rounded-full overflow-hidden opacity-30">
+            <div class="w-[26.6%] bg-cyan-500 h-full border-r border-slate-600"></div>
+            <div class="w-[35.5%] bg-emerald-500 h-full border-r border-slate-600"></div>
+            <div class="w-[31.1%] bg-amber-500 h-full border-r border-slate-600"></div>
+            <div class="w-[6.8%] bg-purple-500 h-full"></div>
+          </div>
+          <!-- Dynamic progress bar fill -->
+          <div id="progressFill" class="h-full bg-gradient-to-r from-cyan-400 via-emerald-400 to-amber-400 rounded-full transition-all duration-75 relative z-0" style="width: 0%;"></div>
+          <!-- Truck head icon marker on track -->
+          <div id="truckMarker" class="absolute z-10 -top-1 transform -translate-x-1/2 transition-all duration-75 pointer-events-none text-base sm:text-lg" style="left: 0%;">
+            🚚
+          </div>
+          <!-- Finish Gate Flag -->
+          <div class="absolute right-0.5 z-10 text-xs sm:text-sm">
+            🏁
+          </div>
+        </div>
+        <!-- Biome tick marks -->
+        <div id="biomeTicks" class="flex justify-between text-[8px] sm:text-[9px] text-slate-400 mt-1 px-1 font-mono">
+          <span>0m Pantura</span>
+          <span>1.2k Sawah</span>
+          <span>2.8k Gunung</span>
+          <span title="4500m SD · SMP · SMA Puspa Bangsa">SD · SMP · SMA</span>
+        </div>
+      </div>
+
+      <!-- Right: Fuel, Deadline Clock, Audio & Pause -->
+      <div id="rightHud" class="flex items-center gap-2 pointer-events-auto">
+        <!-- Fuel & Clock widget -->
+        <div id="fuelWidget" class="bg-slate-900/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-2.5 shadow-xl min-w-[130px] sm:min-w-[170px] flex flex-col gap-1">
+          <!-- Fuel Gauge -->
+          <div class="flex items-center justify-between text-xs sm:text-sm font-bold">
+            <span id="fuelLabel" class="flex items-center gap-1 text-amber-400">
+              ⛽ BENSIN
+            </span>
+            <span id="fuelVal" class="text-amber-300 font-mono">100%</span>
+          </div>
+          <div class="w-full h-3 sm:h-3.5 bg-slate-800 rounded-full overflow-hidden p-0.5 border border-slate-700">
+            <div id="fuelBar" class="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full transition-all duration-100" style="width: 100%;"></div>
+          </div>
+          <!-- Countdown Clock (towards 09:45 WIB) -->
+          <div class="flex items-center justify-between text-[11px] sm:text-xs pt-0.5">
+            <span class="text-slate-400">TARGET: <b class="text-white font-mono">09:45</b></span>
+            <span id="clockVal" class="font-mono font-bold text-red-400 text-xs sm:text-sm">03:30</span>
+          </div>
+        </div>
+
+        <!-- Audio & Pause Buttons -->
+        <div id="hudActions" class="flex flex-col gap-1.5">
+          <button id="audioBtn" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-800/90 border border-slate-700 hover:bg-slate-700 active:scale-95 flex items-center justify-center text-base sm:text-lg shadow-lg">
+            🔊
+          </button>
+          <button id="pauseBtn" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-800/90 border border-slate-700 hover:bg-slate-700 active:scale-95 flex items-center justify-center text-sm font-bold shadow-lg">
+            ⏸️
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Floating Screen Notification / Telolet Floaters -->
+    <div id="centerNotice" class="text-center font-fredoka text-xl sm:text-3xl text-amber-300 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] opacity-0 transition-opacity duration-300 pointer-events-none">
+      TELOLET MANIA! 📢
+    </div>
+
+    <!-- Bottom Controls Row: Mobile Pedals & Horn (Visible on Touch/All Devices) -->
+    <div class="flex items-end justify-between w-full pointer-events-none px-2 sm:px-6 pb-2">
+      <!-- Left Pedal: BRAKE / REVERSE -->
+      <div class="pointer-events-auto flex flex-col items-center">
+        <button id="pedalBrake" class="pedal-btn relative w-24 h-32 sm:w-32 sm:h-40 rounded-2xl bg-gradient-to-b from-red-600 via-red-700 to-red-900 border-2 border-red-400/80 flex flex-col items-center justify-between p-3 select-none">
+          <!-- Metallic Grip Ribs -->
+          <div class="w-full flex flex-col gap-1.5 opacity-60 mt-1">
+            <div class="h-2 bg-slate-900 rounded-sm"></div>
+            <div class="h-2 bg-slate-900 rounded-sm"></div>
+            <div class="h-2 bg-slate-900 rounded-sm"></div>
+            <div class="h-2 bg-slate-900 rounded-sm"></div>
+          </div>
+          <div class="text-center">
+            <span class="block font-fredoka text-lg sm:text-2xl text-white tracking-wider drop-shadow">BRAKE</span>
+            <span class="block text-[9px] sm:text-[11px] font-mono text-red-200">REM / MUNDUR / PITCH ▼</span>
+          </div>
+          <span class="text-[10px] text-red-300/80 font-mono hidden sm:inline">[A] / [←]</span>
+        </button>
+      </div>
+
+      <!-- Center: Telolet Horn Button -->
+      <div class="pointer-events-auto flex flex-col items-center pb-1">
+        <button id="hornBtn" class="pedal-btn relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-b from-amber-400 via-amber-500 to-yellow-600 border-2 border-yellow-200 shadow-lg flex flex-col items-center justify-center p-1 active:scale-90">
+          <span class="text-2xl sm:text-3xl">🎺</span>
+          <span class="font-fredoka text-[10px] sm:text-xs text-slate-950 font-bold tracking-tight">TELOLET</span>
+          <span class="text-[8px] text-amber-900 font-mono hidden sm:inline">[H] / [Spasi]</span>
+        </button>
+      </div>
+
+      <!-- Right Pedal: GAS / ACCELERATE -->
+      <div class="pointer-events-auto flex flex-col items-center">
+        <button id="pedalGas" class="pedal-btn relative w-24 h-36 sm:w-32 sm:h-44 rounded-2xl bg-gradient-to-b from-blue-500 via-blue-700 to-blue-950 border-2 border-sky-300/80 flex flex-col items-center justify-between p-3 select-none">
+          <!-- Metallic Grip Ribs -->
+          <div class="w-full flex flex-col gap-1.5 opacity-60 mt-1">
+            <div class="h-2 bg-slate-900 rounded-sm"></div>
+            <div class="h-2 bg-slate-900 rounded-sm"></div>
+            <div class="h-2 bg-slate-900 rounded-sm"></div>
+            <div class="h-2 bg-slate-900 rounded-sm"></div>
+            <div class="h-2 bg-slate-900 rounded-sm"></div>
+          </div>
+          <div class="text-center">
+            <span class="block font-fredoka text-xl sm:text-3xl text-white tracking-wider drop-shadow">GAS</span>
+            <span class="block text-[9px] sm:text-[11px] font-mono text-emerald-200">MAJU / AKSELERASI / PITCH ▲</span>
+          </div>
+          <span class="text-[10px] text-emerald-300/80 font-mono hidden sm:inline">[D] / [→]</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- START / LORE MODAL -->
+  <div id="startModal" class="absolute inset-0 z-40 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="max-w-xl w-full bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-cyan-500/60 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden flex flex-col items-center text-center">
+      <!-- Glow Accent -->
+      <div class="absolute -top-24 -left-24 w-52 h-52 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-52 h-52 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Badges -->
+      <div class="flex items-center gap-2 mb-2">
+        <span class="bg-blue-500/20 border border-blue-400 text-sky-300 px-3 py-0.5 rounded-full text-xs font-bold tracking-wider uppercase">
+          Unit Antar Pangan & Gizi
+        </span>
+        <span class="bg-amber-500/20 border border-amber-400 text-amber-300 px-3 py-0.5 rounded-full text-xs font-bold">
+          Cirebon - Kuningan
+        </span>
+      </div>
+
+      <!-- Vector wordmark; visible title text remains available to assistive technology. -->
+      <img id="gameLogo" src="assets/refresh/v3/ui/logo.svg" alt="" class="w-64 sm:w-80 h-auto max-h-24 object-contain mb-1" />
+      <h1 id="gameLogoFallback" class="sr-only">MBG: Road To School</h1>
+      <p class="text-xs sm:text-sm text-cyan-200 font-mono tracking-wide mb-4">
+        (My Mobil Gweh) - Misi Antar 500 Porsi Gizi Hangat
+      </p>
+
+      <!-- Story Narrative Box -->
+      <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 text-xs sm:text-sm text-slate-300 leading-relaxed text-left space-y-2 mb-4 w-full">
+        <p>
+          <b class="text-amber-300">Kisah Mang Ucup:</b> Mantan supir elf balap trayek Cirebon–Kuningan yang tobat dan beralih profesi jadi kurir logistik gizi nomor wahid!
+        </p>
+        <p>
+          🎯 <b class="text-white">Misi Kamu:</b> Antar <b>500 porsi paket gizi hangat</b> (nasi pulen, ayam serundeng, tahu-tempe orek, sayur lodeh, dan susu murni) menuju kawasan sekolah fiktif <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b> sebelum bel masuk berbunyi tepat pukul <b>09:45 WIB!</b>
+        </p>
+        <p class="text-amber-200/90 text-[11px] sm:text-xs">
+          ⚠️ Hati-hati: Rob Pantura licin, kubangan lumpur sawah seret, dan balok kayu gunung bisa merontokkan sayur lodeh!
+        </p>
+      </div>
+
+      <!-- Controls Guide -->
+      <div class="grid grid-cols-2 gap-2 w-full text-[11px] sm:text-xs mb-5">
+        <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-2.5">
+          <span class="font-bold text-cyan-300 block mb-1">🖥️ Desktop Web</span>
+          <span class="text-slate-300 block">Gas / Pitch Up: <b>[D] / [→]</b></span>
+          <span class="text-slate-300 block">Rem / Pitch Down: <b>[A] / [←]</b></span>
+          <span class="text-slate-300 block">Telolet: <b>[H] / [Spasi]</b> | Reset: <b>[R]</b></span>
+        </div>
+        <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-2.5">
+          <span class="font-bold text-amber-300 block mb-1">📱 HP / Mobile Touch</span>
+          <span class="text-slate-300 block">Pedal Kanan: <b>Gas / Pitch Up</b></span>
+          <span class="text-slate-300 block">Pedal Kiri: <b>Rem / Pitch Down</b></span>
+          <span class="text-slate-300 block">Tombol Tengah: <b>Klakson Telolet</b></span>
+        </div>
+      </div>
+
+      <!-- Legal Disclaimer for Parody (HAKI Safe) -->
+      <p class="text-[10px] text-slate-500 mb-4 max-w-md">
+        *Disclaimer: Game dan sekolah Puspa Bangsa (SD, SMP, SMA) adalah fiktif untuk hiburan dan edukasi gizi; tidak berafiliasi dengan institusi nyata.
+      </p>
+
+      <!-- Start Button -->
+      <button id="startGameBtn" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 hover:from-blue-600 hover:to-sky-400 text-white font-fredoka text-lg sm:text-xl shadow-lg shadow-blue-500/30 transform active:scale-95 transition-all">
+        GASKEUN! BERANGKATKAN GIZI 🚚💨
+      </button>
+    </div>
+  </div>
+
+  <!-- GAME OVER MODAL -->
+  <div id="gameOverModal" class="hidden absolute inset-0 z-40 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-red-500/70 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden flex flex-col items-center text-center">
+      <div class="text-5xl sm:text-6xl mb-2" id="goIcon">💥</div>
+      <h2 id="goTitle" class="font-fredoka text-2xl sm:text-4xl text-red-400 drop-shadow mb-1">
+        Game Over
+      </h2>
+      <div id="goSubtitle" class="font-fredoka text-lg sm:text-xl text-amber-300 drop-shadow mb-2 font-bold">
+        Omprengmu telah tumpah!
+      </div>
+      <p id="goDesc" class="text-xs sm:text-sm text-slate-300 mb-4 leading-relaxed">
+        MOBIL GWEH TERGULING! Atap truk mencium aspal! Boks toska ambyar, 500 botol susu meletus, dan kuah sayur lodeh melumuri layar kaca!
+      </p>
+
+      <!-- Stats Box -->
+      <div class="w-full bg-slate-800/80 border border-slate-700 rounded-2xl p-3.5 mb-5 text-xs sm:text-sm space-y-1.5 text-left font-mono">
+        <div class="flex justify-between">
+          <span class="text-slate-400">Jarak Ditempuh:</span>
+          <span id="goDist" class="text-cyan-300 font-bold">1,240m</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">Koin Gizi:</span>
+          <span id="goCoins" class="text-amber-400 font-bold">14</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">Sisa Kargo:</span>
+          <span id="goCargo" class="text-emerald-400 font-bold">0%</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">Waktu Bertahan:</span>
+          <span id="goTime" class="text-red-400 font-bold">01:22</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex gap-3 w-full">
+        <button id="goRestartBtn" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-red-500 to-amber-500 hover:from-red-400 hover:to-amber-400 text-slate-950 font-fredoka text-base sm:text-lg shadow-lg active:scale-95 transition-all">
+          COBA LAGI [R] 🔄
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VICTORY MODAL -->
+  <div id="victoryModal" class="hidden absolute inset-0 z-40 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-amber-400/80 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden flex flex-col items-center text-center">
+      <!-- Glow -->
+      <div class="absolute -top-20 -right-20 w-44 h-44 bg-amber-400/30 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="mb-1 flex h-16 items-center justify-center animate-bounce">
+        <span id="vicFoodParcelFallback" class="text-5xl sm:text-6xl">🏆</span>
+        <img id="vicFoodParcel" alt="Paket makanan MBG" class="hidden h-16 w-16 object-contain" />
+      </div>
+      <h2 class="font-fredoka text-2xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-orange-400 drop-shadow">
+        MISI SELESAI!
+      </h2>
+      <p class="text-xs sm:text-sm text-amber-200 font-mono mb-3">
+        Gizi Tiba di Sekolah Puspa Bangsa!
+      </p>
+
+      <!-- Star Rating -->
+      <div id="vicStars" class="text-3xl sm:text-4xl tracking-widest mb-3">
+        ⭐⭐⭐
+      </div>
+
+      <p class="text-xs text-slate-300 mb-4 italic">
+        "Siswa-siswi bersorak mengacungkan sendok dan piring gizi! Mang Ucup dianugerahi gelar Pahlawan Elf Gizi Pantura!"
+      </p>
+
+      <!-- Victory Score Card -->
+      <div class="w-full bg-slate-800/80 border border-slate-700 rounded-2xl p-4 mb-5 text-xs sm:text-sm space-y-2 text-left font-mono">
+        <div class="flex justify-between">
+          <span class="text-slate-400">Keutuhan Kargo:</span>
+          <span id="vicCargo" class="text-emerald-400 font-bold">88%</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">Sisa Bensin:</span>
+          <span id="vicFuel" class="text-amber-400 font-bold">32%</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">Waktu Tempuh:</span>
+          <span id="vicTime" class="text-cyan-300 font-bold">01:54 WIB</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">Koin Gizi Terkumpul:</span>
+          <span id="vicCoins" class="text-yellow-400 font-bold">38</span>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <button id="vicRestartBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-blue-500 via-blue-600 to-sky-500 text-white font-fredoka text-lg shadow-lg shadow-blue-500/40 active:scale-95 transition-all">
+        GAS LAGI TRAYEK BERIKUTNYA! 🚀
+      </button>
+    </div>
+  </div>
+
+  <!-- PAUSE MODAL -->
+  <div id="pauseModal" class="hidden absolute inset-0 z-40 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-3xl p-6 text-center max-w-xs w-full shadow-2xl">
+      <h3 class="font-fredoka text-2xl text-cyan-300 mb-3">GAME DI-JEDA ⏸️</h3>
+      <p class="text-xs text-slate-400 mb-5 font-mono">Mang Ucup sedang istirahat ngopi di warteg...</p>
+      <button id="resumeBtn" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-fredoka text-base mb-2">
+        LANJUTKAN [ESC]
+      </button>
+      <button id="pauseRestartBtn" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fredoka text-sm border border-slate-700">
+        ULANG DARI AWAL
+      </button>
+    </div>
+  </div>
+
+  <!-- Browser controller and renderer; shared physics/state are imported from game_core.js. -->
+  <script type="module">
+    import { BIOMES, PHYSICS_CONSTANTS, TerrainSystem as WorldTerrain, PhysicsVehicle, GameStateManager } from './game_core.js?v=20260925-gameplay11';
+
+    // =========================================================================
+    // 1. SOUND SYNTHESIZER (Web Audio API - Zero External Audio Files)
+    // =========================================================================
+    class SoundSynthesizer {
+      constructor() {
+        this.ctx = null;
+        this.isMuted = false;
+        this.engineOsc = null;
+        this.engineGain = null;
+        this.engineFilter = null;
+        this.isEngineRunning = false;
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+        if (this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+        if (!this.isEngineRunning) {
+          this.startEngineSound();
+        }
+      }
+
+      startEngineSound() {
+        if (!this.ctx || this.isEngineRunning) return;
+        try {
+          this.engineOsc = this.ctx.createOscillator();
+          this.engineOsc.type = 'sawtooth';
+          this.engineOsc.frequency.setValueAtTime(45, this.ctx.currentTime); // Diesel idle 45Hz
+
+          this.engineFilter = this.ctx.createBiquadFilter();
+          this.engineFilter.type = 'lowpass';
+          this.engineFilter.frequency.setValueAtTime(260, this.ctx.currentTime);
+
+          this.engineGain = this.ctx.createGain();
+          this.engineGain.gain.setValueAtTime(this.isMuted ? 0 : 0.08, this.ctx.currentTime);
+
+          this.engineOsc.connect(this.engineFilter);
+          this.engineFilter.connect(this.engineGain);
+          this.engineGain.connect(this.ctx.destination);
+
+          this.engineOsc.start();
+          this.isEngineRunning = true;
+        } catch (e) {
+          console.warn('Audio start failed', e);
+        }
+      }
+
+      updateEngine(speed, isGas, isAirborne = false) {
+        if (!this.ctx || !this.isEngineRunning || this.isMuted) return;
+        const now = this.ctx.currentTime;
+        const absSpeed = Math.abs(speed);
+        const speedRatio = Math.min(1.0, absSpeed / 500);
+
+        // Modulate pitch: 45Hz (idle) to 120Hz + throttle boost
+        // When wheels leave ground (airborne) and gas is held, engine pitch leaps up (sawtooth frequency revs to 180Hz)
+        let targetFreq = 45 + speedRatio * 55 + (isGas ? 25 : 0);
+        let targetFilter = 220 + speedRatio * 850 + (isGas ? 400 : 0);
+        let targetGain = isGas ? 0.12 : (0.05 + speedRatio * 0.04);
+
+        if (isAirborne && isGas) {
+          targetFreq = 180;
+          targetFilter = 1450;
+          targetGain = 0.15;
+        }
+
+        this.engineOsc.frequency.setTargetAtTime(targetFreq, now, 0.06);
+        this.engineFilter.frequency.setTargetAtTime(targetFilter, now, 0.06);
+        this.engineGain.gain.setTargetAtTime(targetGain, now, 0.06);
+      }
+
+      playSuspensionSpringSound() {
+        if (!this.ctx || this.isMuted) return;
+        const now = this.ctx.currentTime;
+        if (this.lastSpringTime && (now - this.lastSpringTime) < 0.22) return;
+        this.lastSpringTime = now;
+
+        try {
+          // Procedural suspension spring squeak & boing
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(320, now);
+          osc.frequency.exponentialRampToValueAtTime(140, now + 0.18);
+
+          // FM Modulation for spring boing / squeak resonance
+          const modOsc = this.ctx.createOscillator();
+          const modGain = this.ctx.createGain();
+          modOsc.frequency.setValueAtTime(38, now);
+          modGain.gain.setValueAtTime(45, now);
+          modOsc.connect(osc.frequency);
+
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          modOsc.start(now);
+          osc.start(now);
+          modOsc.stop(now + 0.22);
+          osc.stop(now + 0.22);
+        } catch (_) {}
+      }
+
+      pauseEngine() {
+        if (!this.ctx || !this.engineGain) return;
+        this.engineGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.05);
+      }
+
+      resumeEngine() {
+        if (!this.ctx || !this.engineGain || this.isMuted) return;
+        this.engineGain.gain.setTargetAtTime(0.08, this.ctx.currentTime, 0.05);
+      }
+
+      stopEngine() {
+        if (!this.ctx) return;
+        this.pauseEngine();
+        this.isEngineRunning = false;
+        try {
+          if (this.engineOsc) {
+            this.engineOsc.stop();
+            this.engineOsc.disconnect();
+            this.engineOsc = null;
+          }
+        } catch (_) {}
+      }
+
+      playTeloletHorn() {
+        if (!this.ctx || this.isMuted) return;
+        const now = this.ctx.currentTime;
+        if (this.lastHornTime && (now - this.lastHornTime) < 0.6) return;
+        this.lastHornTime = now;
+
+        // Classic Indonesian Pantura Telolet 6-Note Arpeggio
+        // Notes: F5 (698Hz), A5 (880Hz), C6 (1046Hz), A5 (880Hz), F5 (698Hz), C6 (1046Hz)
+        const notes = [
+          { f: 698.46, d: 0.12, t: 0.00 },
+          { f: 880.00, d: 0.12, t: 0.13 },
+          { f: 1046.5, d: 0.16, t: 0.26 },
+          { f: 880.00, d: 0.12, t: 0.43 },
+          { f: 698.46, d: 0.14, t: 0.56 },
+          { f: 1046.5, d: 0.28, t: 0.71 }
+        ];
+
+        notes.forEach(n => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(n.f, now + n.t);
+
+          // Rich brassy filter
+          const filter = this.ctx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(1800, now + n.t);
+
+          gain.gain.setValueAtTime(0, now + n.t);
+          gain.gain.linearRampToValueAtTime(0.18, now + n.t + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + n.t + n.d);
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start(now + n.t);
+          osc.stop(now + n.t + n.d);
+        });
+      }
+
+      playCoinSound() {
+        if (!this.ctx || this.isMuted) return;
+        const now = this.ctx.currentTime;
+        // B5 (987.77 Hz) -> E6 (1318.51 Hz) Arpeggio
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(987.77, now);
+        osc.frequency.setValueAtTime(1318.51, now + 0.07);
+
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.22);
+      }
+
+      playFuelSound() {
+        if (!this.ctx || this.isMuted) return;
+        const now = this.ctx.currentTime;
+        // Frequency sweep rising from 220Hz to 650Hz
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.exponentialRampToValueAtTime(650, now + 0.25);
+
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.3);
+      }
+
+      playSplashSound() {
+        if (!this.ctx || this.isMuted) return;
+        this.playNoiseBurst(0.25, 600, 1800, 0.16);
+      }
+
+      playMudSound() {
+        if (!this.ctx || this.isMuted) return;
+        this.playNoiseBurst(0.3, 180, 450, 0.2);
+      }
+
+      playImpactSound() {
+        if (!this.ctx || this.isMuted) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(110, now);
+        osc.frequency.exponentialRampToValueAtTime(35, now + 0.15);
+
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.2);
+      }
+
+      playCrashSound() {
+        if (!this.ctx || this.isMuted) return;
+        this.playNoiseBurst(0.6, 120, 600, 0.4);
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.exponentialRampToValueAtTime(40, now + 0.5);
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.5);
+      }
+
+      playVictoryFanfare() {
+        if (!this.ctx || this.isMuted) return;
+        const now = this.ctx.currentTime;
+        const victoryChords = [
+          { f: 523.25, d: 0.15, t: 0.00 }, // C5
+          { f: 659.25, d: 0.15, t: 0.16 }, // E5
+          { f: 783.99, d: 0.18, t: 0.32 }, // G5
+          { f: 1046.5, d: 0.45, t: 0.50 }  // C6
+        ];
+        victoryChords.forEach(c => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(c.f, now + c.t);
+          gain.gain.setValueAtTime(0.25, now + c.t);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + c.t + c.d);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + c.t);
+          osc.stop(now + c.t + c.d);
+        });
+      }
+
+      playNoiseBurst(duration, lowFreq, highFreq, volume) {
+        if (!this.ctx) return;
+        try {
+          const bufferSize = Math.floor(this.ctx.sampleRate * duration);
+          const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.35));
+          }
+          const noise = this.ctx.createBufferSource();
+          noise.buffer = buffer;
+
+          const filter = this.ctx.createBiquadFilter();
+          filter.type = 'bandpass';
+          filter.frequency.value = (lowFreq + highFreq) / 2;
+          filter.Q.value = 1.2;
+
+          const gain = this.ctx.createGain();
+          gain.gain.value = volume;
+
+          noise.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.ctx.destination);
+          noise.start();
+        } catch (e) {
+          // ignore audio burst error
+        }
+      }
+
+      toggleMute() {
+        this.isMuted = !this.isMuted;
+        if (this.engineGain) {
+          this.engineGain.gain.setValueAtTime(this.isMuted ? 0 : 0.08, this.ctx?.currentTime || 0);
+        }
+        return this.isMuted;
+      }
+    }
+
+    // Terrain and rigid-body physics come from game_core.js, the same module
+    // used by the Node physics suite. Keep only browser presentation effects here.
+    class Vehicle extends PhysicsVehicle {
+      constructor(startX = 100, startY = 400) {
+        super(startX, startY);
+        this.exhaustPuffs = [];
+        this.teloletNotes = [];
+        this.burnoutSmoke = [];
+        this.tireMarks = [];
+      }
+
+      update(dt, inputs, terrain) {
+        super.update(dt, inputs, terrain);
+        const elapsed = Number.isFinite(dt) ? Math.max(0, Math.min(0.1, dt)) : 0;
+        const emit = (rate) => Math.random() < 1 - Math.exp(-rate * elapsed);
+
+        if (inputs.gas && this.fuel > 0 && Math.abs(this.vx) < 160 && this.rearWheel.onGround && emit(24)) {
+          const wheel = this.rearWheel;
+          this.burnoutSmoke.push({
+            x: wheel.x + (Math.random() * 8 - 4), y: wheel.y + this.wheelRadius - 2,
+            vx: -40 - Math.random() * 60, vy: -15 - Math.random() * 25,
+            size: 6 + Math.random() * 6, maxLife: 0.55, life: 0.55
+          });
+          this.tireMarks.push({ x: wheel.x, y: wheel.y + this.wheelRadius, rot: this.angle, life: 2.5, maxLife: 2.5 });
+        }
+
+        if (inputs.gas && emit(18)) {
+          const cosA = Math.cos(this.angle), sinA = Math.sin(this.angle);
+          this.exhaustPuffs.push({
+            x: this.x - 42 * cosA - 16 * sinA,
+            y: this.y - 42 * sinA + 16 * cosA,
+            vx: -30 - Math.random() * 40, vy: -10 - Math.random() * 20,
+            size: 4 + Math.random() * 5, life: 0.6, maxLife: 0.6
+          });
+        }
+
+        this.updateEffects(this.burnoutSmoke, elapsed, (item) => {
+          item.x += item.vx * elapsed; item.y += item.vy * elapsed;
+          item.size += 22 * elapsed; item.life -= elapsed;
+        });
+        this.updateEffects(this.exhaustPuffs, elapsed, (item) => {
+          item.x += item.vx * elapsed; item.y += item.vy * elapsed;
+          item.size += 15 * elapsed; item.life -= elapsed;
+        });
+        this.updateEffects(this.tireMarks, elapsed, (item) => { item.life -= elapsed; });
+        this.updateEffects(this.teloletNotes, elapsed, (item) => {
+          item.x += item.vx * elapsed; item.y += item.vy * elapsed; item.life -= elapsed;
+        });
+      }
+
+      updateEffects(items, dt, update) {
+        for (let i = items.length - 1; i >= 0; i--) {
+          update(items[i]);
+          if (items[i].life <= 0) items.splice(i, 1);
+        }
+      }
+
+      triggerTeloletNotes() {
+        const symbols = ['♪', '♫', '♬'];
+        const colors = ['#fbbf24', '#22d3ee', '#f43f5e', '#a855f7'];
+        for (let i = 0; i < 5; i++) {
+          this.teloletNotes.push({
+            char: symbols[Math.floor(Math.random() * symbols.length)],
+            x: this.x + (Math.random() * 20 - 10), y: this.y - 45,
+            vx: (Math.random() - 0.5) * 60, vy: -80 - Math.random() * 50,
+            life: 1.2, color: colors[i % colors.length]
+          });
+        }
+      }
+
+      checkPickups(terrain) {
+        const fuelBefore = terrain.fuelCans.filter((item) => !item.collected).length;
+        const coinsBefore = terrain.coins.filter((item) => !item.collected).length;
+        super.checkPickups(terrain);
+        if (!this.soundEngine) return;
+        if (terrain.fuelCans.filter((item) => !item.collected).length < fuelBefore) this.soundEngine.playFuelSound();
+        if (terrain.coins.filter((item) => !item.collected).length < coinsBefore) this.soundEngine.playCoinSound();
+      }
+    }
+
+    // =========================================================================
+    // 4. CANVAS RENDERING ENGINE (Procedural Vector 2D Artwork)
+    // =========================================================================
+    class GameRenderer {
+      constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.dpr = window.devicePixelRatio || 1;
+        this.camera = { x: 0, y: 0, targetX: 0, targetY: 0, zoom: 1.0 };
+        this.confetti = [];
+        this.splatters = [];
+        this.initAssets();
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+      }
+
+      initAssets() {
+        this.assets = {
+          truckBody: { img: null, loaded: false, failed: false },
+          truckWheel: { img: null, loaded: false, failed: false },
+          fuelCan: { img: null, loaded: false, failed: false },
+          coinGizi: { img: null, loaded: false, failed: false },
+          obstacleLog: { img: null, loaded: false, failed: false },
+          finishGate: { img: null, loaded: false, failed: false }
+        };
+        this.backgroundAssets = {};
+        if (typeof Image === 'undefined' || typeof fetch === 'undefined') return;
+
+        fetch('assets/manifest.json', { cache: 'no-cache' })
+          .then(response => {
+            if (!response.ok) throw new Error(`Asset manifest returned ${response.status}`);
+            return response.json();
+          })
+          .then(manifest => {
+            const logoEntry = manifest.assets && manifest.assets.gameLogo;
+            const logoElement = document.getElementById('gameLogo');
+            const logoFallback = document.getElementById('gameLogoFallback');
+            if (logoElement && logoEntry && logoEntry.src) {
+              logoElement.onerror = () => {
+                logoElement.hidden = true;
+                if (logoFallback) logoFallback.classList.remove('sr-only');
+              };
+              logoElement.src = logoEntry.src;
+            }
+
+            const parcelEntry = manifest.assets && manifest.assets.foodParcel;
+            const parcelElement = document.getElementById('vicFoodParcel');
+            const parcelFallback = document.getElementById('vicFoodParcelFallback');
+            const cargoParcelIcon = document.getElementById('cargoParcelIcon');
+            const cargoParcelFallback = document.getElementById('cargoParcelFallback');
+            if (cargoParcelIcon && parcelEntry && parcelEntry.src) {
+              cargoParcelIcon.onload = () => {
+                cargoParcelIcon.classList.remove('hidden');
+                if (cargoParcelFallback) cargoParcelFallback.classList.add('hidden');
+              };
+              cargoParcelIcon.onerror = () => {
+                cargoParcelIcon.classList.add('hidden');
+                if (cargoParcelFallback) cargoParcelFallback.classList.remove('hidden');
+              };
+              cargoParcelIcon.src = parcelEntry.src;
+            }
+            if (parcelElement && parcelEntry && parcelEntry.src) {
+              parcelElement.onload = () => {
+                parcelElement.classList.remove('hidden');
+                if (parcelFallback) parcelFallback.classList.add('hidden');
+              };
+              parcelElement.onerror = () => {
+                parcelElement.classList.add('hidden');
+                if (parcelFallback) parcelFallback.classList.remove('hidden');
+              };
+              parcelElement.src = parcelEntry.src;
+            }
+
+            for (const [key, entry] of Object.entries(manifest.assets || {})) {
+              const isBiomeLayer = key.startsWith('biome');
+              const target = isBiomeLayer
+                ? (this.backgroundAssets[key] = { img: null, loaded: false, failed: false })
+                : this.assets[key];
+              if (!target || !entry.src) continue;
+              target.width = entry.width;
+              target.height = entry.height;
+              target.pivot = entry.pivot;
+              target.tileAspect = entry.tileAspect;
+              this.loadAsset(target, entry.src, entry.fallback);
+            }
+          })
+          .catch(error => console.warn('Asset manifest unavailable; using procedural artwork.', error));
+      }
+
+      async loadAsset(target, src, fallback) {
+        const attempt = async path => {
+          const image = new Image();
+          image.decoding = 'async';
+          if (typeof image.decode === 'function') {
+            image.src = path;
+            await image.decode();
+          } else {
+            await new Promise((resolve, reject) => {
+              image.onload = resolve;
+              image.onerror = () => reject(new Error(`Could not load ${path}`));
+              image.src = path;
+            });
+          }
+          return image;
+        };
+
+        try {
+          target.img = await attempt(src);
+          target.loaded = true;
+          return;
+        } catch (primaryError) {
+          if (fallback && fallback !== src) {
+            try {
+              target.img = await attempt(fallback);
+              target.loaded = true;
+              return;
+            } catch (fallbackError) {
+              console.warn(`Asset and fallback failed: ${src}`, fallbackError);
+            }
+          }
+          target.loaded = false;
+          target.failed = true;
+        }
+      }
+
+      drawTiledBackground(assetKey, w, h, scroll, topRatio, heightRatio) {
+        const asset = this.backgroundAssets && this.backgroundAssets[assetKey];
+        if (!asset || !asset.loaded || !asset.img) return false;
+        const ctx = this.ctx;
+        const drawHeight = h * heightRatio;
+        const drawWidth = drawHeight * (asset.tileAspect || asset.width / asset.height);
+        if (!drawWidth || !drawHeight) return false;
+        const offset = ((scroll % drawWidth) + drawWidth) % drawWidth;
+        const y = h * topRatio;
+        for (let x = -offset; x < w; x += drawWidth) {
+          const tileIndex = Math.round((x + scroll) / drawWidth);
+          if (Math.abs(tileIndex % 2) === 1) {
+            ctx.save();
+            ctx.translate(x + drawWidth, 0);
+            ctx.scale(-1, 1);
+            ctx.drawImage(asset.img, 0, y, drawWidth, drawHeight);
+            ctx.restore();
+          } else {
+            ctx.drawImage(asset.img, x, y, drawWidth, drawHeight);
+          }
+        }
+        return true;
+      }
+
+      resize() {
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
+        this.canvas.width = this.width * this.dpr;
+        this.canvas.height = this.height * this.dpr;
+        this.ctx.scale(this.dpr, this.dpr);
+      }
+
+      render(vehicle, terrain, gameState, inputs) {
+        const ctx = this.ctx;
+        const w = this.width;
+        const h = this.height;
+
+        // Smooth Camera Follow
+        this.camera.targetX = vehicle.x - w * 0.32;
+        this.camera.targetY = vehicle.y - h * 0.65;
+        this.camera.x += (this.camera.targetX - this.camera.x) * 0.1;
+        this.camera.y += (this.camera.targetY - this.camera.y) * 0.1;
+
+        const meterX = vehicle.x / PHYSICS_CONSTANTS.METER_SCALE;
+        const currentBiome = terrain.getBiomeAt(meterX);
+        const biomeBlend = terrain.getBiomeBlend(meterX);
+
+        ctx.clearRect(0, 0, w, h);
+
+        // 1. Parallax Background Layers with 200m smooth cross-fade & skybox lerp
+        this.drawParallaxBackdrop(meterX, currentBiome, biomeBlend);
+
+        // 2. World Coordinate Space
+        ctx.save();
+        ctx.translate(-this.camera.x, -this.camera.y);
+
+        // Draw Tire Skid Marks on terrain
+        if (vehicle.tireMarks && vehicle.tireMarks.length > 0) {
+          ctx.save();
+          for (const tm of vehicle.tireMarks) {
+            const alpha = Math.min(0.65, (tm.life / tm.maxLife) * 0.65);
+            ctx.fillStyle = `rgba(15, 23, 42, ${alpha})`;
+            ctx.beginPath();
+            ctx.ellipse(tm.x, tm.y, 8, 3, tm.rot, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+
+        // Draw Terrain Surface and Soil with continuous road material blending
+        this.drawTerrain(terrain, meterX, currentBiome, biomeBlend);
+
+        // Draw Hazards (Puddles, Mud pits, Logs, Speed bumps)
+        this.drawHazards(terrain);
+
+        // Draw Collectibles (Jerrycans, Coins)
+        this.drawCollectibles(terrain);
+
+        // Draw the fictional Puspa Bangsa SD, SMP, and SMA school district.
+        this.drawSchoolFinishGate(terrain.finishLinePx, terrain);
+
+        // Draw Burnout Smoke Puffs from spinning wheels
+        if (vehicle.burnoutSmoke && vehicle.burnoutSmoke.length > 0) {
+          ctx.save();
+          for (const sm of vehicle.burnoutSmoke) {
+            const alpha = Math.min(0.65, (sm.life / sm.maxLife) * 0.65);
+            ctx.fillStyle = `rgba(226, 232, 240, ${alpha})`;
+            ctx.beginPath();
+            ctx.arc(sm.x, sm.y, sm.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+
+        // Draw Vehicle Exhaust Puffs
+        this.drawExhaustPuffs(vehicle.exhaustPuffs);
+
+        // Draw Food Particles Ejected
+        this.drawFoodParticles(vehicle.foodParticles);
+
+        // Draw Floating Telolet Musical Notes
+        this.drawTeloletNotes(vehicle.teloletNotes);
+
+        // Draw Truck Vehicle (Chassis, Boks Tosca, Mang Ucup, Rims)
+        this.drawVehicle(vehicle, inputs);
+
+        // Draw Perfect Landing Floating Banner
+        if (vehicle.perfectLandingTimer > 0) {
+          ctx.save();
+          const popAlpha = Math.min(1.0, vehicle.perfectLandingTimer / 0.4);
+          ctx.globalAlpha = popAlpha;
+          ctx.textAlign = 'center';
+          ctx.font = 'bold 18px Fredoka One, sans-serif';
+          ctx.strokeStyle = '#065f46';
+          ctx.lineWidth = 4;
+          ctx.strokeText('✨ PERFECT LANDING! 100% SHOCK ABSORPTION ✨', vehicle.x, vehicle.y - 70);
+          ctx.fillStyle = '#34d399';
+          ctx.fillText('✨ PERFECT LANDING! 100% SHOCK ABSORPTION ✨', vehicle.x, vehicle.y - 70);
+          ctx.restore();
+        }
+
+        // Draw Flip Stunt Banner
+        if (vehicle.stuntTimer > 0 && vehicle.stuntMessage) {
+          ctx.save();
+          const stuntAlpha = Math.min(1.0, vehicle.stuntTimer / 0.4);
+          ctx.globalAlpha = stuntAlpha;
+          ctx.textAlign = 'center';
+          ctx.font = 'bold 20px Fredoka One, sans-serif';
+          ctx.strokeStyle = '#78350f';
+          ctx.lineWidth = 4;
+          ctx.strokeText(vehicle.stuntMessage, vehicle.x, vehicle.y - 95);
+          ctx.fillStyle = '#fbbf24';
+          ctx.fillText(vehicle.stuntMessage, vehicle.x, vehicle.y - 95);
+          ctx.restore();
+        }
+
+        // Draw Victory Confetti
+        if (gameState.state === 'VICTORY') {
+          this.drawConfetti();
+        }
+
+        ctx.restore();
+
+        // 3. Screen Overlay Effects (Sayur Lodeh Monitor Splatter on Rollover Crash)
+        if (gameState.state === 'GAMEOVER' && gameState.reason === 'ROLLOVER') {
+          this.drawLodehSplatter();
+        }
+      }
+
+      drawLodehSplatter() {
+        const ctx = this.ctx;
+        if (this.splatters.length === 0) {
+          for (let i = 0; i < 24; i++) {
+            this.splatters.push({
+              x: (0.08 + Math.random() * 0.84) * this.width,
+              y: (0.08 + Math.random() * 0.84) * this.height,
+              r: 16 + Math.random() * 36,
+              drips: Math.floor(2 + Math.random() * 3),
+              color: ['rgba(234, 179, 8, 0.75)', 'rgba(132, 204, 22, 0.7)', 'rgba(254, 240, 138, 0.8)', 'rgba(202, 138, 4, 0.8)'][i % 4]
+            });
+          }
+        }
+
+        ctx.save();
+        for (const s of this.splatters) {
+          ctx.fillStyle = s.color;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+
+          for (let d = 0; d < s.drips; d++) {
+            const dx = s.x + (d - 1) * (s.r * 0.45);
+            const dLen = s.r * (1.2 + d * 0.6);
+            ctx.beginPath();
+            ctx.moveTo(dx - 4, s.y);
+            ctx.quadraticCurveTo(dx, s.y + dLen * 0.7, dx, s.y + dLen);
+            ctx.quadraticCurveTo(dx, s.y + dLen * 0.7, dx + 4, s.y);
+            ctx.closePath();
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(dx, s.y + dLen, 5, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // Floating tofu cubes in soup
+          ctx.fillStyle = '#fef08a';
+          ctx.fillRect(s.x - 6, s.y - 6, 12, 12);
+          ctx.strokeStyle = '#b45309';
+          ctx.lineWidth = 1.5;
+          ctx.strokeRect(s.x - 6, s.y - 6, 12, 12);
+        }
+
+        ctx.fillStyle = '#fde047';
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 4;
+        ctx.font = 'bold 22px Fredoka One, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.strokeText('KUAH LODEH & SUSU AMBYAR! 🍲💥', this.width / 2, this.height * 0.28);
+        ctx.fillText('KUAH LODEH & SUSU AMBYAR! 🍲💥', this.width / 2, this.height * 0.28);
+        ctx.restore();
+      }
+
+      drawParallaxBackdrop(meterX, biome, blend) {
+        const ctx = this.ctx;
+        const w = this.width;
+        const h = this.height;
+
+        // Dynamic Skybox Color Interpolation (RGBA Lerp) across 200m zone
+        const skyPalettes = {
+          1: { top: [6, 182, 212], mid: [103, 232, 249], bot: [254, 215, 170], midStop: 0.6 },  // Pantura cyan-peach
+          2: { top: [56, 189, 248], mid: [186, 230, 253], bot: [254, 240, 138], midStop: 0.5 }, // Sawah golden-green
+          3: { top: [51, 65, 85], mid: [100, 116, 139], bot: [148, 163, 184], midStop: 0.6 },   // Gunung slate mist
+          4: { top: [2, 132, 199], mid: [125, 211, 252], bot: [251, 207, 232], midStop: 0.7 }   // School district cyan-pink
+        };
+
+        const lerpColor = (c1, c2, t) => {
+          const r = Math.round(c1[0] + (c2[0] - c1[0]) * t);
+          const g = Math.round(c1[1] + (c2[1] - c1[1]) * t);
+          const b = Math.round(c1[2] + (c2[2] - c1[2]) * t);
+          return `rgb(${r},${g},${b})`;
+        };
+
+        let topColor, midColor, botColor, midStop;
+        if (blend && blend.inTransition && blend.toBiome) {
+          const p1 = skyPalettes[blend.fromBiome.id];
+          const p2 = skyPalettes[blend.toBiome.id];
+          const t = blend.t;
+          topColor = lerpColor(p1.top, p2.top, t);
+          midColor = lerpColor(p1.mid, p2.mid, t);
+          botColor = lerpColor(p1.bot, p2.bot, t);
+          midStop = p1.midStop + (p2.midStop - p1.midStop) * t;
+        } else {
+          const p = skyPalettes[biome.id];
+          topColor = `rgb(${p.top.join(',')})`;
+          midColor = `rgb(${p.mid.join(',')})`;
+          botColor = `rgb(${p.bot.join(',')})`;
+          midStop = p.midStop;
+        }
+
+        const skyGradient = ctx.createLinearGradient(0, 0, 0, h);
+        skyGradient.addColorStop(0, topColor);
+        skyGradient.addColorStop(midStop, midColor);
+        skyGradient.addColorStop(1, botColor);
+        ctx.fillStyle = skyGradient;
+        ctx.fillRect(0, 0, w, h);
+
+        // Distant Sun / Morning Glare
+        ctx.save();
+        ctx.fillStyle = 'rgba(255, 253, 231, 0.4)';
+        ctx.beginPath();
+        ctx.arc(w * 0.78, h * 0.22, 60, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = 'rgba(255, 249, 196, 0.15)';
+        ctx.beginPath();
+        ctx.arc(w * 0.78, h * 0.22, 110, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // Layer 2: Distant Mountains / Sea Horizon (Parallax Alpha Cross-Fade)
+        const scroll2 = this.camera.x * 0.08;
+        if (blend && blend.inTransition && blend.toBiome) {
+          ctx.save();
+          ctx.globalAlpha = blend.alphaPrev;
+          this.drawDistantParallaxLayer(blend.fromBiome.id, w, h, scroll2);
+          ctx.restore();
+
+          ctx.save();
+          ctx.globalAlpha = blend.alphaNext;
+          this.drawDistantParallaxLayer(blend.toBiome.id, w, h, scroll2);
+          ctx.restore();
+        } else {
+          this.drawDistantParallaxLayer(biome.id, w, h, scroll2);
+        }
+
+        // Layer 3: Midground (Warteg, Terraces, Tea Hills, Suburban Houses - Alpha Cross-Fade)
+        const scroll3 = this.camera.x * 0.25;
+        if (blend && blend.inTransition && blend.toBiome) {
+          ctx.save();
+          ctx.globalAlpha = blend.alphaPrev;
+          this.drawMidgroundParallaxLayer(blend.fromBiome.id, w, h, scroll3);
+          ctx.restore();
+
+          ctx.save();
+          ctx.globalAlpha = blend.alphaNext;
+          this.drawMidgroundParallaxLayer(blend.toBiome.id, w, h, scroll3);
+          ctx.restore();
+        } else {
+          this.drawMidgroundParallaxLayer(biome.id, w, h, scroll3);
+        }
+      }
+
+      drawDistantParallaxLayer(biomeId, w, h, scroll2) {
+        const ctx = this.ctx;
+        ctx.save();
+        if (this.drawTiledBackground(`biome${biomeId}Distant`, w, h, scroll2, 0.12, 0.75)) {
+          ctx.restore();
+          return;
+        }
+        if (biomeId === 1) {
+          // Pantura Sea with Traditional Fishing Boats (Perahu Nelayan)
+          ctx.fillStyle = '#0284c7';
+          ctx.fillRect(0, h * 0.48, w, h * 0.2);
+          for (let i = 0; i < 4; i++) {
+            const bx = ((i * 320 - scroll2) % w + w) % w;
+            const by = h * 0.49 + (i % 2) * 8;
+            ctx.fillStyle = '#f8fafc';
+            ctx.beginPath();
+            ctx.moveTo(bx, by);
+            ctx.lineTo(bx + 18, by);
+            ctx.lineTo(bx + 14, by + 5);
+            ctx.lineTo(bx + 4, by + 5);
+            ctx.closePath();
+            ctx.fill();
+            // Triangular sail
+            ctx.fillStyle = '#f97316';
+            ctx.beginPath();
+            ctx.moveTo(bx + 8, by);
+            ctx.lineTo(bx + 8, by - 14);
+            ctx.lineTo(bx + 16, by - 3);
+            ctx.closePath();
+            ctx.fill();
+          }
+        } else {
+          // Silhouette of Mt. Ciremai in misty blue
+          ctx.fillStyle = biomeId === 3 ? 'rgba(51, 65, 85, 0.45)' : 'rgba(14, 116, 144, 0.35)';
+          ctx.beginPath();
+          ctx.moveTo(0, h * 0.65);
+          for (let x = 0; x <= w + 40; x += 40) {
+            const worldX = x + scroll2;
+            const my = h * 0.42 + Math.sin(worldX * 0.003) * 60 + Math.cos(worldX * 0.001) * 45;
+            ctx.lineTo(x, my);
+          }
+          ctx.lineTo(w, h);
+          ctx.lineTo(0, h);
+          ctx.closePath();
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      drawMidgroundParallaxLayer(biomeId, w, h, scroll3) {
+        const ctx = this.ctx;
+        ctx.save();
+        // Midground PNGs include a broad foreground band near their lower edge.
+        // Keep that band above the physical terrain; the old 0.28/0.80 placement
+        // put the beach/fields/buildings behind the terrain fill on most screens.
+        if (this.drawTiledBackground(`biome${biomeId}Midground`, w, h, scroll3, 0.12, 0.68)) {
+          ctx.restore();
+          return;
+        }
+        if (biomeId === 1) {
+          // Coconut palms & Warteg Bahari roadside stalls
+          for (let i = 0; i < 5; i++) {
+            const px = ((i * 280 - scroll3) % w + w) % w;
+            const py = h * 0.62;
+            ctx.strokeStyle = '#78350f';
+            ctx.lineWidth = 6;
+            ctx.beginPath();
+            ctx.moveTo(px, py);
+            ctx.quadraticCurveTo(px + 15, py - 40, px + 10, py - 90);
+            ctx.stroke();
+
+            ctx.fillStyle = '#15803d';
+            for (let l = 0; l < 6; l++) {
+              const la = (l * Math.PI) / 3;
+              ctx.beginPath();
+              ctx.ellipse(px + 10 + Math.cos(la) * 20, py - 90 + Math.sin(la) * 12, 22, 6, la, 0, Math.PI * 2);
+              ctx.fill();
+            }
+
+            if (i % 2 === 0) {
+              const wx = px + 60;
+              ctx.fillStyle = '#38bdf8';
+              ctx.fillRect(wx, py - 40, 50, 40);
+              ctx.fillStyle = '#0284c7';
+              ctx.beginPath();
+              ctx.moveTo(wx - 5, py - 40);
+              ctx.lineTo(wx + 55, py - 40);
+              ctx.lineTo(wx + 50, py - 30);
+              ctx.lineTo(wx - 10, py - 30);
+              ctx.closePath();
+              ctx.fill();
+              ctx.fillStyle = '#ffffff';
+              ctx.font = 'bold 9px sans-serif';
+              ctx.fillText('WARTEG', wx + 4, py - 18);
+            }
+          }
+        } else if (biomeId === 2) {
+          // Lush terraced sawah layers & bamboo saung
+          ctx.fillStyle = 'rgba(34, 197, 94, 0.4)';
+          ctx.beginPath();
+          ctx.moveTo(0, h * 0.72);
+          for (let x = 0; x <= w + 30; x += 30) {
+            const sx = x + scroll3;
+            const sy = h * 0.58 + Math.sin(sx * 0.007) * 35;
+            ctx.lineTo(x, sy);
+          }
+          ctx.lineTo(w, h);
+          ctx.lineTo(0, h);
+          ctx.closePath();
+          ctx.fill();
+        } else if (biomeId === 3) {
+          // Rolling tea plantation hills with pine trees
+          ctx.fillStyle = 'rgba(21, 128, 61, 0.5)';
+          ctx.beginPath();
+          ctx.moveTo(0, h * 0.72);
+          for (let x = 0; x <= w + 40; x += 40) {
+            const tx = x + scroll3;
+            const ty = h * 0.55 + Math.sin(tx * 0.009) * 45;
+            ctx.lineTo(x, ty);
+          }
+          ctx.lineTo(w, h);
+          ctx.lineTo(0, h);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          // Indonesian Suburban Houses & Umbul-Umbul (Red-White Banners)
+          for (let i = 0; i < 6; i++) {
+            const hx = ((i * 220 - scroll3) % w + w) % w;
+            const hy = h * 0.65;
+            ctx.fillStyle = '#cbd5e1';
+            ctx.fillRect(hx, hy - 35, 45, 35);
+            ctx.fillStyle = '#b91c1c';
+            ctx.beginPath();
+            ctx.moveTo(hx - 6, hy - 35);
+            ctx.lineTo(hx + 22, hy - 55);
+            ctx.lineTo(hx + 51, hy - 35);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.strokeStyle = '#64748b';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(hx + 55, hy);
+            ctx.lineTo(hx + 55, hy - 60);
+            ctx.stroke();
+
+            ctx.fillStyle = '#dc2626';
+            ctx.fillRect(hx + 55, hy - 58, 16, 8);
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(hx + 55, hy - 50, 16, 8);
+          }
+        }
+        ctx.restore();
+      }
+
+      drawTerrain(terrain, meterX, biome, blend) {
+        const ctx = this.ctx;
+        const startX = this.camera.x - 50;
+        const endX = this.camera.x + this.width + 50;
+        const step = 8;
+
+        // Road & Surface Material Blending (200m smooth transition)
+        const terrainPalettes = {
+          1: { surface: [30, 41, 59], subsoil: [15, 23, 42], dashAlpha: 1.0 },   // Pantura asphalt
+          2: { surface: [77, 124, 15], subsoil: [113, 63, 18], dashAlpha: 0.0 }, // Sawah earthen/muddy bunds
+          3: { surface: [120, 53, 15], subsoil: [69, 26, 3], dashAlpha: 0.0 },   // Mountain dirt/gravel
+          4: { surface: [51, 65, 85], subsoil: [30, 41, 59], dashAlpha: 1.0 }    // Neat school district pavement
+        };
+
+        const lerpColor = (c1, c2, t) => {
+          const r = Math.round(c1[0] + (c2[0] - c1[0]) * t);
+          const g = Math.round(c1[1] + (c2[1] - c1[1]) * t);
+          const b = Math.round(c1[2] + (c2[2] - c1[2]) * t);
+          return `rgb(${r},${g},${b})`;
+        };
+
+        let surfaceColor, subsoilColor, dashAlpha;
+        if (blend && blend.inTransition && blend.toBiome) {
+          const pal1 = terrainPalettes[blend.fromBiome.id];
+          const pal2 = terrainPalettes[blend.toBiome.id];
+          surfaceColor = lerpColor(pal1.surface, pal2.surface, blend.t);
+          subsoilColor = lerpColor(pal1.subsoil, pal2.subsoil, blend.t);
+          dashAlpha = pal1.dashAlpha * blend.alphaPrev + pal2.dashAlpha * blend.alphaNext;
+        } else {
+          const pal = terrainPalettes[biome.id];
+          surfaceColor = `rgb(${pal.surface.join(',')})`;
+          subsoilColor = `rgb(${pal.subsoil.join(',')})`;
+          dashAlpha = pal.dashAlpha;
+        }
+
+        // Draw Subsoil Deep Polygon
+        ctx.fillStyle = subsoilColor;
+        ctx.beginPath();
+        ctx.moveTo(startX, this.height + this.camera.y + 200);
+        for (let x = startX; x <= endX; x += step) {
+          ctx.lineTo(x, terrain.getHeight(x));
+        }
+        ctx.lineTo(endX, this.height + this.camera.y + 200);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw Surface Road / Topsoil Ribbon
+        ctx.strokeStyle = surfaceColor;
+        ctx.lineWidth = 14;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        for (let x = startX; x <= endX; x += step) {
+          const gy = terrain.getHeight(x);
+          if (x === startX) ctx.moveTo(x, gy);
+          else ctx.lineTo(x, gy);
+        }
+        ctx.stroke();
+
+        // Road Center Dashed Line (smooth alpha transition)
+        if (dashAlpha > 0.02) {
+          ctx.save();
+          ctx.globalAlpha = dashAlpha;
+          ctx.strokeStyle = '#fef08a';
+          ctx.lineWidth = 2.5;
+          ctx.setLineDash([16, 16]);
+          ctx.beginPath();
+          for (let x = startX; x <= endX; x += step) {
+            const gy = terrain.getHeight(x);
+            if (x === startX) ctx.moveTo(x, gy + 1);
+            else ctx.lineTo(x, gy + 1);
+          }
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+
+      drawHazards(terrain) {
+        const ctx = this.ctx;
+
+        // 1. Water Puddles (Rob Pantura)
+        for (const p of terrain.puddles) {
+          const pxStart = p.start * PHYSICS_CONSTANTS.METER_SCALE;
+          const pxEnd = p.end * PHYSICS_CONSTANTS.METER_SCALE;
+          if (pxEnd < this.camera.x - 100 || pxStart > this.camera.x + this.width + 100) continue;
+
+          // Water must rise above the terrain fill; the old +4/-2px band sat
+          // entirely inside the soil and looked like an invisible hitbox.
+          ctx.fillStyle = 'rgba(14, 165, 233, 0.9)';
+          ctx.beginPath();
+          ctx.moveTo(pxStart, terrain.getHeight(pxStart) - 7);
+          for (let x = pxStart; x <= pxEnd; x += 6) {
+            const ripple = Math.sin(x * 0.035) * 1.5;
+            ctx.lineTo(x, terrain.getHeight(x) - 7 + ripple);
+          }
+          for (let x = pxEnd; x >= pxStart; x -= 6) {
+            ctx.lineTo(x, terrain.getHeight(x) + 7);
+          }
+          ctx.closePath();
+          ctx.fill();
+
+          // High contrast surface edge keeps the slippery area readable on blue soil.
+          ctx.strokeStyle = 'rgba(224, 242, 254, 0.95)';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.moveTo(pxStart + 10, terrain.getHeight(pxStart + 10) - 7);
+          for (let x = pxStart + 16; x < pxEnd - 8; x += 20) {
+            ctx.lineTo(x, terrain.getHeight(x) - 7 + Math.sin(x * 0.035) * 1.5);
+          }
+          ctx.lineTo(pxEnd - 8, terrain.getHeight(pxEnd - 8) - 7);
+          ctx.stroke();
+        }
+
+        // 2. Mud Pits (Sawah)
+        for (const m of terrain.mudPits) {
+          const mxStart = m.start * PHYSICS_CONSTANTS.METER_SCALE;
+          const mxEnd = m.end * PHYSICS_CONSTANTS.METER_SCALE;
+          if (mxEnd < this.camera.x - 100 || mxStart > this.camera.x + this.width + 100) continue;
+
+          // Mud also needs a visible lip above the ground surface. The previous
+          // polygon was fully buried inside the already-filled terrain.
+          ctx.fillStyle = '#3b2417';
+          ctx.beginPath();
+          ctx.moveTo(mxStart, terrain.getHeight(mxStart) - 5);
+          for (let x = mxStart; x <= mxEnd; x += 6) {
+            ctx.lineTo(x, terrain.getHeight(x) - 5);
+          }
+          for (let x = mxEnd; x >= mxStart; x -= 6) {
+            ctx.lineTo(x, terrain.getHeight(x) + 10);
+          }
+          ctx.closePath();
+          ctx.fill();
+
+          // Sludge droplets along edge
+          ctx.fillStyle = '#a16207';
+          for (let x = mxStart + 12; x < mxEnd; x += 30) {
+            ctx.beginPath();
+            ctx.ellipse(x, terrain.getHeight(x) - 2, 6, 2.5, 0, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        // 3. Wooden Logs (Mountain)
+        for (const log of terrain.logs) {
+          const logPxX = log.x * PHYSICS_CONSTANTS.METER_SCALE;
+          if (logPxX < this.camera.x - 100 || logPxX > this.camera.x + this.width + 100) continue;
+          const groundY = terrain.getHeight(logPxX);
+
+          ctx.save();
+          ctx.translate(logPxX, groundY);
+
+          if (this.assets && this.assets.obstacleLog.loaded) {
+            // The uploaded log is a wide sprite with transparent padding. Draw
+            // it wide enough to match its circular collision footprint.
+            ctx.drawImage(this.assets.obstacleLog.img, -36, -27, 72, 30);
+          } else {
+            // Procedural fallback has the same wide, raised silhouette.
+            ctx.fillStyle = '#854d0e';
+            ctx.strokeStyle = '#451a03';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.roundRect(-27, -16, 54, 15, 7);
+            ctx.fill();
+            ctx.stroke();
+
+            // Visible cut ends, grain, and moss make the collision readable.
+            ctx.fillStyle = '#d6a66b';
+            ctx.beginPath();
+            ctx.ellipse(-25, -8.5, 3.2, 7, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#f3d3a1';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.ellipse(-25, -8.5, 1.5, 4.5, 0, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.strokeStyle = '#5b3214';
+            ctx.lineWidth = 1.3;
+            ctx.beginPath();
+            ctx.moveTo(-18, -11); ctx.lineTo(19, -11);
+            ctx.moveTo(-12, -6); ctx.lineTo(22, -6);
+            ctx.stroke();
+
+            ctx.fillStyle = '#22c55e';
+            ctx.beginPath();
+            ctx.ellipse(-9, -14, 6, 2, -0.15, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+
+        // 4. Speed Bumps (Suburb)
+        for (const sb of terrain.speedBumps) {
+          const sbPxX = sb * PHYSICS_CONSTANTS.METER_SCALE;
+          // getHeight() shapes each bump across +/-1.2m (24px) with a 10px crest.
+          // Paint that same sampled surface so the visible obstacle cannot drift
+          // away from its collision/ride profile when physics is tuned later.
+          const halfWidth = 1.2 * PHYSICS_CONSTANTS.METER_SCALE;
+          if (sbPxX + halfWidth < this.camera.x - 8 || sbPxX - halfWidth > this.camera.x + this.width + 8) continue;
+          ctx.save();
+          ctx.lineCap = 'butt';
+          ctx.lineJoin = 'round';
+          ctx.strokeStyle = '#eab308';
+          ctx.lineWidth = 8;
+          ctx.beginPath();
+          for (let x = sbPxX - halfWidth; x <= sbPxX + halfWidth; x += 2) {
+            const y = terrain.getHeight(x);
+            if (x === sbPxX - halfWidth) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+
+          // Three short transverse marks make the raised strip read as a
+          // traffic-calming bump while remaining aligned to the local slope.
+          ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+          ctx.lineWidth = 2;
+          for (const offset of [-12, 0, 12]) {
+            const x = sbPxX + offset;
+            const y = terrain.getHeight(x);
+            ctx.beginPath();
+            ctx.moveTo(x - 2, y - 3);
+            ctx.lineTo(x + 2, y + 3);
+            ctx.stroke();
+          }
+          ctx.restore();
+        }
+      }
+
+      drawCollectibles(terrain) {
+        const ctx = this.ctx;
+        const now = Date.now() * 0.004;
+
+        // Jerrycans
+        for (const can of terrain.fuelCans) {
+          if (can.collected) continue;
+          const canPxX = can.x * PHYSICS_CONSTANTS.METER_SCALE;
+          if (canPxX < this.camera.x - 60 || canPxX > this.camera.x + this.width + 60) continue;
+          const canPxY = terrain.getHeight(canPxX) - 28 + Math.sin(now + can.x) * 4;
+
+          ctx.save();
+          ctx.translate(canPxX, canPxY);
+
+          // Glowing aura
+          ctx.fillStyle = 'rgba(239, 68, 68, 0.35)';
+          ctx.beginPath();
+          ctx.arc(0, 0, 20, 0, Math.PI * 2);
+          ctx.fill();
+
+          if (this.assets && this.assets.fuelCan.loaded) {
+            ctx.drawImage(this.assets.fuelCan.img, -12, -14, 24, 28);
+          } else {
+            // Red Jerrycan canister
+            ctx.fillStyle = '#dc2626';
+            ctx.strokeStyle = '#991b1b';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(-10, -12, 20, 24, 4);
+            ctx.fill();
+            ctx.stroke();
+
+            // Handle & Cap
+            ctx.fillStyle = '#1e293b';
+            ctx.fillRect(-6, -17, 12, 5);
+            ctx.fillRect(4, -18, 5, 4);
+
+            // Text "BENSIN"
+            ctx.fillStyle = '#fde047';
+            ctx.font = 'bold 6px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('BENSIN', 0, 4);
+          }
+          ctx.restore();
+        }
+
+        // Coins
+        for (const coin of terrain.coins) {
+          if (coin.collected) continue;
+          const coinPxX = coin.x * PHYSICS_CONSTANTS.METER_SCALE;
+          if (coinPxX < this.camera.x - 40 || coinPxX > this.camera.x + this.width + 40) continue;
+          const coinPxY = terrain.getHeight(coinPxX) - 30 + Math.sin(now * 1.5 + coin.x) * 3;
+
+          const wobble = Math.abs(Math.cos(now * 1.8 + coin.x));
+          ctx.save();
+          ctx.translate(coinPxX, coinPxY);
+          ctx.scale(Math.max(0.15, wobble), 1);
+
+          if (this.assets && this.assets.coinGizi.loaded) {
+            ctx.drawImage(this.assets.coinGizi.img, -11, -11, 22, 22);
+          } else {
+            // Gold coin
+            ctx.fillStyle = '#fbbf24';
+            ctx.strokeStyle = '#d97706';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(0, 0, 11, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Embossed letter "G" for Gizi
+            ctx.fillStyle = '#78350f';
+            ctx.font = 'bold 10px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('G', 0, 0);
+          }
+          ctx.restore();
+        }
+      }
+
+      drawSchoolFinishGate(finishPx, terrain) {
+        const ctx = this.ctx;
+        if (finishPx < this.camera.x - 200 || finishPx > this.camera.x + this.width + 400) return;
+
+        const groundY = terrain ? terrain.getHeight(finishPx) : 420;
+
+        if (this.assets && this.assets.finishGate && this.assets.finishGate.loaded) {
+          ctx.save();
+          ctx.translate(finishPx, groundY);
+          ctx.drawImage(this.assets.finishGate.img, -25, -300, 420, 300);
+          ctx.restore();
+          return;
+        }
+
+        ctx.save();
+        ctx.translate(finishPx, groundY);
+
+        // 1. Fictional separate buildings for elementary, middle, and high school.
+        ctx.fillStyle = '#f8fafc';
+        ctx.strokeStyle = '#1e3a8a';
+        ctx.lineWidth = 4;
+        ctx.fillRect(20, -155, 105, 155);
+        ctx.strokeRect(20, -155, 105, 155);
+        ctx.fillRect(145, -220, 135, 220);
+        ctx.strokeRect(145, -220, 135, 220);
+        ctx.fillRect(300, -175, 105, 175);
+        ctx.strokeRect(300, -175, 105, 175);
+
+        // Windows and concise, exact school-level labels.
+        ctx.fillStyle = '#38bdf8';
+        for (const school of [{ x: 38, top: -125, count: 2 }, { x: 165, top: -190, count: 3 }, { x: 318, top: -145, count: 2 }]) {
+          for (let row = 0; row < 3; row++) {
+            for (let col = 0; col < school.count; col++) {
+              ctx.fillRect(school.x + col * 38, school.top + row * 45, 25, 28);
+            }
+          }
+        }
+
+        // Neutral signs identify the three fictional school levels.
+        ctx.fillStyle = '#facc15';
+        ctx.strokeStyle = '#1e3a8a';
+        ctx.lineWidth = 3;
+        ctx.font = 'bold 14px sans-serif';
+        ctx.textAlign = 'center';
+        for (const school of [{ x: 72, y: -178, label: 'SD' }, { x: 212, y: -243, label: 'SMP' }, { x: 352, y: -198, label: 'SMA' }]) {
+          ctx.fillStyle = '#facc15';
+          ctx.fillRect(school.x - 30, school.y - 17, 60, 24);
+          ctx.strokeRect(school.x - 30, school.y - 17, 60, 24);
+          ctx.fillStyle = '#0f172a';
+          ctx.fillText(school.label, school.x, school.y);
+        }
+
+        // 2. Maroon Welcome Archway
+        ctx.fillStyle = '#881337';
+        ctx.fillRect(-20, -140, 24, 140);
+        ctx.fillRect(140, -140, 24, 140);
+        ctx.fillRect(-25, -150, 194, 28);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 10px sans-serif';
+        ctx.fillText('SELAMAT DATANG', 72, -132);
+
+        // 3. Checkered Finish Line Arch
+        const checkWidth = 14;
+        for (let i = 0; i < 10; i++) {
+          ctx.fillStyle = (i % 2 === 0) ? '#ffffff' : '#000000';
+          ctx.fillRect(0, -120 + i * 12, 12, 12);
+        }
+
+        // 4. Cheering Indonesian Students holding spoons & bowls
+        for (let s = 0; s < 4; s++) {
+          const sx = 20 + s * 30;
+          const sy = 0;
+          // Uniform: White top, red shorts/skirt
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(sx - 5, sy - 38, 10, 18);
+          ctx.fillStyle = '#dc2626';
+          ctx.fillRect(sx - 6, sy - 20, 12, 14);
+          // Head
+          ctx.fillStyle = '#fbcfe8';
+          ctx.beginPath();
+          ctx.arc(sx, sy - 44, 7, 0, Math.PI * 2);
+          ctx.fill();
+          // Raised Spoon & Bowl
+          ctx.strokeStyle = '#94a3b8';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(sx + 5, sy - 34);
+          ctx.lineTo(sx + 10, sy - 52);
+          ctx.stroke();
+          ctx.fillStyle = '#fbbf24';
+          ctx.beginPath();
+          ctx.arc(sx + 10, sy - 52, 3, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.restore();
+      }
+
+      drawVehicle(vehicle, inputs) {
+        const ctx = this.ctx;
+        const cosA = Math.cos(vehicle.angle);
+        const sinA = Math.sin(vehicle.angle);
+
+        // 1. Calculate world positions of chassis suspension mounting points
+        const rmx = vehicle.x + (vehicle.rearMountOffset.x * cosA - vehicle.rearMountOffset.y * sinA);
+        const rmy = vehicle.y + (vehicle.rearMountOffset.x * sinA + vehicle.rearMountOffset.y * cosA);
+        const fmx = vehicle.x + (vehicle.frontMountOffset.x * cosA - vehicle.frontMountOffset.y * sinA);
+        const fmy = vehicle.y + (vehicle.frontMountOffset.x * sinA + vehicle.frontMountOffset.y * cosA);
+
+        // 2. Draw Visible Mechanical Suspension Struts, Springs & Axle Linkages (WORLD SPACE)
+        this.drawSuspensionStrut(rmx, rmy, vehicle.rearWheel.x, vehicle.rearWheel.y);
+        this.drawSuspensionStrut(fmx, fmy, vehicle.frontWheel.x, vehicle.frontWheel.y);
+
+        // 3. Draw Chassis & Cargo Box (LOCAL CHASSIS SPACE)
+        ctx.save();
+        ctx.translate(vehicle.x, vehicle.y);
+        ctx.rotate(vehicle.angle);
+
+        if (this.assets && this.assets.truckBody.loaded) {
+          ctx.drawImage(this.assets.truckBody.img, -50, -45, 100, 50);
+        } else {
+          // Procedural Vector Fallback: Original blue MBG utility truck cabin
+          const blueGrad = ctx.createLinearGradient(-48, -45, 10, 15);
+          blueGrad.addColorStop(0, '#58b7f2');
+          blueGrad.addColorStop(1, '#1769c2');
+
+          ctx.fillStyle = blueGrad;
+          ctx.strokeStyle = '#0d2b52';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.roundRect(-48, -40, 60, 48, [6, 2, 2, 6]);
+          ctx.fill();
+          ctx.stroke();
+
+          // Metallic Borders & Panel Rivets
+          ctx.fillStyle = '#e2e8f0';
+          ctx.fillRect(-48, -40, 60, 4);
+          ctx.fillRect(-48, 4, 60, 4);
+          ctx.fillRect(-48, -40, 4, 48);
+
+          // Satirical Emblem: Golden Rooster holding nutrition plate
+          ctx.save();
+          ctx.translate(-18, -16);
+          ctx.fillStyle = '#f8fafc';
+          ctx.beginPath();
+          ctx.arc(0, 0, 14, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = '#fbbf24';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          // Little Rooster & Spoon
+          ctx.fillStyle = '#d97706';
+          ctx.beginPath();
+          ctx.arc(0, -2, 5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#ef4444';
+          ctx.fillRect(-1, -8, 3, 4); // Comb
+          ctx.restore();
+
+          // Stencil Text on Blue Box
+          ctx.fillStyle = '#0d2b52';
+          ctx.font = 'bold 5.5px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('SATUAN GIZI', -18, 2);
+
+          // Front Cabin: White compact utility truck
+          ctx.fillStyle = '#f8fafc';
+          ctx.strokeStyle = '#475569';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(12, -40);
+          ctx.lineTo(26, -40);
+          ctx.lineTo(44, -18);
+          ctx.lineTo(48, 8);
+          ctx.lineTo(12, 8);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // Red Front Bumper Lip Accent
+          ctx.fillStyle = '#ef4444';
+          ctx.fillRect(38, 6, 12, 5);
+
+          // Front Headlight (Yellow Glass)
+          ctx.fillStyle = '#fef08a';
+          ctx.fillRect(45, -12, 4, 8);
+
+          // Tinted Driver Window & Mang Ucup Inside!
+          ctx.fillStyle = '#1e293b';
+          ctx.beginPath();
+          ctx.moveTo(15, -37);
+          ctx.lineTo(25, -37);
+          ctx.lineTo(39, -20);
+          ctx.lineTo(15, -20);
+          ctx.closePath();
+          ctx.fill();
+
+          // Mang Ucup Driver Silhouette with Trucker Cap & Mustache
+          ctx.save();
+          ctx.translate(22, -26);
+          ctx.fillStyle = '#fbcfe8';
+          ctx.beginPath();
+          ctx.arc(0, 0, 5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#dc2626';
+          ctx.beginPath();
+          ctx.arc(0, -3, 6, Math.PI, Math.PI * 2);
+          ctx.lineTo(4, -3);
+          ctx.closePath();
+          ctx.fill();
+          ctx.fillStyle = '#0f172a';
+          ctx.fillRect(1, 1, 4, 2);
+          ctx.restore();
+
+          // Roof Warning Siren / Telolet Flasher
+          const sirenColor = (Date.now() % 300 < 150) ? '#f59e0b' : '#38bdf8';
+          ctx.fillStyle = sirenColor;
+          ctx.fillRect(-2, -45, 10, 5);
+
+          // Rear Mud Flap ("SABAR MAS")
+          ctx.fillStyle = '#0f172a';
+          ctx.fillRect(-48, 8, 4, 12);
+          ctx.fillStyle = '#ffffff';
+          ctx.font = '3.5px sans-serif';
+          ctx.fillText('SABAR', -46, 14);
+
+          // Exhaust Pipe
+          ctx.fillStyle = '#64748b';
+          ctx.fillRect(-47, 2, 4, 5);
+
+          // Heavy-duty Steel Undercarriage Frame Rail
+          ctx.fillStyle = '#1e293b';
+          ctx.fillRect(-48, 6, 96, 5);
+          ctx.fillStyle = '#334155';
+          ctx.fillRect(-48, 7, 96, 1.5);
+
+          // Protective Wheel Arches (Fender Flares at -30 and +30)
+          ctx.fillStyle = '#090d16';
+          ctx.beginPath();
+          ctx.arc(-30, 8, 14, Math.PI, 0);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(30, 8, 14, Math.PI, 0);
+          ctx.fill();
+
+          // Diesel Tank between wheels
+          ctx.fillStyle = '#475569';
+          ctx.fillRect(-12, 7, 24, 6);
+          ctx.fillStyle = '#64748b';
+          ctx.fillRect(-11, 8, 22, 2);
+        }
+
+        ctx.restore();
+
+        // 4. Draw Wheel Rims & Knobby Tires (WORLD SPACE)
+        this.drawWheel(vehicle.rearWheel);
+        this.drawWheel(vehicle.frontWheel);
+      }
+
+      drawSuspensionStrut(mx, my, wx, wy) {
+        const ctx = this.ctx;
+        const dx = wx - mx;
+        const dy = wy - my;
+        const dist = Math.max(6, Math.sqrt(dx * dx + dy * dy));
+        const angle = Math.atan2(dy, dx);
+
+        ctx.save();
+        ctx.translate(mx, my);
+        ctx.rotate(angle);
+
+        // A. Heavy-duty chassis mounting bracket at (0, 0)
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(-6, -7, 12, 14);
+        ctx.fillStyle = '#cbd5e1';
+        ctx.beginPath();
+        ctx.arc(0, 0, 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        // B. Trailing suspension control arm / wishbone linkage
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 4.5;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(dist, 0);
+        ctx.stroke();
+
+        // C. Polished Chrome Piston Rod
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = 3.2;
+        ctx.beginPath();
+        ctx.moveTo(dist * 0.25, 0);
+        ctx.lineTo(dist, 0);
+        ctx.stroke();
+
+        // Specular chrome highlight
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1.0;
+        ctx.beginPath();
+        ctx.moveTo(dist * 0.25, -0.8);
+        ctx.lineTo(dist, -0.8);
+        ctx.stroke();
+
+        // D. Hydraulic Damper Body (Upper section)
+        const damperLen = Math.max(3, dist * 0.42);
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(damperLen, 0);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#475569';
+        ctx.lineWidth = 4.5;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(damperLen, 0);
+        ctx.stroke();
+
+        // E. 3D Metallic Coil Spring wrapped around strut
+        const coilStart = Math.min(2, dist * 0.1);
+        const coilEnd = Math.max(coilStart + 4, dist - 2);
+        const coilSpan = coilEnd - coilStart;
+        const coils = 5;
+        const pitch = coilSpan / coils;
+        const coilHalfH = Math.min(5.5, Math.max(3.5, dist * 0.28 + 1));
+
+        // Back coil loops (dark shadow)
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 3.0;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        for (let i = 0; i < coils; i++) {
+          const sx = coilStart + i * pitch;
+          ctx.moveTo(sx, coilHalfH);
+          ctx.lineTo(sx + pitch * 0.5, -coilHalfH);
+        }
+        ctx.stroke();
+
+        // Front coil loops (bright metallic steel)
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 3.5;
+        ctx.beginPath();
+        for (let i = 0; i < coils; i++) {
+          const sx = coilStart + i * pitch;
+          ctx.moveTo(sx + pitch * 0.5, -coilHalfH);
+          ctx.lineTo(sx + pitch, coilHalfH);
+        }
+        ctx.stroke();
+
+        // Front coil specular gleam
+        ctx.strokeStyle = '#f8fafc';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        for (let i = 0; i < coils; i++) {
+          const sx = coilStart + i * pitch;
+          ctx.moveTo(sx + pitch * 0.6, -coilHalfH * 0.6);
+          ctx.lineTo(sx + pitch * 0.9, coilHalfH * 0.6);
+        }
+        ctx.stroke();
+
+        // F. Lower wheel knuckle & axle hub collar at (dist, 0)
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.arc(dist, 0, 5.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#64748b';
+        ctx.beginPath();
+        ctx.arc(dist, 0, 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+      }
+
+      drawCoilSpring(mountX, mountY, wheel, vx, vy, vAngle) {
+        const cosA = Math.cos(vAngle);
+        const sinA = Math.sin(vAngle);
+        const worldMx = vx + (mountX * cosA - mountY * sinA);
+        const worldMy = vy + (mountX * sinA + mountY * cosA);
+        this.drawSuspensionStrut(worldMx, worldMy, wheel.x, wheel.y);
+      }
+
+      drawWheel(wheel) {
+        const ctx = this.ctx;
+        ctx.save();
+        ctx.translate(wheel.x, wheel.y);
+        ctx.rotate(wheel.rotation);
+
+        const r = 18;
+
+        if (this.assets && this.assets.truckWheel.loaded) {
+          ctx.drawImage(this.assets.truckWheel.img, -r, -r, r * 2, r * 2);
+        } else {
+          // Knobby Black Off-Road Tire
+          ctx.fillStyle = '#0f172a';
+          ctx.beginPath();
+          ctx.arc(0, 0, r, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Deep Tread Knobs around perimeter
+          ctx.fillStyle = '#1e293b';
+          for (let t = 0; t < 8; t++) {
+            const ta = (t * Math.PI) / 4;
+            ctx.fillRect(Math.cos(ta) * (r - 2) - 2, Math.sin(ta) * (r - 2) - 2, 4, 4);
+          }
+
+          // Silver Steel Rim
+          ctx.fillStyle = '#94a3b8';
+          ctx.beginPath();
+          ctx.arc(0, 0, r * 0.65, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = '#64748b';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+
+          // Center Grease Cap & 5 Lug Nuts
+          ctx.fillStyle = '#334155';
+          ctx.beginPath();
+          ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = '#e2e8f0';
+          for (let n = 0; n < 5; n++) {
+            const na = (n * Math.PI * 2) / 5;
+            ctx.fillRect(Math.cos(na) * 6 - 1, Math.sin(na) * 6 - 1, 2.5, 2.5);
+          }
+        }
+
+        ctx.restore();
+      }
+
+      drawExhaustPuffs(puffs) {
+        const ctx = this.ctx;
+        for (const ep of puffs) {
+          const alpha = Math.max(0, ep.life / ep.maxLife);
+          ctx.fillStyle = `rgba(100, 116, 139, ${alpha * 0.6})`;
+          ctx.beginPath();
+          ctx.arc(ep.x, ep.y, ep.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      drawFoodParticles(particles) {
+        const ctx = this.ctx;
+        for (const p of particles) {
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+
+          if (p.type === 'tofu') {
+            // Golden Tahu Pong Cube
+            ctx.fillStyle = '#fde047';
+            ctx.strokeStyle = '#b45309';
+            ctx.lineWidth = 1.5;
+            ctx.fillRect(-5, -5, 10, 10);
+            ctx.strokeRect(-5, -5, 10, 10);
+          } else if (p.type === 'tempe') {
+            // Textured Tempe Orek
+            ctx.fillStyle = '#78350f';
+            ctx.fillRect(-7, -4, 14, 8);
+            ctx.fillStyle = '#d97706';
+            ctx.fillRect(-4, -2, 4, 3);
+          } else if (p.type === 'milk') {
+            // Mint-White Milk Carton
+            ctx.fillStyle = '#f8fafc';
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 1;
+            ctx.fillRect(-4, -6, 8, 12);
+            ctx.strokeRect(-4, -6, 8, 12);
+          } else if (p.type === 'serundeng') {
+            // Golden Serundeng Flake
+            ctx.fillStyle = '#f59e0b';
+            ctx.beginPath();
+            ctx.arc(0, 0, 3, 0, Math.PI * 2);
+            ctx.fill();
+          } else {
+            // Sayur Lodeh Droplet
+            ctx.fillStyle = '#84cc16';
+            ctx.beginPath();
+            ctx.arc(0, 0, 4, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+      }
+
+      drawTeloletNotes(notes) {
+        const ctx = this.ctx;
+        ctx.font = 'bold 18px sans-serif';
+        for (const tn of notes) {
+          ctx.fillStyle = tn.color;
+          ctx.fillText(tn.char, tn.x, tn.y);
+        }
+      }
+
+      drawConfetti() {
+        const ctx = this.ctx;
+        if (this.confetti.length < 80) {
+          const colors = ['#f43f5e', '#38bdf8', '#fbbf24', '#4ade80', '#c084fc'];
+          for (let i = 0; i < 80; i++) {
+            this.confetti.push({
+              x: this.camera.x + Math.random() * this.width,
+              y: this.camera.y - Math.random() * 200,
+              vx: (Math.random() - 0.5) * 80,
+              vy: 120 + Math.random() * 140,
+              rot: Math.random() * Math.PI * 2,
+              vrot: (Math.random() - 0.5) * 8,
+              color: colors[Math.floor(Math.random() * colors.length)],
+              w: 7 + Math.random() * 6,
+              h: 4 + Math.random() * 4
+            });
+          }
+        }
+
+        for (const c of this.confetti) {
+          c.x += c.vx * 0.016;
+          c.y += c.vy * 0.016;
+          c.rot += c.vrot * 0.016;
+          ctx.save();
+          ctx.translate(c.x, c.y);
+          ctx.rotate(c.rot);
+          ctx.fillStyle = c.color;
+          ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
+          ctx.restore();
+        }
+      }
+    }
+
+    // =========================================================================
+    // 5. MASTER CONTROLLER & GAME LOOP
+    // =========================================================================
+    class GameController {
+      constructor() {
+        this.canvas = document.getElementById('gameCanvas');
+        this.renderer = new GameRenderer(this.canvas);
+        this.sound = new SoundSynthesizer();
+        this.terrain = new WorldTerrain(4600);
+        const startX = 150;
+        const startY = this.terrain.getHeight(startX) - 34; // suspension rest length + wheel radius; no artificial opening drop
+        this.vehicle = new Vehicle(startX, startY);
+        this.vehicle.setSoundEngine(this.sound);
+        this.gameStateManager = new GameStateManager();
+
+        this.inputs = { gas: false, brake: false, horn: false };
+        this.activeKeys = new Set();
+        this.pedalGasActive = false;
+        this.pedalBrakeActive = false;
+
+        this.state = 'START'; // 'START' | 'PLAYING' | 'PAUSED' | 'GAMEOVER' | 'VICTORY'
+        this.gameOverReason = null;
+        this.timeRemaining = 210; // 3m 30s countdown to 09:45:00 WIB
+        this.startTime = Date.now();
+        this.lastTime = performance.now();
+        this.pausedForVisibility = false;
+
+        this.initDOM();
+        this.bindEvents();
+        this.loop = this.loop.bind(this);
+        requestAnimationFrame(this.loop);
+      }
+
+      initDOM() {
+        // HUD Elements
+        this.domCargoVal = document.getElementById('cargoVal');
+        this.domCargoBar = document.getElementById('cargoBar');
+        this.domSpeedVal = document.getElementById('speedVal');
+        this.domCoinVal = document.getElementById('coinVal');
+        this.domBiomeLabel = document.getElementById('biomeLabel');
+        this.domDistVal = document.getElementById('distVal');
+        this.domProgressFill = document.getElementById('progressFill');
+        this.domTruckMarker = document.getElementById('truckMarker');
+        this.domFuelVal = document.getElementById('fuelVal');
+        this.domFuelBar = document.getElementById('fuelBar');
+        this.domFuelLabel = document.getElementById('fuelLabel');
+        this.domClockVal = document.getElementById('clockVal');
+        this.domCenterNotice = document.getElementById('centerNotice');
+
+        // Modals
+        this.modalStart = document.getElementById('startModal');
+        this.modalGameOver = document.getElementById('gameOverModal');
+        this.modalVictory = document.getElementById('victoryModal');
+        this.modalPause = document.getElementById('pauseModal');
+
+        // Buttons
+        this.btnStart = document.getElementById('startGameBtn');
+        this.btnGORestart = document.getElementById('goRestartBtn');
+        this.btnVicRestart = document.getElementById('vicRestartBtn');
+        this.btnResume = document.getElementById('resumeBtn');
+        this.btnPauseRestart = document.getElementById('pauseRestartBtn');
+        this.btnAudio = document.getElementById('audioBtn');
+        this.btnPause = document.getElementById('pauseBtn');
+        this.btnHorn = document.getElementById('hornBtn');
+        this.btnPedalGas = document.getElementById('pedalGas');
+        this.btnPedalBrake = document.getElementById('pedalBrake');
+      }
+
+      bindEvents() {
+        // Start Game
+        this.btnStart.addEventListener('click', () => {
+          this.sound.init();
+          this.modalStart.classList.add('hidden');
+          this.state = 'PLAYING';
+          this.gameStateManager.state = 'PLAYING';
+          this.gameStateManager.timeRemaining = this.timeRemaining;
+          this.startTime = Date.now();
+        });
+
+        // Restart buttons
+        this.btnGORestart.addEventListener('click', () => this.restartGame());
+        this.btnVicRestart.addEventListener('click', () => this.restartGame());
+        this.btnPauseRestart.addEventListener('click', () => this.restartGame());
+
+        // Pause / Resume
+        this.btnPause.addEventListener('click', () => this.togglePause());
+        this.btnResume.addEventListener('click', () => this.togglePause());
+
+        // Audio toggle
+        this.btnAudio.addEventListener('click', () => {
+          const muted = this.sound.toggleMute();
+          this.btnAudio.innerText = muted ? '🔇' : '🔊';
+        });
+
+        // Horn Button
+        this.btnHorn.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          this.triggerHorn();
+        });
+
+        // Keyboard Controls
+        window.addEventListener('keydown', (e) => {
+          if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+            e.preventDefault();
+          }
+          if (e.repeat) return;
+          if (this.state === 'PLAYING') this.sound.init();
+
+          this.activeKeys.add(e.key.toLowerCase());
+          this.updateInputStates();
+
+          if (e.key === 'h' || e.key === 'H' || e.key === ' ') {
+            this.triggerHorn();
+          }
+          if (e.key === 'r' || e.key === 'R') {
+            if (this.state === 'GAMEOVER' || this.state === 'VICTORY' || this.state === 'PLAYING') {
+              this.restartGame();
+            }
+          }
+          if (e.key === 'Escape') {
+            this.togglePause();
+          }
+        });
+
+        window.addEventListener('keyup', (e) => {
+          this.activeKeys.delete(e.key.toLowerCase());
+          this.updateInputStates();
+        });
+
+        window.addEventListener('blur', () => {
+          this.activeKeys.clear();
+          this.pedalGasActive = false;
+          this.pedalBrakeActive = false;
+          this.updateInputStates();
+        });
+
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden && this.state === 'PLAYING') {
+            this.pausedForVisibility = true;
+            this.togglePause();
+          } else if (!document.hidden && this.pausedForVisibility) {
+            this.pausedForVisibility = false;
+            if (this.state === 'PAUSED') this.togglePause();
+          }
+        });
+
+        // Mobile Touch Pedals (True Multi-touch with Pointer Capture)
+        const setupPedal = (btn, isGas) => {
+          btn.addEventListener('pointerdown', (e) => {
+            e.preventDefault();
+            if (this.state === 'PLAYING') this.sound.init();
+            try { btn.setPointerCapture(e.pointerId); } catch (_) {}
+            if (isGas) this.pedalGasActive = true;
+            else this.pedalBrakeActive = true;
+            this.updateInputStates();
+          });
+          btn.addEventListener('pointerup', (e) => {
+            e.preventDefault();
+            if (isGas) this.pedalGasActive = false;
+            else this.pedalBrakeActive = false;
+            this.updateInputStates();
+            try { btn.releasePointerCapture(e.pointerId); } catch (_) {}
+          });
+          btn.addEventListener('pointercancel', (e) => {
+            e.preventDefault();
+            if (isGas) this.pedalGasActive = false;
+            else this.pedalBrakeActive = false;
+            this.updateInputStates();
+            try { btn.releasePointerCapture(e.pointerId); } catch (_) {}
+          });
+          btn.addEventListener('pointerleave', (e) => {
+            if (!btn.hasPointerCapture || !btn.hasPointerCapture(e.pointerId)) {
+              if (isGas) this.pedalGasActive = false;
+              else this.pedalBrakeActive = false;
+              this.updateInputStates();
+            }
+          });
+        };
+
+        setupPedal(this.btnPedalGas, true);
+        setupPedal(this.btnPedalBrake, false);
+      }
+
+      updateInputStates() {
+        const gasKey = this.activeKeys.has('d') || this.activeKeys.has('arrowright') || this.activeKeys.has('arrowup') || this.activeKeys.has('w');
+        const brakeKey = this.activeKeys.has('a') || this.activeKeys.has('arrowleft') || this.activeKeys.has('arrowdown') || this.activeKeys.has('s');
+
+        this.inputs.gas = gasKey || this.pedalGasActive;
+        this.inputs.brake = brakeKey || this.pedalBrakeActive;
+
+        if (this.inputs.gas) {
+          this.btnPedalGas.classList.add('active-touch');
+        } else {
+          this.btnPedalGas.classList.remove('active-touch');
+        }
+
+        if (this.inputs.brake) {
+          this.btnPedalBrake.classList.add('active-touch');
+        } else {
+          this.btnPedalBrake.classList.remove('active-touch');
+        }
+      }
+
+      triggerHorn() {
+        this.sound.playTeloletHorn();
+        this.vehicle.triggerTeloletNotes();
+        this.btnHorn.classList.add('horn-honking');
+        setTimeout(() => this.btnHorn.classList.remove('horn-honking'), 600);
+
+        this.domCenterNotice.style.opacity = '1';
+        clearTimeout(this.noticeTimeout);
+        this.noticeTimeout = setTimeout(() => {
+          this.domCenterNotice.style.opacity = '0';
+        }, 1200);
+      }
+
+      togglePause() {
+        if (this.state === 'PLAYING') {
+          this.state = 'PAUSED';
+          this.gameStateManager.state = 'PAUSED';
+          this.sound.pauseEngine();
+          this.modalPause.classList.remove('hidden');
+        } else if (this.state === 'PAUSED') {
+          this.state = 'PLAYING';
+          this.gameStateManager.state = 'PLAYING';
+          this.sound.resumeEngine();
+          this.modalPause.classList.add('hidden');
+          this.lastTime = performance.now();
+        }
+      }
+
+      restartGame() {
+        this.terrain = new WorldTerrain(4600);
+        const startX = 150;
+        const startY = this.terrain.getHeight(startX) - 34;
+        this.vehicle = new Vehicle(startX, startY);
+        this.vehicle.setSoundEngine(this.sound);
+        this.timeRemaining = 210;
+        this.gameStateManager = new GameStateManager();
+        this.gameStateManager.state = 'PLAYING';
+        this.state = 'PLAYING';
+        this.gameOverReason = null;
+        this.modalGameOver.classList.add('hidden');
+        this.modalVictory.classList.add('hidden');
+        this.modalPause.classList.add('hidden');
+        this.renderer.confetti = [];
+        this.renderer.splatters = [];
+        this.sound.resumeEngine();
+        this.startTime = Date.now();
+        this.lastTime = performance.now();
+      }
+
+      updateGameState(dt) {
+        if (this.state !== 'PLAYING') return;
+        this.gameStateManager.state = 'PLAYING';
+        this.gameStateManager.timeRemaining = this.timeRemaining;
+        this.gameStateManager.update(dt, this.vehicle, this.terrain);
+        this.timeRemaining = this.gameStateManager.timeRemaining;
+
+        if (this.gameStateManager.state === 'GAMEOVER') {
+          this.triggerGameOver(this.gameStateManager.gameOverReason);
+        } else if (this.gameStateManager.state === 'VICTORY') {
+          this.triggerVictory();
+        }
+      }
+
+      triggerGameOver(reason) {
+        this.state = 'GAMEOVER';
+        this.gameOverReason = reason;
+        this.gameStateManager.state = 'GAMEOVER';
+        this.gameStateManager.gameOverReason = reason;
+        this.sound.pauseEngine();
+        this.sound.playCrashSound();
+
+        const goTitle = document.getElementById('goTitle');
+        const goSubtitle = document.getElementById('goSubtitle');
+        const goDesc = document.getElementById('goDesc');
+        const goIcon = document.getElementById('goIcon');
+
+        goTitle.innerText = 'Game Over';
+
+        if (reason === 'ROLLOVER') {
+          goIcon.innerText = '💥';
+          if (goSubtitle) goSubtitle.innerText = 'Omprengmu telah tumpah!';
+          goDesc.innerText = 'MOBIL GWEH TERGULING! Atap truk menghantam tanah, boks toska ambyar, 500 botol susu meletus, kuah sayur lodeh tumpah ambyar ke layar kaca, dan Mang Ucup keluar meratapi nasib sambil memegang rantang kosong!';
+          if (this.renderer) {
+            this.renderer.isLodehActive = true;
+            this.renderer.lodehTimer = 3.5;
+          }
+        } else if (reason === 'FUEL') {
+          goIcon.innerText = '⛽';
+          if (goSubtitle) goSubtitle.innerText = 'BENSIN LUDES DI TANJAKAN!';
+          goDesc.innerText = 'Bensin habis saat menanjak bukit curam! Truk melorot mundur tak terkendali diiringi sorakan riang warga kampung yang menonton!';
+        } else if (reason === 'DEADLINE') {
+          goIcon.innerText = '⏰';
+          if (goSubtitle) goSubtitle.innerText = 'TELAT! BEL SEKOLAH SUDAH BUNYI!';
+          goDesc.innerText = 'Waktu habis tepat pukul 09:45 WIB! Siswa lemas kelaparan di depan gerbang, dan video Mang Ucup ngadem di bawah pohon jati viral di medsos!';
+        } else {
+          goIcon.innerText = '🍲';
+          if (goSubtitle) goSubtitle.innerText = 'PAKET GIZI HANCUR LEBUR!';
+          goDesc.innerText = 'Integritas muatan menyentuh 0%! Tahu-tempe orek dan sayur lodeh gurih berceceran ambyar jadi bubur jalanan akibat guncangan ekstrem!';
+        }
+
+        const meterX = Math.floor(this.vehicle.x / PHYSICS_CONSTANTS.METER_SCALE);
+        document.getElementById('goDist').innerText = `${meterX.toLocaleString()}m`;
+        document.getElementById('goCoins').innerText = this.terrain.coins.filter(c => c.collected).length;
+        document.getElementById('goCargo').innerText = `${Math.round(this.vehicle.cargoIntegrity)}%`;
+          const elapsed = Math.max(0, Math.floor(210 - this.timeRemaining));
+        const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
+        const secs = String(elapsed % 60).padStart(2, '0');
+        document.getElementById('goTime').innerText = `${mins}:${secs}`;
+
+        this.modalGameOver.classList.remove('hidden');
+      }
+
+      triggerVictory() {
+        this.state = 'VICTORY';
+        this.gameStateManager.state = 'VICTORY';
+        this.sound.pauseEngine();
+        this.sound.playVictoryFanfare();
+
+        const stars = this.gameStateManager.calculateStars(this.vehicle);
+
+        document.getElementById('vicStars').innerText = '⭐'.repeat(stars);
+        document.getElementById('vicCargo').innerText = `${Math.round(this.vehicle.cargoIntegrity)}%`;
+        document.getElementById('vicFuel').innerText = `${Math.round(this.vehicle.fuel)}%`;
+        document.getElementById('vicCoins').innerText = this.terrain.coins.filter(c => c.collected).length;
+
+        const elapsed = Math.max(0, Math.floor(210 - this.timeRemaining));
+        const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
+        const secs = String(elapsed % 60).padStart(2, '0');
+        document.getElementById('vicTime').innerText = `${mins}:${secs} (Target 09:45 Tercapai!)`;
+
+        this.modalVictory.classList.remove('hidden');
+      }
+
+      updateHUD() {
+        // Cargo Bar & Value
+        const cargo = Math.max(0, Math.round(this.vehicle.cargoIntegrity));
+        this.domCargoVal.innerText = `${cargo}%`;
+        this.domCargoBar.style.width = `${cargo}%`;
+        if (cargo < 30) {
+          this.domCargoBar.className = 'h-full bg-gradient-to-r from-red-600 to-rose-500 rounded-full transition-all duration-100';
+        } else if (cargo < 65) {
+          this.domCargoBar.className = 'h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full transition-all duration-100';
+        } else {
+          this.domCargoBar.className = 'h-full bg-gradient-to-r from-blue-700 via-blue-500 to-sky-300 rounded-full transition-all duration-100';
+        }
+
+        // Speed km/h
+        const speedKmh = Math.max(0, Math.round(Math.abs(this.vehicle.vx) * 0.18));
+        this.domSpeedVal.innerText = speedKmh;
+
+        // Coins
+        const coins = this.terrain.coins.filter(c => c.collected).length;
+        this.domCoinVal.innerText = coins;
+
+        // Distance & Biome
+        const meterX = Math.max(0, Math.min(4500, Math.floor(this.vehicle.x / PHYSICS_CONSTANTS.METER_SCALE)));
+        this.domDistVal.innerText = meterX;
+        const biome = this.terrain.getBiomeAt(meterX);
+        this.domBiomeLabel.innerText = biome.name;
+
+        // Progress bar percentage
+        const progressPct = Math.min(100, (meterX / 4500) * 100);
+        this.domProgressFill.style.width = `${progressPct}%`;
+        this.domTruckMarker.style.left = `${progressPct}%`;
+
+        // Fuel Bar & Warning
+        const fuel = Math.max(0, Math.round(this.vehicle.fuel));
+        this.domFuelVal.innerText = `${fuel}%`;
+        this.domFuelBar.style.width = `${fuel}%`;
+        if (fuel < 20) {
+          this.domFuelLabel.classList.add('low-fuel-pulse', 'text-red-500');
+          this.domFuelBar.className = 'h-full bg-gradient-to-r from-red-600 to-rose-500 rounded-full';
+        } else {
+          this.domFuelLabel.classList.remove('low-fuel-pulse', 'text-red-500');
+          this.domFuelBar.className = 'h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full';
+        }
+
+        // Countdown Timer
+        const m = Math.floor(this.timeRemaining / 60);
+        const s = Math.floor(this.timeRemaining % 60);
+        this.domClockVal.innerText = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      }
+
+      loop(timestamp) {
+        const dt = Math.min(0.1, Math.max(0, (timestamp - this.lastTime) / 1000));
+        this.lastTime = timestamp;
+
+        if (this.state === 'PLAYING') {
+          this.vehicle.update(dt, this.inputs, this.terrain);
+          this.updateGameState(dt);
+          const isAirborne = !this.vehicle.rearWheel.onGround && !this.vehicle.frontWheel.onGround;
+          this.sound.updateEngine(this.vehicle.vx, this.inputs.gas, isAirborne);
+        }
+
+        this.updateHUD();
+        this.renderer.render(this.vehicle, this.terrain, { state: this.state, reason: this.gameOverReason }, this.inputs);
+
+        requestAnimationFrame(this.loop);
+      }
+    }
+
+    // Launch game once window loads
+    window.addEventListener('DOMContentLoaded', () => {
+      window.game = new GameController();
+    });
+  </script>
+</body>
+</html>
