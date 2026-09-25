@@ -40,6 +40,7 @@ export default function DialogueModal({
     'Husna': <Smile className="text-yellow-300 w-8 h-8 sm:w-10 sm:h-10" />,
     'Zacky': <Wrench className="text-amber-300 w-8 h-8 sm:w-10 sm:h-10" />,
     'Mang Ucup': <UserCheck className="text-sky-300 w-8 h-8 sm:w-10 sm:h-10" />,
+    'Mang Abdul': <UserCheck className="text-sky-300 w-8 h-8 sm:w-10 sm:h-10" />,
     'Pak RT': <ShieldCheck className="text-emerald-300 w-8 h-8 sm:w-10 sm:h-10" />
   };
 
@@ -58,7 +59,7 @@ export default function DialogueModal({
           <div>
             <div className="flex items-center justify-between mb-1">
               <span id="dialogueSpeakerName" className="font-fredoka text-lg text-amber-300 drop-shadow">
-                {currentLine.speaker}
+                {currentLine.speaker} {currentLine.role && <span className="text-xs text-slate-400 font-mono font-normal">({currentLine.role})</span>}
               </span>
               <span id="dialogueLevelBadge" className="text-[10px] text-cyan-300 font-mono bg-cyan-950/80 border border-cyan-800/80 px-2 py-0.5 rounded-full">
                 LEVEL {level} • {currentIndex + 1}/{dialogues.length}
