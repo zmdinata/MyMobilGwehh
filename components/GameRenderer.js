@@ -407,7 +407,7 @@ export class GameRenderer {
           1: { top: [6, 182, 212], mid: [103, 232, 249], bot: [254, 215, 170], midStop: 0.6 },  // 1: Pesisir Pantura (cyan-peach)
           2: { top: [14, 165, 233], mid: [125, 211, 252], bot: [253, 230, 138], midStop: 0.55 }, // 2: Jalur Arteri Pantura (azure-amber)
           3: { top: [56, 189, 248], mid: [186, 230, 253], bot: [254, 240, 138], midStop: 0.5 },  // 3: Lembah Sawah (golden-green)
-          4: { top: [34, 197, 94], mid: [134, 239, 172], bot: [254, 249, 195], midStop: 0.65 },  // 4: Pedesaan Sawah (lush green)
+          4: { top: [56, 189, 248], mid: [186, 230, 253], bot: [254, 249, 195], midStop: 0.65 },  // 4: Pedesaan Sawah (azure sky over lush green)
           5: { top: [51, 65, 85], mid: [100, 116, 139], bot: [148, 163, 184], midStop: 0.6 },    // 5: Puncak Gn. Ciremai (slate mist)
           6: { top: [30, 58, 79], mid: [74, 107, 130], bot: [178, 190, 195], midStop: 0.55 },   // 6: Lereng Hutan Pinus (alpine fog)
           7: { top: [59, 130, 246], mid: [147, 197, 253], bot: [254, 205, 211], midStop: 0.6 },  // 7: Kawasan Pemukiman (morning pink)
@@ -504,8 +504,8 @@ export class GameRenderer {
           8: 'biome4Distant'
         };
         const distantKey = distantMap[biomeId] || `biome${biomeId}Distant`;
-        if (this.drawTiledBackground(distantKey, w, h, scroll2, 0.12, 0.75) ||
-            this.drawTiledBackground(`biome${biomeId}Distant`, w, h, scroll2, 0.12, 0.75)) {
+        if (this.drawTiledBackground(distantKey, w, h, scroll2, 0.0, 0.92) ||
+            this.drawTiledBackground(`biome${biomeId}Distant`, w, h, scroll2, 0.0, 0.92)) {
           ctx.restore();
           return;
         }

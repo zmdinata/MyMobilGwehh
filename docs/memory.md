@@ -93,9 +93,11 @@ Setiap bioma terhubung 1:1 ke aset ilustrasi latar belakang dan transisi 200m ya
   - Dilarang menambahkan lapisan overlay CRT scanlines yang menyebabkan visual bergaris-garis kasar.
   - Kontrol kemudi di layar sentuh wajib menggunakan **Glassmorphic Cyber-Chic Pedals** dengan haptic grip dots dan glow LED border (`cyan` Gas, `red` Rem/Mundur, `amber` Telolet).
   - Tidak boleh ada container gelap kosong (*dark void*) yang memotong aspek rasio gameplay canvas.
-- **Penyelarasan Sprites**:
+- **Penyelarasan Sprites & Parallax Canvas**:
   - Log rintangan (`obstacle_log.png`): terpotong rapat (*tight-cropped*) tanpa padding transparan bawah agar kayu menancap pas di permukaan tanah.
   - Gerbang finis sekolah (`finish_gate.png`): skala tinggi 180px dengan proporsi ortografis terjaga.
+  - **Anchoring Background Jauh**: Lapisan latar belakang jauh (`drawDistantParallaxLayer`) wajib selalu dijangkarkan pada $y = 0$ (`topRatio = 0.0`, `heightRatio = 0.92`) agar kanvas langit menutup sempurna dari tepi atas layar hingga cakrawala tanpa celah ("bolong").
+  - **Palet Skybox Alami**: Palet langit (`skyPalettes`) seluruh bioma siang hari (termasuk Biome 4 Pedesaan Sawah) menggunakan gradien biru atmosferik alami (`top: [56, 189, 248]`), bukan warna hijau rumput yang menyebabkan artefak strip neon hijau.
 
 ---
 
