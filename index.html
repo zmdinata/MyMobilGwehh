@@ -34,8 +34,9 @@
 
   <!-- Google Fonts: Fredoka One, Chakra Petch, Rajdhani -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;800&family=Fredoka+One&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet" />
+  <!-- Lucide Icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- React 18 & ReactDOM via CDN (production UMD) -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -143,8 +144,9 @@
         <!-- Speed & Coins -->
         <div class="flex items-center justify-between text-[11px] sm:text-xs text-slate-300 pt-0.5">
           <span class="font-mono">KECEPATAN: <b id="speedVal" class="text-white text-xs sm:text-sm">0</b> km/h</span>
-          <span class="text-amber-400 font-bold flex items-center gap-0.5">
-            🪙 <span id="coinVal" class="font-mono">0</span>
+          <span class="text-amber-400 font-bold flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 text-amber-400 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="m7 6 1 4"/></svg>
+            <span id="coinVal" class="font-mono">0</span>
           </span>
         </div>
       </div>
@@ -170,12 +172,12 @@
           <!-- Dynamic progress bar fill -->
           <div id="progressFill" class="h-full bg-gradient-to-r from-cyan-400 via-emerald-400 to-amber-400 rounded-full transition-all duration-75 relative z-0" style="width: 0%;"></div>
           <!-- Truck head icon marker on track -->
-          <div id="truckMarker" class="absolute z-10 -top-1 transform -translate-x-1/2 transition-all duration-75 pointer-events-none text-base sm:text-lg" style="left: 0%;">
-            🚚
+          <div id="truckMarker" class="absolute z-10 -top-1.5 transform -translate-x-1/2 transition-all duration-75 pointer-events-none text-cyan-300 drop-shadow" style="left: 0%;">
+            <svg class="w-4 h-4 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
           </div>
           <!-- Finish Gate Flag -->
-          <div class="absolute right-0.5 z-10 text-xs sm:text-sm">
-            🏁
+          <div class="absolute right-1 z-10 text-emerald-400 drop-shadow">
+            <svg class="w-3.5 h-3.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
           </div>
         </div>
         <!-- Biome tick marks -->
@@ -193,8 +195,9 @@
         <div id="fuelWidget" class="bg-slate-900/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-2.5 shadow-xl min-w-[130px] sm:min-w-[170px] flex flex-col gap-1">
           <!-- Fuel Gauge -->
           <div class="flex items-center justify-between text-xs sm:text-sm font-bold">
-            <span id="fuelLabel" class="flex items-center gap-1 text-amber-400">
-              ⛽ BENSIN
+            <span id="fuelLabel" class="flex items-center gap-1.5 text-amber-400">
+              <svg class="w-3.5 h-3.5 text-amber-400 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="15" y1="22" y2="22"/><line x1="4" x2="14" y1="9" y2="9"/><path d="M14 22V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v18"/><path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5"/></svg>
+              <span>BENSIN</span>
             </span>
             <span id="fuelVal" class="text-amber-300 font-mono">100%</span>
           </div>
@@ -210,19 +213,20 @@
 
         <!-- Audio & Pause Buttons -->
         <div id="hudActions" class="flex flex-col gap-1.5">
-          <button id="audioBtn" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-800/90 border border-slate-700 hover:bg-slate-700 active:scale-95 flex items-center justify-center text-base sm:text-lg shadow-lg">
-            🔊
+          <button id="audioBtn" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-800/90 border border-slate-700 hover:bg-slate-700 active:scale-95 flex items-center justify-center text-cyan-400 shadow-lg" title="Toggle Suara">
+            <svg id="audioIcon" class="w-4 h-4 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
           </button>
-          <button id="pauseBtn" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-800/90 border border-slate-700 hover:bg-slate-700 active:scale-95 flex items-center justify-center text-sm font-bold shadow-lg">
-            ⏸️
+          <button id="pauseBtn" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-800/90 border border-slate-700 hover:bg-slate-700 active:scale-95 flex items-center justify-center text-slate-200 shadow-lg" title="Jeda">
+            <svg class="w-4 h-4 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="4" height="16" x="6" y="4"/><rect width="4" height="16" x="14" y="4"/></svg>
           </button>
         </div>
       </div>
     </div>
 
     <!-- Center Floating Screen Notification / Telolet Floaters -->
-    <div id="centerNotice" class="text-center font-fredoka text-xl sm:text-3xl text-amber-300 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] opacity-0 transition-opacity duration-300 pointer-events-none">
-      TELOLET MANIA! 📢
+    <div id="centerNotice" class="text-center font-fredoka text-xl sm:text-3xl text-amber-300 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] opacity-0 transition-opacity duration-300 pointer-events-none flex items-center justify-center gap-2">
+      <svg class="w-6 h-6 text-amber-400 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+      <span>TELOLET MANIA!</span>
     </div>
 
     <!-- Bottom Controls Row: Sleek Glassmorphism Mobile Pedals & Horn (Visible on Touch/All Devices) -->
@@ -239,7 +243,10 @@
           </div>
           <div class="text-center">
             <span class="block font-fredoka text-xl sm:text-2xl text-white tracking-wider drop-shadow group-hover:scale-105 transition-transform">REM</span>
-            <span class="block text-[9px] sm:text-[10px] font-mono text-red-200 uppercase font-semibold">Mundur / Pitch ▼</span>
+            <span class="block text-[9px] sm:text-[10px] font-mono text-red-200 uppercase font-semibold flex items-center justify-center gap-0.5">
+              <span>Mundur / Pitch</span>
+              <svg class="w-2.5 h-2.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
           </div>
           <span class="text-[9px] text-red-300/80 font-mono hidden sm:inline">[A] / [←]</span>
         </button>
@@ -248,7 +255,7 @@
       <!-- Center: Telolet Horn Button -->
       <div class="pointer-events-auto flex flex-col items-center pb-1">
         <button id="hornBtn" class="pedal-btn relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-b from-amber-400/95 via-amber-500/95 to-yellow-600/95 backdrop-blur-md border-2 border-amber-200 shadow-[0_8px_20px_rgba(245,158,11,0.5)] flex flex-col items-center justify-center p-1 active:scale-90 transition-transform">
-          <span class="text-2xl sm:text-3xl filter drop-shadow">🎺</span>
+          <svg class="w-7 h-7 text-slate-950 mb-0.5 drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
           <span class="font-fredoka text-[10px] sm:text-xs text-slate-950 font-bold tracking-tight">TELOLET</span>
           <span class="text-[8px] text-amber-950 font-mono hidden sm:inline font-bold">[H] / [Spasi]</span>
         </button>
@@ -303,24 +310,32 @@
         <p>
           <b class="text-cyan-300">Kisah Mas Tion:</b> Driver muda tangguh armada MBG yang berjuang mengantar <b>500 porsi</b> paket gizi hangat demi Bu Yulie dan siswa-siswi <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b>, didampingi petuah bijak sang legenda supir elf Pantura, <b>Mang Ucup</b>!
         </p>
-        <p>
-          🎯 <b class="text-white">Misi Kamu:</b> Antar <b>500 porsi paket gizi hangat</b> (nasi pulen, ayam serundeng, tahu-tempe orek, sayur lodeh, dan susu murni) menuju kawasan sekolah fiktif <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b> sebelum bel masuk berbunyi tepat pukul <b>09:45 WIB!</b>
+        <p class="flex items-start gap-1.5">
+          <svg class="w-4 h-4 text-rose-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <span><b class="text-white">Misi Kamu:</b> Antar <b>500 porsi paket gizi hangat</b> (nasi pulen, ayam serundeng, tahu-tempe orek, sayur lodeh, dan susu murni) menuju kawasan sekolah fiktif <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b> sebelum bel masuk berbunyi tepat pukul <b>09:45 WIB!</b></span>
         </p>
-        <p class="text-amber-200/90 text-[11px] sm:text-xs">
-          ⚠️ Hati-hati: Rob Pantura licin, kubangan lumpur sawah seret, dan balok kayu gunung bisa merontokkan sayur lodeh!
+        <p class="text-amber-200/90 text-[11px] sm:text-xs flex items-start gap-1.5">
+          <svg class="w-4 h-4 text-amber-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+          <span>Hati-hati: Rob Pantura licin, kubangan lumpur sawah seret, dan balok kayu gunung bisa merontokkan sayur lodeh!</span>
         </p>
       </div>
 
       <!-- Controls Guide -->
       <div class="grid grid-cols-2 gap-2 w-full text-[11px] sm:text-xs mb-5">
         <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-2.5">
-          <span class="font-bold text-cyan-300 block mb-1">🖥️ Desktop Web</span>
+          <span class="font-bold text-cyan-300 flex items-center gap-1.5 mb-1">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+            Desktop Web
+          </span>
           <span class="text-slate-300 block">Gas / Pitch Up: <b>[D] / [→]</b></span>
           <span class="text-slate-300 block">Rem / Pitch Down: <b>[A] / [←]</b></span>
           <span class="text-slate-300 block">Telolet: <b>[H] / [Spasi]</b> | Reset: <b>[R]</b></span>
         </div>
         <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-2.5">
-          <span class="font-bold text-amber-300 block mb-1">📱 HP / Mobile Touch</span>
+          <span class="font-bold text-amber-300 flex items-center gap-1.5 mb-1">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+            HP / Mobile Touch
+          </span>
           <span class="text-slate-300 block">Pedal Kanan: <b>Gas / Pitch Up</b></span>
           <span class="text-slate-300 block">Pedal Kiri: <b>Rem / Pitch Down</b></span>
           <span class="text-slate-300 block">Tombol Tengah: <b>Klakson Telolet</b></span>
@@ -333,8 +348,9 @@
       </p>
 
       <!-- Start / Welcome Button -->
-      <button id="startGameBtn" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 hover:from-blue-600 hover:to-sky-400 text-white font-fredoka text-lg sm:text-xl shadow-lg shadow-blue-500/30 transform active:scale-95 transition-all">
-        MASUK KE MENU UTAMA (TAP TO START) 🚚💨
+      <button id="startGameBtn" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 hover:from-blue-600 hover:to-sky-400 text-white font-fredoka text-lg sm:text-xl shadow-lg shadow-blue-500/30 transform active:scale-95 transition-all flex items-center justify-center gap-2.5">
+        <span>MASUK KE MENU UTAMA (TAP TO START)</span>
+        <svg class="w-5 h-5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
       </button>
       <p id="startTapNotice" class="text-[11px] text-cyan-300 font-mono mt-2 animate-pulse">[ Sentuh layar atau klik tombol untuk mengaktifkan audio & masuk Menu Utama ]</p>
     </div>
@@ -343,7 +359,9 @@
   <!-- GAME OVER MODAL -->
   <div id="gameOverModal" class="hidden absolute inset-0 z-40 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
     <div class="max-w-md w-full bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-red-500/70 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden flex flex-col items-center text-center">
-      <div class="text-5xl sm:text-6xl mb-2" id="goIcon">💥</div>
+      <div class="mb-2" id="goIcon">
+        <svg class="w-14 h-14 text-rose-500 mx-auto drop-shadow-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+      </div>
       <h2 id="goTitle" class="font-fredoka text-2xl sm:text-4xl text-red-400 drop-shadow mb-1">
         Game Over
       </h2>
@@ -376,15 +394,18 @@
 
       <!-- Action Buttons -->
       <div class="flex flex-col gap-2 w-full">
-        <button id="goRestartBtn" class="w-full py-3 rounded-2xl bg-gradient-to-r from-red-500 to-amber-500 hover:from-red-400 hover:to-amber-400 text-slate-950 font-fredoka text-base sm:text-lg shadow-lg active:scale-95 transition-all">
-          COBA LAGI [R] 🔄
+        <button id="goRestartBtn" class="w-full py-3 rounded-2xl bg-gradient-to-r from-red-500 to-amber-500 hover:from-red-400 hover:to-amber-400 text-slate-950 font-fredoka text-base sm:text-lg shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
+          <span>COBA LAGI [R]</span>
+          <svg class="w-4 h-4 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
         </button>
         <div class="flex gap-2 w-full">
-          <button id="goGarageBtn" class="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-fredoka text-xs sm:text-sm shadow-md active:scale-95 transition-all">
-            KE GARASI ZACKY 🔧
+          <button id="goGarageBtn" class="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-fredoka text-xs sm:text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5">
+            <span>KE GARASI ZACKY</span>
+            <svg class="w-3.5 h-3.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
           </button>
-          <button id="goMenuBtn" class="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fredoka text-xs sm:text-sm border border-slate-600 shadow-md active:scale-95 transition-all">
-            MENU UTAMA 🏠
+          <button id="goMenuBtn" class="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fredoka text-xs sm:text-sm border border-slate-600 shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5">
+            <span>MENU UTAMA</span>
+            <svg class="w-3.5 h-3.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </button>
         </div>
       </div>
@@ -398,7 +419,9 @@
       <div class="absolute -top-20 -right-20 w-44 h-44 bg-amber-400/30 rounded-full blur-3xl pointer-events-none"></div>
 
       <div class="mb-1 flex h-16 items-center justify-center animate-bounce">
-        <span id="vicFoodParcelFallback" class="text-5xl sm:text-6xl">🏆</span>
+        <span id="vicFoodParcelFallback" class="text-amber-400">
+          <svg class="w-14 h-14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+        </span>
         <img id="vicFoodParcel" alt="Paket makanan MBG" class="hidden h-16 w-16 object-contain" />
       </div>
       <h2 class="font-fredoka text-2xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-orange-400 drop-shadow">
@@ -409,8 +432,10 @@
       </p>
 
       <!-- Star Rating -->
-      <div id="vicStars" class="text-3xl sm:text-4xl tracking-widest mb-3">
-        ⭐⭐⭐
+      <div id="vicStars" class="flex justify-center items-center gap-1 mb-3">
+        <svg class="w-8 h-8 text-amber-400 fill-amber-400" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg class="w-8 h-8 text-amber-400 fill-amber-400" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg class="w-8 h-8 text-amber-400 fill-amber-400" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
       </div>
 
       <p class="text-xs text-slate-300 mb-4 italic">
@@ -440,24 +465,31 @@
       <!-- Total Permanent Coins Display -->
       <div class="w-full bg-slate-900/90 border border-amber-500/40 rounded-xl py-1.5 px-3 mb-4 text-xs font-mono text-amber-300 flex items-center justify-between">
         <span>Tabungan Koin Gizi:</span>
-        <span class="font-bold text-amber-400 flex items-center gap-1">🪙 <span id="vicTotalCoins">0</span></span>
+        <span class="font-bold text-amber-400 flex items-center gap-1">
+          <svg class="w-3.5 h-3.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="m7 6 1 4"/></svg>
+          <span id="vicTotalCoins">0</span>
+        </span>
       </div>
 
       <!-- Action Buttons -->
       <div class="flex flex-col gap-2 w-full">
-        <button id="vicNextLevelBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-fredoka text-lg shadow-lg shadow-emerald-500/30 active:scale-95 transition-all">
-          LEVEL SELANJUTNYA 🚀
+        <button id="vicNextLevelBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-fredoka text-lg shadow-lg shadow-emerald-500/30 active:scale-95 transition-all flex items-center justify-center gap-2">
+          <span>LEVEL SELANJUTNYA</span>
+          <svg class="w-5 h-5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 19 22 12 13 5 13 19"/><polygon points="2 19 11 12 2 5 2 19"/></svg>
         </button>
         <div class="flex gap-2 w-full">
-          <button id="vicGarageBtn" class="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-fredoka text-xs sm:text-sm shadow-md active:scale-95 transition-all">
-            KE GARASI ZACKY 🔧
+          <button id="vicGarageBtn" class="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-fredoka text-xs sm:text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5">
+            <span>KE GARASI ZACKY</span>
+            <svg class="w-3.5 h-3.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
           </button>
-          <button id="vicMenuBtn" class="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fredoka text-xs sm:text-sm border border-slate-600 shadow-md active:scale-95 transition-all">
-            MENU UTAMA 🏠
+          <button id="vicMenuBtn" class="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fredoka text-xs sm:text-sm border border-slate-600 shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5">
+            <span>MENU UTAMA</span>
+            <svg class="w-3.5 h-3.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </button>
         </div>
-        <button id="vicRestartBtn" class="w-full py-2 rounded-xl bg-slate-800/60 hover:bg-slate-700 text-slate-400 font-fredoka text-xs border border-slate-700">
-          GAS LAGI TRAYEK INI! 🔄
+        <button id="vicRestartBtn" class="w-full py-2 rounded-xl bg-slate-800/60 hover:bg-slate-700 text-slate-400 font-fredoka text-xs border border-slate-700 flex items-center justify-center gap-1.5">
+          <span>GAS LAGI TRAYEK INI!</span>
+          <svg class="w-3.5 h-3.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
         </button>
       </div>
     </div>
@@ -466,7 +498,10 @@
   <!-- PAUSE MODAL -->
   <div id="pauseModal" class="hidden absolute inset-0 z-40 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 rounded-3xl p-6 text-center max-w-xs w-full shadow-2xl">
-      <h3 class="font-fredoka text-2xl text-cyan-300 mb-3">GAME DI-JEDA ⏸️</h3>
+      <h3 class="font-fredoka text-2xl text-cyan-300 mb-3 flex items-center justify-center gap-2">
+        <svg class="w-5 h-5 inline text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="4" height="16" x="6" y="4"/><rect width="4" height="16" x="14" y="4"/></svg>
+        <span>GAME DI-JEDA</span>
+      </h3>
       <p class="text-xs text-slate-400 mb-5 font-mono">Mas Tion sedang mengatur napas dan memeriksa ikatan rantang gizi...</p>
       <button id="resumeBtn" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-fredoka text-base mb-2">
         LANJUTKAN [ESC]
@@ -474,8 +509,9 @@
       <button id="pauseRestartBtn" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fredoka text-sm border border-slate-700 mb-2">
         ULANG DARI AWAL
       </button>
-      <button id="pauseMenuBtn" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fredoka text-sm border border-slate-700">
-        MENU UTAMA 🏠
+      <button id="pauseMenuBtn" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fredoka text-sm border border-slate-700 flex items-center justify-center gap-1.5">
+        <span>MENU UTAMA</span>
+        <svg class="w-4 h-4 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       </button>
     </div>
   </div>
@@ -508,26 +544,31 @@
           <span class="text-cyan-300 font-bold">Level <span id="menuCurrentLevel">1</span> / 20</span>
         </div>
         <div class="flex items-center gap-1.5 text-amber-400 font-bold">
-          🪙 <span id="menuCoinCount">0</span> Koin Gizi
+          <svg class="w-4 h-4 text-amber-400 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="m7 6 1 4"/></svg>
+          <span id="menuCoinCount">0</span> Koin Gizi
         </div>
       </div>
 
       <!-- Menu Navigation Buttons -->
       <div class="flex flex-col gap-3 w-full">
-        <button id="btnStoryContinue" class="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 hover:from-blue-500 hover:to-cyan-300 text-white font-fredoka text-lg sm:text-xl shadow-lg shadow-blue-500/30 transform active:scale-95 transition-all flex items-center justify-center gap-2">
-          <span>MULAI CERITA</span> <span>🚚💨</span>
+        <button id="btnStoryContinue" class="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 hover:from-blue-500 hover:to-cyan-300 text-white font-fredoka text-lg sm:text-xl shadow-lg shadow-blue-500/30 transform active:scale-95 transition-all flex items-center justify-center gap-2.5">
+          <span>MULAI CERITA</span>
+          <svg class="w-5 h-5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
         </button>
 
         <button id="btnLevelSelect" class="w-full py-3.5 rounded-2xl bg-slate-800 hover:bg-slate-700/90 text-cyan-300 font-fredoka text-base sm:text-lg border border-cyan-500/40 shadow-md transform active:scale-95 transition-all flex items-center justify-center gap-2">
-          <span>PILIH LEVEL (1 - 20)</span> <span>🗺️</span>
+          <span>PILIH LEVEL (1 - 20)</span>
+          <svg class="w-5 h-5 inline text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
         </button>
 
         <button id="btnGarage" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 text-slate-950 font-fredoka text-base sm:text-lg shadow-lg shadow-amber-500/30 transform active:scale-95 transition-all flex items-center justify-center gap-2">
-          <span>GARASI ZACKY (UPGRADE & SKIN)</span> <span>🔧</span>
+          <span>GARASI ZACKY (UPGRADE & SKIN)</span>
+          <svg class="w-5 h-5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
         </button>
 
-        <button id="btnHowToPlay" class="w-full py-2.5 rounded-xl bg-slate-800/70 hover:bg-slate-700 text-slate-400 font-fredoka text-xs sm:text-sm border border-slate-700 active:scale-95 transition-all">
-          📖 PANDUAN KONTROL & KISAH MAS TION
+        <button id="btnHowToPlay" class="w-full py-2.5 rounded-xl bg-slate-800/70 hover:bg-slate-700 text-slate-400 font-fredoka text-xs sm:text-sm border border-slate-700 active:scale-95 transition-all flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span>PANDUAN KONTROL & KISAH MAS TION</span>
         </button>
       </div>
     </div>
@@ -538,11 +579,15 @@
     <div class="max-w-3xl w-full bg-slate-900 border-2 border-cyan-500/60 rounded-3xl p-4 sm:p-6 shadow-2xl flex flex-col my-auto max-h-[92vh]">
       <div class="flex items-center justify-between mb-4 border-b border-slate-700 pb-3">
         <div>
-          <h2 class="font-fredoka text-xl sm:text-2xl text-cyan-300">PILIH LEVEL PERJALANAN 🗺️</h2>
+          <h2 class="font-fredoka text-xl sm:text-2xl text-cyan-300 flex items-center gap-2">
+            <span>PILIH LEVEL PERJALANAN</span>
+            <svg class="w-5 h-5 inline text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
+          </h2>
           <p class="text-[11px] sm:text-xs text-slate-400 font-mono">20 Level Menuju Gerbang Puspa Bangsa</p>
         </div>
-        <button id="levelSelectBackBtn" class="py-1.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-sm border border-slate-700">
-          KEMBALI ✕
+        <button id="levelSelectBackBtn" class="py-1.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-sm border border-slate-700 flex items-center gap-1.5">
+          <span>KEMBALI</span>
+          <svg class="w-3.5 h-3.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
       </div>
 
@@ -559,31 +604,38 @@
       <!-- Header -->
       <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-3">
         <div class="flex items-center gap-2">
-          <div class="w-10 h-10 rounded-full bg-slate-800 border border-amber-400 flex items-center justify-center text-xl">
-            👨‍🔧
+          <div class="w-10 h-10 rounded-full bg-slate-800 border border-amber-400 flex items-center justify-center text-amber-300">
+            <svg class="w-5 h-5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
           </div>
           <div>
-            <h2 class="font-fredoka text-lg sm:text-xl text-amber-300">BENGKEL MODIFIKASI ZACKY 🔧</h2>
+            <h2 class="font-fredoka text-lg sm:text-xl text-amber-300 flex items-center gap-1.5">
+              <span>BENGKEL MODIFIKASI ZACKY</span>
+              <svg class="w-4 h-4 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </h2>
             <p class="text-[10px] sm:text-xs text-slate-400 font-mono">"Oprek mesin, perkuat grip, dan ganti skin biar makin ngacir!"</p>
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <div class="bg-slate-800 border border-amber-400/60 text-amber-400 px-3 py-1 rounded-xl text-xs sm:text-sm font-mono font-bold flex items-center gap-1">
-            🪙 <span id="garageCoins">0</span>
+          <div class="bg-slate-800 border border-amber-400/60 text-amber-400 px-3 py-1 rounded-xl text-xs sm:text-sm font-mono font-bold flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="m7 6 1 4"/></svg>
+            <span id="garageCoins">0</span>
           </div>
-          <button id="closeGarageBtn" class="py-1.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-sm border border-slate-700">
-            TUTUP ✕
+          <button id="closeGarageBtn" class="py-1.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-sm border border-slate-700 flex items-center gap-1.5">
+            <span>TUTUP</span>
+            <svg class="w-3.5 h-3.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
           </button>
         </div>
       </div>
 
       <!-- Tabs Bar -->
       <div class="flex gap-2 mb-3">
-        <button id="garageTabUpgradesBtn" class="flex-1 py-2 rounded-xl bg-amber-500 text-slate-950 font-fredoka text-sm font-bold shadow-md transition-all">
-          ⚡ UPGRADE KOMPONEN (LVL 1-20)
+        <button id="garageTabUpgradesBtn" class="flex-1 py-2 rounded-xl bg-amber-500 text-slate-950 font-fredoka text-sm font-bold shadow-md transition-all flex items-center justify-center gap-1.5">
+          <svg class="w-4 h-4 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span>UPGRADE KOMPONEN (LVL 1-20)</span>
         </button>
-        <button id="garageTabCustomBtn" class="flex-1 py-2 rounded-xl bg-slate-800 text-slate-300 font-fredoka text-sm border border-slate-700 hover:bg-slate-700 transition-all">
-          🎨 BODI & VELG
+        <button id="garageTabCustomBtn" class="flex-1 py-2 rounded-xl bg-slate-800 text-slate-300 font-fredoka text-sm border border-slate-700 hover:bg-slate-700 transition-all flex items-center justify-center gap-1.5">
+          <svg class="w-4 h-4 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+          <span>BODI & VELG</span>
         </button>
       </div>
 
@@ -593,7 +645,10 @@
         <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div class="flex-1">
             <div class="flex items-center justify-between text-xs sm:text-sm font-bold mb-1">
-              <span class="text-cyan-300 flex items-center gap-1.5">⚡ TENAGA MESIN (GAS / TANJAKAN)</span>
+              <span class="text-cyan-300 flex items-center gap-1.5">
+                <svg class="w-4 h-4 inline text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span>TENAGA MESIN (GAS / TANJAKAN)</span>
+              </span>
               <span class="text-cyan-400 font-mono">Level <span id="engineLevelVal">1</span>/20</span>
             </div>
             <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-slate-700 mb-1">
@@ -601,8 +656,12 @@
             </div>
             <p class="text-[11px] text-slate-400">Tenaga: <b id="engineStatVal" class="text-white font-mono">2200</b> HP • Melesat di tanjakan curam gunung</p>
           </div>
-          <button id="btnUpgradeEngine" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-fredoka text-xs sm:text-sm font-bold shadow active:scale-95 transition-all whitespace-nowrap">
-            UPGRADE (🪙 <span id="engineCostVal">12</span>)
+          <button id="btnUpgradeEngine" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-fredoka text-xs sm:text-sm font-bold shadow active:scale-95 transition-all whitespace-nowrap flex items-center justify-center gap-1.5">
+            <span>UPGRADE</span>
+            <span class="flex items-center gap-1 text-[11px] font-mono font-bold bg-slate-950/40 px-1.5 py-0.5 rounded">
+              <svg class="w-3 h-3 inline text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="m7 6 1 4"/></svg>
+              <span id="engineCostVal">12</span>
+            </span>
           </button>
         </div>
 
@@ -610,7 +669,10 @@
         <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div class="flex-1">
             <div class="flex items-center justify-between text-xs sm:text-sm font-bold mb-1">
-              <span class="text-emerald-300 flex items-center gap-1.5">🛞 GRIP BAN (ANTI LICIN & LUMPUR)</span>
+              <span class="text-emerald-300 flex items-center gap-1.5">
+                <svg class="w-4 h-4 inline text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                <span>GRIP BAN (ANTI LICIN & LUMPUR)</span>
+              </span>
               <span class="text-emerald-400 font-mono">Level <span id="gripLevelVal">1</span>/20</span>
             </div>
             <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-slate-700 mb-1">
@@ -618,8 +680,12 @@
             </div>
             <p class="text-[11px] text-slate-400">Daya Cengkeram: <b id="gripStatVal" class="text-white font-mono">100%</b> • Anti selip air rob dan lumpur</p>
           </div>
-          <button id="btnUpgradeGrip" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-fredoka text-xs sm:text-sm font-bold shadow active:scale-95 transition-all whitespace-nowrap">
-            UPGRADE (🪙 <span id="gripCostVal">12</span>)
+          <button id="btnUpgradeGrip" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-fredoka text-xs sm:text-sm font-bold shadow active:scale-95 transition-all whitespace-nowrap flex items-center justify-center gap-1.5">
+            <span>UPGRADE</span>
+            <span class="flex items-center gap-1 text-[11px] font-mono font-bold bg-slate-950/40 px-1.5 py-0.5 rounded">
+              <svg class="w-3 h-3 inline text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="m7 6 1 4"/></svg>
+              <span id="gripCostVal">12</span>
+            </span>
           </button>
         </div>
 
@@ -627,7 +693,10 @@
         <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div class="flex-1">
             <div class="flex items-center justify-between text-xs sm:text-sm font-bold mb-1">
-              <span class="text-amber-300 flex items-center gap-1.5">🔩 SHOCKBREAKER (PER & WHEELIE)</span>
+              <span class="text-amber-300 flex items-center gap-1.5">
+                <svg class="w-4 h-4 inline text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                <span>SHOCKBREAKER (PER & WHEELIE)</span>
+              </span>
               <span class="text-amber-400 font-mono">Level <span id="suspLevelVal">1</span>/20</span>
             </div>
             <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-slate-700 mb-1">
@@ -635,8 +704,12 @@
             </div>
             <p class="text-[11px] text-slate-400">Pegas: <b id="suspStatVal" class="text-white font-mono">180</b> K_Spring • Redam benturan keras & manuver wheeli</p>
           </div>
-          <button id="btnUpgradeSusp" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-fredoka text-xs sm:text-sm font-bold shadow active:scale-95 transition-all whitespace-nowrap">
-            UPGRADE (🪙 <span id="suspCostVal">12</span>)
+          <button id="btnUpgradeSusp" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-fredoka text-xs sm:text-sm font-bold shadow active:scale-95 transition-all whitespace-nowrap flex items-center justify-center gap-1.5">
+            <span>UPGRADE</span>
+            <span class="flex items-center gap-1 text-[11px] font-mono font-bold bg-slate-950/40 px-1.5 py-0.5 rounded">
+              <svg class="w-3 h-3 inline text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="m7 6 1 4"/></svg>
+              <span id="suspCostVal">12</span>
+            </span>
           </button>
         </div>
       </div>
@@ -1564,9 +1637,9 @@
           ctx.font = 'bold 18px Fredoka One, sans-serif';
           ctx.strokeStyle = '#065f46';
           ctx.lineWidth = 4;
-          ctx.strokeText('✨ PERFECT LANDING! 100% SHOCK ABSORPTION ✨', vehicle.x, vehicle.y - 70);
+          ctx.strokeText('PERFECT LANDING! 100% SHOCK ABSORPTION', vehicle.x, vehicle.y - 70);
           ctx.fillStyle = '#34d399';
-          ctx.fillText('✨ PERFECT LANDING! 100% SHOCK ABSORPTION ✨', vehicle.x, vehicle.y - 70);
+          ctx.fillText('PERFECT LANDING! 100% SHOCK ABSORPTION', vehicle.x, vehicle.y - 70);
           ctx.restore();
         }
 
@@ -1646,8 +1719,8 @@
         ctx.lineWidth = 4;
         ctx.font = 'bold 22px Fredoka One, sans-serif';
         ctx.textAlign = 'center';
-        ctx.strokeText('KUAH LODEH & SUSU AMBYAR! 🍲💥', this.width / 2, this.height * 0.28);
-        ctx.fillText('KUAH LODEH & SUSU AMBYAR! 🍲💥', this.width / 2, this.height * 0.28);
+        ctx.strokeText('KUAH LODEH & SUSU AMBYAR!', this.width / 2, this.height * 0.28);
+        ctx.fillText('KUAH LODEH & SUSU AMBYAR!', this.width / 2, this.height * 0.28);
         ctx.restore();
       }
 
@@ -3528,7 +3601,9 @@
         this.btnHowToPlay.addEventListener('click', () => {
           this.modalMainMenu.classList.add('hidden');
           this.modalStart.classList.remove('hidden');
-          if (this.btnStart) this.btnStart.innerText = 'KEMBALI KE MENU UTAMA 🏠';
+          if (this.btnStart) {
+            this.btnStart.innerHTML = '<span>KEMBALI KE MENU UTAMA</span> <svg class="w-5 h-5 inline ml-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>';
+          }
           if (this.domStartTapNotice) this.domStartTapNotice.innerText = '[ Panduan Kontrol & Kisah Mas Tion ]';
         });
 
@@ -3561,7 +3636,7 @@
             btn.addEventListener('click', () => {
               const reqLvl = skinLevelRequirements[key] || 1;
               if ((this.saveData.unlockedLevel || 1) < reqLvl) {
-                if (window.showMbgToast) window.showMbgToast(`Skin ini terbuka mulai Level ${reqLvl}!`, '🔒');
+                if (window.showMbgToast) window.showMbgToast(`Skin ini terbuka mulai Level ${reqLvl}!`, 'lock');
                 return;
               }
               this.saveData.selectedSkin = key;
@@ -3580,7 +3655,7 @@
             btn.addEventListener('click', () => {
               const reqLvl = rimLevelRequirements[key] || 1;
               if ((this.saveData.unlockedLevel || 1) < reqLvl) {
-                if (window.showMbgToast) window.showMbgToast(`Velg ini terbuka mulai Level ${reqLvl}!`, '🔒');
+                if (window.showMbgToast) window.showMbgToast(`Velg ini terbuka mulai Level ${reqLvl}!`, 'lock');
                 return;
               }
               this.saveData.selectedRim = key;
@@ -3637,7 +3712,9 @@
         // Audio toggle
         this.btnAudio.addEventListener('click', () => {
           const muted = this.sound.toggleMute();
-          this.btnAudio.innerText = muted ? '🔇' : '🔊';
+          this.btnAudio.innerHTML = muted
+            ? '<svg class="w-4 h-4 inline text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></svg>'
+            : '<svg class="w-4 h-4 inline text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
         });
 
         // Horn Button
@@ -3744,7 +3821,7 @@
         this.sound.playCoinSound();
         if (window.showMbgToast) {
           const names = { engine: 'Mesin Balap', grip: 'Grip Ban', suspension: 'Shockbreaker' };
-          window.showMbgToast(`Upgrade ${names[type] || type} berhasil ke Level ${curLvl + 1}!`, '⚡');
+          window.showMbgToast(`Upgrade ${names[type] || type} berhasil ke Level ${curLvl + 1}!`, 'zap');
         }
       }
 
@@ -3752,7 +3829,9 @@
         this.state = 'START';
         this.sound.pauseEngine();
         this.updateSaveUI();
-        if (this.btnStart) this.btnStart.innerText = 'MASUK KE MENU UTAMA (TAP TO START) 🚚💨';
+        if (this.btnStart) {
+          this.btnStart.innerHTML = '<span>MASUK KE MENU UTAMA (TAP TO START)</span> <svg class="w-5 h-5 inline ml-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>';
+        }
         if (this.domStartTapNotice) this.domStartTapNotice.innerText = '[ Sentuh layar atau klik tombol untuk mengaktifkan audio & masuk Menu Utama ]';
         this.modalMainMenu.classList.remove('hidden');
         this.modalLevelSelect.classList.add('hidden');
@@ -3786,15 +3865,19 @@
                 ? 'bg-blue-900/60 border-cyan-400 shadow-lg shadow-cyan-500/20'
                 : 'bg-slate-800/80 border-slate-700 hover:border-slate-500 hover:bg-slate-800'
             }`;
+            const starsHtml = stars > 0
+              ? Array.from({ length: stars }).map(() => '<svg class="w-3.5 h-3.5 inline text-amber-400 fill-amber-400" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>').join('')
+              : '<span class="text-slate-500 text-[10px]">Belum Bintang</span>';
+
             card.innerHTML = `
               <div class="flex items-center justify-between mb-1">
                 <span class="font-fredoka text-sm text-cyan-300">Level ${i}</span>
-                <span class="text-xs text-amber-400 tracking-wider">${stars > 0 ? '⭐'.repeat(stars) : '<span class="text-slate-500 text-[10px]">Belum Bintang</span>'}</span>
+                <span class="text-xs text-amber-400 tracking-wider">${starsHtml}</span>
               </div>
               <p class="text-[11px] text-white font-bold truncate mb-1">${cfg ? cfg.name : 'Trayek Gizi'}</p>
               <div class="flex items-center justify-between text-[10px] text-slate-400 font-mono mt-auto pt-1 border-t border-slate-700/60">
-                <span>📏 ${cfg ? cfg.distanceMeters : 4500}m</span>
-                <span class="text-cyan-400 font-bold">GAS ▶</span>
+                <span>Rute: ${cfg ? cfg.distanceMeters : 4500}m</span>
+                <span class="text-cyan-400 font-bold flex items-center gap-0.5"><span>GAS</span><svg class="w-2.5 h-2.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
               </div>
             `;
             card.addEventListener('click', () => {
@@ -3805,11 +3888,11 @@
             card.innerHTML = `
               <div class="flex items-center justify-between mb-1">
                 <span class="font-fredoka text-sm text-slate-500">Level ${i}</span>
-                <span class="text-xs">🔒</span>
+                <span class="text-xs text-slate-500"><svg class="w-3.5 h-3.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
               </div>
               <p class="text-[11px] text-slate-500 font-medium truncate mb-1">${cfg ? cfg.name : 'Trayek Terkunci'}</p>
               <div class="flex items-center justify-between text-[10px] text-slate-600 font-mono mt-auto pt-1 border-t border-slate-800">
-                <span>📏 ${cfg ? cfg.distanceMeters : 4500}m</span>
+                <span>Rute: ${cfg ? cfg.distanceMeters : 4500}m</span>
                 <span>Terkunci</span>
               </div>
             `;
@@ -3897,10 +3980,10 @@
           const reqLvl = skinReqs[key] || 1;
           const isUnlocked = (this.saveData.unlockedLevel || 1) >= reqLvl;
           if (!isUnlocked) {
-            btn.innerHTML = `<span class="opacity-70">${skinNames[key]}</span><span class="block text-[9px] text-amber-400 font-mono mt-0.5">🔒 Lvl ${reqLvl}</span>`;
+            btn.innerHTML = `<span class="opacity-70">${skinNames[key]}</span><span class="block text-[9px] text-amber-400 font-mono mt-0.5 flex items-center justify-center gap-1"><svg class="w-2.5 h-2.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Lvl ${reqLvl}</span></span>`;
             btn.className = 'p-2 rounded-xl bg-slate-900/60 border border-slate-800 text-xs font-fredoka text-slate-500 text-center opacity-70 cursor-not-allowed';
           } else if (key === this.saveData.selectedSkin) {
-            btn.innerHTML = `<span>${skinNames[key]}</span><span class="block text-[9px] text-cyan-300 font-mono mt-0.5">✓ Terpasang</span>`;
+            btn.innerHTML = `<span>${skinNames[key]}</span><span class="block text-[9px] text-cyan-300 font-mono mt-0.5 flex items-center justify-center gap-1"><svg class="w-2.5 h-2.5 inline text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Terpasang</span></span>`;
             btn.className = 'p-2 rounded-xl bg-slate-700 border-2 border-cyan-400 text-xs font-fredoka text-white text-center shadow-md';
           } else {
             btn.innerHTML = `<span>${skinNames[key]}</span>`;
@@ -3916,10 +3999,10 @@
           const reqLvl = rimReqs[key] || 1;
           const isUnlocked = (this.saveData.unlockedLevel || 1) >= reqLvl;
           if (!isUnlocked) {
-            btn.innerHTML = `<span class="opacity-70">${rimNames[key]}</span><span class="block text-[9px] text-amber-400 font-mono mt-0.5">🔒 Lvl ${reqLvl}</span>`;
+            btn.innerHTML = `<span class="opacity-70">${rimNames[key]}</span><span class="block text-[9px] text-amber-400 font-mono mt-0.5 flex items-center justify-center gap-1"><svg class="w-2.5 h-2.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Lvl ${reqLvl}</span></span>`;
             btn.className = 'p-2 rounded-xl bg-slate-900/60 border border-slate-800 text-xs font-fredoka text-slate-500 text-center opacity-70 cursor-not-allowed';
           } else if (key === this.saveData.selectedRim) {
-            btn.innerHTML = `<span>${rimNames[key]}</span><span class="block text-[9px] text-amber-300 font-mono mt-0.5">✓ Terpasang</span>`;
+            btn.innerHTML = `<span>${rimNames[key]}</span><span class="block text-[9px] text-amber-300 font-mono mt-0.5 flex items-center justify-center gap-1"><svg class="w-2.5 h-2.5 inline text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Terpasang</span></span>`;
             btn.className = 'p-2 rounded-xl bg-slate-700 border-2 border-amber-400 text-xs font-fredoka text-white text-center shadow-md';
           } else {
             btn.innerHTML = `<span>${rimNames[key]}</span>`;
@@ -3955,7 +4038,9 @@
         this.domDialogueText.innerText = item.text;
 
         const isLast = this.dialogueIndex === this.dialogueList.length - 1;
-        this.btnDialogueNext.innerText = isLast ? 'MULAI! 🚚💨' : 'LANJUT ▶';
+        this.btnDialogueNext.innerHTML = isLast
+          ? '<span>MULAI!</span> <svg class="w-4 h-4 inline ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>'
+          : '<span>LANJUT</span> <svg class="w-4 h-4 inline ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
       }
 
       advanceDialogue() {
@@ -4127,7 +4212,7 @@
         goTitle.innerText = 'Game Over';
 
         if (reason === 'ROLLOVER') {
-          goIcon.innerText = '💥';
+          goIcon.innerHTML = '<svg class="w-14 h-14 text-rose-500 mx-auto drop-shadow-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>';
           if (goSubtitle) goSubtitle.innerText = 'Omprengmu telah tumpah!';
           goDesc.innerText = 'MOBIL GWEH TERGULING! Atap truk menghantam tanah, boks toska ambyar, 500 botol susu meletus, kuah sayur lodeh tumpah ambyar ke layar kaca, dan Mas Tion terduduk lemas meratapi rantang gizi yang berserakan di depan Mang Ucup!';
           if (this.renderer) {
@@ -4135,15 +4220,15 @@
             this.renderer.lodehTimer = 3.5;
           }
         } else if (reason === 'FUEL') {
-          goIcon.innerText = '⛽';
+          goIcon.innerHTML = '<svg class="w-14 h-14 text-amber-500 mx-auto drop-shadow-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="15" y1="22" y2="22"/><line x1="4" x2="14" y1="9" y2="9"/><path d="M14 22V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v18"/><path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5"/></svg>';
           if (goSubtitle) goSubtitle.innerText = 'BENSIN LUDES DI TANJAKAN!';
           goDesc.innerText = 'Bensin habis saat menanjak bukit curam! Truk melorot mundur tak terkendali diiringi sorakan riang warga kampung yang menonton!';
         } else if (reason === 'DEADLINE') {
-          goIcon.innerText = '⏰';
+          goIcon.innerHTML = '<svg class="w-14 h-14 text-orange-500 mx-auto drop-shadow-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
           if (goSubtitle) goSubtitle.innerText = 'TELAT! BEL SEKOLAH SUDAH BUNYI!';
           goDesc.innerText = 'Waktu habis tepat pukul 09:45 WIB! Siswa lemas kelaparan di depan gerbang Puspa Bangsa, dan Mas Tion harus menanggung malu di hadapan Bu Yulie!';
         } else {
-          goIcon.innerText = '🍲';
+          goIcon.innerHTML = '<svg class="w-14 h-14 text-rose-500 mx-auto drop-shadow-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2v6a3 3 0 0 1-3 3 3 3 0 0 1-3-3V2"/><path d="M15 11v11"/><path d="M5 2v10a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V2"/><path d="M8 14v8"/></svg>';
           if (goSubtitle) goSubtitle.innerText = 'PAKET GIZI HANCUR LEBUR!';
           goDesc.innerText = 'Integritas muatan menyentuh 0%! Tahu-tempe orek dan sayur lodeh gurih berceceran ambyar jadi bubur jalanan akibat guncangan ekstrem!';
         }
@@ -4181,7 +4266,7 @@
         this.saveProgress();
         this.updateSaveUI();
 
-        document.getElementById('vicStars').innerText = '⭐'.repeat(stars);
+        document.getElementById('vicStars').innerHTML = Array.from({ length: stars }).map(() => '<svg class="w-8 h-8 text-amber-400 fill-amber-400 inline" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>').join('');
         document.getElementById('vicCargo').innerText = `${Math.round(this.vehicle.cargoIntegrity)}%`;
         document.getElementById('vicFuel').innerText = `${Math.round(this.vehicle.fuel)}%`;
         document.getElementById('vicCoins').innerText = runCoins;
@@ -4195,7 +4280,9 @@
         document.getElementById('vicTime').innerText = `${mins}:${secs} (Target 09:45 Tercapai!)`;
 
         if (this.btnVicNextLevel) {
-          this.btnVicNextLevel.innerText = this.currentLevel >= 20 ? 'TAMAT! MENU UTAMA 🏆' : 'LEVEL SELANJUTNYA 🚀';
+          this.btnVicNextLevel.innerHTML = this.currentLevel >= 20
+            ? '<span>TAMAT! MENU UTAMA</span> <svg class="w-5 h-5 inline ml-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>'
+            : '<span>LEVEL SELANJUTNYA</span> <svg class="w-5 h-5 inline ml-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 19 22 12 13 5 13 19"/><polygon points="2 19 11 12 2 5 2 19"/></svg>';
         }
 
         const dialogues = STORY_DIALOGUES[this.currentLevel];
@@ -4292,17 +4379,39 @@
         const [toast, setToast] = useState(null);
 
         useEffect(() => {
-          window.showMbgToast = (message, icon = '🚚') => {
+          window.showMbgToast = (message, icon = 'truck') => {
             setToast({ message, icon, id: Date.now() });
             setTimeout(() => setToast(null), 3200);
           };
         }, []);
 
         if (!toast) return null;
+
+        const getToastIcon = (type) => {
+          if (type === 'lock') {
+            return h('svg', { className: 'w-6 h-6 text-amber-400', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' }, [
+              h('rect', { key: 'r', width: 18, height: 11, x: 3, y: 11, rx: 2, ry: 2 }),
+              h('path', { key: 'p', d: 'M7 11V7a5 5 0 0 1 10 0v4' })
+            ]);
+          }
+          if (type === 'zap') {
+            return h('svg', { className: 'w-6 h-6 text-cyan-400', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' }, [
+              h('polygon', { key: 'p', points: '13 2 3 14 12 14 11 22 21 10 12 10 13 2' })
+            ]);
+          }
+          return h('svg', { className: 'w-6 h-6 text-cyan-400', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' }, [
+            h('path', { key: 'p1', d: 'M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2' }),
+            h('path', { key: 'p2', d: 'M15 18H9' }),
+            h('path', { key: 'p3', d: 'M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14' }),
+            h('circle', { key: 'c1', cx: 17, cy: 18, r: 2 }),
+            h('circle', { key: 'c2', cx: 7, cy: 18, r: 2 })
+          ]);
+        };
+
         return h('div', {
           className: 'absolute top-14 left-1/2 transform -translate-x-1/2 bg-slate-900/95 border-2 border-cyan-400 text-white px-5 py-2.5 rounded-2xl shadow-2xl backdrop-blur-md flex items-center gap-3 pointer-events-none transition-all duration-300'
         }, [
-          h('span', { key: 'icon', className: 'text-2xl animate-bounce' }, toast.icon),
+          h('span', { key: 'icon', className: 'animate-bounce flex items-center justify-center' }, getToastIcon(toast.icon)),
           h('span', { key: 'msg', className: 'font-fredoka text-sm text-cyan-200 tracking-wide' }, toast.message)
         ]);
       }

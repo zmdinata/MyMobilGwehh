@@ -3,15 +3,16 @@
 
 import React, { useEffect, useRef } from 'react';
 import {
-  FaWrench,
-  FaCoins,
-  FaXmark,
-  FaBolt,
-  FaPalette,
-  FaGear,
-  FaLock
-} from 'react-icons/fa6';
-import { GiTireTracks, GiSpring } from 'react-icons/gi';
+  Wrench,
+  Coins,
+  X,
+  Zap,
+  CircleDot,
+  Activity,
+  Palette,
+  Settings,
+  Lock
+} from 'lucide-react';
 
 export default function GarageModal({
   coins = 0,
@@ -125,7 +126,7 @@ export default function GarageModal({
         {/* Header */}
         <div className="flex items-center justify-between mb-3 border-b border-slate-700 pb-3">
           <div className="flex items-center gap-2.5">
-            <FaWrench className="text-2xl sm:text-3xl text-amber-400" />
+            <Wrench className="w-7 h-7 text-amber-400" />
             <div>
               <h2 className="font-fredoka text-xl sm:text-2xl text-amber-300">
                 BENGKEL RESMI ZACKY
@@ -137,7 +138,7 @@ export default function GarageModal({
           </div>
           <div className="flex items-center gap-3">
             <span className="bg-amber-500/20 border border-amber-400 text-amber-300 px-3 py-1 rounded-full text-xs sm:text-sm font-bold font-mono flex items-center gap-1.5">
-              <FaCoins className="text-amber-400 text-xs" />
+              <Coins className="text-amber-400 w-3.5 h-3.5" />
               <span id="garageCoins">{coins}</span> Koin
             </span>
             <button
@@ -146,7 +147,7 @@ export default function GarageModal({
               className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-sm border border-slate-600 active:scale-95 cursor-pointer flex items-center gap-1.5"
             >
               <span>KEMBALI</span>
-              <FaXmark className="text-xs" />
+              <X className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -172,7 +173,7 @@ export default function GarageModal({
             <div>
               <div className="flex items-center justify-between mb-1">
                 <span className="font-fredoka text-sm text-cyan-300 flex items-center gap-1.5">
-                  <FaBolt className="text-cyan-400 text-xs" /> Mesin Turbo
+                  <Zap className="text-cyan-400 w-3.5 h-3.5" /> Mesin Turbo
                 </span>
                 <span className="font-mono text-xs font-bold text-amber-400">LV {upgrades.engine}/20</span>
               </div>
@@ -202,7 +203,7 @@ export default function GarageModal({
             <div>
               <div className="flex items-center justify-between mb-1">
                 <span className="font-fredoka text-sm text-emerald-300 flex items-center gap-1.5">
-                  <GiTireTracks className="text-emerald-400 text-base" /> Ban Kompon
+                  <CircleDot className="text-emerald-400 w-4 h-4" /> Ban Kompon
                 </span>
                 <span className="font-mono text-xs font-bold text-amber-400">LV {upgrades.grip}/20</span>
               </div>
@@ -232,7 +233,7 @@ export default function GarageModal({
             <div>
               <div className="flex items-center justify-between mb-1">
                 <span className="font-fredoka text-sm text-amber-300 flex items-center gap-1.5">
-                  <GiSpring className="text-amber-400 text-base" /> Suspensi
+                  <Activity className="text-amber-400 w-4 h-4" /> Suspensi
                 </span>
                 <span className="font-mono text-xs font-bold text-amber-400">LV {upgrades.suspension}/20</span>
               </div>
@@ -261,7 +262,7 @@ export default function GarageModal({
         {/* Skins & Rims Section */}
         <div className="border-t border-slate-800 pt-3">
           <span className="font-fredoka text-sm text-slate-300 flex items-center gap-1.5 mb-2">
-            <FaPalette className="text-amber-400" /> Kustomisasi Body Truk:
+            <Palette className="text-amber-400 w-4 h-4" /> Kustomisasi Body Truk:
           </span>
           <div className="flex flex-wrap gap-2 mb-3">
             {skins.map(s => {
@@ -284,7 +285,7 @@ export default function GarageModal({
                   <span>{s.name}</span>
                   {!isUnlocked && (
                     <span className="inline-flex items-center gap-1 text-[10px] opacity-75">
-                      <FaLock className="text-[9px]" /> Lvl {s.unlockLevel}
+                      <Lock className="w-2.5 h-2.5" /> Lvl {s.unlockLevel}
                     </span>
                   )}
                 </button>
@@ -293,7 +294,7 @@ export default function GarageModal({
           </div>
 
           <span className="font-fredoka text-sm text-slate-300 flex items-center gap-1.5 mb-2">
-            <FaGear className="text-cyan-400" /> Pilihan Velg:
+            <Settings className="text-cyan-400 w-4 h-4" /> Pilihan Velg:
           </span>
           <div className="flex flex-wrap gap-2">
             {rims.map(r => {
@@ -316,7 +317,7 @@ export default function GarageModal({
                   <span>{r.name}</span>
                   {!isUnlocked && (
                     <span className="inline-flex items-center gap-1 text-[10px] opacity-75">
-                      <FaLock className="text-[9px]" /> Lvl {r.unlockLevel}
+                      <Lock className="w-2.5 h-2.5" /> Lvl {r.unlockLevel}
                     </span>
                   )}
                 </button>

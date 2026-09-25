@@ -2,7 +2,7 @@
 'use client';
 
 import React from 'react';
-import { FaBullhorn, FaCaretDown, FaCaretUp, FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
+import { Megaphone, ChevronDown, ChevronUp, ArrowLeft, ArrowRight } from 'lucide-react';
 
 export default function TouchPedals({
   onBrakeStart = () => {},
@@ -36,11 +36,11 @@ export default function TouchPedals({
               REM
             </span>
             <span className="block text-[9px] sm:text-[10px] font-mono text-red-200 uppercase font-semibold flex items-center justify-center gap-0.5">
-              Mundur / Pitch <FaCaretDown className="text-xs" />
+              Mundur / Pitch <ChevronDown className="w-3 h-3 inline" />
             </span>
           </div>
           <span className="text-[9px] text-red-300/80 font-mono hidden sm:inline flex items-center gap-1">
-            [A] / [<FaArrowLeft className="text-[7px]" />]
+            [A] / [<ArrowLeft className="w-2.5 h-2.5 inline" />]
           </span>
         </button>
       </div>
@@ -53,7 +53,7 @@ export default function TouchPedals({
           onTouchStart={(e) => { e.preventDefault(); onHorn(); }}
           className="pedal-btn relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-b from-amber-400/95 via-amber-500/95 to-yellow-600/95 backdrop-blur-md border-2 border-amber-200 shadow-[0_8px_20px_rgba(245,158,11,0.5)] flex flex-col items-center justify-center p-1 active:scale-90 transition-transform"
         >
-          <FaBullhorn className="text-xl sm:text-2xl text-slate-950 mb-0.5 drop-shadow" />
+          <Megaphone className="w-7 h-7 text-slate-950 mb-0.5 drop-shadow" />
           <span className="font-fredoka text-[10px] sm:text-xs text-slate-950 font-bold tracking-tight">TELOLET</span>
           <span className="text-[8px] text-amber-950 font-mono hidden sm:inline font-bold">[H] / [Spasi]</span>
         </button>
@@ -82,11 +82,11 @@ export default function TouchPedals({
               GAS
             </span>
             <span className="block text-[9px] sm:text-[10px] font-mono text-cyan-200 uppercase font-semibold flex items-center justify-center gap-0.5">
-              Maju / Pitch <FaCaretUp className="text-xs" />
+              Maju / Pitch <ChevronUp className="w-3 h-3 inline" />
             </span>
           </div>
           <span className="text-[9px] text-cyan-300/80 font-mono hidden sm:inline flex items-center gap-1">
-            [D] / [<FaArrowRight className="text-[7px]" />]
+            [D] / [<ArrowRight className="w-2.5 h-2.5 inline" />]
           </span>
         </button>
       </div>

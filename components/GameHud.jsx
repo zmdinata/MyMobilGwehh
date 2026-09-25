@@ -3,15 +3,15 @@
 
 import React from 'react';
 import {
-  FaCoins,
-  FaTruckMoving,
-  FaFlagCheckered,
-  FaGasPump,
-  FaVolumeHigh,
-  FaVolumeXmark,
-  FaPause,
-  FaBullhorn
-} from 'react-icons/fa6';
+  Coins,
+  Truck,
+  Flag,
+  Fuel,
+  Volume2,
+  VolumeX,
+  Pause,
+  Megaphone
+} from 'lucide-react';
 
 export default function GameHud({
   level = 1,
@@ -70,7 +70,7 @@ export default function GameHud({
           <div className="flex items-center justify-between text-[11px] sm:text-xs text-slate-300 pt-0.5">
             <span className="font-mono">KECEPATAN: <b id="speedVal" className="text-white text-xs sm:text-sm">{Math.round(speedKmh)}</b> km/h</span>
             <span className="text-amber-400 font-bold flex items-center gap-1">
-              <FaCoins className="text-amber-400 text-xs" />
+              <Coins className="w-3.5 h-3.5 text-amber-400" />
               <span id="coinVal" className="font-mono">{coins}</span>
             </span>
           </div>
@@ -103,14 +103,14 @@ export default function GameHud({
             {/* Truck marker */}
             <div
               id="truckMarker"
-              className="absolute z-10 -top-1.5 transform -translate-x-1/2 transition-all duration-75 pointer-events-none text-cyan-300 text-sm drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+              className="absolute z-10 -top-1.5 transform -translate-x-1/2 transition-all duration-75 pointer-events-none text-cyan-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
               style={{ left: `${progressRatio}%` }}
             >
-              <FaTruckMoving />
+              <Truck className="w-4 h-4" />
             </div>
             {/* Finish Gate Flag */}
-            <div className="absolute right-1 z-10 text-xs text-white drop-shadow">
-              <FaFlagCheckered />
+            <div className="absolute right-1 z-10 text-emerald-400 drop-shadow">
+              <Flag className="w-3.5 h-3.5" />
             </div>
           </div>
 
@@ -128,7 +128,7 @@ export default function GameHud({
           <div id="fuelWidget" className="flex flex-col gap-1 pointer-events-auto bg-slate-900/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-2.5 shadow-xl min-w-[130px] sm:min-w-[160px]">
             <div className="flex items-center justify-between text-xs sm:text-sm font-bold">
               <span className="flex items-center gap-1.5 text-amber-400">
-                <FaGasPump className="text-amber-400 text-xs" /> BENSIN
+                <Fuel className="w-3.5 h-3.5 text-amber-400" /> BENSIN
               </span>
               <span id="fuelVal" className="text-amber-300 font-mono">{Math.round(fuelPercent)}%</span>
             </div>
@@ -154,7 +154,7 @@ export default function GameHud({
               className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-800/90 border border-slate-700 hover:bg-slate-700 active:scale-95 flex items-center justify-center text-sm shadow-lg text-slate-200"
               title="Toggle Audio"
             >
-              {isAudioMuted ? <FaVolumeXmark className="text-red-400" /> : <FaVolumeHigh className="text-cyan-400" />}
+              {isAudioMuted ? <VolumeX className="w-4 h-4 text-red-400" /> : <Volume2 className="w-4 h-4 text-cyan-400" />}
             </button>
             <button
               id="pauseBtn"
@@ -162,7 +162,7 @@ export default function GameHud({
               className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-800/90 border border-slate-700 hover:bg-slate-700 active:scale-95 flex items-center justify-center text-sm shadow-lg text-slate-200"
               title="Jeda Permainan"
             >
-              <FaPause />
+              <Pause className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -171,7 +171,7 @@ export default function GameHud({
       {/* Center Floating Screen Notification / Telolet Floaters */}
       {centerNotice && (
         <div id="centerNotice" className="text-center font-fredoka text-xl sm:text-3xl text-amber-300 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] transition-opacity duration-300 pointer-events-none flex items-center justify-center gap-2">
-          <FaBullhorn className="text-amber-400 animate-bounce" />
+          <Megaphone className="w-6 h-6 text-amber-400 animate-bounce" />
           <span>{centerNotice}</span>
         </div>
       )}

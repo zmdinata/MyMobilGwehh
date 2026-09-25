@@ -3,13 +3,13 @@
 
 import React from 'react';
 import {
-  FaTrophy,
-  FaStar,
-  FaCoins,
-  FaForward,
-  FaRotateRight,
-  FaHouse
-} from 'react-icons/fa6';
+  Trophy,
+  Star,
+  Coins,
+  FastForward,
+  RotateCcw,
+  Home
+} from 'lucide-react';
 
 export default function VictoryModal({
   stars = 3,
@@ -23,7 +23,7 @@ export default function VictoryModal({
   return (
     <div id="victoryModal" className="absolute inset-0 z-40 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-emerald-400 rounded-3xl p-6 sm:p-8 shadow-2xl text-center relative overflow-hidden">
-        <FaTrophy className="text-4xl sm:text-5xl text-yellow-400 mx-auto mb-2 drop-shadow-lg" />
+        <Trophy className="w-12 h-12 text-yellow-400 mx-auto mb-2 drop-shadow-lg" />
         <h2 className="font-fredoka text-2xl sm:text-3xl text-emerald-400 drop-shadow mb-1">
           MISI BERHASIL!
         </h2>
@@ -45,7 +45,7 @@ export default function VictoryModal({
         {/* Star Rating */}
         <div id="vicStars" className="flex justify-center items-center gap-2 text-2xl sm:text-3xl text-amber-400 mb-3">
           {Array.from({ length: stars }).map((_, i) => (
-            <FaStar key={i} />
+            <Star key={i} className="w-8 h-8 fill-amber-400 text-amber-400" />
           ))}
         </div>
 
@@ -67,7 +67,7 @@ export default function VictoryModal({
             <span>Koin Gizi Diperoleh:</span>
             <span id="vicCoins" className="flex items-center gap-1">
               <span>+{coinsEarned}</span>
-              <FaCoins className="text-amber-400 text-xs" />
+              <Coins className="text-amber-400 w-3.5 h-3.5" />
             </span>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function VictoryModal({
             className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-fredoka text-base sm:text-lg font-bold shadow-lg shadow-emerald-500/30 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
           >
             <span>LANJUT TRAYEK BERIKUTNYA</span>
-            <FaForward className="text-sm" />
+            <FastForward className="w-4 h-4" />
           </button>
           <div className="grid grid-cols-2 gap-2">
             <button
@@ -89,14 +89,14 @@ export default function VictoryModal({
               className="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-xs border border-slate-700 active:scale-95 cursor-pointer flex items-center justify-center gap-1.5"
             >
               <span>ULANG LEVEL</span>
-              <FaRotateRight className="text-[10px]" />
+              <RotateCcw className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={onMenu}
               className="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-xs border border-slate-700 active:scale-95 cursor-pointer flex items-center justify-center gap-1.5"
             >
               <span>MENU UTAMA</span>
-              <FaHouse className="text-[10px]" />
+              <Home className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>

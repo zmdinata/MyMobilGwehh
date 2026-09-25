@@ -3,13 +3,13 @@
 
 import React from 'react';
 import {
-  FaMapLocationDot,
-  FaXmark,
-  FaLock,
-  FaStar,
-  FaRoute,
-  FaPlay
-} from 'react-icons/fa6';
+  Map,
+  X,
+  Lock,
+  Star,
+  Milestone,
+  Play
+} from 'lucide-react';
 
 export default function LevelSelectModal({
   currentUnlockedLevel = 1,
@@ -35,7 +35,7 @@ export default function LevelSelectModal({
           <div>
             <h2 className="font-fredoka text-xl sm:text-2xl text-cyan-300 flex items-center gap-2">
               <span>PILIH LEVEL PERJALANAN</span>
-              <FaMapLocationDot className="text-cyan-400" />
+              <Map className="w-5 h-5 text-cyan-400" />
             </h2>
             <p className="text-xs text-slate-400 font-mono">
               20 Level Menuju Gerbang Puspa Bangsa Cirebon
@@ -47,7 +47,7 @@ export default function LevelSelectModal({
             className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-sm border border-slate-600 active:scale-95 cursor-pointer flex items-center gap-1.5"
           >
             <span>KEMBALI</span>
-            <FaXmark className="text-xs" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
@@ -75,11 +75,11 @@ export default function LevelSelectModal({
                     Level {item.level}
                   </span>
                   {!item.isUnlocked ? (
-                    <FaLock className="text-slate-500 text-xs" />
+                    <Lock className="text-slate-500 w-3.5 h-3.5" />
                   ) : item.stars > 0 ? (
                     <div className="flex items-center gap-0.5 text-amber-400 text-xs">
                       {Array.from({ length: item.stars }).map((_, i) => (
-                        <FaStar key={i} />
+                        <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
                       ))}
                     </div>
                   ) : (
@@ -89,13 +89,13 @@ export default function LevelSelectModal({
 
                 <div className="text-[10px] sm:text-xs text-slate-400 font-mono flex items-center justify-between mt-2 pt-1 border-t border-slate-700/50">
                   <span className="flex items-center gap-1">
-                    <FaRoute className="text-[9px] text-slate-500" />
+                    <Milestone className="w-3 h-3 text-slate-500" />
                     <span>{item.dist}m</span>
                   </span>
                   {item.isUnlocked && (
                     <span className="text-cyan-300 font-bold flex items-center gap-1">
                       <span>GAS</span>
-                      <FaPlay className="text-[8px]" />
+                      <Play className="w-2.5 h-2.5 fill-cyan-300" />
                     </span>
                   )}
                 </div>

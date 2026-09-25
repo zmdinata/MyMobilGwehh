@@ -3,12 +3,12 @@
 
 import React from 'react';
 import {
-  FaBullseye,
-  FaTriangleExclamation,
-  FaDesktop,
-  FaMobileScreenButton,
-  FaTruckFast
-} from 'react-icons/fa6';
+  Target,
+  AlertTriangle,
+  Monitor,
+  Smartphone,
+  Truck
+} from 'lucide-react';
 
 export default function WelcomeModal({ onStart = () => {} }) {
   return (
@@ -46,13 +46,13 @@ export default function WelcomeModal({ onStart = () => {} }) {
             <b className="text-cyan-300">Kisah Mas Tion:</b> Driver muda tangguh armada MBG yang berjuang mengantar <b>500 porsi</b> paket gizi hangat demi Bu Yulie dan siswa-siswi <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b>, didampingi petuah bijak sang legenda supir elf Pantura, <b>Mang Ucup</b>!
           </p>
           <p className="flex items-start gap-2">
-            <FaBullseye className="text-rose-400 text-sm mt-0.5 shrink-0" />
+            <Target className="text-rose-400 w-4 h-4 mt-0.5 shrink-0" />
             <span>
               <b className="text-white">Misi Kamu:</b> Antar <b>500 porsi paket gizi hangat</b> (nasi pulen, ayam serundeng, tahu-tempe orek, sayur lodeh, dan susu murni) menuju kawasan sekolah fiktif <b>Sekolah Puspa Bangsa</b> sebelum bel masuk berbunyi tepat pukul <b>09:45 WIB!</b>
             </span>
           </p>
           <p className="text-amber-200/90 text-[11px] sm:text-xs flex items-center gap-1.5">
-            <FaTriangleExclamation className="text-amber-400 shrink-0 text-xs" />
+            <AlertTriangle className="text-amber-400 shrink-0 w-3.5 h-3.5" />
             <span>Hati-hati: Rob Pantura licin, kubangan lumpur sawah seret, dan balok kayu gunung bisa merontokkan sayur lodeh!</span>
           </p>
         </div>
@@ -61,7 +61,7 @@ export default function WelcomeModal({ onStart = () => {} }) {
         <div className="grid grid-cols-2 gap-2 w-full text-[11px] sm:text-xs mb-5">
           <div className="bg-slate-800/60 border border-slate-700/80 rounded-xl p-2.5 text-left">
             <span className="font-bold text-cyan-300 flex items-center gap-1.5 mb-1">
-              <FaDesktop className="text-cyan-400" /> Desktop Web
+              <Monitor className="text-cyan-400 w-4 h-4" /> Desktop Web
             </span>
             <span className="text-slate-300 block">Gas / Pitch Up: <b>[D] / [→]</b></span>
             <span className="text-slate-300 block">Rem / Pitch Down: <b>[A] / [←]</b></span>
@@ -69,7 +69,7 @@ export default function WelcomeModal({ onStart = () => {} }) {
           </div>
           <div className="bg-slate-800/60 border border-slate-700/80 rounded-xl p-2.5 text-left">
             <span className="font-bold text-amber-300 flex items-center gap-1.5 mb-1">
-              <FaMobileScreenButton className="text-amber-400" /> HP / Mobile Touch
+              <Smartphone className="text-amber-400 w-4 h-4" /> HP / Mobile Touch
             </span>
             <span className="text-slate-300 block">Pedal Kanan: <b>Gas / Pitch Up</b></span>
             <span className="text-slate-300 block">Pedal Kiri: <b>Rem / Pitch Down</b></span>
@@ -88,7 +88,7 @@ export default function WelcomeModal({ onStart = () => {} }) {
           className="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 hover:from-blue-500 hover:to-cyan-300 text-white font-fredoka text-lg sm:text-xl shadow-lg shadow-blue-500/30 transform active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
           <span>MASUK KE MENU UTAMA (TAP TO START)</span>
-          <FaTruckFast className="text-xl" />
+          <Truck className="w-5 h-5" />
         </button>
         <span className="text-[10px] text-slate-400 font-mono mt-2">
           [ Sentuh layar atau klik tombol untuk mengaktifkan audio & masuk Menu Utama ]

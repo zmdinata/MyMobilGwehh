@@ -98,6 +98,10 @@ Setiap bioma terhubung 1:1 ke aset ilustrasi latar belakang dan transisi 200m ya
   - Gerbang finis sekolah (`finish_gate.png`): skala tinggi 180px dengan proporsi ortografis terjaga.
   - **Anchoring Background Jauh**: Lapisan latar belakang jauh (`drawDistantParallaxLayer`) wajib selalu dijangkarkan pada $y = 0$ (`topRatio = 0.0`, `heightRatio = 0.92`) agar kanvas langit menutup sempurna dari tepi atas layar hingga cakrawala tanpa celah ("bolong").
   - **Palet Skybox Alami**: Palet langit (`skyPalettes`) seluruh bioma siang hari (termasuk Biome 4 Pedesaan Sawah) menggunakan gradien biru atmosferik alami (`top: [56, 189, 248]`), bukan warna hijau rumput yang menyebabkan artefak strip neon hijau.
+- **Standar Ikon Vektor Lucide (Kebijakan Nol Emoticon / Emojis)**:
+  - Seluruh elemen UI, badge, tombol, dialog, modal, HUD, dan pedal dilarang menggunakan karakter unicode emoticon/emoji (misal `🚚💨`, `🪙`, `⛽`, `🔊`, `🎯`, `⚠️`, `🔧`, `💥`, `🏆`, dll.).
+  - **React Components Suite (`components/`)**: Menggunakan pustaka resmi [`lucide-react`](https://lucide.dev/) (`Coins`, `Truck`, `Fuel`, `Volume2`, `VolumeX`, `Pause`, `Megaphone`, `Target`, `AlertTriangle`, `Monitor`, `Smartphone`, `Map`, `Wrench`, `BookOpen`, `Lock`, `Star`, `Milestone`, `Play`, `Zap`, `CircleDot`, `Activity`, `Palette`, `Settings`, `GraduationCap`, `Smile`, `UserCheck`, `ShieldCheck`, `User`, `FastForward`, `Flag`, `RotateCcw`, `Home`, `AlertOctagon`, `Clock`, `Utensils`, `ChevronDown`, `ChevronUp`, `ArrowLeft`, `ArrowRight`).
+  - **Standalone HTML5 Canvas (`index.html`)**: Menggunakan inline SVG vector Lucide 1:1 serta Lucide CDN script (`unpkg.com/lucide@latest`) untuk rendering vector tanpa FOUC, tajam, ringan, dan zero emojis.
 
 ---
 

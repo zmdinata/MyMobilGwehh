@@ -3,12 +3,12 @@
 
 import React from 'react';
 import {
-  FaCoins,
-  FaTruckFast,
-  FaMapLocationDot,
-  FaWrench,
-  FaBookOpen
-} from 'react-icons/fa6';
+  Coins,
+  Truck,
+  Map,
+  Wrench,
+  BookOpen
+} from 'lucide-react';
 
 export default function MainMenuModal({
   currentLevel = 1,
@@ -52,7 +52,7 @@ export default function MainMenuModal({
             <span className="text-cyan-300 font-bold">Level <span id="menuCurrentLevel">{currentLevel}</span> / 20</span>
           </div>
           <div className="flex items-center gap-1.5 text-amber-400 font-bold">
-            <FaCoins className="text-amber-400 text-sm" />
+            <Coins className="text-amber-400 w-4 h-4" />
             <span id="menuCoinCount">{coins}</span> Koin Gizi
           </div>
         </div>
@@ -65,7 +65,7 @@ export default function MainMenuModal({
             className="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 hover:from-blue-500 hover:to-cyan-300 text-white font-fredoka text-lg sm:text-xl shadow-lg shadow-blue-500/30 transform active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer"
           >
             <span>MULAI CERITA</span>
-            <FaTruckFast className="text-xl" />
+            <Truck className="w-5 h-5" />
           </button>
 
           <button
@@ -74,7 +74,7 @@ export default function MainMenuModal({
             className="w-full py-3.5 rounded-2xl bg-slate-800 hover:bg-slate-700/90 text-cyan-300 font-fredoka text-base sm:text-lg border border-cyan-500/40 shadow-md transform active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer"
           >
             <span>PILIH LEVEL (1 - 20)</span>
-            <FaMapLocationDot className="text-lg text-cyan-400" />
+            <Map className="w-5 h-5 text-cyan-400" />
           </button>
 
           <button
@@ -83,7 +83,7 @@ export default function MainMenuModal({
             className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 text-slate-950 font-fredoka text-base sm:text-lg shadow-lg shadow-amber-500/30 transform active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer"
           >
             <span>GARASI ZACKY (UPGRADE & SKIN)</span>
-            <FaWrench className="text-base text-slate-950" />
+            <Wrench className="w-4 h-4 text-slate-950" />
           </button>
 
           <button
@@ -91,7 +91,7 @@ export default function MainMenuModal({
             onClick={onOpenLore}
             className="w-full py-2.5 rounded-xl bg-slate-800/70 hover:bg-slate-700 text-slate-400 font-fredoka text-xs sm:text-sm border border-slate-700 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
           >
-            <FaBookOpen className="text-cyan-400 text-xs" />
+            <BookOpen className="text-cyan-400 w-3.5 h-3.5" />
             <span>PANDUAN KONTROL & KISAH MAS TION</span>
           </button>
         </div>
