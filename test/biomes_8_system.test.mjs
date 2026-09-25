@@ -161,3 +161,24 @@ test('index.html and GameRenderer.js implement 1-to-1 full-height cover (0.0, 1.
   }
 });
 
+test('index.html and GameRenderer.js implement multi-layer earth strata, dynamic surface trims, and animated underground micro-objects', () => {
+  const gameRendererPath = path.resolve(__dirname, '../components/GameRenderer.js');
+  const gameRendererJs = fs.readFileSync(gameRendererPath, 'utf8');
+
+  for (const [name, content] of [['index.html', indexHtml], ['GameRenderer.js', gameRendererJs]]) {
+    // Multi-layer vertical strata gradient
+    assert.ok(content.includes('subsoilGrad.addColorStop'), `${name} implements vertical strata gradient`);
+    // Subterranean sedimentary strata bands
+    assert.ok(content.includes('Subterranean Sedimentary Strata Bands'), `${name} has wavy geological strata bands`);
+    // Thematic underground micro-objects (cacing, roots, fossils, shells, conduits)
+    assert.ok(content.includes('Cacing Tanah Menggeliat'), `${name} renders wiggling earthworms`);
+    assert.ok(content.includes('Akar Padi / Tanaman'), `${name} renders hanging root systems`);
+    assert.ok(content.includes('Prehistoric Ammonite Fossil'), `${name} renders mountain ammonite fossils`);
+    assert.ok(content.includes('Underground Drainage Conduit Pipe'), `${name} renders urban utility conduits`);
+    assert.ok(content.includes('Buried Sea Shell'), `${name} renders coastal sea shells`);
+    // Biome-specific living grass surface trim
+    assert.ok(content.includes('Living Grass Tufts'), `${name} renders living animated grass tufts`);
+  }
+});
+
+

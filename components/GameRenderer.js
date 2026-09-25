@@ -845,18 +845,266 @@ export class GameRenderer {
           dashAlpha = pal.dashAlpha;
         }
 
-        // Draw Subsoil Deep Polygon
-        ctx.fillStyle = subsoilColor;
+        // Determine active biome for thematic features
+        const activeBiomeId = (blend && blend.inTransition && blend.t > 0.5 && blend.toBiome) ? blend.toBiome.id : biome.id;
+        const animTime = (typeof performance !== 'undefined' ? performance.now() * 0.001 : Date.now() * 0.001);
+
+        // 1. Draw Subsoil Deep Polygon with Vertical Strata Gradient
+        const groundBottomY = this.height + this.camera.y + 200;
+        const subsoilGrad = ctx.createLinearGradient(0, this.camera.y + 100, 0, groundBottomY);
+        subsoilGrad.addColorStop(0, subsoilColor);
+        subsoilGrad.addColorStop(0.28, subsoilColor);
+        subsoilGrad.addColorStop(1, 'rgba(15, 23, 42, 0.95)');
+        ctx.fillStyle = subsoilGrad;
         ctx.beginPath();
-        ctx.moveTo(startX, this.height + this.camera.y + 200);
+        ctx.moveTo(startX, groundBottomY);
         for (let x = startX; x <= endX; x += step) {
           ctx.lineTo(x, terrain.getHeight(x));
         }
-        ctx.lineTo(endX, this.height + this.camera.y + 200);
+        ctx.lineTo(endX, groundBottomY);
         ctx.closePath();
         ctx.fill();
 
-        // Draw Surface Road / Topsoil Ribbon
+        // 2. Subterranean Sedimentary Strata Bands (Wavy geological layering)
+        ctx.save();
+        for (let s = 1; s <= 3; s++) {
+          const depthOffset = s * 65;
+          ctx.strokeStyle = (s % 2 === 0) ? 'rgba(0, 0, 0, 0.14)' : 'rgba(255, 255, 255, 0.05)';
+          ctx.lineWidth = 4 + (s % 2) * 2;
+          ctx.beginPath();
+          for (let x = startX; x <= endX; x += 24) {
+            const gy = terrain.getHeight(x) + depthOffset + Math.sin(x * 0.015 + s) * 7;
+            if (x === startX) ctx.moveTo(x, gy);
+            else ctx.lineTo(x, gy);
+          }
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // 3. Thematic Underground Micro-Objects (Earthworms, Roots, Stones, Fossils, Conduits, Shells)
+        ctx.save();
+        const gridSize = 110;
+        const startK = Math.floor(startX / gridSize);
+        const endK = Math.ceil(endX / gridSize);
+
+        for (let k = startK; k <= endK; k++) {
+          const hash = (seed) => {
+            const v = Math.sin(k * 12.9898 + seed * 78.233) * 43758.5453;
+            return v - Math.floor(v);
+          };
+
+          const objX = k * gridSize + 18 + hash(1) * (gridSize - 36);
+          const groundY = terrain.getHeight(objX);
+          const depth = 35 + hash(2) * 110;
+          const objY = groundY + depth;
+
+          if (objY > groundBottomY - 20) continue;
+
+          const roll = hash(3);
+
+          if (activeBiomeId === 3 || activeBiomeId === 4) {
+            // Biome 3 & 4: Lembah Sawah & Pedesaan Lumbung Padi
+            if (roll < 0.45) {
+              // Cute wiggling earthworm (Cacing Tanah Menggeliat)
+              const wPhase = animTime * 3.2 + k * 1.6;
+              const wLen = 14;
+              ctx.save();
+              ctx.strokeStyle = '#fb7185';
+              ctx.lineWidth = 3.8;
+              ctx.lineCap = 'round';
+              ctx.lineJoin = 'round';
+              ctx.beginPath();
+              ctx.moveTo(objX - wLen, objY + Math.sin(wPhase) * 3);
+              ctx.quadraticCurveTo(
+                objX - wLen * 0.35, objY - 4 + Math.sin(wPhase + 1.2) * 3.5,
+                objX + wLen * 0.15, objY + Math.sin(wPhase + 2.4) * 3
+              );
+              ctx.quadraticCurveTo(
+                objX + wLen * 0.65, objY + 4 + Math.sin(wPhase + 3.6) * 3.5,
+                objX + wLen, objY + Math.sin(wPhase + 4.8) * 3
+              );
+              ctx.stroke();
+
+              // Clitellum saddle band (darker pink ring)
+              ctx.strokeStyle = '#f43f5e';
+              ctx.lineWidth = 4.4;
+              ctx.beginPath();
+              ctx.moveTo(objX - 2, objY + Math.sin(wPhase + 2) * 3);
+              ctx.lineTo(objX + 2, objY + Math.sin(wPhase + 2) * 3);
+              ctx.stroke();
+
+              // Cute eye dot
+              ctx.fillStyle = '#881337';
+              ctx.beginPath();
+              ctx.arc(objX + wLen - 1, objY + Math.sin(wPhase + 4.8) * 3 - 1, 1.2, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.restore();
+            } else if (roll < 0.75) {
+              // Hanging Roots (Akar Padi / Tanaman)
+              ctx.save();
+              ctx.strokeStyle = 'rgba(180, 83, 9, 0.65)';
+              ctx.lineWidth = 2;
+              ctx.lineCap = 'round';
+              ctx.beginPath();
+              ctx.moveTo(objX, groundY + 4);
+              const midRootX = objX + (hash(4) - 0.5) * 24;
+              const endRootX = objX + (hash(5) - 0.5) * 20;
+              ctx.quadraticCurveTo(midRootX, groundY + depth * 0.55, endRootX, objY);
+              ctx.stroke();
+              // Side rootlet
+              ctx.lineWidth = 1.2;
+              ctx.beginPath();
+              ctx.moveTo(midRootX, groundY + depth * 0.48);
+              ctx.lineTo(midRootX + (hash(6) > 0.5 ? 9 : -9), groundY + depth * 0.48 + 14);
+              ctx.stroke();
+              ctx.restore();
+            } else {
+              // Rounded Humus Stone (Batu Kerikil Sawah)
+              ctx.save();
+              ctx.fillStyle = '#78716c';
+              ctx.beginPath();
+              ctx.ellipse(objX, objY, 7 + hash(4) * 5, 4.5 + hash(5) * 3, hash(6) * Math.PI, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.strokeStyle = 'rgba(0, 0, 0, 0.25)';
+              ctx.lineWidth = 1.5;
+              ctx.stroke();
+              ctx.restore();
+            }
+          } else if (activeBiomeId === 5 || activeBiomeId === 6) {
+            // Biome 5 & 6: Puncak Gn. Ciremai & Lereng Pinus Terjal
+            if (roll < 0.35) {
+              // Prehistoric Ammonite Fossil (Fosil Keong Purba)
+              ctx.save();
+              ctx.fillStyle = 'rgba(254, 243, 199, 0.85)';
+              ctx.beginPath();
+              ctx.arc(objX, objY, 7, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.strokeStyle = '#b45309';
+              ctx.lineWidth = 1.4;
+              ctx.beginPath();
+              for (let a = 0; a < Math.PI * 3.5; a += 0.35) {
+                const r = 1.0 + a * 1.6;
+                const fx = objX + Math.cos(a) * r;
+                const fy = objY + Math.sin(a) * r;
+                if (a === 0) ctx.moveTo(fx, fy);
+                else ctx.lineTo(fx, fy);
+              }
+              ctx.stroke();
+              ctx.restore();
+            } else if (roll < 0.68) {
+              // Jagged Volcanic Rock (Batu Granit/Vulkanik Ciremai)
+              ctx.save();
+              ctx.fillStyle = '#475569';
+              ctx.beginPath();
+              ctx.moveTo(objX - 9, objY + 4);
+              ctx.lineTo(objX - 3, objY - 8);
+              ctx.lineTo(objX + 8, objY - 4);
+              ctx.lineTo(objX + 6, objY + 6);
+              ctx.closePath();
+              ctx.fill();
+              ctx.strokeStyle = '#1e293b';
+              ctx.lineWidth = 1.5;
+              ctx.stroke();
+              ctx.restore();
+            } else {
+              // Thick Pine Woody Root (Akar Pinus Tebal)
+              ctx.save();
+              ctx.strokeStyle = 'rgba(120, 53, 15, 0.75)';
+              ctx.lineWidth = 3.2;
+              ctx.beginPath();
+              ctx.moveTo(objX, groundY + 4);
+              ctx.quadraticCurveTo(objX + 16, groundY + depth * 0.6, objX + 8, objY);
+              ctx.stroke();
+              ctx.restore();
+            }
+          } else if (activeBiomeId === 1 || activeBiomeId === 2) {
+            // Biome 1 & 2: Pesisir Pantai Pantura & Jalur Arteri
+            if (roll < 0.40) {
+              // Buried Sea Shell (Kerang Laut Pantai)
+              ctx.save();
+              ctx.fillStyle = '#fed7aa';
+              ctx.strokeStyle = '#ea580c';
+              ctx.lineWidth = 1.4;
+              ctx.beginPath();
+              ctx.arc(objX, objY, 7.5, Math.PI, 0);
+              ctx.closePath();
+              ctx.fill();
+              ctx.stroke();
+              for (let ra = -0.7; ra <= 0.7; ra += 0.35) {
+                ctx.beginPath();
+                ctx.moveTo(objX, objY);
+                ctx.lineTo(objX + Math.sin(ra) * 7.5, objY - Math.cos(ra) * 7.5);
+                ctx.stroke();
+              }
+              ctx.restore();
+            } else if (roll < 0.70) {
+              // Coastal Sand Pebbles Cluster
+              ctx.save();
+              ctx.fillStyle = '#cbd5e1';
+              ctx.beginPath();
+              ctx.arc(objX - 4, objY, 3, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.beginPath();
+              ctx.arc(objX + 3, objY - 2, 2.5, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.beginPath();
+              ctx.arc(objX + 1, objY + 3, 2, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.restore();
+            } else {
+              // Sand Worm (Cacing Pasir)
+              const wPhase = animTime * 2.8 + k;
+              ctx.save();
+              ctx.strokeStyle = '#fca5a5';
+              ctx.lineWidth = 3;
+              ctx.beginPath();
+              ctx.moveTo(objX - 8, objY);
+              ctx.quadraticCurveTo(objX, objY - 3 + Math.sin(wPhase) * 2.5, objX + 8, objY + Math.sin(wPhase) * 2.5);
+              ctx.stroke();
+              ctx.restore();
+            }
+          } else {
+            // Biome 7 & 8: Kawasan Pemukiman & Kompleks Sekolah Puspa Bangsa
+            if (roll < 0.42) {
+              // Underground Drainage Conduit Pipe (Pipa Gorong-gorong Utilitas)
+              ctx.save();
+              ctx.fillStyle = '#0284c7';
+              ctx.fillRect(objX - 16, objY - 5, 32, 10);
+              ctx.strokeStyle = '#0369a1';
+              ctx.lineWidth = 1.5;
+              ctx.strokeRect(objX - 16, objY - 5, 32, 10);
+              for (let px = objX - 12; px <= objX + 12; px += 6) {
+                ctx.beginPath();
+                ctx.moveTo(px, objY - 5);
+                ctx.lineTo(px, objY + 5);
+                ctx.stroke();
+              }
+              ctx.restore();
+            } else if (roll < 0.72) {
+              // Underground Cable Conduit (Kabel Utilitas Kuning)
+              ctx.save();
+              ctx.strokeStyle = '#eab308';
+              ctx.lineWidth = 2.5;
+              ctx.beginPath();
+              ctx.moveTo(objX - 15, objY - 2);
+              ctx.quadraticCurveTo(objX, objY + 6, objX + 15, objY - 2);
+              ctx.stroke();
+              ctx.restore();
+            } else {
+              // Brick Fragment (Pecahan Batu Bata Fondasi)
+              ctx.save();
+              ctx.fillStyle = '#b91c1c';
+              ctx.fillRect(objX - 7, objY - 4, 14, 8);
+              ctx.strokeStyle = '#7f1d1d';
+              ctx.lineWidth = 1;
+              ctx.strokeRect(objX - 7, objY - 4, 14, 8);
+              ctx.restore();
+            }
+          }
+        }
+        ctx.restore();
+
+        // 4. Draw Surface Road / Topsoil Ribbon
         ctx.strokeStyle = surfaceColor;
         ctx.lineWidth = 14;
         ctx.lineCap = 'round';
@@ -869,7 +1117,58 @@ export class GameRenderer {
         }
         ctx.stroke();
 
-        // Road Center Dashed Line (smooth alpha transition)
+        // 5. Biome-Specific Surface Trims (Living Grass, Curbing, Mountain Edges)
+        ctx.save();
+        if (activeBiomeId === 3 || activeBiomeId === 4 || activeBiomeId === 6) {
+          // Living Grass Tufts & Wildflowers on Sawah & Forest Edges
+          for (let x = Math.floor(startX / 12) * 12; x <= endX; x += 12) {
+            const gy = terrain.getHeight(x);
+            const grassH = 5 + Math.abs(Math.sin(x * 0.12)) * 4;
+            const sway = Math.sin(animTime * 2.8 + x * 0.06) * 3;
+            ctx.strokeStyle = (Math.round(x) % 3 === 0) ? '#84cc16' : (Math.round(x) % 3 === 1) ? '#65a30d' : '#4d7c0f';
+            ctx.lineWidth = 1.8;
+            ctx.beginPath();
+            ctx.moveTo(x - 2, gy - 2);
+            ctx.quadraticCurveTo(x + sway * 0.5, gy - grassH * 0.6, x + sway, gy - grassH);
+            ctx.moveTo(x + 2, gy - 2);
+            ctx.quadraticCurveTo(x + 1 + sway * 0.5, gy - (grassH - 2) * 0.6, x + 3 + sway * 0.8, gy - (grassH - 2));
+            ctx.stroke();
+
+            // Tiny yellow wildflower or rice grain
+            if (Math.abs(Math.sin(x * 0.04)) > 0.88) {
+              ctx.fillStyle = '#facc15';
+              ctx.beginPath();
+              ctx.arc(x + sway, gy - grassH - 1, 2.2, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+        } else if (activeBiomeId === 1 || activeBiomeId === 2 || activeBiomeId === 7 || activeBiomeId === 8) {
+          // Asphalt Curb Edging
+          ctx.strokeStyle = (activeBiomeId >= 7) ? 'rgba(226, 232, 240, 0.75)' : 'rgba(245, 158, 11, 0.35)';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          for (let x = startX; x <= endX; x += step) {
+            const gy = terrain.getHeight(x) + 7;
+            if (x === startX) ctx.moveTo(x, gy);
+            else ctx.lineTo(x, gy);
+          }
+          ctx.stroke();
+        } else if (activeBiomeId === 5) {
+          // Mountain Jagged Rocks on Surface
+          ctx.fillStyle = '#475569';
+          for (let x = Math.floor(startX / 36) * 36; x <= endX; x += 36) {
+            const gy = terrain.getHeight(x);
+            ctx.beginPath();
+            ctx.moveTo(x - 4, gy - 1);
+            ctx.lineTo(x, gy - 5);
+            ctx.lineTo(x + 4, gy - 1);
+            ctx.closePath();
+            ctx.fill();
+          }
+        }
+        ctx.restore();
+
+        // 6. Road Center Dashed Line (smooth alpha transition)
         if (dashAlpha > 0.02) {
           ctx.save();
           ctx.globalAlpha = dashAlpha;
