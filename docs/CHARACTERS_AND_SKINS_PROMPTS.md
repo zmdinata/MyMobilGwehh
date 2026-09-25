@@ -55,14 +55,12 @@ Gunakan aturan gaya visual berikut agar seluruh 15 aset memiliki keselarasan est
 
 - **Style Definition**: 2D stylized cartoon game asset, modern Indonesian comic art style, clean vector look, bold uniform navy blue contour outline (`#0D2B52`, stroke-width 4-5px), crisp 2-step cel shading with soft directional highlight, vibrant color fills, zero 3D CGI plastic glossy reflections, zero watercolor bleeding.
 - **Pencahayaan (Lighting)**: Soft tropical morning sunlight from upper-left (10:00 AM angle), warm golden highlights (`#FEF08A`), clean sharp shadows.
-- **Palet Warna Kanonik (Color Palette)**:
-  - *Primary Navy Outline & Chassis*: `#0D2B52`
-  - *Cobalt Blue (Hero Color)*: `#1769C2` / `#2563EB`
-  - *Sky Blue (Hijab & Aerodynamics)*: `#58B7F2` / `#38BDF8`
-  - *Nutritious Gold (Coins, Stars, Accents)*: `#F5BD3F` / `#F59E0B`
-  - *Warm Cream (Canvas Cover, Food Container)*: `#FFF3DA` / `#FEF3C7`
-  - *Coral Red (Hair Ties, Fuel Cans, Badges)*: `#E66B5D` / `#F43F5E`
-  - *Warm Skin Tan*: `#F4B28C` (Tion), `#FED7AA` (Bu Yulie), `#E2A374` (Mang Abdul)
+- **Palet Warna & Kostum Karakter (Character Wardrobe & Identity)**:
+  - *Mas Tion (Protagonis / Kurir MMG)*: Kemeja kurir utilitarian Cobalt Blue (`#1769C2`) & Navy (`#0D2B52`), kaus dalam krem (`#FFF3DA`), pin daun gizi emas (`#F5BD3F`).
+  - *Mang Abdul (Mentor / Supir Veteran)*: Kemeja safari supir Khaki Brown (`#854D0E`), topi pet laken cokelat tua (`#78350F`), handuk putih leher.
+  - *Bu Yulie (Ibu Guru Puspa Bangsa)*: **Batik Mega Mendung Khas Cirebon** (blus/tunik motif awan berlapis horizontal gradasi biru nila, terracotta, & krem khas Cirebon) dipadu jilbab anggun warna krem lembut (`#FFF3DA`) atau dusty pastel beraksen emas.
+  - *Husna (Siswi SMA Puspa Bangsa)*: **Seragam Nasional SMA Indonesia (Putih Abu-Abu)** — Kemeja putih bersih lengan pendek (`#FFFFFF`), dasi & kerah abu-abu SMA (`#64748B` / `#475569`), lencana saku sekolah, kuncir samping dengan ikat rambut koral-merah (`#E66B5D`).
+  - *Zacky (Montir Jenius & Stylist)*: **Baju Montir Racing Modern Stylist MERAH - HITAM** (`#DC2626` & `#0F172A`) — Rompi/jaket mekanik sporty merah menyala dengan panel hitam taktis, ritsleting perak, kaus dalam hitam, topi bisbol merah-hitam terbalik, kunci pas perak di saku dada.
 
 ---
 
@@ -71,7 +69,7 @@ Gunakan aturan gaya visual berikut agar seluruh 15 aset memiliki keselarasan est
 *Spesifikasi Teknis*:
 - **Format**: PNG 32-bit (Alpha Transparency).
 - **Dimensi**: 512 × 512 piksel (Square 1:1).
-- **Komposisi**: Character Bust Portrait (Dada ke atas), sudut pandang tiga perempat (*three-quarter angle*), menghadap sedikit ke kanan, kepala tegak proporsional, terdapat ruang aman (*padding margin*) 12% di sekeliling kepala agar tidak terpotong saat dimasukkan ke dalam avatar lingkaran/kotak berbingkai.
+- **Komposisi**: Character Bust Portrait (Dada ke atas), sudut pandang tiga perempat (*three-quarter angle*), menghadap sedikit ke kanan/kiri, kepala tegak proporsional, terdapat ruang aman (*padding margin*) 12% di sekeliling kepala agar tidak terpotong saat dimasukkan ke dalam avatar lingkaran/kotak berbingkai.
 
 ---
 
@@ -108,29 +106,29 @@ photorealistic, 3d cgi, depressed, scared, screaming mouth, blurry motion, low r
 ---
 
 ### 2. BU YULIE — Ibu Guru Bersahaja & Anggun (Love Interest)
-*Karakter*: Guru muda 25 tahun di Sekolah Puspa Bangsa, anggun, bersahaja, berhijab rapi warna sky blue (`#58B7F2`) dipadu aksen krem lembut (`#FFF3DA`), blus seragam batik modern navy bernuansa geometris rapi dengan sentuhan emas gizi (`#F5BD3F`). Tatapan mata teduh, ramah, penuh kehangatan pendidik.
+*Karakter*: Guru muda 25 tahun di Sekolah Puspa Bangsa Cirebon, anggun, bersahaja, berhijab rapi warna krem lembut (`#FFF3DA`) berpadu aksen emas gizi, mengenakan **blus tunik Batik Mega Mendung khas Cirebon** yang memesona dengan motif awan berlapis horizontal bergradasi halus (lambang keteduhan langit Cirebon). Tatapan mata teduh, ramah, penuh empati dan perhatian.
 
-#### Prompt 2.1: Bu Yulie — Senyum Hangat Menyambut (Welcoming at School Gate)
+#### Prompt 2.1: Bu Yulie — Senyum Hangat Menyambut (Batik Mega Mendung Cirebon)
 ```text
-Production-ready 2D game dialogue character bust avatar portrait of "Bu Yulie", a graceful, kind, and approachable 25-year-old Indonesian female schoolteacher. Gentle crescent-shaped expressive eyes, warm affectionate welcoming smile, smooth fair-warm complexion (#FED7AA). Wearing a neatly wrapped modern hijab in serene sky blue (#58B7F2) and pale ivory tones (#FFF3DA) framing her oval face elegantly. Modest professional blouse featuring dark navy (#0D2B52) and gold (#F5BD3F) Indonesian batik floral geometric motifs. Three-quarter bust view facing slightly left, centered on square canvas with 12% safety padding. Bold clean navy blue contour lineart (#0D2B52), clean 2-step cel shading, soft warm ambient morning glow. Wholesome, respectful, elegant Indonesian educator aesthetic. Pure transparent PNG background, no text, no watermark.
+Production-ready 2D game dialogue character bust avatar portrait of "Bu Yulie", a graceful, kind, and respected 25-year-old Indonesian female schoolteacher in Cirebon. Gentle crescent-shaped expressive eyes, warm affectionate welcoming smile, smooth fair complexion (#FED7AA). Wearing an exquisite modern Indonesian batik blouse featuring the iconic Cirebon "Mega Mendung" cloud pattern with graceful layered horizontal cloud swirls in rich indigo navy, cerulean sky blue, and cream gradients. Framed elegantly by a neatly wrapped, modest hijab in soft warm cream (#FFF3DA) with delicate golden trim (#F5BD3F). Three-quarter bust view facing slightly left, centered on square canvas with 12% safety padding. Bold clean navy blue contour lineart (#0D2B52), crisp 2-step cel shading, soft warm morning lighting. Authentic Cirebon batik heritage educator aesthetic. Pure transparent PNG background, no text, no watermark.
 ```
 *Negative Prompt*:
 ```text
-photorealistic, 3d render, seductive, revealing clothes, loose messy hijab, harsh shadows, dirty colors, text, watermark, cropped hijab crown, fake background grid.
+photorealistic, 3d render, plain blue uniform, western dress, seductive, revealing clothes, loose messy hijab, harsh shadows, dirty colors, text, watermark, cropped hijab crown, fake background grid.
 ```
 
 #### Prompt 2.2: Bu Yulie — Khawatir & Perhatian ("Hati-hati di jalan ya, Mas Tion...")
 ```text
-Production-ready 2D game dialogue character bust avatar portrait of "Bu Yulie", schoolteacher, expressing gentle tender concern and heartfelt empathy. Softly knit eyebrows, compassionate caring gaze looking toward the player, one delicate hand resting gently near her collarbone in concern, subtle empathetic parting of lips. Same sky blue hijab (#58B7F2) and elegant navy-gold batik blouse. Expressive comic cel-shaded vector art style, bold navy contour lineart, smooth pastel palette. Centered chest-up framing with safe margins. Pure transparent PNG background, zero artifacts, no text, no watermark.
+Production-ready 2D game dialogue character bust avatar portrait of "Bu Yulie", schoolteacher, expressing gentle tender concern and heartfelt empathy. Softly knit eyebrows, compassionate caring gaze looking toward the player, one delicate hand resting gently near her collarbone in concern, subtle empathetic parting of lips. Wearing the signature Cirebon "Mega Mendung" layered cloud batik tunic blouse and neat warm cream hijab (#FFF3DA). Expressive comic cel-shaded vector art style, bold navy contour lineart, wholesome emotional nuance. Centered chest-up framing with safe margins. Pure transparent PNG background, zero artifacts, no text, no watermark.
 ```
 *Negative Prompt*:
 ```text
-photorealistic, weeping, horrified, angry, distorted hands, extra fingers, dark horror lighting, text, watermark, background textures.
+photorealistic, weeping, horrified, angry, distorted hands, extra fingers, plain clothes, dark horror lighting, text, watermark, background textures.
 ```
 
 #### Prompt 2.3: Bu Yulie — Gembira & Terkesan (Menerima 500 Porsi Makanan)
 ```text
-Production-ready 2D game dialogue character bust avatar portrait of "Bu Yulie", teacher, radiating pure joy, relief, and deep appreciation. Sparkling enthusiastic eyes, broad genuine radiant smile with rosy cheerful cheeks, hands clasped together near her chest in thankful gratitude. Same signature sky blue hijab (#58B7F2) with bright clean highlights and navy batik blouse. Vibrant uplifting comic vector art style, bold navy outlines, rich cel highlights. Three-quarter bust view, centered on square canvas with 12% padding. Pure transparent PNG background, no text, no watermark.
+Production-ready 2D game dialogue character bust avatar portrait of "Bu Yulie", teacher, radiating pure joy, relief, and deep appreciation. Sparkling enthusiastic eyes, broad genuine radiant smile with rosy cheerful cheeks, hands clasped together near her chest in thankful gratitude. Wearing her elegant Cirebon "Mega Mendung" cloud batik blouse with distinct layered motifs and matching neat cream hijab. Vibrant uplifting comic vector art style, bold navy outlines, rich cel highlights. Three-quarter bust view, centered on square canvas with 12% padding. Pure transparent PNG background, no text, no watermark.
 ```
 *Negative Prompt*:
 ```text
@@ -139,21 +137,21 @@ photorealistic, 3d render, exaggerated anime wide mouth, extra limbs, blurry lin
 
 ---
 
-### 3. HUSNA — Siswi SMA Puspa Bangsa (Ceria & Mak Comblang)
-*Karakter*: Siswi SMA kelas 11 berumur 16 tahun, lincah, ekspresif, suka bercanda dan gemar menggoda Mas Tion soal Bu Yulie. Rambut hitam ikal sebahu diikat kuncir samping (*side ponytail*) dengan ikat rambut koral-merah cerah (`#E66B5D`). Memakai seragam putih abu-abu SMA nasional dengan dasi navy rapi dan pin lencana sekolah.
+### 3. HUSNA — Siswi SMA Puspa Bangsa (Seragam Putih Abu-Abu SMA)
+*Karakter*: Siswi SMA kelas 11 berumur 16 tahun, energik, usil, ceria, dan gemar menggoda Mas Tion soal Bu Yulie. Mengenakan **Seragam Nasional SMA Indonesia (Putih Abu-Abu)**: Kemeja putih bersih lengan pendek (`#FFFFFF`), kerah rapi dengan dasi abu-abu SMA (`#64748B`), saku dada kiri dengan bordir lencana OSIS / sekolah Puspa Bangsa. Rambut hitam ikal sebahu diikat kuncir samping (*side ponytail*) dengan ikat rambut koral-merah cerah (`#E66B5D`).
 
 #### Prompt 3.1: Husna — Kedipan Jahil / Menggoda ("Cieee, Mas Tion...")
 ```text
-Production-ready 2D game dialogue character bust avatar portrait of "Husna", a vivacious, cheerful, and cheeky 16-year-old Indonesian high school student. Playful wide grin, one mischievous winking eye with sparkling eyelashes, short wavy black hair tied into a bouncy side ponytail on the right with a vibrant coral-red scrunchie (#E66B5D). Wearing an Indonesian high school uniform: crisp short-sleeve white shirt, dark navy necktie (#0D2B52), and tiny circular Puspa Bangsa blue school pin on breast pocket. Energetic three-quarter pose pointing index finger playfully sideways. Bold uniform navy contour lineart, flat cel shading with pop-comic highlights. Centered chest-up bust framing with 12% margin padding. Pure transparent PNG background, no text, no watermark.
+Production-ready 2D game dialogue character bust avatar portrait of "Husna", a vivacious, cheeky, and spirited 16-year-old Indonesian high school student. Playful wide grin, one mischievous winking eye with cute eyelashes, short wavy black hair tied into a bouncy side ponytail on the right with a vibrant coral-red scrunchie (#E66B5D). Wearing an authentic Indonesian high school uniform (seragam SMA putih abu-abu): crisp clean white short-sleeve collared shirt (#FFFFFF), classic slate-gray SMA necktie (#64748B), and official high school pocket crest embroidered on left breast. Energetic three-quarter pose pointing index finger playfully sideways. Bold uniform navy contour lineart (#0D2B52), flat cel shading with pop-comic highlights. Centered chest-up bust framing with 12% margin padding. Pure transparent PNG background, no text, no watermark.
 ```
 *Negative Prompt*:
 ```text
-photorealistic, 3d model, mature adult look, revealing uniform, messy sketch, dark gritty style, watermark, logo, text, fake transparent checkerboard.
+photorealistic, 3d model, mature adult look, all blue clothes, revealing uniform, messy sketch, dark gritty style, watermark, logo, text, fake transparent checkerboard.
 ```
 
 #### Prompt 3.2: Husna — Lapar Menanti Makanan ("Mas Tion, makan siangnya udah dateng?")
 ```text
-Production-ready 2D game dialogue character bust avatar portrait of "Husna", high school girl, looking eagerly hungry and excited. Big sparkling rounded anime-comic eyes staring excitedly, mouth open in happy mouth-watering anticipation, hands holding an empty stainless steel lunchbox lid near her chin. Same side ponytail with coral scrunchie (#E66B5D) and neat Indonesian high school uniform. Cute comedic anime exaggeration, bold navy blue outlines (#0D2B52), bright colorful cel shading. Centered square framing with 12% margin padding. Pure transparent PNG background, zero background noise, no text, no watermark.
+Production-ready 2D game dialogue character bust avatar portrait of "Husna", high school girl, looking eagerly hungry and excited. Big sparkling rounded anime-comic eyes staring excitedly, mouth open in happy mouth-watering anticipation, hands eagerly holding an empty stainless steel lunchbox lid near her chin. Same authentic Indonesian SMA uniform: crisp white shirt (#FFFFFF) and slate-gray school tie (#64748B), side ponytail with coral scrunchie (#E66B5D). Cute comedic anime exaggeration, bold navy blue outlines (#0D2B52), bright colorful cel shading. Centered square framing with 12% margin padding. Pure transparent PNG background, zero background noise, no text, no watermark.
 ```
 *Negative Prompt*:
 ```text
@@ -162,7 +160,7 @@ photorealistic, drooling excessively, grotesque face, distorted hands, dark shad
 
 #### Prompt 3.3: Husna — Bersorak Menyemangati ("Ayo Mas Tion, tembak Bu Yulie!")
 ```text
-Production-ready 2D game dialogue character bust avatar portrait of "Husna", schoolgirl, shouting enthusiastic encouragement with full spirit. Radiant shouting open-mouth smile, sparkling eyes, both small fists pumped triumphantly in the air near shoulders in a cheering victory gesture. Same wavy black side ponytail with coral tie (#E66B5D) and white-navy school uniform. High-energy comic art style, dynamic cel highlights, clean navy borders. Centered chest-up framing, pure transparent PNG background, no text, no watermark.
+Production-ready 2D game dialogue character bust avatar portrait of "Husna", schoolgirl, shouting enthusiastic encouragement with full spirit. Radiant shouting open-mouth smile, sparkling eyes, both small fists pumped triumphantly in the air near shoulders in a cheering victory gesture. Same wavy black side ponytail with coral scrunchie and authentic white-and-gray Indonesian high school uniform (seragam putih abu-abu SMA). High-energy comic art style, dynamic cel highlights, clean navy borders. Centered chest-up framing, pure transparent PNG background, no text, no watermark.
 ```
 *Negative Prompt*:
 ```text
@@ -171,39 +169,39 @@ photorealistic, aggressive anger, deformed hands, extra fingers, blurry, text, w
 
 ---
 
-### 4. ZACKY — Montir Jenius & Sahabat Tion (Kepala Bengkel Modifikasi)
-*Karakter*: Montir muda 24 tahun, cerdas, solutif, percaya diri, sahabat karib Tion yang selalu mengupgrade armada truk. Mengenakan topi bisbol navy terbalik, rompi kerja berbahan denim navy tebal (`#0D2B52`) dengan aksen biru kobalt (`#1769C2`), kaus abu-abu, kunci pas perak terselip di saku rompi, serta sedikit coretan noda oli di pipi kiri sebagai ciri khas mekanik handal.
+### 4. ZACKY — Montir Jenius & Stylist (Baju Montir Racing Merah - Hitam)
+*Karakter*: Montir muda 24 tahun, jenius, cerdas, gaul, stylist, pemilik Garasi Zacky. Mengenakan **baju montir modern stylist warna MERAH dan HITAM** (racing tuner mechanic uniform: kombinasi merah balap berani `#DC2626` dan hitam pekat `#0F172A`), rompi/jaket mekanik sporty merah dengan panel hitam taktis di bahu, ritsleting perak, kaus dalam hitam, topi bisbol merah-hitam terbalik, kunci pas perak krom terselip di saku dada, serta sedikit coretan noda oli di pipi kiri sebagai ciri khas mekanik handal.
 
-#### Prompt 4.1: Zacky — Pose Percaya Diri dengan Kunci Pas (Garasi Siap Balap)
+#### Prompt 4.1: Zacky — Pose Percaya Diri dengan Kunci Pas (Stylist Merah - Hitam)
 ```text
-Production-ready 2D game dialogue character bust avatar portrait of "Zacky", a clever, charismatic, and reliable 24-year-old Indonesian master auto-mechanic. Confident charismatic grin, slightly disheveled dark brown hair poking out from under a backwards dark navy baseball cap (#0D2B52), charming small grease smudge on left cheekbone. Wearing a durable mechanic work vest in heavy navy denim (#0D2B52) with cobalt blue paneling (#1769C2) over a heather-gray t-shirt, shiny chrome adjustable wrench tucked securely in chest pocket. One hand giving a solid confident thumbs-up. Three-quarter view, bold clean navy contour lineart, sharp angular cel shading with metallic highlights. Centered chest-up bust framing with 12% padding. Pure transparent PNG background, no text, no watermark.
+Production-ready 2D game dialogue character bust avatar portrait of "Zacky", a clever, charismatic, and stylish 24-year-old Indonesian master auto-mechanic and tuner. Confident charismatic smirk, slightly disheveled dark brown hair poking out from under a stylish backwards red-and-black racing baseball cap (#DC2626 and #0F172A), charming small grease smudge on left cheekbone. Wearing a modern, stylish mechanic work uniform in high-contrast RACING RED and MATTE BLACK (#DC2626 and #0F172A): sleek red utility vest with black tactical shoulder paneling and silver zippers over a fitted black crewneck shirt, shiny chrome adjustable wrench tucked securely in chest pocket. One hand giving a solid confident thumbs-up. Three-quarter view, bold clean navy contour lineart (#0D2B52), sharp angular cel shading with metallic highlights. Modern trendy street-tuner mechanic aesthetic. Centered chest-up bust framing with 12% padding. Pure transparent PNG background, no text, no watermark.
 ```
 *Negative Prompt*:
 ```text
-photorealistic, 3d render, dirty filthy face, deformed thumb, extra fingers, tired expression, real car brand logos, text, watermark, background artifacts.
+photorealistic, 3d render, blue clothes, dirty filthy face, deformed thumb, extra fingers, tired expression, real car brand logos, text, watermark, background artifacts.
 ```
 
 #### Prompt 4.2: Zacky — Menganalisis Mesin & Suspensi (Berpikir Taktis)
 ```text
-Production-ready 2D game dialogue character bust avatar portrait of "Zacky", mechanic, thoughtfully analyzing vehicle performance specs. Sharp calculating eyes looking upward in thought, thoughtful confident smirk, one hand touching his chin in analysis while holding a tuning clipboard with blueprint sketches. Same backwards navy cap, grease smudge, and utility mechanic vest with silver wrench. Clean vector-comic lineart, bold navy borders (#0D2B52), crisp 2-step cel shading. Centered square framing with safe margins. Pure transparent PNG background, no text, no watermark.
+Production-ready 2D game dialogue character bust avatar portrait of "Zacky", stylish mechanic, thoughtfully analyzing vehicle performance specs. Sharp calculating eyes looking upward in thought, confident analytical smirk, one hand touching his chin while holding a tuning clipboard with suspension blueprint sketches. Same modern stylist red-and-black mechanic racing vest (#DC2626 / #0F172A), backwards cap, grease smudge, and utility silver wrench. Clean vector-comic lineart, bold navy borders (#0D2B52), crisp 2-step cel shading. Centered square framing with safe margins. Pure transparent PNG background, no text, no watermark.
 ```
 *Negative Prompt*:
 ```text
-photorealistic, confused idiot expression, cluttered messy background, illegible blueprint text, watermark, text, opaque background.
+photorealistic, blue vest, confused idiot expression, cluttered messy background, illegible blueprint text, watermark, text, opaque background.
 ```
 
 ---
 
 ### *BONUS MENTOR*: MANG ABDUL — Supir Veteran Pantura (Mentor Legendaris Tion)
-*Karakter*: Supir senior 52 tahun, bertubuh gempal kokoh, berkumis tebal ramah, mengenakan topi pet laken supir cokelat tua, rompi safari khaki (`#854D0E`), dan syal handuk kecil di leher. Pembimbing bijak yang gemar melempar lelucon renyah khas jalur Pantura.
+*Karakter*: Supir senior 52 tahun, bertubuh gempal kokoh, berkumis tebal ramah, mengenakan topi pet laken supir cokelat tua (`#78350F`), kemeja safari supir khaki-brown (`#854D0E`), dan syal handuk kecil putih di leher. Pembimbing bijak yang gemar melempar lelucon renyah khas jalur Pantura.
 
 #### Prompt Bonus: Mang Abdul — Tertawa Renyah & Menepuk Pundak (Senior Pantura)
 ```text
-Production-ready 2D game dialogue character bust avatar portrait of "Mang Abdul", a jovial, wise, and hearty 52-year-old veteran Indonesian truck driver. Hearty booming laugh with crinkling joyful eyes, thick neat graying mustache, warm tanned weathered skin tone (#E2A374). Wearing a classic dark brown driver flat-cap (#78350F), khaki-brown utility safari shirt (#854D0E) with yellow inner collar, small white driver sweat towel draped neatly around his neck. Warm fatherly demeanor, three-quarter bust view, bold clean navy contour outlines (#0D2B52), rich 2-step cel shading. Centered square framing with 12% padding. Pure transparent PNG background, wholesome Indonesian driver culture aesthetic. No text, no watermark.
+Production-ready 2D game dialogue character bust avatar portrait of "Mang Abdul", a jovial, wise, and hearty 52-year-old veteran Indonesian truck driver. Hearty booming laugh with crinkling joyful eyes, thick neat graying mustache, warm tanned weathered skin tone (#E2A374). Wearing a classic dark brown driver flat-cap (#78350F), khaki-brown utility safari driver shirt (#854D0E) with yellow inner collar, small white driver sweat towel draped neatly around his neck. Warm fatherly demeanor, three-quarter bust view, bold clean navy contour outlines (#0D2B52), rich 2-step cel shading. Centered square framing with 12% padding. Pure transparent PNG background, wholesome Indonesian driver culture aesthetic. No text, no watermark.
 ```
 *Negative Prompt*:
 ```text
-photorealistic, 3d CGI, toothless, creepy, smoking cigarette, messy lines, text, watermark, opaque background.
+photorealistic, 3d CGI, blue clothes, toothless, creepy, smoking cigarette, messy lines, text, watermark, opaque background.
 ```
 
 ---

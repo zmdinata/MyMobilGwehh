@@ -923,25 +923,30 @@
       }
 
       if (s.includes('yulie') || s.includes('guru')) {
-        const isConcern = m.includes('concern') || m.includes('worry');
-        const isHappy = m.includes('happy') || m.includes('joy');
+        const isConcern = m.includes('concern') || m.includes('worry') || m.includes('khawatir');
+        const isHappy = m.includes('happy') || m.includes('joy') || m.includes('gembira');
         return `<svg viewBox="0 0 120 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <radialGradient id="yulieBg" cx="50%" cy="40%" r="50%">
-              <stop offset="0%" stop-color="#fbcfe8" stop-opacity="0.35"/>
-              <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.05"/>
+              <stop offset="0%" stop-color="#fef08a" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.08"/>
             </radialGradient>
-            <linearGradient id="hijabGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#7dd3fc"/>
-              <stop offset="100%" stop-color="#0284c7"/>
+            <linearGradient id="creamHijabGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="60%" stop-color="#fff3da"/>
+              <stop offset="100%" stop-color="#fed7aa"/>
             </linearGradient>
           </defs>
-          <circle cx="60" cy="60" r="54" fill="url(#yulieBg)" stroke="#f472b6" stroke-width="2"/>
-          <path d="M24 114 C26 86 38 74 60 74 C82 74 94 86 96 114 Z" fill="url(#hijabGrad)" stroke="#0d2b52" stroke-width="2.5"/>
-          <polygon points="60,94 48,114 72,114" fill="#0d2b52"/>
-          <circle cx="60" cy="98" r="3.5" fill="#f59e0b" stroke="#b45309" stroke-width="1"/>
-          <path d="M34 56 C34 32 44 20 60 20 C76 20 86 32 86 56 C86 78 74 86 60 86 C46 86 34 78 34 56 Z" fill="url(#hijabGrad)" stroke="#0d2b52" stroke-width="2.5"/>
-          <ellipse cx="60" cy="52" rx="19" ry="22" fill="#fef3c7"/>
+          <circle cx="60" cy="60" r="54" fill="url(#yulieBg)" stroke="#f59e0b" stroke-width="2"/>
+          <path d="M22 114 C24 86 36 74 60 74 C84 74 96 86 98 114 Z" fill="#0d2b52" stroke="#0d2b52" stroke-width="2.5"/>
+          <path d="M26 108 Q38 98 50 104 Q60 92 70 104 Q82 98 94 108" fill="none" stroke="#38bdf8" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M30 114 Q40 104 52 110 Q60 100 68 110 Q80 104 90 114" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M40 96 Q50 90 60 94 Q70 90 80 96" fill="none" stroke="#f43f5e" stroke-width="1.8" stroke-linecap="round"/>
+          <polygon points="60,94 50,114 70,114" fill="#0f172a"/>
+          <circle cx="60" cy="98" r="3" fill="#f59e0b" stroke="#b45309" stroke-width="1"/>
+          <circle cx="60" cy="107" r="2.5" fill="#f59e0b" stroke="#b45309" stroke-width="1"/>
+          <path d="M34 56 C34 30 44 18 60 18 C76 18 86 30 86 56 C86 78 74 86 60 86 C46 86 34 78 34 56 Z" fill="url(#creamHijabGrad)" stroke="#0d2b52" stroke-width="2.5"/>
+          <ellipse cx="60" cy="52" rx="19" ry="22" fill="#fff3da"/>
           <ellipse cx="60" cy="55" rx="16" ry="19" fill="#fed7aa" stroke="#0d2b52" stroke-width="2"/>
           ${isConcern
             ? '<path d="M46 47 Q52 50 56 48" stroke="#78350f" stroke-width="2" fill="none"/><path d="M64 48 Q68 50 74 47" stroke="#78350f" stroke-width="2" fill="none"/>'
@@ -959,8 +964,8 @@
       }
 
       if (s.includes('husna') || s.includes('siswi')) {
-        const isFlirt = m.includes('flirt') || m.includes('wink');
-        const isCheer = m.includes('cheer') || m.includes('happy');
+        const isFlirt = m.includes('flirt') || m.includes('wink') || m.includes('jahil') || m.includes('tease');
+        const isCheer = m.includes('cheer') || m.includes('happy') || m.includes('semangat');
         return `<svg viewBox="0 0 120 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <radialGradient id="husnaBg" cx="50%" cy="40%" r="50%">
@@ -972,7 +977,9 @@
           <circle cx="86" cy="40" r="8" fill="#e66b5d" stroke="#0d2b52" stroke-width="2"/>
           <path d="M86 42 C98 48 102 62 94 74 C90 66 90 54 86 46 Z" fill="#0f172a" stroke="#0d2b52" stroke-width="2"/>
           <path d="M26 114 C28 92 40 84 60 84 C80 84 92 92 94 114 Z" fill="#ffffff" stroke="#0d2b52" stroke-width="2.5"/>
-          <polygon points="60,86 52,98 56,114 64,114 68,98" fill="#0d2b52"/>
+          <polygon points="60,86 54,98 57,114 63,114 66,98" fill="#64748b" stroke="#0d2b52" stroke-width="1.8"/>
+          <rect x="74" y="93" width="12" height="14" rx="1.5" fill="#f8fafc" stroke="#64748b" stroke-width="1.2"/>
+          <circle cx="80" cy="98" r="2.5" fill="#0284c7"/>
           <rect x="53" y="72" width="14" height="15" fill="#fbcfe8" stroke="#0d2b52" stroke-width="2"/>
           <ellipse cx="60" cy="56" rx="21" ry="23" fill="#fbcfe8" stroke="#0d2b52" stroke-width="2.5"/>
           <path d="M38 52 C36 34 46 24 60 24 C74 24 82 34 82 52 C76 42 70 38 62 42 C56 46 48 40 38 52 Z" fill="#0f172a" stroke="#0d2b52" stroke-width="2.5"/>
@@ -995,27 +1002,29 @@
       }
 
       if (s.includes('zacky') || s.includes('montir')) {
-        const isThinking = m.includes('think');
+        const isThinking = m.includes('think') || m.includes('analisis');
         return `<svg viewBox="0 0 120 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <radialGradient id="zackyBg" cx="50%" cy="40%" r="50%">
-              <stop offset="0%" stop-color="#fb923c" stop-opacity="0.35"/>
-              <stop offset="100%" stop-color="#ea580c" stop-opacity="0.05"/>
+              <stop offset="0%" stop-color="#ef4444" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#991b1b" stop-opacity="0.08"/>
             </radialGradient>
           </defs>
-          <circle cx="60" cy="60" r="54" fill="url(#zackyBg)" stroke="#f97316" stroke-width="2"/>
-          <path d="M22 114 C24 92 36 84 60 84 C84 84 96 92 98 114 Z" fill="#475569" stroke="#0d2b52" stroke-width="2.5"/>
-          <path d="M22 114 C26 94 36 86 52 86 L48 114 Z" fill="#0d2b52"/>
-          <path d="M98 114 C94 94 84 86 68 86 L72 114 Z" fill="#0d2b52"/>
-          <rect x="74" y="90" width="6" height="20" rx="2" fill="#cbd5e1" stroke="#0d2b52" stroke-width="1.5" transform="rotate(15 77 100)"/>
-          <circle cx="75" cy="92" r="5" fill="none" stroke="#cbd5e1" stroke-width="2.5"/>
+          <circle cx="60" cy="60" r="54" fill="url(#zackyBg)" stroke="#dc2626" stroke-width="2"/>
+          <path d="M22 114 C24 92 36 84 60 84 C84 84 96 92 98 114 Z" fill="#0f172a" stroke="#0d2b52" stroke-width="2.5"/>
+          <path d="M22 114 C25 94 34 86 48 86 L44 114 Z" fill="#dc2626" stroke="#0d2b52" stroke-width="2"/>
+          <path d="M98 114 C95 94 86 86 72 86 L76 114 Z" fill="#dc2626" stroke="#0d2b52" stroke-width="2"/>
+          <line x1="60" y1="86" x2="60" y2="114" stroke="#e2e8f0" stroke-width="2.5" stroke-dasharray="2 1"/>
+          <polygon points="52,86 60,94 68,86" fill="#ef4444" stroke="#0d2b52" stroke-width="1.5"/>
+          <rect x="76" y="90" width="6" height="20" rx="2" fill="#cbd5e1" stroke="#0d2b52" stroke-width="1.5" transform="rotate(15 79 100)"/>
+          <circle cx="77" cy="92" r="5" fill="none" stroke="#cbd5e1" stroke-width="2.5"/>
           <rect x="52" y="70" width="16" height="18" fill="#f4b28c" stroke="#0d2b52" stroke-width="2"/>
           <ellipse cx="60" cy="56" rx="22" ry="24" fill="#f4b28c" stroke="#0d2b52" stroke-width="2.5"/>
           <ellipse cx="44" cy="62" rx="5" ry="3" fill="#334155" opacity="0.6" transform="rotate(-15 44 62)"/>
           <circle cx="38" cy="56" r="5" fill="#f4b28c" stroke="#0d2b52" stroke-width="2"/>
           <circle cx="82" cy="56" r="5" fill="#f4b28c" stroke="#0d2b52" stroke-width="2"/>
-          <path d="M37 46 C37 28 47 22 60 22 C73 22 83 28 83 46 Z" fill="#0d2b52" stroke="#0d2b52" stroke-width="2.5"/>
-          <path d="M48 44 Q60 38 72 44" fill="#0369a1" stroke="#0d2b52" stroke-width="2"/>
+          <path d="M37 46 C37 28 47 22 60 22 C73 22 83 28 83 46 Z" fill="#dc2626" stroke="#0d2b52" stroke-width="2.5"/>
+          <path d="M48 44 Q60 38 72 44" fill="#0f172a" stroke="#0d2b52" stroke-width="2"/>
           <ellipse cx="60" cy="45" rx="5" ry="3" fill="#f4b28c"/>
           <path d="M36 50 L32 54 L38 56 M84 50 L88 54 L82 56" stroke="#0f172a" stroke-width="2.5" fill="none"/>
           ${isThinking
