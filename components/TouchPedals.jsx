@@ -2,6 +2,7 @@
 'use client';
 
 import React from 'react';
+import { FaBullhorn, FaCaretDown, FaCaretUp, FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
 
 export default function TouchPedals({
   onBrakeStart = () => {},
@@ -34,11 +35,13 @@ export default function TouchPedals({
             <span className="block font-fredoka text-xl sm:text-2xl text-white tracking-wider drop-shadow group-hover:scale-105 transition-transform">
               REM
             </span>
-            <span className="block text-[9px] sm:text-[10px] font-mono text-red-200 uppercase font-semibold">
-              Mundur / Pitch ▼
+            <span className="block text-[9px] sm:text-[10px] font-mono text-red-200 uppercase font-semibold flex items-center justify-center gap-0.5">
+              Mundur / Pitch <FaCaretDown className="text-xs" />
             </span>
           </div>
-          <span className="text-[9px] text-red-300/80 font-mono hidden sm:inline">[A] / [←]</span>
+          <span className="text-[9px] text-red-300/80 font-mono hidden sm:inline flex items-center gap-1">
+            [A] / [<FaArrowLeft className="text-[7px]" />]
+          </span>
         </button>
       </div>
 
@@ -50,7 +53,7 @@ export default function TouchPedals({
           onTouchStart={(e) => { e.preventDefault(); onHorn(); }}
           className="pedal-btn relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-b from-amber-400/95 via-amber-500/95 to-yellow-600/95 backdrop-blur-md border-2 border-amber-200 shadow-[0_8px_20px_rgba(245,158,11,0.5)] flex flex-col items-center justify-center p-1 active:scale-90 transition-transform"
         >
-          <span className="text-2xl sm:text-3xl filter drop-shadow">🎺</span>
+          <FaBullhorn className="text-xl sm:text-2xl text-slate-950 mb-0.5 drop-shadow" />
           <span className="font-fredoka text-[10px] sm:text-xs text-slate-950 font-bold tracking-tight">TELOLET</span>
           <span className="text-[8px] text-amber-950 font-mono hidden sm:inline font-bold">[H] / [Spasi]</span>
         </button>
@@ -78,11 +81,13 @@ export default function TouchPedals({
             <span className="block font-fredoka text-2xl sm:text-3xl text-white tracking-wider drop-shadow group-hover:scale-105 transition-transform">
               GAS
             </span>
-            <span className="block text-[9px] sm:text-[10px] font-mono text-cyan-200 uppercase font-semibold">
-              Maju / Pitch ▲
+            <span className="block text-[9px] sm:text-[10px] font-mono text-cyan-200 uppercase font-semibold flex items-center justify-center gap-0.5">
+              Maju / Pitch <FaCaretUp className="text-xs" />
             </span>
           </div>
-          <span className="text-[9px] text-cyan-300/80 font-mono hidden sm:inline">[D] / [→]</span>
+          <span className="text-[9px] text-cyan-300/80 font-mono hidden sm:inline flex items-center gap-1">
+            [D] / [<FaArrowRight className="text-[7px]" />]
+          </span>
         </button>
       </div>
     </div>

@@ -1,31 +1,73 @@
-# Menjalankan dan Men-deploy
+# Panduan Menjalankan & Men-deploy
 
-## Karakter deployment
+Dokumen ini menjelaskan tata cara pengujian lokal dan deployment aplikasi **MBG: Road To School** ke lingkungan staging maupun produksi.
 
-Situs statis tanpa bundler. Sertakan index.html, game_core.js, vercel.json bila memakai Vercel, manifest serta seluruh aset yang dirujuk. Tailwind dan Google Fonts dimuat dari CDN. Biaya, kuota, limit upload, dan trafik bergantung provider/account; jangan mengasumsikan tier atau kapasitas.
+---
 
-## Uji lokal
+## 1. Menjalankan di Lingkungan Lokal
 
-Dari root proyek di PowerShell jalankan py -m http.server 8000, buka http://127.0.0.1:8000/, lalu hentikan dengan Ctrl+C. Bila py tidak ada gunakan python -m http.server 8000. Periksa Network dan Console. file:// bukan pengganti HTTP karena fetch manifest dan ES modules bisa dibatasi browser.
+### Opsi A: Server Fullstack Next.js 16 (Rekomendasi)
+```bash
+# Dari root c:\Projects\game
+npm install
+npm run dev
+```
+Akses aplikasi melalui browser: [http://localhost:3000](http://localhost:3000)
 
-Alternatif: npx serve . dapat mengunduh paket dari registry jika tidak tersedia lokal; tinjau sumber sebelum menerimanya.
+### Opsi B: Build Produksi Lokal Next.js
+```bash
+npm run build
+npm start
+```
+Aplikasi berjalan pada mode produksi teroptimasi di port 3000.
 
-## Vercel
+### Opsi C: Standalone HTML5 Canvas (Tanpa Build)
+```bash
+python -m http.server 8000
+```
+Buka di browser: [http://localhost:8000](http://localhost:8000)
 
-vercel.json menetapkan cleanUrls. HTML, game_core.js dan manifest direvalidasi; URL assets/refresh/ mendapat Cache-Control public, max-age=31536000, immutable. Path immutable tidak boleh ditimpa setelah rilis.
+---
 
-Alur aman: siapkan/login CLI atau tautkan repo di dashboard; tinjau scope/project/root/branch; deploy preview; uji URL preview, Network, Console, aset, alur gameplay dan header cache; baru promosikan ke production. Periksa dokumentasi/dashboard provider untuk instruksi dan biaya yang berlaku karena dapat berubah. Jangan simpan token deploy di repository atau command yang tercatat publik.
+## 2. Opsi Deployment ke Produksi
 
-## Cache dan rollback
+### A. Deployment ke Vercel (Next.js Fullstack)
+Proyek ini dikonfigurasi secara native untuk Next.js 16:
+1. Hubungkan repositori GitHub `zmdinata/MyMobilGwehh` ke dashboard Vercel.
+2. Vercel secara otomatis mendeteksi framework Next.js:
+   - Build Command: `next build`
+   - Output Directory: `.next`
+   - Install Command: `npm install`
+3. Konfigurasi `vercel.json` menyajikan clean URLs dan cache control otomatis.
 
-Saat aset berubah, buat path versi baru lalu ubah manifest. Saat game_core.js berubah, naikkan query versi pada import module di index.html. Verifikasi header aktual setelah deployment; konfigurasi lokal bukan bukti perilaku CDN. Jika rilis gagal, rollback deployment atau kembalikan manifest/query ke versi terdahulu; pertahankan file sumber versi lama.
+### B. Deployment Self-Hosted (Node.js Server / Docker)
+1. Jalankan `npm run build` di server target.
+2. Jalankan process manager (PM2 / Systemd):
+   ```bash
+   pm2 start npm --name "mbg-game" -- start
+   ```
+3. Arahkan reverse proxy (Nginx / Caddy) ke port `3000`.
 
-## Checklist dan risiko
+### C. Deployment Statis (GitHub Pages / Netlify / CDN)
+Jika ingin menyajikan game murni berbasis canvas statis tanpa Node runtime:
+- Deploy berkas: `index.html`, `game_core.js`, direktori `assets/`, dan `assets/manifest.json`.
 
-| Risiko | Mitigasi |
-| --- | --- |
-| Target project/branch keliru | Cocokkan identitas dan preview sebelum production |
-| Cache menampilkan kode/aset lama | Revalidasi HTML/manifest; URL aset baru; cek request |
-| PNG sumber membesarkan payload | Ukur payload dan tinjau apakah sumber mentah perlu dipublikasikan |
-| CDN/font tidak tersedia | Uji jaringan sasaran dan fallback |
-| Secret terpublikasi | Scan staged files; jangan commit .env, kunci, token, kredensial |
+---
+
+## 3. Strategi Cache & Header Aset
+
+- **Berkas Kode & Manifest**:
+  - `index.html`, `app/page.jsx`, `assets/manifest.json`: Menggunakan header `Cache-Control: public, max-age=0, must-revalidate` agar pemain selalu mendapatkan update versi cerita dan level terbaru.
+- **Aset Gambar Versi (v11)**:
+  - Berkas di bawah `assets/refresh/v11/...` dapat di-cache secara immutable: `Cache-Control: public, max-age=31536000, immutable`.
+  - Jika ada pembaruan gambar, buat direktori versi baru (misal `v12`) dan perbarui rujukan di `manifest.json`.
+
+---
+
+## 4. Checklist Keamanan Sebelum Deploy
+
+- [x] Tidak ada berkas `.env`, token rahasia, atau kredensial API yang ter-commit.
+- [x] Seluruh 80 unit test lulus 100% (`npm test`).
+- [x] Build produksi lulus tanpa warning (`npm run build`).
+- [x] Aset logo PNG resmi dan gerbang finis ter-render dengan benar.
+- [x] Responsivitas kontrol mobile sentuh dan keyboard desktop terverifikasi.

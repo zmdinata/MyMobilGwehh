@@ -2,6 +2,14 @@
 'use client';
 
 import React from 'react';
+import {
+  FaTrophy,
+  FaStar,
+  FaCoins,
+  FaForward,
+  FaRotateRight,
+  FaHouse
+} from 'react-icons/fa6';
 
 export default function VictoryModal({
   stars = 3,
@@ -12,12 +20,10 @@ export default function VictoryModal({
   onReplay = () => {},
   onMenu = () => {}
 }) {
-  const starsDisplay = stars === 3 ? '⭐⭐⭐' : stars === 2 ? '⭐⭐' : '⭐';
-
   return (
     <div id="victoryModal" className="absolute inset-0 z-40 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-emerald-400 rounded-3xl p-6 sm:p-8 shadow-2xl text-center relative overflow-hidden">
-        <div className="text-4xl sm:text-5xl mb-2">🎉</div>
+        <FaTrophy className="text-4xl sm:text-5xl text-yellow-400 mx-auto mb-2 drop-shadow-lg" />
         <h2 className="font-fredoka text-2xl sm:text-3xl text-emerald-400 drop-shadow mb-1">
           MISI BERHASIL!
         </h2>
@@ -37,8 +43,10 @@ export default function VictoryModal({
         </div>
 
         {/* Star Rating */}
-        <div id="vicStars" className="text-3xl sm:text-4xl tracking-widest mb-3">
-          {starsDisplay}
+        <div id="vicStars" className="flex justify-center items-center gap-2 text-2xl sm:text-3xl text-amber-400 mb-3">
+          {Array.from({ length: stars }).map((_, i) => (
+            <FaStar key={i} />
+          ))}
         </div>
 
         <p className="text-xs text-slate-300 mb-4 italic">
@@ -57,7 +65,10 @@ export default function VictoryModal({
           </div>
           <div className="flex justify-between border-t border-slate-700 pt-1 text-amber-400 font-bold">
             <span>Koin Gizi Diperoleh:</span>
-            <span id="vicCoins">+{coinsEarned} 🪙</span>
+            <span id="vicCoins" className="flex items-center gap-1">
+              <span>+{coinsEarned}</span>
+              <FaCoins className="text-amber-400 text-xs" />
+            </span>
           </div>
         </div>
 
@@ -66,23 +77,26 @@ export default function VictoryModal({
           <button
             id="vicNextBtn"
             onClick={onNextLevel}
-            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-fredoka text-base sm:text-lg font-bold shadow-lg shadow-emerald-500/30 active:scale-95 transition-all cursor-pointer"
+            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-fredoka text-base sm:text-lg font-bold shadow-lg shadow-emerald-500/30 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
           >
-            LANJUT TRAYEK BERIKUTNYA ⏩
+            <span>LANJUT TRAYEK BERIKUTNYA</span>
+            <FaForward className="text-sm" />
           </button>
           <div className="grid grid-cols-2 gap-2">
             <button
               id="vicRestartBtn"
               onClick={onReplay}
-              className="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-xs border border-slate-700 active:scale-95 cursor-pointer"
+              className="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-xs border border-slate-700 active:scale-95 cursor-pointer flex items-center justify-center gap-1.5"
             >
-              ULANG LEVEL 🔄
+              <span>ULANG LEVEL</span>
+              <FaRotateRight className="text-[10px]" />
             </button>
             <button
               onClick={onMenu}
-              className="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-xs border border-slate-700 active:scale-95 cursor-pointer"
+              className="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-xs border border-slate-700 active:scale-95 cursor-pointer flex items-center justify-center gap-1.5"
             >
-              MENU UTAMA 🏠
+              <span>MENU UTAMA</span>
+              <FaHouse className="text-[10px]" />
             </button>
           </div>
         </div>

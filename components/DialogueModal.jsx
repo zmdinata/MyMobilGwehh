@@ -2,6 +2,18 @@
 'use client';
 
 import React, { useState } from 'react';
+import {
+  FaTruckFast,
+  FaGraduationCap,
+  FaFaceSmileWink,
+  FaWrench,
+  FaUserTie,
+  FaUserShield,
+  FaUser,
+  FaForward,
+  FaPlay,
+  FaFlagCheckered
+} from 'react-icons/fa6';
 
 export default function DialogueModal({
   level = 1,
@@ -23,15 +35,15 @@ export default function DialogueModal({
   };
 
   const speakerAvatars = {
-    'Tion': '🚚',
-    'Bu Yulie': '👩‍🏫',
-    'Husna': '👧',
-    'Zacky': '🔧',
-    'Mang Ucup': '🧔',
-    'Pak RT': '👨‍💼'
+    'Tion': <FaTruckFast className="text-cyan-200" />,
+    'Bu Yulie': <FaGraduationCap className="text-pink-300" />,
+    'Husna': <FaFaceSmileWink className="text-yellow-300" />,
+    'Zacky': <FaWrench className="text-amber-300" />,
+    'Mang Ucup': <FaUserTie className="text-sky-300" />,
+    'Pak RT': <FaUserShield className="text-emerald-300" />
   };
 
-  const avatar = speakerAvatars[currentLine.speaker] || '👤';
+  const avatar = speakerAvatars[currentLine.speaker] || <FaUser className="text-slate-300" />;
 
   return (
     <div id="dialogueModal" className="absolute inset-0 z-40 bg-slate-950/75 backdrop-blur-sm flex items-end justify-center p-3 sm:p-6 pb-6 sm:pb-8">
@@ -62,16 +74,27 @@ export default function DialogueModal({
             <button
               id="dialogueSkipBtn"
               onClick={onComplete}
-              className="py-1 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 font-fredoka text-xs border border-slate-700 active:scale-95 transition-all cursor-pointer"
+              className="py-1 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 font-fredoka text-xs border border-slate-700 active:scale-95 transition-all cursor-pointer flex items-center gap-1.5"
             >
-              LEWATI / SKIP ⏩
+              <span>LEWATI / SKIP</span>
+              <FaForward className="text-[10px]" />
             </button>
             <button
               id="dialogueNextBtn"
               onClick={handleNext}
-              className="py-1.5 px-5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-fredoka text-sm shadow active:scale-95 transition-all cursor-pointer"
+              className="py-1.5 px-5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-fredoka text-sm shadow active:scale-95 transition-all cursor-pointer flex items-center gap-1.5"
             >
-              {currentIndex < dialogues.length - 1 ? 'LANJUT ▶' : 'MULAI GAS! 🏁'}
+              {currentIndex < dialogues.length - 1 ? (
+                <>
+                  <span>LANJUT</span>
+                  <FaPlay className="text-[10px]" />
+                </>
+              ) : (
+                <>
+                  <span>MULAI GAS!</span>
+                  <FaFlagCheckered className="text-xs" />
+                </>
+              )}
             </button>
           </div>
         </div>

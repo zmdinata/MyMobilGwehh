@@ -79,7 +79,7 @@ export default function GamePage() {
   }, [screen]);
 
   const triggerHorn = () => {
-    setCenterNotice('TELOLET MANIA! 📢');
+    setCenterNotice('TELOLET MANIA!');
     setTimeout(() => setCenterNotice(null), 1800);
   };
 

@@ -1,45 +1,52 @@
-# PRD — MBG: Road To School
+# PRD — MBG: Road To School (My Mobil Gwehh)
 
-## Tujuan dan batas
+## 1. Tujuan & Ruang Lingkup Produk
 
-Game browser side-scrolling 2D dengan fisika arcade. Pemain mengantar paket menggunakan truk biru melalui empat bioma menuju sekolah fiktif SD, SMP, dan SMA Puspa Bangsa, Cirebon.
+**MBG: Road To School** adalah game browser 2D side-scrolling physics platformer bertema edukasi gizi dan petualangan cinta lokal. Pemain mengendalikan truk katering gizi **Mas Tion** yang mengarungi rute Pantura hingga pegunungan untuk mengantarkan 500 porsi paket makanan sehat hangat ke **Bu Yulie** di sekolah fiktif **SD, SMP, dan SMA Puspa Bangsa Cirebon** sebelum pukul 09:45 WIB, didampingi petuah supir veteran **Mang Ucup** dan bengkel modifikasi **Zacky**.
 
-Aplikasi berupa index.html, game_core.js dan aset lokal. Tidak ada backend, akun, cloud save atau transaksi. Styling dan font memakai CDN. Target pengalaman: desktop keyboard serta browser sentuh; kompatibilitas pada perangkat nyata harus diuji sebelum diklaim.
+Aplikasi menyediakan dua moda runtime:
+1. **Mode Modern Fullstack**: Next.js 16 (App Router) + React 19 + Turbopack + Tailwind v4, dengan UI modular, animasi VN, dan live preview bengkel.
+2. **Mode Standalone Canvas**: File tunggal `index.html` yang dapat dimainkan tanpa build melalui HTTP server lokal.
 
-## Pengalaman inti
+---
 
-Mencapai finish 4500 m sebelum timer 210 detik berakhir, sambil mengelola bensin, kargo, hazard, pitch, wheelie/stoppie, dan airtime. Kondisi gagal: rollover, kehabisan bensin sambil mundur, deadline, atau cargo hancur.
+## 2. Pengalaman Inti Permainan
 
-## Kriteria produk
+- **Kampanye 20 Level**: Mengarungi 20 rute dengan kenaikan jarak bertahap (800m hingga 4500m) melintasi 8 bioma berurutan.
+- **Dinamika Suspensi & Kargo**: Menjaga keseimbangan truk bermuatan rantang sayur lodeh dan botol susu murni agar tidak tumpah saat menanjak, melompat, atau mendarat di lereng terjal.
+- **Koleksi Koin & Upgrade Garasi**: Mengumpulkan koin gizi di lintasan untuk menaikkan level Mesin, Cengkeraman Ban, dan Suspensi di Garasi Zacky (Level 1–20), serta membuka skin bodi dan velg balap.
+- **Cerita Visual Novel Interaktif**: Menikmati dialog jenaka dan menghangatkan hati antara Mas Tion, Bu Yulie, Husna, Zacky, Mang Ucup, dan Pak RT di setiap awal dan akhir level.
 
-1. Dapat dimainkan via HTTP tanpa build.
-2. Browser memakai engine terrain/fisika/state yang sama dengan test, dari game_core.js.
-3. Aset gagal tidak menyebabkan retry tak terbatas; ada fallback.
-4. Terrain kode adalah collision authority, ilustrasi tidak menggeser permukaan fisik.
-5. Identitas biru dominan; desain tetap terbaca di desktop dan layar sempit.
-6. Keyboard serta multi-touch mendukung kontrol dan UI jeda/restart.
-7. Skor/fisika/aset punya tes regresi.
-8. Laporan membedakan tes otomatis, simulasi, browser smoke, dan playtest manusia.
+---
 
-## Spesifikasi aktif
+## 3. Kriteria Keberhasilan Produk
 
-Kontrol: D/W/panah kanan/atas gas; A/S/panah kiri/bawah rem; H/Spasi klakson; Esc jeda; R restart. Finish 4500 m; terrain 4600 m. Batas maju/mundur 550/220 px/s pada skala 20 px/m. Timer 210 s. Jeriken +30 sampai 100. Dua bintang: cargo ≥40%, fuel >0. Tiga bintang: cargo ≥70%, fuel ≥20%, sisa waktu ≥30 s.
+1. **Dual Runtime Viability**: Dapat dijalankan via `npm run dev` / `npm run build && npm start` (Next.js) dan `python -m http.server` (HTML5 statis).
+2. **Konsistensi Fisika Bersama**: Logika rigid-body, suspensi, dan terrain diatur oleh satu file inti (`game_core.js`) yang digunakan bersama oleh browser, React, dan automated unit tests.
+3. **80 Suite Unit Test Lulus 100%**: Tidak ada regresi pada fisika baseline (`enginePower = 2200`, `kSpring = 180`, `kDamper = 18.8`).
+4. **Bebas Visual AI-Slop**: Kontrol layar sentuh menggunakan pedal glassmorphic transparan modern, tanpa overlay CRT scanlines yang membuat tampilan pecah/bergaris.
+5. **Aset Manifest Lengkap (v11)**: Seluruh 8 bioma WebP dan 8 sprite PNG (logo, gerbang sekolah, kargo ompreng, truk, roda, koin, jeriken, kayu) terhubung dengan fallback prosedural otomatis.
+6. **Invarian Garis Finis**: Setiap level wajib berakhir pada kompleks sekolah fiktif SD, SMP, dan SMA Puspa Bangsa yang aman dan datar.
+7. **Penyimpanan Lokal**: Saldo koin, status bintang level, level terbuka, dan level upgrade komponen tersimpan otomatis di `localStorage`.
 
-Bioma nominal: Pantura 0–1200 m, sawah 1200–2800, gunung 2800–4200, sekolah 4200–4600. Traksi air/lumpur 0.85/0.82. Konstanta drag lumpur 2.5/s, diterapkan dengan faktor 0.5 pada roda. Model dan satuan adalah tuning arcade.
+---
 
-## Visual dan aset
+## 4. Spesifikasi Karakter & Narasi
 
-Palet utama navy #0D2B52, cobalt #1769C2, sky blue #58B7F2. Dunia, armada, lambang dan sekolah fiktif. Hindari merek/institusi nyata serta imitasi IP. Manifest v11 memiliki 6 PNG, 8 WebP, 2 SVG. PNG logo/gate belum diunggah; keduanya masih SVG v3. Prompt dan sumber dijelaskan di ASSETS_GUIDE.md dan HIGGSFIELD_PROMPTS.md.
+- **Mas Tion**: Protagonis dan pengemudi utama truk MBG.
+- **Bu Yulie**: Guru muda teladan di Sekolah Puspa Bangsa, tokoh idaman Tion.
+- **Mang Ucup**: Supir veteran pembimbing Mas Tion (memberi nasihat mengemudi dan petuah hidup).
+- **Zacky**: Montir handal pemilik bengkel Garasi Zacky.
+- **Husna**: Siswi SMA ceria yang sering menggoda kedekatan Tion dan Bu Yulie.
+- **Pak RT**: Tokoh masyarakat pendukung program gizi anak sekolah.
 
-Pengguna melaporkan telah membeli kredit Higgsfield; saldo yang dapat digunakan dan akses model tidak diverifikasi, serta tidak ada generasi baru pada audit dokumentasi ini.
+---
 
-## Risiko dan mitigasi
+## 5. Matriks Risiko & Mitigasi
 
-| Risiko | Mitigasi |
-| --- | --- |
-| Parameter arcade dipahami sebagai realistis | Jelaskan batas unit; playtest untuk UX |
-| Aset merusak pivot/hitbox | Terrain terpisah; validasi manifest dan komposit runtime |
-| Aset atau CDN gagal | Fallback lokal/prosedural, uji HTTP dan jaringan |
-| Cache lama | Path aset versi baru dan query modul baru |
-| Kredit/izin generator | Periksa billing dan syarat penggunaan saat produksi |
-| File sensitif/payload besar ikut publikasi | Audit seluruh staged tree, ukuran dan kredensial |
+| Risiko | Dampak | Mitigasi Otomatis |
+| :--- | :--- | :--- |
+| **Gagal muat gambar pada koneksi lambat** | Layar putih / blank | Loader manifest mendukung decode asynchronous, fallback path, dan gambar prosedural canvas bawaan. |
+| **Deviasi fisika pada FPS bervariasi** | Skor atau rute rusak | Fixed timestep 120 Hz dengan pembatas delta time (maks 100ms) dan catch-up sub-stepping. |
+| **Inkonsistensi cerita karakter** | Kebingungan pemain | Seluruh 20 naskah dialog dan teks UI dikunci melalui automated regression tests. |
+| **Kompilasi Next.js gagal di produksi** | Gagal deploy | Script build Turbopack diverifikasi dengan 0 error dan 0 warning. |

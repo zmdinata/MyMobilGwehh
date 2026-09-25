@@ -1,7 +1,17 @@
 // components/GarageModal.jsx
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import {
+  FaWrench,
+  FaCoins,
+  FaXmark,
+  FaBolt,
+  FaPalette,
+  FaGear,
+  FaLock
+} from 'react-icons/fa6';
+import { GiTireTracks, GiSpring } from 'react-icons/gi';
 
 export default function GarageModal({
   coins = 0,
@@ -16,24 +26,26 @@ export default function GarageModal({
 }) {
   const previewCanvasRef = useRef(null);
 
-  const getUpgradeCost = (lvl) => Math.round(50 * Math.pow(1.35, lvl - 1));
+  const getUpgradeCost = (currentLvl) => {
+    return Math.round(50 * Math.pow(1.35, currentLvl - 1));
+  };
 
   const skins = [
-    { id: 'standard', name: 'Standard Tosca MBG', unlockLevel: 1, cost: 0, color: '#0d9488' },
-    { id: 'speedy', name: 'Speedy Pantura Blue', unlockLevel: 3, cost: 100, color: '#0284c7' },
-    { id: 'mountain', name: 'Mountain Hunter Red', unlockLevel: 7, cost: 250, color: '#dc2626' },
-    { id: 'retro', name: 'Retro Cirebon Brown', unlockLevel: 12, cost: 450, color: '#78350f' },
-    { id: 'sport', name: 'Sport Gizi Lime', unlockLevel: 16, cost: 700, color: '#16a34a' }
+    { id: 'standard', name: 'Standard MBG Box', unlockLevel: 1, color: '#0d9488' },
+    { id: 'speedy', name: 'Speedy Courier', unlockLevel: 4, color: '#0284c7' },
+    { id: 'mountain', name: 'Mountain 4x4', unlockLevel: 8, color: '#b45309' },
+    { id: 'retro', name: 'Retro Classic', unlockLevel: 12, color: '#be123c' },
+    { id: 'sport', name: 'Sport Tuned', unlockLevel: 16, color: '#4338ca' }
   ];
 
   const rims = [
-    { id: 'stock', name: 'Velg Kaleng Bawaan', unlockLevel: 1, cost: 0 },
-    { id: 'gold', name: 'Bintang Emas 5-Spoke', unlockLevel: 4, cost: 120 },
-    { id: 'beadlock', name: 'Offroad Beadlock Heavy Duty', unlockLevel: 9, cost: 300 },
-    { id: 'whitewall', name: 'Klasik Whitewall Pantura', unlockLevel: 14, cost: 500 }
+    { id: 'stock', name: 'Stock Steelie', unlockLevel: 1, color: '#64748b' },
+    { id: 'gold', name: 'Gold Racing Alloy', unlockLevel: 5, color: '#eab308' },
+    { id: 'beadlock', name: 'Mud Offroad Beadlock', unlockLevel: 10, color: '#ef4444' },
+    { id: 'whitewall', name: 'White-Wall Classic', unlockLevel: 15, color: '#f8fafc' }
   ];
 
-  // Draw truck live preview
+  // Render live truck preview on mini canvas
   useEffect(() => {
     const canvas = previewCanvasRef.current;
     if (!canvas) return;
@@ -42,59 +54,78 @@ export default function GarageModal({
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Workshop ground line
+    // Floor line
     ctx.strokeStyle = '#334155';
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 4;
     ctx.beginPath();
-    ctx.moveTo(10, 115);
-    ctx.lineTo(290, 115);
+    ctx.moveTo(10, 110);
+    ctx.lineTo(290, 110);
     ctx.stroke();
 
-    const skinObj = skins.find(s => s.id === selectedSkin) || skins[0];
+    // Truck Body Box
+    const curSkin = skins.find(s => s.id === selectedSkin) || skins[0];
+    ctx.fillStyle = curSkin.color;
+    ctx.beginPath();
+    ctx.roundRect(80, 45, 140, 50, 8);
+    ctx.fill();
 
-    // Truck body box
-    ctx.fillStyle = skinObj.color;
-    ctx.fillRect(80, 45, 90, 45);
-    ctx.strokeStyle = '#0f172a';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(80, 45, 90, 45);
+    // Cabin Window
+    ctx.fillStyle = '#bae6fd';
+    ctx.beginPath();
+    ctx.roundRect(175, 52, 35, 25, 4);
+    ctx.fill();
 
-    // Cabin
-    ctx.fillStyle = '#f8fafc';
-    ctx.fillRect(170, 55, 35, 35);
-    ctx.strokeRect(170, 55, 35, 35);
+    // Headlight
+    ctx.fillStyle = '#fef08a';
+    ctx.beginPath();
+    ctx.arc(218, 75, 4, 0, Math.PI * 2);
+    ctx.fill();
 
-    // Windshield
-    ctx.fillStyle = '#38bdf8';
-    ctx.fillRect(185, 60, 15, 15);
+    // Suspension Linkages
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 3;
+    // Rear strut
+    ctx.beginPath();
+    ctx.moveTo(110, 85);
+    ctx.lineTo(110, 100);
+    ctx.stroke();
+    // Front strut
+    ctx.beginPath();
+    ctx.moveTo(190, 85);
+    ctx.lineTo(190, 100);
+    ctx.stroke();
 
     // Wheels
-    const rimColor = selectedRim === 'gold' ? '#facc15' : selectedRim === 'whitewall' ? '#f1f5f9' : '#475569';
-    [105, 180].forEach(wx => {
+    const curRim = rims.find(r => r.id === selectedRim) || rims[0];
+    const drawWheel = (wx, wy) => {
       // Tire
-      ctx.fillStyle = '#1e293b';
+      ctx.fillStyle = '#0f172a';
       ctx.beginPath();
-      ctx.arc(wx, 105, 15, 0, Math.PI * 2);
+      ctx.arc(wx, wy, 16, 0, Math.PI * 2);
       ctx.fill();
-      ctx.strokeStyle = '#0f172a';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
       // Rim
-      ctx.fillStyle = rimColor;
+      ctx.fillStyle = curRim.color;
       ctx.beginPath();
-      ctx.arc(wx, 105, 7, 0, Math.PI * 2);
+      ctx.arc(wx, wy, 8, 0, Math.PI * 2);
       ctx.fill();
-    });
-  }, [selectedSkin, selectedRim, upgrades]);
+      // Hub center
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.arc(wx, wy, 3, 0, Math.PI * 2);
+      ctx.fill();
+    };
+
+    drawWheel(110, 102);
+    drawWheel(190, 102);
+  }, [selectedSkin, selectedRim]);
 
   return (
     <div id="garageModal" className="absolute inset-0 z-40 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
       <div className="max-w-2xl w-full bg-slate-900 border-2 border-amber-500/60 rounded-3xl p-4 sm:p-6 shadow-2xl flex flex-col my-auto max-h-[92vh]">
         {/* Header */}
         <div className="flex items-center justify-between mb-3 border-b border-slate-700 pb-3">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl sm:text-3xl">🔧</span>
+          <div className="flex items-center gap-2.5">
+            <FaWrench className="text-2xl sm:text-3xl text-amber-400" />
             <div>
               <h2 className="font-fredoka text-xl sm:text-2xl text-amber-300">
                 BENGKEL RESMI ZACKY
@@ -105,15 +136,17 @@ export default function GarageModal({
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <span className="bg-amber-500/20 border border-amber-400 text-amber-300 px-3 py-1 rounded-full text-xs sm:text-sm font-bold font-mono">
-              🪙 <span id="garageCoins">{coins}</span> Koin
+            <span className="bg-amber-500/20 border border-amber-400 text-amber-300 px-3 py-1 rounded-full text-xs sm:text-sm font-bold font-mono flex items-center gap-1.5">
+              <FaCoins className="text-amber-400 text-xs" />
+              <span id="garageCoins">{coins}</span> Koin
             </span>
             <button
               id="btnGarageClose"
               onClick={onClose}
-              className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-sm border border-slate-600 active:scale-95 cursor-pointer"
+              className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-sm border border-slate-600 active:scale-95 cursor-pointer flex items-center gap-1.5"
             >
-              KEMBALI ✕
+              <span>KEMBALI</span>
+              <FaXmark className="text-xs" />
             </button>
           </div>
         </div>
@@ -138,7 +171,9 @@ export default function GarageModal({
           <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-1">
-                <span className="font-fredoka text-sm text-cyan-300">⚡ Mesin Turbo</span>
+                <span className="font-fredoka text-sm text-cyan-300 flex items-center gap-1.5">
+                  <FaBolt className="text-cyan-400 text-xs" /> Mesin Turbo
+                </span>
                 <span className="font-mono text-xs font-bold text-amber-400">LV {upgrades.engine}/20</span>
               </div>
               <p className="text-[10px] text-slate-400 mb-2">Akselerasi & daya tanjak</p>
@@ -158,7 +193,7 @@ export default function GarageModal({
                   : 'bg-slate-700 text-slate-400 cursor-not-allowed'
               }`}
             >
-              {upgrades.engine >= 20 ? 'MAX' : `UPGRADE (🪙 ${getUpgradeCost(upgrades.engine)})`}
+              {upgrades.engine >= 20 ? 'MAX' : `UPGRADE (${getUpgradeCost(upgrades.engine)} Koin)`}
             </button>
           </div>
 
@@ -166,7 +201,9 @@ export default function GarageModal({
           <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-1">
-                <span className="font-fredoka text-sm text-emerald-300">🛞 Ban Kompon</span>
+                <span className="font-fredoka text-sm text-emerald-300 flex items-center gap-1.5">
+                  <GiTireTracks className="text-emerald-400 text-base" /> Ban Kompon
+                </span>
                 <span className="font-mono text-xs font-bold text-amber-400">LV {upgrades.grip}/20</span>
               </div>
               <p className="text-[10px] text-slate-400 mb-2">Grip lumpur & aspal basah</p>
@@ -186,7 +223,7 @@ export default function GarageModal({
                   : 'bg-slate-700 text-slate-400 cursor-not-allowed'
               }`}
             >
-              {upgrades.grip >= 20 ? 'MAX' : `UPGRADE (🪙 ${getUpgradeCost(upgrades.grip)})`}
+              {upgrades.grip >= 20 ? 'MAX' : `UPGRADE (${getUpgradeCost(upgrades.grip)} Koin)`}
             </button>
           </div>
 
@@ -194,7 +231,9 @@ export default function GarageModal({
           <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-1">
-                <span className="font-fredoka text-sm text-amber-300">🪓 Suspensi</span>
+                <span className="font-fredoka text-sm text-amber-300 flex items-center gap-1.5">
+                  <GiSpring className="text-amber-400 text-base" /> Suspensi
+                </span>
                 <span className="font-mono text-xs font-bold text-amber-400">LV {upgrades.suspension}/20</span>
               </div>
               <p className="text-[10px] text-slate-400 mb-2">Redam benturan kargo</p>
@@ -214,14 +253,16 @@ export default function GarageModal({
                   : 'bg-slate-700 text-slate-400 cursor-not-allowed'
               }`}
             >
-              {upgrades.suspension >= 20 ? 'MAX' : `UPGRADE (🪙 ${getUpgradeCost(upgrades.suspension)})`}
+              {upgrades.suspension >= 20 ? 'MAX' : `UPGRADE (${getUpgradeCost(upgrades.suspension)} Koin)`}
             </button>
           </div>
         </div>
 
         {/* Skins & Rims Section */}
         <div className="border-t border-slate-800 pt-3">
-          <span className="font-fredoka text-sm text-slate-300 block mb-2">🎨 Kustomisasi Body Truk:</span>
+          <span className="font-fredoka text-sm text-slate-300 flex items-center gap-1.5 mb-2">
+            <FaPalette className="text-amber-400" /> Kustomisasi Body Truk:
+          </span>
           <div className="flex flex-wrap gap-2 mb-3">
             {skins.map(s => {
               const isUnlocked = unlockedLevel >= s.unlockLevel;
@@ -232,7 +273,7 @@ export default function GarageModal({
                   id={`skinBtn_${s.id}`}
                   disabled={!isUnlocked}
                   onClick={() => onSelectSkin(s.id)}
-                  className={`px-3 py-1 rounded-xl text-xs font-fredoka transition-all ${
+                  className={`px-3 py-1 rounded-xl text-xs font-fredoka transition-all flex items-center gap-1.5 ${
                     isSelected
                       ? 'bg-amber-500 text-slate-950 font-bold border-2 border-amber-300'
                       : isUnlocked
@@ -240,13 +281,20 @@ export default function GarageModal({
                       : 'bg-slate-900 text-slate-500 border border-slate-800 cursor-not-allowed'
                   }`}
                 >
-                  {s.name} {!isUnlocked && `🔒 Lvl ${s.unlockLevel}`}
+                  <span>{s.name}</span>
+                  {!isUnlocked && (
+                    <span className="inline-flex items-center gap-1 text-[10px] opacity-75">
+                      <FaLock className="text-[9px]" /> Lvl {s.unlockLevel}
+                    </span>
+                  )}
                 </button>
               );
             })}
           </div>
 
-          <span className="font-fredoka text-sm text-slate-300 block mb-2">⚙️ Pilihan Velg:</span>
+          <span className="font-fredoka text-sm text-slate-300 flex items-center gap-1.5 mb-2">
+            <FaGear className="text-cyan-400" /> Pilihan Velg:
+          </span>
           <div className="flex flex-wrap gap-2">
             {rims.map(r => {
               const isUnlocked = unlockedLevel >= r.unlockLevel;
@@ -257,7 +305,7 @@ export default function GarageModal({
                   id={`rimBtn_${r.id}`}
                   disabled={!isUnlocked}
                   onClick={() => onSelectRim(r.id)}
-                  className={`px-3 py-1 rounded-xl text-xs font-fredoka transition-all ${
+                  className={`px-3 py-1 rounded-xl text-xs font-fredoka transition-all flex items-center gap-1.5 ${
                     isSelected
                       ? 'bg-amber-500 text-slate-950 font-bold border-2 border-amber-300'
                       : isUnlocked
@@ -265,7 +313,12 @@ export default function GarageModal({
                       : 'bg-slate-900 text-slate-500 border border-slate-800 cursor-not-allowed'
                   }`}
                 >
-                  {r.name} {!isUnlocked && `🔒 Lvl ${r.unlockLevel}`}
+                  <span>{r.name}</span>
+                  {!isUnlocked && (
+                    <span className="inline-flex items-center gap-1 text-[10px] opacity-75">
+                      <FaLock className="text-[9px]" /> Lvl {r.unlockLevel}
+                    </span>
+                  )}
                 </button>
               );
             })}

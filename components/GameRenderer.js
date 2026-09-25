@@ -310,9 +310,9 @@ export class GameRenderer {
           ctx.font = 'bold 18px Fredoka One, sans-serif';
           ctx.strokeStyle = '#065f46';
           ctx.lineWidth = 4;
-          ctx.strokeText('✨ PERFECT LANDING! 100% SHOCK ABSORPTION ✨', vehicle.x, vehicle.y - 70);
+          ctx.strokeText('PERFECT LANDING! 100% SHOCK ABSORPTION', vehicle.x, vehicle.y - 70);
           ctx.fillStyle = '#34d399';
-          ctx.fillText('✨ PERFECT LANDING! 100% SHOCK ABSORPTION ✨', vehicle.x, vehicle.y - 70);
+          ctx.fillText('PERFECT LANDING! 100% SHOCK ABSORPTION', vehicle.x, vehicle.y - 70);
           ctx.restore();
         }
 
@@ -392,8 +392,8 @@ export class GameRenderer {
         ctx.lineWidth = 4;
         ctx.font = 'bold 22px Fredoka One, sans-serif';
         ctx.textAlign = 'center';
-        ctx.strokeText('KUAH LODEH & SUSU AMBYAR! 🍲💥', this.width / 2, this.height * 0.28);
-        ctx.fillText('KUAH LODEH & SUSU AMBYAR! 🍲💥', this.width / 2, this.height * 0.28);
+        ctx.strokeText('KUAH LODEH & SUSU AMBYAR!', this.width / 2, this.height * 0.28);
+        ctx.fillText('KUAH LODEH & SUSU AMBYAR!', this.width / 2, this.height * 0.28);
         ctx.restore();
       }
 

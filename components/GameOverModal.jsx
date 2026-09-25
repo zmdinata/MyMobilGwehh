@@ -2,6 +2,14 @@
 'use client';
 
 import React from 'react';
+import {
+  FaCarBurst,
+  FaGasPump,
+  FaClock,
+  FaBowlFood,
+  FaRotateRight,
+  FaHouse
+} from 'react-icons/fa6';
 
 export default function GameOverModal({
   reason = 'ROLLOVER',
@@ -11,23 +19,23 @@ export default function GameOverModal({
   onRestart = () => {},
   onMenu = () => {}
 }) {
-  let icon = '💥';
+  let iconComponent = <FaCarBurst className="text-4xl sm:text-5xl text-red-500 mx-auto mb-2 drop-shadow-lg" />;
   let title = 'MOBIL GWEH TERGULING';
   let subtitle = 'Omprengmu telah tumpah!';
   let desc = 'MOBIL GWEH TERGULING! Atap truk menghantam tanah, boks toska ambyar, 500 botol susu meletus, kuah sayur lodeh tumpah ambyar ke layar kaca, dan Mas Tion terduduk lemas meratapi rantang gizi yang berserakan di depan Mang Ucup!';
 
   if (reason === 'FUEL') {
-    icon = '⛽';
+    iconComponent = <FaGasPump className="text-4xl sm:text-5xl text-amber-500 mx-auto mb-2 drop-shadow-lg" />;
     title = 'BENSIN LUDES!';
     subtitle = 'Mogok di Tanjakan Curam!';
     desc = 'Bensin habis saat menanjak bukit curam! Truk melorot mundur tak terkendali diiringi sorakan riang warga kampung yang menonton!';
   } else if (reason === 'DEADLINE') {
-    icon = '⏰';
+    iconComponent = <FaClock className="text-4xl sm:text-5xl text-orange-500 mx-auto mb-2 drop-shadow-lg" />;
     title = 'TELAT! BEL SUDAH BUNYI!';
     subtitle = 'Melewati Pukul 09:45 WIB!';
     desc = 'Waktu habis tepat pukul 09:45 WIB! Siswa lemas kelaparan di depan gerbang Puspa Bangsa, dan Mas Tion harus menanggung malu di hadapan Bu Yulie!';
   } else if (reason === 'CARGO') {
-    icon = '🍲';
+    iconComponent = <FaBowlFood className="text-4xl sm:text-5xl text-rose-500 mx-auto mb-2 drop-shadow-lg" />;
     title = 'PAKET GIZI HANCUR!';
     subtitle = 'Integritas Muatan 0%!';
     desc = 'Integritas muatan menyentuh 0%! Tahu-tempe orek dan sayur lodeh gurih berceceran ambyar jadi bubur jalanan akibat guncangan ekstrem!';
@@ -36,7 +44,7 @@ export default function GameOverModal({
   return (
     <div id="gameOverModal" className="absolute inset-0 z-40 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-red-500 rounded-3xl p-6 sm:p-8 shadow-2xl text-center relative overflow-hidden">
-        <div id="goIcon" className="text-4xl sm:text-5xl mb-2">{icon}</div>
+        <div id="goIcon">{iconComponent}</div>
         <h2 id="goTitle" className="font-fredoka text-2xl sm:text-3xl text-red-500 drop-shadow mb-1">
           {title}
         </h2>
@@ -69,16 +77,18 @@ export default function GameOverModal({
           <button
             id="goRestartBtn"
             onClick={onRestart}
-            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white font-fredoka text-base sm:text-lg font-bold shadow-lg shadow-red-500/30 active:scale-95 transition-all cursor-pointer"
+            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white font-fredoka text-base sm:text-lg font-bold shadow-lg shadow-red-500/30 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
           >
-            GAS LAGI DARI AWAL! 🔄
+            <span>GAS LAGI DARI AWAL!</span>
+            <FaRotateRight className="text-sm" />
           </button>
           <button
             id="goMenuBtn"
             onClick={onMenu}
-            className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-xs sm:text-sm border border-slate-700 active:scale-95 cursor-pointer"
+            className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-xs sm:text-sm border border-slate-700 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
           >
-            KEMBALI KE MENU UTAMA 🏠
+            <span>KEMBALI KE MENU UTAMA</span>
+            <FaHouse className="text-xs" />
           </button>
         </div>
       </div>
