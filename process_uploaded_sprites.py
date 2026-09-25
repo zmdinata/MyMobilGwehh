@@ -115,6 +115,13 @@ def main() -> None:
     for source_name, (target_name, size) in SPRITES.items():
         with Image.open(SOURCE / source_name) as source:
             sprite, transparent_ratio = cutout(source, source_name)
+        if source_name == "logo.png":
+            w, h = sprite.size
+            max_dim = max(w, h)
+            square_img = Image.new("RGBA", (max_dim, max_dim), (0, 0, 0, 0))
+            offset = ((max_dim - w) // 2, (max_dim - h) // 2)
+            square_img.paste(sprite, offset)
+            sprite = square_img
         sprite = sprite.resize(size, Image.Resampling.LANCZOS)
         if source_name == "Truk kurir—sprite bodi transparan.png":
             # Remove the remaining checkerboard only from the visible pocket
@@ -131,7 +138,7 @@ def main() -> None:
         if source_name == "logo.png":
             meta = PngImagePlugin.PngInfo()
             meta.add_text("brand_color", "#0d2b52")
-            meta.add_text("title", "MBG: Road To School")
+            meta.add_text("title", "MMG: Road To School")
             sprite.save(target, "PNG", optimize=True, pnginfo=meta)
         else:
             sprite.save(target, "PNG", optimize=True)
