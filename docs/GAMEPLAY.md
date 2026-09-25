@@ -19,14 +19,18 @@ Misi ini didedikasikan untuk menyambut **Bu Yulie** (guru muda yang disukai Tion
 | **Mulai Ulang (Restart)** | `R` | Tombol Ulangi di Layar Kalah/Menang |
 
 ### Mekanika Fisika Lanjutan:
-1. **Dinamika Daratan**:
-   - Menekan **Gas** menggerakkan roda belakang dan menghasilkan gaya angkat hidung (*wheelie* terkendali).
-   - Menekan **Rem** mengurangi laju maju, menghasilkan efek *stoppie* (roda belakang terangkat ringan), dan beralih ke gigi mundur saat kendaraan berhenti.
+1. **Dinamika Daratan & Stunt Roda Tunggal**:
+   - Menekan **Gas** menggerakkan roda belakang dan menghasilkan gaya angkat hidung (*wheelie* terkendali). Menjaga roda depan melayang selama $\ge 0.4$ detik akan menampilkan badge live `WHEELIE X.Xs ⚡`, dan mendaratkan kedua roda dengan aman menghadiahkan bonus **+5 hingga +25 Koin Gizi**.
+   - Menekan **Rem** mengurangi laju maju, menghasilkan efek *stoppie* (roda belakang terangkat ringan saat deselerasi cepat). Menjaga roda belakang melayang $\ge 0.4$ detik memicu badge live `STOPPIE X.Xs 🛑` serta hadiah bonus koin.
    - Menekan **Gas + Rem** secara bersamaan di tanah: mesin tetap aktif mendorong maju sambil menetralkan torsi pitch, berguna untuk menanjak terjal tanpa terjungkal ke belakang.
-2. **Kontrol Pitch di Udara (*Air-Pitch Control*)**:
-   - Di udara, tahan `Gas` untuk mengangkat moncong mobil (*pitch up*) atau tahan `Rem` untuk menundukkan moncong (*pitch down*).
+2. **Kontrol Pitch di Udara (*Airborne Dynamics*)**:
+   - Torsi kendali udara telah dioptimalkan ke **`6.5 rad/s²`** (berskala dinamis +3%/level dengan peningkatan suspensi). Saat melayang, tahan `Gas` untuk mengangkat moncong truk (*pitch up* / counter-clockwise) atau tahan `Rem` untuk menundukkan moncong (*pitch down* / clockwise).
+   - **Live Airborne Badge**: Melayang di udara $\ge 0.35$ detik secara instan mengaktifkan lencana neon real-time `AIR TIME X.Xs ✈️` tepat di atas kabin truk.
+   - **Hadiah Manuver Udara (*Stunt Rewards*)**:
+     - **Air Time Jump**: Melayang $\ge 0.75$ detik dan mendarat aman ($\Delta\theta \le 35^\circ$) menghadiahkan bonus **+10 hingga +30 Koin Gizi**.
+     - **Acrobatic Flips**: Melakukan putaran penuh di udara menghadiahkan **BACKFLIP! +25 KOIN ⭐** atau **FRONTFLIP! +25 KOIN ⭐**.
    - **Teknik Pendaratan Sempurna (*Angle-Matched Landing*)**: Jika selisih sudut bodi truk dan permukaan lereng pendaratan $\Delta\theta \le 22^\circ$, suspensi ganda menyerap hingga **90% energi benturan**, menjaga kecepatan tangent, dan mengakibatkan **0% kerusakan pada paket sayur lodeh**.
-   - Pendaratan tajam ($\Delta\theta > 35^\circ$) akan merusak kargo gizi.
+   - Pendaratan tajam ($\Delta\theta > 35^\circ$) akan memicu guncangan keras yang merusak kargo gizi.
 
 ---
 

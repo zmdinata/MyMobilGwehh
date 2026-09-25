@@ -80,7 +80,10 @@ Buka browser di: [http://localhost:8000](http://localhost:8000)
 | **Jeda (Pause)** | `Esc` | Tombol Jeda `⏸️` di HUD |
 | **Mulai Ulang (Restart)** | `R` | Tombol Ulangi di Layar Selesai |
 
-- **Dinamika Udara (Air-Pitch)**: Saat melayang, tahan `Gas` untuk mengangkat hidung mobil (*pitch up*) atau tahan `Rem` untuk menurunkan hidung (*pitch down*). Sesuaikan sudut pendaratan agar sejajar dengan kemiringan tanah guna menyerap guncangan dan menyelamatkan paket sayur lodeh!
+- **Dinamika Udara (Airborne & Stunts)**:
+  - Torsi kendali udara telah dioptimalkan ke `6.5 rad/s²` (berskala +3%/level dengan peningkatan suspensi). Saat melayang, tahan `Gas` untuk mengangkat hidung mobil (*pitch up*) atau tahan `Rem` untuk menurunkan hidung (*pitch down*).
+  - Tampil lencana neon real-time di atas mobil saat melayang (`AIR TIME X.Xs ✈️`), melakukan wheelie roda belakang (`WHEELIE X.Xs ⚡`), atau stoppie roda depan (`STOPPIE X.Xs 🛑`).
+  - Berhasil mendarat mulus setelah manuver akrobatik menghadiahkan bonus koin gizi instan (+5 s.d. +30 koin) dan disimpan permanen ke tabungan pemain!
 
 ---
 
@@ -90,9 +93,11 @@ Seluruh logika fisika, aturan kampanye, dan integritas antarmuka diuji menggunak
 ```bash
 npm test
 ```
-**Hasil Aktual**: **80/80 Unit Test Lulus (0 Gagal)**, mencakup:
+**Hasil Aktual**: **83/83 Unit Test Lulus (0 Gagal)**, mencakup:
+- Deteksi airborne real-time, timer melayang, live badges, dan akumulasi bonus koin stunt.
+- Stunt wheelie & stoppie satu roda dengan validasi pendaratan aman.
 - Fisika suspensi pegas-redam ganda, weight transfer, dan landing shock absorption.
-- Simulasi end-to-end 20 level tanpa NaN atau crash.
+- Simulasi end-to-end 20 level tanpa NaN atau crash pada 30, 60, dan 120 FPS.
 - Kelengkapan dialog visual novel dan kurva biaya upgrade garasi.
 - Kompilasi produksi Next.js 16 (`npm run build`) berhasil 100% tanpa error.
 
