@@ -2,7 +2,7 @@
 
 ## Status workspace
 
-Catatan historis: pernah ada percobaan Higgsfield yang ditolak oleh persyaratan plan dan tidak menghasilkan job. Setelah itu pengguna melaporkan baru membeli 40 kredit. Laporan pembelian berasal dari pengguna; saldo yang dapat dipakai, akses model, serta biaya tiap aset tidak diverifikasi pada audit dokumentasi ini. Tidak ada gambar baru yang dibuat dalam pembaruan dokumen ini. Paket prompt berikut ditujukan untuk varian atau aset yang belum tersedia. Sebelum submit, verifikasi saldo, plan/model, estimasi, dan terms di akun. Mitigasi pemborosan: mulai dari satu aset uji, review hasil/transparansi, lalu lanjutkan kategori berikutnya.
+Catatan historis: pernah ada percobaan Higgsfield yang ditolak oleh persyaratan plan dan tidak menghasilkan job. Setelah itu pengguna melaporkan baru membeli kredit. Laporan pembelian berasal dari pengguna; saldo yang dapat dipakai, akses model, serta biaya tiap aset tidak diverifikasi pada audit dokumentasi ini. Tidak ada gambar baru yang dibuat dalam pembaruan dokumen ini. Paket prompt berikut ditujukan untuk varian atau aset yang belum tersedia. Sebelum submit, verifikasi saldo, plan/model, estimasi, dan terms di akun. Mitigasi pemborosan: mulai dari satu aset uji, review hasil/transparansi, lalu lanjutkan kategori berikutnya.
 
 ## Visual bible bersama
 

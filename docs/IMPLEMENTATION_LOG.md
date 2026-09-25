@@ -11,7 +11,7 @@ Browser mengimpor game_core.js?v=20260925-gameplay11; manifest aset aktif v11.
 
 ## Audit dokumentasi — 2026-09-25
 
-Menambahkan README, menyelaraskan spesifikasi aktif ke kode, merapikan hasil testing yang sebelumnya mencampur banyak snapshot, memperbarui status Higgsfield sesuai laporan pengguna tentang 40 kredit, serta menambahkan mitigasi cache, aset, CDN, credential dan publikasi. Semua klaim hasil diberi batas jenis bukti.
+Menambahkan README, menyelaraskan spesifikasi aktif ke kode, merapikan hasil testing yang sebelumnya mencampur banyak snapshot, memperbarui status Higgsfield sesuai laporan pengguna tentang pembelian kredit, serta menambahkan mitigasi cache, aset, CDN, credential dan publikasi. Semua klaim hasil diberi batas jenis bukti.
 
 ## Catatan sejarah teknis
 

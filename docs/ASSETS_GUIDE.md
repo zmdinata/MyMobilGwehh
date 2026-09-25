@@ -34,7 +34,7 @@ Untuk aset baru: pertahankan versi aktif dan sumber, ekspor ke direktori versi b
 
 ## Higgsfield
 
-Prompt rinci dan per kategori tersedia di HIGGSFIELD_PROMPTS.md. Pengguna melaporkan membeli 40 kredit; saldo, hak akses model, biaya, dan hak distribusi belum diverifikasi pada audit dokumen ini. Jangan commit credential atau data billing. Tinjau ketentuan generator dan hasil sebelum publikasi.
+Prompt rinci dan per kategori tersedia di HIGGSFIELD_PROMPTS.md. Pengguna melaporkan telah membeli kredit; saldo, hak akses model, biaya, dan hak distribusi belum diverifikasi pada audit dokumen ini. Jangan commit credential atau data billing. Tinjau ketentuan generator dan hasil sebelum publikasi.
 
 ## Mitigasi risiko
 

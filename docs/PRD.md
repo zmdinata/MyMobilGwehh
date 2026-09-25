@@ -31,7 +31,7 @@ Bioma nominal: Pantura 0–1200 m, sawah 1200–2800, gunung 2800–4200, sekola
 
 Palet utama navy #0D2B52, cobalt #1769C2, sky blue #58B7F2. Dunia, armada, lambang dan sekolah fiktif. Hindari merek/institusi nyata serta imitasi IP. Manifest v11 memiliki 6 PNG, 8 WebP, 2 SVG. PNG logo/gate belum diunggah; keduanya masih SVG v3. Prompt dan sumber dijelaskan di ASSETS_GUIDE.md dan HIGGSFIELD_PROMPTS.md.
 
-Pengguna sebelumnya melaporkan membeli 40 kredit Higgsfield; saldo/akses model sekarang tidak diverifikasi dan tidak ada generasi baru pada audit dokumentasi ini.
+Pengguna melaporkan telah membeli kredit Higgsfield; saldo yang dapat digunakan dan akses model tidak diverifikasi, serta tidak ada generasi baru pada audit dokumentasi ini.
 
 ## Risiko dan mitigasi
 
