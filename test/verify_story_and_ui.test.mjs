@@ -10,7 +10,8 @@ import {
   PhysicsVehicle,
   GameStateManager,
   LEVEL_CONFIGS,
-  STORY_DIALOGUES
+  STORY_DIALOGUES,
+  getCharacterAvatarMeta
 } from '../game_core.js';
 
 test('LEVEL_CONFIGS - All 20 levels defined with proper stepped distances & ending at Sekolah Puspa Bangsa', () => {
@@ -57,6 +58,7 @@ test('STORY_DIALOGUES - All 20 levels have rich Intro & Outro dialogues with all
       assert.ok(line.mood, `Dialogue line has mood`);
       assert.equal(/\bMBG\b/.test(line.text), false, `Dialogue line in Level ${lvl} must not contain deprecated 'MBG': "${line.text}"`);
       assert.equal(/\bMBG\b/.test(line.role || ''), false, `Role in Level ${lvl} must not contain deprecated 'MBG'`);
+      assert.equal(/\bJon\b/.test(line.text), false, `Dialogue line in Level ${lvl} must use nickname 'Yon' instead of 'Jon': "${line.text}"`);
       charactersFound.add(line.speaker);
     }
   }
@@ -179,5 +181,27 @@ test('Garage - Skin & Rim unlock progression rules and badges', () => {
   assert.ok(html.includes('gold: 5'), 'Gold rim requires level 5');
   assert.ok(html.includes('beadlock: 10'), 'Beadlock rim requires level 10');
   assert.ok(html.includes('whitewall: 15'), 'Whitewall rim requires level 15');
+});
+
+test('Character Avatars - All dialogue speakers and moods map to valid WebP and PNG assets', () => {
+  const charactersDir = path.resolve('assets/refresh/v11/characters');
+  assert.ok(fs.existsSync(charactersDir), 'assets/refresh/v11/characters directory exists');
+
+  for (let lvl = 1; lvl <= 20; lvl++) {
+    const story = STORY_DIALOGUES[lvl];
+    for (const line of [...story.intro, ...story.outro]) {
+      const meta = getCharacterAvatarMeta(line.speaker, line.mood);
+      assert.ok(meta, `Metadata returned for ${line.speaker} (${line.mood})`);
+      assert.ok(meta.slug, `Slug exists for ${line.speaker}`);
+      assert.ok(meta.gradient, `Gradient styling exists for ${line.speaker}`);
+      assert.ok(meta.border, `Border styling exists for ${line.speaker}`);
+
+      // Check physical file on disk
+      const webpPath = path.join(charactersDir, `${meta.slug}.webp`);
+      const pngPath = path.join(charactersDir, `${meta.slug}.png`);
+      assert.ok(fs.existsSync(webpPath), `WebP asset exists on disk: ${meta.slug}.webp`);
+      assert.ok(fs.existsSync(pngPath), `PNG asset exists on disk: ${meta.slug}.png`);
+    }
+  }
 });
 

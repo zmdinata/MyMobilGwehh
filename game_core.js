@@ -70,7 +70,7 @@ export const STORY_DIALOGUES = {
   1: {
     intro: [
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Tion, tugas perdana lu bawa armada MMG (My Mobil Gwehh) 500 porsi! Rutenya nembus pematang sawah becek dan saluran irigasi gembur. Gas itu keberanian, rem itu kebijaksanaan, bawa kargo aman itu kehormatan supir sejati!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua udah cek shockbreaker sama suspensinya, Jon! Tanah lembah sawah ini suka bikin mobil goyang dombret kalau lu bejek gas mendadak. Santai aja bawanya!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua udah cek shockbreaker sama suspensinya, Yon! Tanah lembah sawah ini suka bikin mobil goyang dombret kalau lu bejek gas mendadak. Santai aja bawanya!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'normal', text: 'Siap Mang Abdul, siap Bang Zacky! Nasi pulen karbohidrat kompleks 150 gram per porsi (~650 kkal AKG) aman terkunci di boks pemanas MMG. Demi gizi adik-adik SD Puspa Bangsa, pematang sawah siap kita libas!' }
     ],
     outro: [
@@ -82,7 +82,7 @@ export const STORY_DIALOGUES = {
   2: {
     intro: [
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Nah, sekarang rute lu mulai masuk pesisir pantai Pantura, Tion! Angin samping laut Jawa ini kencang, aspalnya kena cipratan air asin agak licin. Jangan melamun mikirin senyum Bu Guru kemarin!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Ban udah gua setel komponnya biar cengkeramannya lengket di aspal asin Pantura Jon. Ayam lengkuas 22g protein hewani di bak jangan sampai salto!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Ban udah gua setel komponnya biar cengkeramannya lengket di aspal asin Pantura Yon. Ayam lengkuas 22g protein hewani di bak jangan sampai salto!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Aman terkendali! Semangat antar kargo nutrisi MMG buat murid-murid... dan tentunya pengen lihat senyum manis Bu Yulie lagi hari ini!' }
     ],
     outro: [
@@ -105,7 +105,7 @@ export const STORY_DIALOGUES = {
   },
   4: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Jalur arteri Pantura lagi ramai bus malam ngebut Jon! Tapi menu hari ini sayur lodeh labu siam dan melinjo kaya vitamin A-C. Kuahnya sensitif guncangan, suspensi udah gua kerasin dikit!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Jalur arteri Pantura lagi ramai bus malam ngebut Yon! Tapi menu hari ini sayur lodeh labu siam dan melinjo kaya vitamin A-C. Kuahnya sensitif guncangan, suspensi udah gua kerasin dikit!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Dengerin mekanik lu, Tion. Mendarat harus sejajar permukaan jalan, jangan sampai kuah santan lodeh berhamburan di aspal Pantura!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Siap para maestro! Rantang gizi bersekat ganda MMG terkunci rapat. Kuah lodeh aman, murid-murid kenyang, martabat kurir terjaga!' }
     ],
@@ -118,7 +118,7 @@ export const STORY_DIALOGUES = {
   5: {
     intro: [
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Tion! Hujan gerimis turun di lereng perbukitan terasering! Ingat ilmu Mang Abdul: licinnya tanah lumpur itu kayak ujian asmara, kalau lu panik lu ngepot terbalik, kalau tenang lu selamat sampai pelaminan!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Torsi mesin Stage 1 lu udah mantap Jon! Bandeng presto tanpa duri kaya Omega-3 EPA/DHA 1200mg ini jangan sampai remuk pas nanjak licin!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Torsi mesin Stage 1 lu udah mantap Yon! Bandeng presto tanpa duri kaya Omega-3 EPA/DHA 1200mg ini jangan sampai remuk pas nanjak licin!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Siap komandan! Walau terasering licin kayak es, tekad kurir MMG gak bakal goyah demi nutrisi anak bangsa!' }
     ],
     outro: [
@@ -129,7 +129,7 @@ export const STORY_DIALOGUES = {
   },
   6: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'thinking', text: 'Jon, ada rintangan balok kayu irigasi dan kubangan tanah di lembah sawah! Menu hari ini telur balado bumbu tomat, kaya kolin 147mg buat memori otak. Gunakan air-pitch control pas melompat!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'thinking', text: 'Yon, ada rintangan balok kayu irigasi dan kubangan tanah di lembah sawah! Menu hari ini telur balado bumbu tomat, kaya kolin 147mg buat memori otak. Gunakan air-pitch control pas melompat!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Telur balado itu rapuh kayak perasaan anak muda, Tion. Salah mendarat dikit, ambyar jadi orak-arik! Mainkan pedal gas dengan penuh kasih sayang!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Per dan damper bengkel Zacky udah teruji! 500 butir telur balado MMG bakal mendarat bulat utuh tanpa retak sehelai rambut pun!' }
     ],
@@ -157,7 +157,7 @@ export const STORY_DIALOGUES = {
     intro: [
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Pagi Mas Tion! Husna punya info A1 dari ruang guru nih! Kemarin Bu Yulie nanya ke guru BK, katanya tipe cowok idamannya yang gigih, bisa nyetir, dan sayang anak-anak!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'blush', text: 'H-hah?! Jangan bikin gosip Husna! Nanti fokus nyetirku buyar di pesisir Pantura!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Hahaha! Jangan sampai buyar Jon! Sayur bening bayam jagung ini kaya zat besi dan lutein buat mata. Bebatuan pesisir licin, ban kompon Stage 8 siap mencengkeram!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Hahaha! Jangan sampai buyar Yon! Sayur bening bayam jagung ini kaya zat besi dan lutein buat mata. Bebatuan pesisir licin, ban kompon Stage 8 siap mencengkeram!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Info intelijen dari Husna jangan disia-siakan, Tion! Sopir Pantura pantang mundur kalau lampu hijau udah nyala!' }
     ],
     outro: [
@@ -169,7 +169,7 @@ export const STORY_DIALOGUES = {
   },
   9: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua baru pasang shockbreaker heavy-duty di garasi Jon! Jalur Pantura bergelombang sampai perbukitan gak bakal bikin kargo opor telur tahu kuning lu berantakan!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua baru pasang shockbreaker heavy-duty di garasi Yon! Jalur Pantura bergelombang sampai perbukitan gak bakal bikin kargo opor telur tahu kuning lu berantakan!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Shockbreaker baru itu ibarat kedewasaan, Tion. Harus lentur meredam benturan hidup, tapi tetap kokoh menopang beban masa depan!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Mantap Bang Zacky dan petuah Mang Abdul! Kurkumin alami pada kunyit opor ini penambah nafsu makan terbaik. Gas pol uji ayunan shockbreaker!' }
     ],
@@ -183,7 +183,7 @@ export const STORY_DIALOGUES = {
   10: {
     intro: [
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Level 10, Tion! Separuh perjalanan ekspedisi MMG! Kali ini bawaannya 500 botol kaca susu murni Kuningan! Kalsium dan vitamin D buat tulang anak-anak. Nol toleransi benturan keras!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Tiap botol ada di rak busa peredam Jon. Tapi lu tetap harus hati-hati di sambungan jalan desa dan pesisir!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Tiap botol ada di rak busa peredam Yon. Tapi lu tetap harus hati-hati di sambungan jalan desa dan pesisir!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Mas Tion jangan tegang! Bu Yulie udah nungguin di depan ruang guru bawa biskuit buat dicelup ke susu lho!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Siap komandan! Rute pedesaan dan pesisir bakal kita lewati semulus sutra. 500 botol susu MMG aman terkendali!' }
     ],
@@ -198,7 +198,7 @@ export const STORY_DIALOGUES = {
     intro: [
       { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'concern', text: 'Mas Tion, kabut pagi di lereng bukit pinus sangat tebal dan hawa dingin sekali. Jangan memaksakan kecepatan ya Mas, keselamatan Mas Tion nomor satu bagi kami...' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Dengar tuh petuah Bu Guru, Tion! Kabut tebal lereng pegunungan itu menuntut insting kemudi dan lampu kabut kuning. Jangan ngebut membabi buta!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Lampu kabut halogen ekstra udah terpasang di bemper depan Jon. Pecel sayur saus kacang kaya folat dan serat ini harus sampai segar!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Lampu kabut halogen ekstra udah terpasang di bemper depan Yon. Pecel sayur saus kacang kaya folat dan serat ini harus sampai segar!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'normal', text: 'Didengar Bu Yulie sekhawatir itu... dinginnya kabut lereng langsung kalah sama hangatnya hati ini! Armada MMG siap menembus kabut!' }
     ],
     outro: [
@@ -211,7 +211,7 @@ export const STORY_DIALOGUES = {
   12: {
     intro: [
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Mas Tion! Di perbatasan pesisir bukit ada gundukan tanah tinggi! Murid-murid nonton dari jendela kelas lho, tunjukin salto akrobatik mobil MMG yang keren!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'thinking', text: 'Ikan kembung bakar kunyit ini kaya kalsium dan asam lemak sehat buat kecerdasan anak-anak Jon. Jangan keasyikan salto sampai boks kargo terbalik!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'thinking', text: 'Ikan kembung bakar kunyit ini kaya kalsium dan asam lemak sehat buat kecerdasan anak-anak Yon. Jangan keasyikan salto sampai boks kargo terbalik!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Salto boleh buat memikat hati Bu Guru, tapi pendaratan harus roda empat sejajar tanah! Itu hukum fisika dan hukum asmara!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Siap! Bakat akrobatik udara kurir MMG bakal kita kerahkan demi nutrisi anak-anak dan bikin Bu Yulie kagum!' }
     ],
@@ -227,7 +227,7 @@ export const STORY_DIALOGUES = {
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'flirt', text: 'Mas Tion! Pepes ikan mas kemanginya harum banget! Husna selipin amplop surat pantun titipan Mas Tion di rantang makan siang Bu Yulie ya?' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'blush', text: 'Ehhh Husna jangan sembarangan! Amplop pantun yang mana?! Kemarin itu cuma coret-coretan di buku nota belanja bengkel!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'laugh', text: 'Hahaha! Jangan ditahan Tion, biarkan burung merpati asmara terbang ke sangkarnya! Husna, pastikan amplopnya gak kena minyak pepes!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Torsi mobil udah stage 13 Jon, buruan kejar sebelum Husna buka amplopnya di depan bapak kepala sekolah!' }
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Torsi mobil udah stage 13 Yon, buruan kejar sebelum Husna buka amplopnya di depan bapak kepala sekolah!' }
     ],
     outro: [
       { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion... amplop kecil warna merah muda di samping rantang ini... "Jalan berliku di lereng Ciremai, melihat senyum Bu Guru hati pun damai"... Mas Tion yang tulis ya?' },
@@ -238,7 +238,7 @@ export const STORY_DIALOGUES = {
   },
   14: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Rute panjang 17.800 meter Jon! Sambal goreng hati sapi dan kentang dadu ini gudangnya zat besi heme anti-anemia. Jaga kestabilan rem di tikungan hairpin tebing pedesaan!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Rute panjang 17.800 meter Yon! Sambal goreng hati sapi dan kentang dadu ini gudangnya zat besi heme anti-anemia. Jaga kestabilan rem di tikungan hairpin tebing pedesaan!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Tion, kalau kemarin surat pantun lu udah disimpan di binder Bu Yulie, tandanya gerbang asmara udah terbuka lebar! Jangan gugup pas tatap muka di ruang guru!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Hari ini Bu Yulie pakai kerudung warna tosca yang senada sama warna bodi mobil MMG Mas Tion lho! Cieee serasi banget!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Aduh Husna makin bikin deg-degan aja! Suspensi dan rem anti-lock siap meliuk di kelokan tebing! Gas pol!' }
@@ -253,7 +253,7 @@ export const STORY_DIALOGUES = {
   15: {
     intro: [
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Angin lembah bertiup kencang di tanjakan cadas batu curam Ciremai, Tion! Sopir handal gak boleh panik. Miring sedikit kuah kaldu tumpah! Rilekskan tangan di kemudi!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Mesin udah di-tune up ke Stage 15 Jon! Tenaga 3320 watt siap mendaki tanjakan 35 derajat tanpa ngos-ngosan!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Mesin udah di-tune up ke Stage 15 Yon! Tenaga 3320 watt siap mendaki tanjakan 35 derajat tanpa ngos-ngosan!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'hungry', text: 'Aroma kaldu ayam makaroni kaya kolagen 1500mg ini sampai kecium ke pos ronda! Mas Tion semangat demi Bu Yulie!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Siap Mang Abdul dan Bang Zacky! Surat balasan Bu Yulie kemarin udah gua kantongin di saku dada kiri, jadi pelindung hati terhebat!' }
     ],
@@ -267,7 +267,7 @@ export const STORY_DIALOGUES = {
   16: {
     intro: [
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Mas Tion, kabar super penting! Hari ini Bu Yulie ulang tahun! Puding melon dan chia seed segar ini udah pas banget buat hidangan penutup perayaan kecil di sekolah!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua udah bersihin injektor dan filter bensin Jon. Top speed dan handling dijamin maksimal buat ngejar waktu sebelum bel sekolah bunyi!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua udah bersihin injektor dan filter bensin Yon. Top speed dan handling dijamin maksimal buat ngejar waktu sebelum bel sekolah bunyi!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Membawa kado kebahagiaan untuk orang tercinta adalah kehormatan tertinggi seorang pengemudi! Jangan telat sedetik pun, Tion!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'normal', text: 'Bismillah! Walau badai pesisir dan tanjakan menghadang, hari bahagia Bu Yulie wajib kita hiasi dengan pengantaran MMG tersempurna!' }
     ],
@@ -281,7 +281,7 @@ export const STORY_DIALOGUES = {
   },
   17: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Jalur bypass arteri Pantura lurus panjang Jon! Waktunya buktikan top speed mesin bertenaga tinggi! Opor ayam rempah kunyit ini kaya kurkumin antiinflamasi pemelihara imunitas.' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Jalur bypass arteri Pantura lurus panjang Yon! Waktunya buktikan top speed mesin bertenaga tinggi! Opor ayam rempah kunyit ini kaya kurkumin antiinflamasi pemelihara imunitas.' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Perjalanan tinggal 3 level lagi, Tion! Nama armada MMG lu udah harum di seluruh pelosok Cirebon sampai Kuningan!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Iya Mas! Ibu-ibu kantin sama murid-murid udah sepakat, Mas Tion itu pahlawan tanpa tanda jasa paling ganteng se-kabupaten!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Terima kasih atas semua dukungan sahabat-sahabat hebatku! Bodi aerodinamis siap meluncur kencang dan stabil!' }
@@ -296,7 +296,7 @@ export const STORY_DIALOGUES = {
   18: {
     intro: [
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Semburat senja keemasan memayungi lembah sawah dan pesisir, Tion. Jaga ritme kemudi! Besok adalah gladi resik tumpeng akbar, nyali lu diuji hari ini!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Sayur asem Sunda jagung manis kaya magnesium dan asam organik pemulih stamina Jon. Traksi ban kompon lunak siap hadapi tanjakan curam!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Sayur asem Sunda jagung manis kaya magnesium dan asam organik pemulih stamina Yon. Traksi ban kompon lunak siap hadapi tanjakan curam!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'flirt', text: 'Tadi Bu Yulie nitip pesan ke aku Mas, katanya hati-hati di tanjakan penentu nyali, jangan sampai bikin Bu Guru jantungan!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Pesan dari Bu Yulie adalah bahan bakar terkuat di bumi! Tanjakan penentu nyali bakal kita taklukkan dengan gagah!' }
     ],
@@ -310,7 +310,7 @@ export const STORY_DIALOGUES = {
   19: {
     intro: [
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Hari ini gladi resik akbar rute 24.000 meter! 500 tumpeng mini gizi seimbang harus tiba sempurna! Ingat wejangan Mang Abdul: sopir sejati gak cuma piawai tancap gas, tapi juga punya keberanian memperjuangkan cintanya!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua udah pasang strut brace suspensi dan mur roda titanium Jon. Mobil MMG lu sekarang setara mobil kompetisi reli dunia!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua udah pasang strut brace suspensi dan mur roda titanium Yon. Mobil MMG lu sekarang setara mobil kompetisi reli dunia!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Panggung perayaan udah berdiri megah di lapangan sekolah Mas! Bunga-bunga mawar udah disiapin buat Mas Tion nembak Bu Yulie besok!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Siap Mang Abdul, Bang Zacky, dan Husna! Demi gizi 500 siswa dan demi masa depan cintaku bersama Bu Yulie, gas pol pantang kendor!' }
     ],
@@ -323,7 +323,7 @@ export const STORY_DIALOGUES = {
   },
   20: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Ini dia GRAND FINALE Jon! Rute pamungkas 25.000 meter melintasi seluruh 8 bioma dari Pesisir Pantura, Lembah Sawah, sampai Puncak Ciremai! Mesin 3720 watt bertenaga monster siap meledak!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Ini dia GRAND FINALE Yon! Rute pamungkas 25.000 meter melintasi seluruh 8 bioma dari Pesisir Pantura, Lembah Sawah, sampai Puncak Ciremai! Mesin 3720 watt bertenaga monster siap meledak!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Buktikan jiwa kesatria kurir MMG Pantura sejati! Gas itu keberanian, rem itu kebijaksanaan, cinta Bu Yulie itu tujuan akhir hidupmu! Berangkatkan kargo cintamu, Tion!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Seluruh murid SD, SMP, SMA Puspa Bangsa dan para guru udah berkumpul di garis finis bawa spanduk selamat datang Mas Tion sang pahlawan gizi!' },
       { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion... berhati-hatilah di jalan raya. Saya berdiri di gerbang sekolah menanti kepulangan Mas Tion dengan segenap doa di hati saya...' },
@@ -333,7 +333,7 @@ export const STORY_DIALOGUES = {
       { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Mas Tion... selama 20 perjalanan penuh rintangan ini, saya menyaksikan langsung ketulusan, tanggung jawab, dan kebaikan hati Mas Tion yang begitu luar biasa. Hari ini di depan seluruh sekolah, saya menerima perasaan cinta Mas Tion...' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'blush', text: '(Air mata haru tumpah ruah, rpm jantung berdegup bahagia menembus angkasa!) Bu Yulie... terima kasih telah mempercayai hati saya... Saya berjanji akan menjaga Bu Yulie dan mendampingi Bu Guru selamanya!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'HOREEEE! AKHIRNYA MAS TION GAK JOMBLO LAGI! RESMI JADIAN SAMA BU GURU TERCINTA! MAKAN GIZI MMG GRATIS SETIAP HARI!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Selamat Jon! Lu resmi dinobatkan jadi Pahlawan Logistik Gizi dan Raja Cinta Sejati Pantura!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Selamat Yon! Lu resmi dinobatkan jadi Pahlawan Logistik Gizi dan Raja Cinta Sejati Pantura!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Air mata bahagia Mang Abdul tumpah ruah di aspal... Ini adalah kemenangan terindah seorang supir sejati! Gaspol terus sampai ke pelaminan, Tion!' }
     ]
   }
@@ -2779,5 +2779,85 @@ export class SoundSynthesizer {
       this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 1.0, this.ctx.currentTime);
     }
   }
+}
+
+/**
+ * Maps character speaker name and emotional mood to optimized asset slug, web-safe image paths, and Tailwind gradient styles.
+ */
+export function getCharacterAvatarMeta(speaker = 'Tion', mood = 'normal') {
+  const s = String(speaker).toLowerCase();
+  const m = String(mood).toLowerCase();
+
+  let slug = 'tion_normal';
+  let gradient = 'from-sky-500/25 to-blue-700/15';
+  let border = 'border-sky-400/60';
+  let textColor = 'text-sky-300';
+
+  // 1. Tion / Yon (Protagonis / Kurir MMG)
+  if (s.includes('tion') || s.includes('yon') || s.includes('supir') || s.includes('kurir')) {
+    gradient = 'from-sky-500/25 to-blue-700/15';
+    border = 'border-sky-400/60';
+    textColor = 'text-sky-300';
+    if (m.includes('blush') || m.includes('shy') || m.includes('salting')) {
+      slug = 'tion_blush';
+    } else if (m.includes('focus') || m.includes('drive') || m.includes('menanjak')) {
+      slug = 'tion_focus';
+    } else {
+      slug = 'tion_normal';
+    }
+  }
+  // 2. Bu Yulie (Guru Puspa Bangsa - Batik Mega Mendung)
+  else if (s.includes('yulie') || s.includes('guru')) {
+    gradient = 'from-amber-400/25 to-yellow-600/15';
+    border = 'border-amber-400/60';
+    textColor = 'text-amber-300';
+    if (m.includes('concern') || m.includes('worry') || m.includes('khawatir') || m.includes('perhatian')) {
+      slug = 'bu_yulie_concern';
+    } else if (m.includes('happy') || m.includes('joy') || m.includes('gembira') || m.includes('terkesan') || m.includes('laugh')) {
+      slug = 'bu_yulie_happy';
+    } else {
+      slug = 'bu_yulie_warm';
+    }
+  }
+  // 3. Husna (Siswi SMA Putih-Abu-Abu)
+  else if (s.includes('husna') || s.includes('siswi')) {
+    gradient = 'from-pink-500/25 to-cyan-500/15';
+    border = 'border-pink-400/60';
+    textColor = 'text-pink-300';
+    if (m.includes('hungry') || m.includes('lapar') || m.includes('makan')) {
+      slug = 'husna_hungry';
+    } else if (m.includes('flirt') || m.includes('tease') || m.includes('kedip') || m.includes('jahil')) {
+      slug = 'husna_tease';
+    } else {
+      slug = 'husna_cheer';
+    }
+  }
+  // 4. Mang Abdul (Sopir Senior Veteran Safari)
+  else if (s.includes('abdul') || s.includes('mang')) {
+    gradient = 'from-amber-700/25 to-yellow-900/15';
+    border = 'border-amber-600/60';
+    textColor = 'text-amber-400';
+    slug = 'mang_abdul_laugh';
+  }
+  // 5. Zacky (Montir Balap Merah-Hitam)
+  else if (s.includes('zacky') || s.includes('montir') || s.includes('mekanik')) {
+    gradient = 'from-red-600/25 to-slate-900/35';
+    border = 'border-red-500/60';
+    textColor = 'text-red-400';
+    if (m.includes('thinking') || m.includes('analyze') || m.includes('inspeksi') || m.includes('tanya')) {
+      slug = 'zacky_analyze';
+    } else {
+      slug = 'zacky_confident';
+    }
+  }
+
+  return {
+    slug,
+    webpUrl: `assets/refresh/v11/characters/${slug}.webp`,
+    pngUrl: `assets/refresh/v11/characters/${slug}.png`,
+    gradient,
+    border,
+    textColor
+  };
 }
 

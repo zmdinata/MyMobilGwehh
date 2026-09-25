@@ -1,7 +1,84 @@
 // components/CharacterAvatar.jsx
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+
+export function getCharacterAvatarMeta(speaker = 'Tion', mood = 'normal') {
+  const s = String(speaker).toLowerCase();
+  const m = String(mood).toLowerCase();
+
+  let slug = 'tion_normal';
+  let gradient = 'from-sky-500/25 to-blue-700/15';
+  let border = 'border-sky-400/60';
+  let textColor = 'text-sky-300';
+
+  // 1. Tion / Yon (Protagonis / Kurir MMG)
+  if (s.includes('tion') || s.includes('yon') || s.includes('supir') || s.includes('kurir')) {
+    gradient = 'from-sky-500/25 to-blue-700/15';
+    border = 'border-sky-400/60';
+    textColor = 'text-sky-300';
+    if (m.includes('blush') || m.includes('shy') || m.includes('salting')) {
+      slug = 'tion_blush';
+    } else if (m.includes('focus') || m.includes('drive') || m.includes('menanjak')) {
+      slug = 'tion_focus';
+    } else {
+      slug = 'tion_normal';
+    }
+  }
+  // 2. Bu Yulie (Guru Puspa Bangsa - Batik Mega Mendung)
+  else if (s.includes('yulie') || s.includes('guru')) {
+    gradient = 'from-amber-400/25 to-yellow-600/15';
+    border = 'border-amber-400/60';
+    textColor = 'text-amber-300';
+    if (m.includes('concern') || m.includes('worry') || m.includes('khawatir') || m.includes('perhatian')) {
+      slug = 'bu_yulie_concern';
+    } else if (m.includes('happy') || m.includes('joy') || m.includes('gembira') || m.includes('terkesan') || m.includes('laugh')) {
+      slug = 'bu_yulie_happy';
+    } else {
+      slug = 'bu_yulie_warm';
+    }
+  }
+  // 3. Husna (Siswi SMA Putih-Abu-Abu)
+  else if (s.includes('husna') || s.includes('siswi')) {
+    gradient = 'from-pink-500/25 to-cyan-500/15';
+    border = 'border-pink-400/60';
+    textColor = 'text-pink-300';
+    if (m.includes('hungry') || m.includes('lapar') || m.includes('makan')) {
+      slug = 'husna_hungry';
+    } else if (m.includes('flirt') || m.includes('tease') || m.includes('kedip') || m.includes('jahil')) {
+      slug = 'husna_tease';
+    } else {
+      slug = 'husna_cheer';
+    }
+  }
+  // 4. Mang Abdul (Sopir Senior Veteran Safari)
+  else if (s.includes('abdul') || s.includes('mang')) {
+    gradient = 'from-amber-700/25 to-yellow-900/15';
+    border = 'border-amber-600/60';
+    textColor = 'text-amber-400';
+    slug = 'mang_abdul_laugh';
+  }
+  // 5. Zacky (Montir Balap Merah-Hitam)
+  else if (s.includes('zacky') || s.includes('montir') || s.includes('mekanik')) {
+    gradient = 'from-red-600/25 to-slate-900/35';
+    border = 'border-red-500/60';
+    textColor = 'text-red-400';
+    if (m.includes('thinking') || m.includes('analyze') || m.includes('inspeksi') || m.includes('tanya')) {
+      slug = 'zacky_analyze';
+    } else {
+      slug = 'zacky_confident';
+    }
+  }
+
+  return {
+    slug,
+    webpUrl: `/assets/refresh/v11/characters/${slug}.webp`,
+    pngUrl: `/assets/refresh/v11/characters/${slug}.png`,
+    gradient,
+    border,
+    textColor
+  };
+}
 
 export function getCharacterAvatarSvg(speaker = 'Tion', mood = 'normal') {
   const s = String(speaker).toLowerCase();
@@ -238,8 +315,24 @@ export function getCharacterAvatarSvg(speaker = 'Tion', mood = 'normal') {
 }
 
 export default function CharacterAvatar({ speaker = 'Tion', mood = 'normal', className = 'w-full h-full' }) {
-  const svgMarkup = getCharacterAvatarSvg(speaker, mood);
+  const [hasError, setHasError] = useState(false);
+  const meta = getCharacterAvatarMeta(speaker, mood);
 
+  if (!hasError && meta) {
+    return (
+      <picture className={`w-full h-full flex items-center justify-center p-0.5 ${className}`}>
+        <source srcSet={meta.webpUrl} type="image/webp" />
+        <img
+          src={meta.pngUrl}
+          alt={`${speaker} (${mood})`}
+          className="w-full h-full object-contain drop-shadow transition-transform duration-200"
+          onError={() => setHasError(true)}
+        />
+      </picture>
+    );
+  }
+
+  const svgMarkup = getCharacterAvatarSvg(speaker, mood);
   return (
     <div
       className={className}

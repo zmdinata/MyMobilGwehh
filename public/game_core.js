@@ -70,7 +70,7 @@ export const STORY_DIALOGUES = {
   1: {
     intro: [
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Tion, tugas perdana lu bawa armada MMG (My Mobil Gwehh) 500 porsi! Rutenya nembus pematang sawah becek dan saluran irigasi gembur. Gas itu keberanian, rem itu kebijaksanaan, bawa kargo aman itu kehormatan supir sejati!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua udah cek shockbreaker sama suspensinya, Jon! Tanah lembah sawah ini suka bikin mobil goyang dombret kalau lu bejek gas mendadak. Santai aja bawanya!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua udah cek shockbreaker sama suspensinya, Yon! Tanah lembah sawah ini suka bikin mobil goyang dombret kalau lu bejek gas mendadak. Santai aja bawanya!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'normal', text: 'Siap Mang Abdul, siap Bang Zacky! Nasi pulen karbohidrat kompleks 150 gram per porsi (~650 kkal AKG) aman terkunci di boks pemanas MMG. Demi gizi adik-adik SD Puspa Bangsa, pematang sawah siap kita libas!' }
     ],
     outro: [
@@ -82,7 +82,7 @@ export const STORY_DIALOGUES = {
   2: {
     intro: [
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Nah, sekarang rute lu mulai masuk pesisir pantai Pantura, Tion! Angin samping laut Jawa ini kencang, aspalnya kena cipratan air asin agak licin. Jangan melamun mikirin senyum Bu Guru kemarin!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Ban udah gua setel komponnya biar cengkeramannya lengket di aspal asin Pantura Jon. Ayam lengkuas 22g protein hewani di bak jangan sampai salto!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Ban udah gua setel komponnya biar cengkeramannya lengket di aspal asin Pantura Yon. Ayam lengkuas 22g protein hewani di bak jangan sampai salto!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Aman terkendali! Semangat antar kargo nutrisi MMG buat murid-murid... dan tentunya pengen lihat senyum manis Bu Yulie lagi hari ini!' }
     ],
     outro: [
@@ -105,7 +105,7 @@ export const STORY_DIALOGUES = {
   },
   4: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Jalur arteri Pantura lagi ramai bus malam ngebut Jon! Tapi menu hari ini sayur lodeh labu siam dan melinjo kaya vitamin A-C. Kuahnya sensitif guncangan, suspensi udah gua kerasin dikit!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Jalur arteri Pantura lagi ramai bus malam ngebut Yon! Tapi menu hari ini sayur lodeh labu siam dan melinjo kaya vitamin A-C. Kuahnya sensitif guncangan, suspensi udah gua kerasin dikit!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Dengerin mekanik lu, Tion. Mendarat harus sejajar permukaan jalan, jangan sampai kuah santan lodeh berhamburan di aspal Pantura!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Siap para maestro! Rantang gizi bersekat ganda MMG terkunci rapat. Kuah lodeh aman, murid-murid kenyang, martabat kurir terjaga!' }
     ],
@@ -118,7 +118,7 @@ export const STORY_DIALOGUES = {
   5: {
     intro: [
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Tion! Hujan gerimis turun di lereng perbukitan terasering! Ingat ilmu Mang Abdul: licinnya tanah lumpur itu kayak ujian asmara, kalau lu panik lu ngepot terbalik, kalau tenang lu selamat sampai pelaminan!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Torsi mesin Stage 1 lu udah mantap Jon! Bandeng presto tanpa duri kaya Omega-3 EPA/DHA 1200mg ini jangan sampai remuk pas nanjak licin!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Torsi mesin Stage 1 lu udah mantap Yon! Bandeng presto tanpa duri kaya Omega-3 EPA/DHA 1200mg ini jangan sampai remuk pas nanjak licin!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Siap komandan! Walau terasering licin kayak es, tekad kurir MMG gak bakal goyah demi nutrisi anak bangsa!' }
     ],
     outro: [
@@ -129,7 +129,7 @@ export const STORY_DIALOGUES = {
   },
   6: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'thinking', text: 'Jon, ada rintangan balok kayu irigasi dan kubangan tanah di lembah sawah! Menu hari ini telur balado bumbu tomat, kaya kolin 147mg buat memori otak. Gunakan air-pitch control pas melompat!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'thinking', text: 'Yon, ada rintangan balok kayu irigasi dan kubangan tanah di lembah sawah! Menu hari ini telur balado bumbu tomat, kaya kolin 147mg buat memori otak. Gunakan air-pitch control pas melompat!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Telur balado itu rapuh kayak perasaan anak muda, Tion. Salah mendarat dikit, ambyar jadi orak-arik! Mainkan pedal gas dengan penuh kasih sayang!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Per dan damper bengkel Zacky udah teruji! 500 butir telur balado MMG bakal mendarat bulat utuh tanpa retak sehelai rambut pun!' }
     ],
@@ -157,7 +157,7 @@ export const STORY_DIALOGUES = {
     intro: [
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Pagi Mas Tion! Husna punya info A1 dari ruang guru nih! Kemarin Bu Yulie nanya ke guru BK, katanya tipe cowok idamannya yang gigih, bisa nyetir, dan sayang anak-anak!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'blush', text: 'H-hah?! Jangan bikin gosip Husna! Nanti fokus nyetirku buyar di pesisir Pantura!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Hahaha! Jangan sampai buyar Jon! Sayur bening bayam jagung ini kaya zat besi dan lutein buat mata. Bebatuan pesisir licin, ban kompon Stage 8 siap mencengkeram!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Hahaha! Jangan sampai buyar Yon! Sayur bening bayam jagung ini kaya zat besi dan lutein buat mata. Bebatuan pesisir licin, ban kompon Stage 8 siap mencengkeram!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Info intelijen dari Husna jangan disia-siakan, Tion! Sopir Pantura pantang mundur kalau lampu hijau udah nyala!' }
     ],
     outro: [
@@ -169,7 +169,7 @@ export const STORY_DIALOGUES = {
   },
   9: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua baru pasang shockbreaker heavy-duty di garasi Jon! Jalur Pantura bergelombang sampai perbukitan gak bakal bikin kargo opor telur tahu kuning lu berantakan!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua baru pasang shockbreaker heavy-duty di garasi Yon! Jalur Pantura bergelombang sampai perbukitan gak bakal bikin kargo opor telur tahu kuning lu berantakan!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Shockbreaker baru itu ibarat kedewasaan, Tion. Harus lentur meredam benturan hidup, tapi tetap kokoh menopang beban masa depan!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Mantap Bang Zacky dan petuah Mang Abdul! Kurkumin alami pada kunyit opor ini penambah nafsu makan terbaik. Gas pol uji ayunan shockbreaker!' }
     ],
@@ -183,7 +183,7 @@ export const STORY_DIALOGUES = {
   10: {
     intro: [
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Level 10, Tion! Separuh perjalanan ekspedisi MMG! Kali ini bawaannya 500 botol kaca susu murni Kuningan! Kalsium dan vitamin D buat tulang anak-anak. Nol toleransi benturan keras!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Tiap botol ada di rak busa peredam Jon. Tapi lu tetap harus hati-hati di sambungan jalan desa dan pesisir!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Tiap botol ada di rak busa peredam Yon. Tapi lu tetap harus hati-hati di sambungan jalan desa dan pesisir!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Mas Tion jangan tegang! Bu Yulie udah nungguin di depan ruang guru bawa biskuit buat dicelup ke susu lho!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Siap komandan! Rute pedesaan dan pesisir bakal kita lewati semulus sutra. 500 botol susu MMG aman terkendali!' }
     ],
@@ -198,7 +198,7 @@ export const STORY_DIALOGUES = {
     intro: [
       { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'concern', text: 'Mas Tion, kabut pagi di lereng bukit pinus sangat tebal dan hawa dingin sekali. Jangan memaksakan kecepatan ya Mas, keselamatan Mas Tion nomor satu bagi kami...' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Dengar tuh petuah Bu Guru, Tion! Kabut tebal lereng pegunungan itu menuntut insting kemudi dan lampu kabut kuning. Jangan ngebut membabi buta!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Lampu kabut halogen ekstra udah terpasang di bemper depan Jon. Pecel sayur saus kacang kaya folat dan serat ini harus sampai segar!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Lampu kabut halogen ekstra udah terpasang di bemper depan Yon. Pecel sayur saus kacang kaya folat dan serat ini harus sampai segar!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'normal', text: 'Didengar Bu Yulie sekhawatir itu... dinginnya kabut lereng langsung kalah sama hangatnya hati ini! Armada MMG siap menembus kabut!' }
     ],
     outro: [
@@ -211,7 +211,7 @@ export const STORY_DIALOGUES = {
   12: {
     intro: [
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Mas Tion! Di perbatasan pesisir bukit ada gundukan tanah tinggi! Murid-murid nonton dari jendela kelas lho, tunjukin salto akrobatik mobil MMG yang keren!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'thinking', text: 'Ikan kembung bakar kunyit ini kaya kalsium dan asam lemak sehat buat kecerdasan anak-anak Jon. Jangan keasyikan salto sampai boks kargo terbalik!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'thinking', text: 'Ikan kembung bakar kunyit ini kaya kalsium dan asam lemak sehat buat kecerdasan anak-anak Yon. Jangan keasyikan salto sampai boks kargo terbalik!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Salto boleh buat memikat hati Bu Guru, tapi pendaratan harus roda empat sejajar tanah! Itu hukum fisika dan hukum asmara!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Siap! Bakat akrobatik udara kurir MMG bakal kita kerahkan demi nutrisi anak-anak dan bikin Bu Yulie kagum!' }
     ],
@@ -227,7 +227,7 @@ export const STORY_DIALOGUES = {
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'flirt', text: 'Mas Tion! Pepes ikan mas kemanginya harum banget! Husna selipin amplop surat pantun titipan Mas Tion di rantang makan siang Bu Yulie ya?' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'blush', text: 'Ehhh Husna jangan sembarangan! Amplop pantun yang mana?! Kemarin itu cuma coret-coretan di buku nota belanja bengkel!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'laugh', text: 'Hahaha! Jangan ditahan Tion, biarkan burung merpati asmara terbang ke sangkarnya! Husna, pastikan amplopnya gak kena minyak pepes!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Torsi mobil udah stage 13 Jon, buruan kejar sebelum Husna buka amplopnya di depan bapak kepala sekolah!' }
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Torsi mobil udah stage 13 Yon, buruan kejar sebelum Husna buka amplopnya di depan bapak kepala sekolah!' }
     ],
     outro: [
       { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion... amplop kecil warna merah muda di samping rantang ini... "Jalan berliku di lereng Ciremai, melihat senyum Bu Guru hati pun damai"... Mas Tion yang tulis ya?' },
@@ -238,7 +238,7 @@ export const STORY_DIALOGUES = {
   },
   14: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Rute panjang 17.800 meter Jon! Sambal goreng hati sapi dan kentang dadu ini gudangnya zat besi heme anti-anemia. Jaga kestabilan rem di tikungan hairpin tebing pedesaan!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Rute panjang 17.800 meter Yon! Sambal goreng hati sapi dan kentang dadu ini gudangnya zat besi heme anti-anemia. Jaga kestabilan rem di tikungan hairpin tebing pedesaan!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Tion, kalau kemarin surat pantun lu udah disimpan di binder Bu Yulie, tandanya gerbang asmara udah terbuka lebar! Jangan gugup pas tatap muka di ruang guru!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Hari ini Bu Yulie pakai kerudung warna tosca yang senada sama warna bodi mobil MMG Mas Tion lho! Cieee serasi banget!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Aduh Husna makin bikin deg-degan aja! Suspensi dan rem anti-lock siap meliuk di kelokan tebing! Gas pol!' }
@@ -253,7 +253,7 @@ export const STORY_DIALOGUES = {
   15: {
     intro: [
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Angin lembah bertiup kencang di tanjakan cadas batu curam Ciremai, Tion! Sopir handal gak boleh panik. Miring sedikit kuah kaldu tumpah! Rilekskan tangan di kemudi!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Mesin udah di-tune up ke Stage 15 Jon! Tenaga 3320 watt siap mendaki tanjakan 35 derajat tanpa ngos-ngosan!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Mesin udah di-tune up ke Stage 15 Yon! Tenaga 3320 watt siap mendaki tanjakan 35 derajat tanpa ngos-ngosan!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'hungry', text: 'Aroma kaldu ayam makaroni kaya kolagen 1500mg ini sampai kecium ke pos ronda! Mas Tion semangat demi Bu Yulie!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Siap Mang Abdul dan Bang Zacky! Surat balasan Bu Yulie kemarin udah gua kantongin di saku dada kiri, jadi pelindung hati terhebat!' }
     ],
@@ -267,7 +267,7 @@ export const STORY_DIALOGUES = {
   16: {
     intro: [
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Mas Tion, kabar super penting! Hari ini Bu Yulie ulang tahun! Puding melon dan chia seed segar ini udah pas banget buat hidangan penutup perayaan kecil di sekolah!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua udah bersihin injektor dan filter bensin Jon. Top speed dan handling dijamin maksimal buat ngejar waktu sebelum bel sekolah bunyi!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua udah bersihin injektor dan filter bensin Yon. Top speed dan handling dijamin maksimal buat ngejar waktu sebelum bel sekolah bunyi!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Membawa kado kebahagiaan untuk orang tercinta adalah kehormatan tertinggi seorang pengemudi! Jangan telat sedetik pun, Tion!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'normal', text: 'Bismillah! Walau badai pesisir dan tanjakan menghadang, hari bahagia Bu Yulie wajib kita hiasi dengan pengantaran MMG tersempurna!' }
     ],
@@ -281,7 +281,7 @@ export const STORY_DIALOGUES = {
   },
   17: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Jalur bypass arteri Pantura lurus panjang Jon! Waktunya buktikan top speed mesin bertenaga tinggi! Opor ayam rempah kunyit ini kaya kurkumin antiinflamasi pemelihara imunitas.' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Jalur bypass arteri Pantura lurus panjang Yon! Waktunya buktikan top speed mesin bertenaga tinggi! Opor ayam rempah kunyit ini kaya kurkumin antiinflamasi pemelihara imunitas.' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Perjalanan tinggal 3 level lagi, Tion! Nama armada MMG lu udah harum di seluruh pelosok Cirebon sampai Kuningan!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Iya Mas! Ibu-ibu kantin sama murid-murid udah sepakat, Mas Tion itu pahlawan tanpa tanda jasa paling ganteng se-kabupaten!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Terima kasih atas semua dukungan sahabat-sahabat hebatku! Bodi aerodinamis siap meluncur kencang dan stabil!' }
@@ -296,7 +296,7 @@ export const STORY_DIALOGUES = {
   18: {
     intro: [
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Semburat senja keemasan memayungi lembah sawah dan pesisir, Tion. Jaga ritme kemudi! Besok adalah gladi resik tumpeng akbar, nyali lu diuji hari ini!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Sayur asem Sunda jagung manis kaya magnesium dan asam organik pemulih stamina Jon. Traksi ban kompon lunak siap hadapi tanjakan curam!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Sayur asem Sunda jagung manis kaya magnesium dan asam organik pemulih stamina Yon. Traksi ban kompon lunak siap hadapi tanjakan curam!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'flirt', text: 'Tadi Bu Yulie nitip pesan ke aku Mas, katanya hati-hati di tanjakan penentu nyali, jangan sampai bikin Bu Guru jantungan!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Pesan dari Bu Yulie adalah bahan bakar terkuat di bumi! Tanjakan penentu nyali bakal kita taklukkan dengan gagah!' }
     ],
@@ -310,7 +310,7 @@ export const STORY_DIALOGUES = {
   19: {
     intro: [
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Hari ini gladi resik akbar rute 24.000 meter! 500 tumpeng mini gizi seimbang harus tiba sempurna! Ingat wejangan Mang Abdul: sopir sejati gak cuma piawai tancap gas, tapi juga punya keberanian memperjuangkan cintanya!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua udah pasang strut brace suspensi dan mur roda titanium Jon. Mobil MMG lu sekarang setara mobil kompetisi reli dunia!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Gua udah pasang strut brace suspensi dan mur roda titanium Yon. Mobil MMG lu sekarang setara mobil kompetisi reli dunia!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Panggung perayaan udah berdiri megah di lapangan sekolah Mas! Bunga-bunga mawar udah disiapin buat Mas Tion nembak Bu Yulie besok!' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'focus', text: 'Siap Mang Abdul, Bang Zacky, dan Husna! Demi gizi 500 siswa dan demi masa depan cintaku bersama Bu Yulie, gas pol pantang kendor!' }
     ],
@@ -323,7 +323,7 @@ export const STORY_DIALOGUES = {
   },
   20: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Ini dia GRAND FINALE Jon! Rute pamungkas 25.000 meter melintasi seluruh 8 bioma dari Pesisir Pantura, Lembah Sawah, sampai Puncak Ciremai! Mesin 3720 watt bertenaga monster siap meledak!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Ini dia GRAND FINALE Yon! Rute pamungkas 25.000 meter melintasi seluruh 8 bioma dari Pesisir Pantura, Lembah Sawah, sampai Puncak Ciremai! Mesin 3720 watt bertenaga monster siap meledak!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Buktikan jiwa kesatria kurir MMG Pantura sejati! Gas itu keberanian, rem itu kebijaksanaan, cinta Bu Yulie itu tujuan akhir hidupmu! Berangkatkan kargo cintamu, Tion!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Seluruh murid SD, SMP, SMA Puspa Bangsa dan para guru udah berkumpul di garis finis bawa spanduk selamat datang Mas Tion sang pahlawan gizi!' },
       { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion... berhati-hatilah di jalan raya. Saya berdiri di gerbang sekolah menanti kepulangan Mas Tion dengan segenap doa di hati saya...' },
@@ -333,7 +333,7 @@ export const STORY_DIALOGUES = {
       { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Mas Tion... selama 20 perjalanan penuh rintangan ini, saya menyaksikan langsung ketulusan, tanggung jawab, dan kebaikan hati Mas Tion yang begitu luar biasa. Hari ini di depan seluruh sekolah, saya menerima perasaan cinta Mas Tion...' },
       { speaker: 'Tion', role: 'Kurir MMG', mood: 'blush', text: '(Air mata haru tumpah ruah, rpm jantung berdegup bahagia menembus angkasa!) Bu Yulie... terima kasih telah mempercayai hati saya... Saya berjanji akan menjaga Bu Yulie dan mendampingi Bu Guru selamanya!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'HOREEEE! AKHIRNYA MAS TION GAK JOMBLO LAGI! RESMI JADIAN SAMA BU GURU TERCINTA! MAKAN GIZI MMG GRATIS SETIAP HARI!' },
-      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Selamat Jon! Lu resmi dinobatkan jadi Pahlawan Logistik Gizi dan Raja Cinta Sejati Pantura!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Selamat Yon! Lu resmi dinobatkan jadi Pahlawan Logistik Gizi dan Raja Cinta Sejati Pantura!' },
       { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Air mata bahagia Mang Abdul tumpah ruah di aspal... Ini adalah kemenangan terindah seorang supir sejati! Gaspol terus sampai ke pelaminan, Tion!' }
     ]
   }
@@ -1844,3 +1844,1020 @@ export class GameStateManager {
     return s;
   }
 }
+
+// ==========================================
+// ADVANCED HYBRID AUDIO SYSTEM & CONSTANTS
+// ==========================================
+
+export const VEHICLE_AUDIO_PROFILES = {
+  standard: {
+    id: 'standard',
+    name: 'Canter Diesel',
+    idleFreq: 40,
+    maxFreq: 115,
+    airborneFreq: 180,
+    oscType: 'sawtooth',
+    real: [0, 0, 0, 0, 0, 0, 0],
+    imag: [0, 1.0, 0.75, 0.55, 0.35, 0.20, 0.10],
+    filterIdle: 220,
+    filterMax: 780,
+    filterAirborne: 1450,
+    gainIdle: 0.28,
+    gainGas: 0.52,
+    airborneGain: 0.60,
+    subHarmonic: true,
+    hasTurbo: false,
+    hasValveTick: false,
+    qResonance: 1.4
+  },
+  speedy: {
+    id: 'speedy',
+    name: 'GranMax Bensin',
+    idleFreq: 65,
+    maxFreq: 215,
+    airborneFreq: 260,
+    oscType: 'sawtooth',
+    real: [0, 0, 0, 0, 0, 0, 0],
+    imag: [0, 0.9, 0.85, 0.70, 0.50, 0.35, 0.25],
+    filterIdle: 380,
+    filterMax: 1450,
+    filterAirborne: 2200,
+    gainIdle: 0.25,
+    gainGas: 0.48,
+    airborneGain: 0.56,
+    subHarmonic: false,
+    hasTurbo: false,
+    hasValveTick: false,
+    qResonance: 1.0
+  },
+  mountain: {
+    id: 'mountain',
+    name: 'Mountain 4x4',
+    idleFreq: 38,
+    maxFreq: 125,
+    airborneFreq: 170,
+    oscType: 'square',
+    real: [0, 0, 0, 0, 0, 0, 0],
+    imag: [0, 1.0, 0.25, 0.80, 0.15, 0.45, 0.08],
+    filterIdle: 190,
+    filterMax: 680,
+    filterAirborne: 1200,
+    gainIdle: 0.30,
+    gainGas: 0.55,
+    airborneGain: 0.62,
+    subHarmonic: true,
+    hasTurbo: false,
+    hasValveTick: false,
+    qResonance: 2.8
+  },
+  retro: {
+    id: 'retro',
+    name: 'Retro Truk Bagong',
+    idleFreq: 36,
+    maxFreq: 105,
+    airborneFreq: 160,
+    oscType: 'triangle',
+    real: [0, 0, 0, 0, 0, 0, 0],
+    imag: [0, 1.0, 0.55, 0.35, 0.22, 0.12, 0.05],
+    filterIdle: 180,
+    filterMax: 560,
+    filterAirborne: 1100,
+    gainIdle: 0.28,
+    gainGas: 0.50,
+    airborneGain: 0.58,
+    subHarmonic: false,
+    hasTurbo: false,
+    hasValveTick: true,
+    qResonance: 1.5
+  },
+  sport: {
+    id: 'sport',
+    name: 'Racing Canter Tuned',
+    idleFreq: 72,
+    maxFreq: 275,
+    airborneFreq: 340,
+    oscType: 'sawtooth',
+    real: [0, 0, 0, 0, 0, 0, 0, 0],
+    imag: [0, 1.0, 0.95, 0.85, 0.70, 0.55, 0.40, 0.30],
+    filterIdle: 450,
+    filterMax: 2100,
+    filterAirborne: 2900,
+    gainIdle: 0.26,
+    gainGas: 0.55,
+    airborneGain: 0.65,
+    subHarmonic: false,
+    hasTurbo: true,
+    hasValveTick: false,
+    qResonance: 1.8
+  }
+};
+
+export const SURFACE_AUDIO_TYPES = {
+  asphalt: {
+    type: 'asphalt',
+    filterType: 'highpass',
+    freq: 1600,
+    q: 1.0,
+    gainMult: 0.32,
+    name: 'Aspal Halus (Tire Hiss)'
+  },
+  soil: {
+    type: 'soil',
+    filterType: 'bandpass',
+    freq: 650,
+    q: 1.2,
+    gainMult: 0.40,
+    name: 'Tanah Berumput (Soil Roll)'
+  },
+  gravel: {
+    type: 'gravel',
+    filterType: 'bandpass',
+    freq: 1100,
+    q: 2.0,
+    gainMult: 0.45,
+    name: 'Kerikil Bebatuan (Gravel Crunch)'
+  },
+  mud: {
+    type: 'mud',
+    filterType: 'lowpass',
+    freq: 260,
+    q: 3.2,
+    gainMult: 0.52,
+    name: 'Lumpur Becek (Mud Suction)'
+  },
+  water: {
+    type: 'water',
+    filterType: 'bandpass',
+    freq: 1250,
+    q: 1.4,
+    gainMult: 0.48,
+    name: 'Genangan Air Rob (Water Churn)'
+  },
+  wood: {
+    type: 'wood',
+    filterType: 'bandpass',
+    freq: 380,
+    q: 3.8,
+    gainMult: 0.46,
+    name: 'Jembatan Kayu (Hollow Wood)'
+  }
+};
+
+export function detectSurfaceMaterial(terrain, meterX) {
+  if (!terrain) return 'asphalt';
+  if (typeof terrain.isInWaterPuddle === 'function' && terrain.isInWaterPuddle(meterX)) {
+    return 'water';
+  }
+  if (typeof terrain.isInMudPit === 'function' && terrain.isInMudPit(meterX)) {
+    return 'mud';
+  }
+  if (terrain.logs && terrain.logs.some(l => Math.abs(l.x - meterX) < 18)) {
+    return 'wood';
+  }
+  const biome = terrain.getBiomeAt ? terrain.getBiomeAt(meterX) : null;
+  const bId = biome ? biome.id : '';
+  const bName = (biome && biome.name ? biome.name.toLowerCase() : '');
+
+  if (bId === 5 || bId === 6 || bId === 'gunung' || bId === 'tanjakan' || bName.includes('gunung') || bName.includes('tanjakan')) {
+    return 'gravel';
+  }
+  if (bId === 3 || bId === 4 || bId === 'sawah' || bId === 'desa_sawah' || bName.includes('sawah') || bName.includes('desa')) {
+    return 'soil';
+  }
+  if (bId === 'alas_roban' || bId === 'pinus' || bName.includes('pinus') || bName.includes('roban')) {
+    return 'soil';
+  }
+  return 'asphalt';
+}
+
+export const TELOLET_MELODY_BASURI_V3 = [
+  { f: 698.46, d: 0.16, t: 0.00, note: 'F5' },
+  { f: 880.00, d: 0.16, t: 0.18, note: 'A5' },
+  { f: 1046.50, d: 0.22, t: 0.36, note: 'C6' },
+  { f: 1396.91, d: 0.24, t: 0.60, note: 'F6' },
+  { f: 1174.66, d: 0.20, t: 0.86, note: 'D6' },
+  { f: 1046.50, d: 0.22, t: 1.08, note: 'C6' },
+  { f: 932.33, d: 0.18, t: 1.32, note: 'Bb5' },
+  { f: 880.00, d: 0.20, t: 1.52, note: 'A5' },
+  { f: 783.99, d: 0.20, t: 1.74, note: 'G5' },
+  { f: 880.00, d: 0.22, t: 1.96, note: 'A5' },
+  { f: 1046.50, d: 0.26, t: 2.20, note: 'C6' },
+  { f: 1396.91, d: 0.85, t: 2.48, note: 'F6_VIBRATO' }
+];
+
+export const BIOME_AUDIO_CONFIG = {
+  pantura: {
+    type: 'ocean',
+    filterFreq: 260,
+    q: 1.2,
+    sweepDepth: 180,
+    period: 4.5,
+    gain: 0.22,
+    name: 'Coastal Surf'
+  },
+  jalur_pantura: {
+    type: 'coastal_highway',
+    filterFreq: 320,
+    q: 1.0,
+    sweepDepth: 120,
+    period: 4.0,
+    gain: 0.20,
+    name: 'Pantura Breeze'
+  },
+  sawah: {
+    type: 'crickets',
+    filterFreq: 3800,
+    q: 3.5,
+    sweepDepth: 60,
+    period: 2.0,
+    gain: 0.18,
+    name: 'Sawah Chirp & Breeze'
+  },
+  desa_sawah: {
+    type: 'crickets',
+    filterFreq: 3400,
+    q: 3.0,
+    sweepDepth: 50,
+    period: 2.2,
+    gain: 0.18,
+    name: 'Rural Kampung Meadow'
+  },
+  alas_roban: {
+    type: 'jungle',
+    filterFreq: 480,
+    q: 2.0,
+    sweepDepth: 150,
+    period: 3.8,
+    gain: 0.24,
+    name: 'Alas Roban Rainforest Draft'
+  },
+  gunung: {
+    type: 'mountain_wind',
+    filterFreq: 620,
+    q: 4.2,
+    sweepDepth: 220,
+    period: 3.0,
+    gain: 0.28,
+    name: 'Mountain Whistling Gale'
+  },
+  tanjakan: {
+    type: 'mountain_wind',
+    filterFreq: 580,
+    q: 3.8,
+    sweepDepth: 200,
+    period: 3.2,
+    gain: 0.26,
+    name: 'Highland Ridge Draft'
+  },
+  pinus: {
+    type: 'pine_canopy',
+    filterFreq: 400,
+    q: 2.4,
+    sweepDepth: 140,
+    period: 3.6,
+    gain: 0.22,
+    name: 'Pine Canopy Murmur'
+  },
+  kota: {
+    type: 'city_hum',
+    filterFreq: 120,
+    q: 1.5,
+    sweepDepth: 40,
+    period: 5.0,
+    gain: 0.20,
+    name: 'Metropolitan Sub-Hum'
+  },
+  sekolah: {
+    type: 'school_morning',
+    filterFreq: 350,
+    q: 1.2,
+    sweepDepth: 70,
+    period: 4.0,
+    gain: 0.18,
+    name: 'School Morning Ambience'
+  }
+};
+
+export class SoundSynthesizer {
+  constructor() {
+    this.ctx = null;
+    this.isMuted = false;
+    this.currentSkin = 'standard';
+    this.isEngineRunning = false;
+
+    // Persistent master nodes
+    this.masterGain = null;
+    this.masterCompressor = null;
+
+    // Engine nodes
+    this.engineOsc = null;
+    this.engineSubOsc = null;
+    this.engineFilter = null;
+    this.engineGain = null;
+    this.turboOsc = null;
+    this.turboGain = null;
+    this.lastWasGas = false;
+    this.lastEngineSpeed = 0;
+
+    // Tire surface continuous audio
+    this.tireNoise = null;
+    this.tireFilter = null;
+    this.tireGain = null;
+    this.currentSurface = 'asphalt';
+
+    // Aerodynamic wind & Biome ambient audio
+    this.windNoise = null;
+    this.windFilter = null;
+    this.windGain = null;
+    this.ambientNoise = null;
+    this.ambientFilter = null;
+    this.ambientGain = null;
+    this.currentBiome = 'pantura';
+
+    // Shared noise buffer
+    this.noiseBuffer = null;
+    this.lastHornTime = 0;
+    this.lastSpringTime = 0;
+  }
+
+  init() {
+    if (typeof window === 'undefined') return;
+    try {
+      if (!this.ctx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        this.ctx = new AudioContext();
+      }
+      if (this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
+      if (!this.masterCompressor) {
+        this.setupMasterBus();
+      }
+      if (!this.isEngineRunning) {
+        this.startContinuousAudio();
+      }
+    } catch (e) {
+      console.warn('AudioSynthesizer init failed:', e);
+    }
+  }
+
+  setupMasterBus() {
+    if (!this.ctx) return;
+    this.masterCompressor = this.ctx.createDynamicsCompressor();
+    this.masterCompressor.threshold.setValueAtTime(-14, this.ctx.currentTime);
+    this.masterCompressor.knee.setValueAtTime(14, this.ctx.currentTime);
+    this.masterCompressor.ratio.setValueAtTime(8, this.ctx.currentTime);
+    this.masterCompressor.attack.setValueAtTime(0.003, this.ctx.currentTime);
+    this.masterCompressor.release.setValueAtTime(0.20, this.ctx.currentTime);
+
+    this.masterGain = this.ctx.createGain();
+    this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 1.35, this.ctx.currentTime);
+
+    this.masterGain.connect(this.masterCompressor);
+    this.masterCompressor.connect(this.ctx.destination);
+
+    // Create 2-second pink noise buffer for tire, wind, and ambient generators
+    this.noiseBuffer = this.createPinkNoiseBuffer(2.0);
+  }
+
+  createPinkNoiseBuffer(seconds = 2.0) {
+    if (!this.ctx) return null;
+    const bufferSize = Math.floor(this.ctx.sampleRate * seconds);
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+    for (let i = 0; i < bufferSize; i++) {
+      const white = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.96900 * b2 + white * 0.1538520;
+      b3 = 0.86650 * b3 + white * 0.3104856;
+      b4 = 0.55000 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.0168980;
+      data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.35;
+      b6 = white * 0.115926;
+    }
+    return buffer;
+  }
+
+  startContinuousAudio() {
+    if (!this.ctx || this.isEngineRunning) return;
+    try {
+      this.startEngineAudio();
+      this.startTireSurfaceAudio();
+      this.startWindAndAmbientAudio();
+      this.isEngineRunning = true;
+    } catch (e) {
+      console.warn('Continuous audio start failed:', e);
+    }
+  }
+
+  startEngineAudio() {
+    if (!this.ctx) return;
+    const profile = VEHICLE_AUDIO_PROFILES[this.currentSkin] || VEHICLE_AUDIO_PROFILES.standard;
+    const now = this.ctx.currentTime;
+
+    // Main Engine Oscillator with custom PeriodicWave or Fallback
+    this.engineOsc = this.ctx.createOscillator();
+    try {
+      if (profile.real && profile.imag && typeof this.ctx.createPeriodicWave === 'function') {
+        const wave = this.ctx.createPeriodicWave(new Float32Array(profile.real), new Float32Array(profile.imag));
+        this.engineOsc.setPeriodicWave(wave);
+      } else {
+        this.engineOsc.type = profile.oscType || 'sawtooth';
+      }
+    } catch (_) {
+      this.engineOsc.type = profile.oscType || 'sawtooth';
+    }
+    this.engineOsc.frequency.setValueAtTime(profile.idleFreq, now);
+
+    this.engineFilter = this.ctx.createBiquadFilter();
+    this.engineFilter.type = 'lowpass';
+    this.engineFilter.frequency.setValueAtTime(profile.filterIdle, now);
+    this.engineFilter.Q.setValueAtTime(profile.qResonance || 1.2, now);
+
+    this.engineGain = this.ctx.createGain();
+    this.engineGain.gain.setValueAtTime(this.isMuted ? 0 : profile.gainIdle, now);
+
+    this.engineOsc.connect(this.engineFilter);
+    this.engineFilter.connect(this.engineGain);
+    this.engineGain.connect(this.masterGain);
+    this.engineOsc.start();
+
+    // Sub-harmonic diesel rumble oscillator for heavy trucks
+    if (profile.subHarmonic) {
+      this.engineSubOsc = this.ctx.createOscillator();
+      this.engineSubOsc.type = 'sine';
+      this.engineSubOsc.frequency.setValueAtTime(profile.idleFreq * 0.5, now);
+      this.engineSubOsc.connect(this.engineFilter);
+      this.engineSubOsc.start();
+    }
+
+    // Turbo spool oscillator for racing/sport skin
+    if (profile.hasTurbo) {
+      this.turboOsc = this.ctx.createOscillator();
+      this.turboOsc.type = 'sine';
+      this.turboOsc.frequency.setValueAtTime(1400, now);
+      this.turboGain = this.ctx.createGain();
+      this.turboGain.gain.setValueAtTime(0, now);
+      this.turboOsc.connect(this.turboGain);
+      this.turboGain.connect(this.masterGain);
+      this.turboOsc.start();
+    }
+  }
+
+  setSkin(skinId) {
+    if (this.currentSkin === skinId && this.engineOsc) return;
+    this.currentSkin = skinId || 'standard';
+    if (this.isEngineRunning) {
+      this.stopEngineAudio();
+      this.startEngineAudio();
+    }
+  }
+
+  stopEngineAudio() {
+    try {
+      if (this.engineOsc) {
+        this.engineOsc.stop();
+        this.engineOsc.disconnect();
+        this.engineOsc = null;
+      }
+      if (this.engineSubOsc) {
+        this.engineSubOsc.stop();
+        this.engineSubOsc.disconnect();
+        this.engineSubOsc = null;
+      }
+      if (this.turboOsc) {
+        this.turboOsc.stop();
+        this.turboOsc.disconnect();
+        this.turboOsc = null;
+      }
+    } catch (_) {}
+  }
+
+  startTireSurfaceAudio() {
+    if (!this.ctx || !this.noiseBuffer) return;
+    this.tireNoise = this.ctx.createBufferSource();
+    this.tireNoise.buffer = this.noiseBuffer;
+    this.tireNoise.loop = true;
+
+    this.tireFilter = this.ctx.createBiquadFilter();
+    this.tireFilter.type = 'bandpass';
+    this.tireFilter.frequency.setValueAtTime(800, this.ctx.currentTime);
+    this.tireFilter.Q.setValueAtTime(1.5, this.ctx.currentTime);
+
+    this.tireGain = this.ctx.createGain();
+    this.tireGain.gain.setValueAtTime(0, this.ctx.currentTime);
+
+    this.tireNoise.connect(this.tireFilter);
+    this.tireFilter.connect(this.tireGain);
+    this.tireGain.connect(this.masterGain);
+    this.tireNoise.start();
+  }
+
+  startWindAndAmbientAudio() {
+    if (!this.ctx || !this.noiseBuffer) return;
+    const now = this.ctx.currentTime;
+
+    // Aerodynamic Wind
+    this.windNoise = this.ctx.createBufferSource();
+    this.windNoise.buffer = this.noiseBuffer;
+    this.windNoise.loop = true;
+
+    this.windFilter = this.ctx.createBiquadFilter();
+    this.windFilter.type = 'bandpass';
+    this.windFilter.frequency.setValueAtTime(350, now);
+    this.windFilter.Q.setValueAtTime(1.8, now);
+
+    this.windGain = this.ctx.createGain();
+    this.windGain.gain.setValueAtTime(0, now);
+
+    this.windNoise.connect(this.windFilter);
+    this.windFilter.connect(this.windGain);
+    this.windGain.connect(this.masterGain);
+    this.windNoise.start();
+
+    // Procedural Biome Ambience
+    this.ambientNoise = this.ctx.createBufferSource();
+    this.ambientNoise.buffer = this.noiseBuffer;
+    this.ambientNoise.loop = true;
+
+    this.ambientFilter = this.ctx.createBiquadFilter();
+    this.ambientFilter.type = 'lowpass';
+    this.ambientFilter.frequency.setValueAtTime(280, now);
+    this.ambientFilter.Q.setValueAtTime(1.2, now);
+
+    this.ambientGain = this.ctx.createGain();
+    this.ambientGain.gain.setValueAtTime(this.isMuted ? 0 : 0.04, now);
+
+    this.ambientNoise.connect(this.ambientFilter);
+    this.ambientFilter.connect(this.ambientGain);
+    this.ambientGain.connect(this.masterGain);
+    this.ambientNoise.start();
+  }
+
+  updateEngine(speed, isGas, isAirborne = false, skinId = null) {
+    if (skinId && skinId !== this.currentSkin) {
+      this.setSkin(skinId);
+    }
+    if (!this.ctx || !this.isEngineRunning || this.isMuted) return;
+    const profile = VEHICLE_AUDIO_PROFILES[this.currentSkin] || VEHICLE_AUDIO_PROFILES.standard;
+    const now = this.ctx.currentTime;
+    const absSpeed = Math.abs(speed);
+    const speedRatio = Math.min(1.0, absSpeed / 500);
+
+    let targetFreq = profile.idleFreq + speedRatio * (profile.maxFreq - profile.idleFreq) + (isGas ? 25 : 0);
+    let targetFilter = profile.filterIdle + speedRatio * (profile.filterMax - profile.filterIdle) + (isGas ? 350 : 0);
+    let targetGain = isGas ? profile.gainGas : (profile.gainIdle + speedRatio * 0.12);
+
+    // Airborne engine over-rev
+    if (isAirborne && isGas) {
+      targetFreq = profile.airborneFreq || 180;
+      targetFilter = profile.filterAirborne || 1450;
+      targetGain = profile.airborneGain || 0.60;
+    }
+
+    if (this.engineOsc) {
+      this.engineOsc.frequency.setTargetAtTime(targetFreq, now, 0.05);
+    }
+    if (this.engineSubOsc) {
+      this.engineSubOsc.frequency.setTargetAtTime(targetFreq * 0.5, now, 0.05);
+    }
+    if (this.engineFilter) {
+      this.engineFilter.frequency.setTargetAtTime(targetFilter, now, 0.05);
+    }
+    if (this.engineGain) {
+      this.engineGain.gain.setTargetAtTime(targetGain, now, 0.05);
+    }
+
+    // Sport turbo whistle & blow-off valve release
+    if (profile.hasTurbo && this.turboOsc && this.turboGain) {
+      const turboFreq = 1400 + speedRatio * 2000 + (isGas ? 600 : 0);
+      const turboVol = isGas ? (0.16 + speedRatio * 0.22) : 0.001;
+      this.turboOsc.frequency.setTargetAtTime(turboFreq, now, 0.08);
+      this.turboGain.gain.setTargetAtTime(turboVol, now, 0.08);
+
+      if (this.lastWasGas && !isGas && this.lastEngineSpeed > 240) {
+        this.playBlowoffValve();
+      }
+    }
+
+    this.lastWasGas = !!isGas;
+    this.lastEngineSpeed = absSpeed;
+  }
+
+  updateSurfaceContact(speed, surfaceType = 'asphalt', onGround = true) {
+    if (!this.ctx || !this.tireGain || !this.tireFilter || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    const absSpeed = Math.abs(speed);
+
+    if (!onGround || absSpeed < 6) {
+      this.tireGain.gain.setTargetAtTime(0.0001, now, 0.08);
+      return;
+    }
+
+    const mat = SURFACE_AUDIO_TYPES[surfaceType] || SURFACE_AUDIO_TYPES.asphalt;
+    const speedRatio = Math.min(1.0, absSpeed / 500);
+    const targetGain = mat.gainMult * (0.35 + speedRatio * 0.65);
+
+    this.tireFilter.type = mat.filterType;
+    this.tireFilter.frequency.setTargetAtTime(mat.freq + speedRatio * 250, now, 0.06);
+    this.tireFilter.Q.setTargetAtTime(mat.q, now, 0.06);
+    this.tireGain.gain.setTargetAtTime(targetGain, now, 0.06);
+
+    // Random micro pebble crackle on gravel
+    if (surfaceType === 'gravel' && absSpeed > 60 && Math.random() < 0.18) {
+      this.playPebbleClick();
+    }
+  }
+
+  updateWindAndAmbient(speed, isAirborne = false, biomeId = 'pantura') {
+    if (!this.ctx || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    const absSpeed = Math.abs(speed);
+
+    // 1. Aerodynamic Wind Whoosh
+    if (this.windGain && this.windFilter) {
+      let windVol = 0;
+      let windFreq = 250;
+      if (absSpeed > 140 || isAirborne) {
+        const speedRatio = Math.min(1.0, absSpeed / 550);
+        windVol = (speedRatio * 0.35) + (isAirborne ? 0.25 : 0.0);
+        windFreq = 300 + speedRatio * 900 + (isAirborne ? 400 : 0);
+      }
+      this.windGain.gain.setTargetAtTime(windVol, now, 0.1);
+      this.windFilter.frequency.setTargetAtTime(windFreq, now, 0.1);
+    }
+
+    // 2. Biome Ambient Morph
+    if (this.ambientGain && this.ambientFilter) {
+      const cfg = BIOME_AUDIO_CONFIG[biomeId] || BIOME_AUDIO_CONFIG.pantura;
+      // Gentle cyclic oscillation (surf swell / wind wave)
+      const cycle = Math.sin((now * 2 * Math.PI) / (cfg.period || 4.0));
+      const targetFreq = Math.max(80, cfg.filterFreq + cycle * (cfg.sweepDepth || 100));
+
+      this.ambientFilter.frequency.setTargetAtTime(targetFreq, now, 0.2);
+      this.ambientFilter.Q.setTargetAtTime(cfg.q, now, 0.2);
+      this.ambientGain.gain.setTargetAtTime(cfg.gain, now, 0.2);
+    }
+  }
+
+  playBlowoffValve() {
+    if (!this.ctx || this.isMuted) return;
+    try {
+      this.playNoiseBurst(0.30, 2200, 7000, 0.45);
+    } catch (_) {}
+  }
+
+  playPebbleClick() {
+    if (!this.ctx || this.isMuted) return;
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(800 + Math.random() * 1200, now);
+      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      osc.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.04);
+    } catch (_) {}
+  }
+
+  playTeloletHorn() {
+    if (!this.ctx || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    if (this.lastHornTime && (now - this.lastHornTime) < 1.4) return;
+    this.lastHornTime = now;
+
+    // Full 12-Note Basuri V3 Extended Fanfare with Dual Air-Horn Brass Acoustics
+    TELOLET_MELODY_BASURI_V3.forEach((n, idx) => {
+      const noteStart = now + n.t;
+      const noteEnd = noteStart + n.d;
+
+      // Primary Horn Oscillator (Sawtooth)
+      const osc1 = this.ctx.createOscillator();
+      osc1.type = 'sawtooth';
+      osc1.frequency.setValueAtTime(n.f, noteStart);
+
+      // Secondary Horn Oscillator (Slightly detuned for rich acoustic beating)
+      const osc2 = this.ctx.createOscillator();
+      osc2.type = 'sawtooth';
+      osc2.frequency.setValueAtTime(n.f * 1.004, noteStart);
+
+      // Rich Brass Air-Horn Filter
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(2200, noteStart);
+      filter.Q.setValueAtTime(2.2, noteStart);
+
+      // Final note vibrato modulation
+      if (idx === TELOLET_MELODY_BASURI_V3.length - 1) {
+        const lfo = this.ctx.createOscillator();
+        const lfoGain = this.ctx.createGain();
+        lfo.frequency.setValueAtTime(5.8, noteStart); // 5.8Hz vibrato
+        lfoGain.gain.setValueAtTime(18, noteStart); // +/-18Hz depth
+        lfo.connect(osc1.frequency);
+        lfo.connect(osc2.frequency);
+        lfo.start(noteStart);
+        lfo.stop(noteEnd);
+      }
+
+      const gain = this.ctx.createGain();
+      gain.gain.setValueAtTime(0, noteStart);
+      gain.gain.linearRampToValueAtTime(0.65, noteStart + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, noteEnd);
+
+      osc1.connect(filter);
+      osc2.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+
+      osc1.start(noteStart);
+      osc2.start(noteStart);
+      osc1.stop(noteEnd);
+      osc2.stop(noteEnd);
+    });
+  }
+
+  playSuspensionSpringSound() {
+    if (!this.ctx || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    if (this.lastSpringTime && (now - this.lastSpringTime) < 0.22) return;
+    this.lastSpringTime = now;
+
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(320, now);
+      osc.frequency.exponentialRampToValueAtTime(140, now + 0.18);
+
+      const modOsc = this.ctx.createOscillator();
+      const modGain = this.ctx.createGain();
+      modOsc.frequency.setValueAtTime(38, now);
+      modGain.gain.setValueAtTime(45, now);
+      modOsc.connect(osc.frequency);
+
+      gain.gain.setValueAtTime(0.42, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+      osc.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+
+      modOsc.start(now);
+      osc.start(now);
+      modOsc.stop(now + 0.22);
+      osc.stop(now + 0.22);
+    } catch (_) {}
+  }
+
+  playCoinSound() {
+    if (!this.ctx || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(987.77, now);
+    osc.frequency.setValueAtTime(1318.51, now + 0.07);
+
+    gain.gain.setValueAtTime(0.36, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+    osc.connect(gain);
+    gain.connect(this.masterGain || this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.22);
+  }
+
+  playFuelSound() {
+    if (!this.ctx || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(220, now);
+    osc.frequency.exponentialRampToValueAtTime(650, now + 0.25);
+
+    gain.gain.setValueAtTime(0.42, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+    osc.connect(gain);
+    gain.connect(this.masterGain || this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.3);
+  }
+
+  playSplashSound() {
+    if (!this.ctx || this.isMuted) return;
+    this.playNoiseBurst(0.28, 600, 1800, 0.40);
+  }
+
+  playMudSound() {
+    if (!this.ctx || this.isMuted) return;
+    this.playNoiseBurst(0.32, 180, 450, 0.48);
+  }
+
+  playImpactSound() {
+    if (!this.ctx || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(110, now);
+    osc.frequency.exponentialRampToValueAtTime(35, now + 0.15);
+
+    gain.gain.setValueAtTime(0.55, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+    osc.connect(gain);
+    gain.connect(this.masterGain || this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.2);
+  }
+
+  playCrashSound() {
+    if (!this.ctx || this.isMuted) return;
+    this.playNoiseBurst(0.65, 120, 600, 0.70);
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(200, now);
+    osc.frequency.exponentialRampToValueAtTime(40, now + 0.5);
+    gain.gain.setValueAtTime(0.65, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+    osc.connect(gain);
+    gain.connect(this.masterGain || this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.5);
+  }
+
+  playVictoryFanfare() {
+    if (!this.ctx || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    const victoryChords = [
+      { f: 523.25, d: 0.15, t: 0.00 }, // C5
+      { f: 659.25, d: 0.15, t: 0.16 }, // E5
+      { f: 783.99, d: 0.18, t: 0.32 }, // G5
+      { f: 1046.5, d: 0.55, t: 0.50 }  // C6
+    ];
+    victoryChords.forEach(c => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(c.f, now + c.t);
+      gain.gain.setValueAtTime(0.55, now + c.t);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + c.t + c.d);
+      osc.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+      osc.start(now + c.t);
+      osc.stop(now + c.t + c.d);
+    });
+  }
+
+  playNoiseBurst(duration, lowFreq, highFreq, volume) {
+    if (!this.ctx) return;
+    try {
+      const bufferSize = Math.floor(this.ctx.sampleRate * duration);
+      const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.35));
+      }
+      const noise = this.ctx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.value = (lowFreq + highFreq) / 2;
+      filter.Q.value = 1.2;
+
+      const gain = this.ctx.createGain();
+      gain.gain.value = volume;
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+      noise.start();
+    } catch (_) {}
+  }
+
+  pauseEngine() {
+    if (!this.ctx || !this.engineGain) return;
+    this.engineGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.05);
+    if (this.tireGain) this.tireGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.05);
+    if (this.windGain) this.windGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.05);
+  }
+
+  resumeEngine() {
+    if (!this.ctx || !this.engineGain || this.isMuted) return;
+    const profile = VEHICLE_AUDIO_PROFILES[this.currentSkin] || VEHICLE_AUDIO_PROFILES.standard;
+    this.engineGain.gain.setTargetAtTime(profile.gainIdle, this.ctx.currentTime, 0.05);
+  }
+
+  stopEngine() {
+    this.pauseEngine();
+    this.isEngineRunning = false;
+    this.stopEngineAudio();
+  }
+
+  toggleMute() {
+    this.isMuted = !this.isMuted;
+    if (this.masterGain && this.ctx) {
+      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 1.0, this.ctx.currentTime);
+    }
+    return this.isMuted;
+  }
+
+  setMuted(muted) {
+    this.isMuted = !!muted;
+    if (this.masterGain && this.ctx) {
+      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 1.0, this.ctx.currentTime);
+    }
+  }
+}
+
+/**
+ * Maps character speaker name and emotional mood to optimized asset slug, web-safe image paths, and Tailwind gradient styles.
+ */
+export function getCharacterAvatarMeta(speaker = 'Tion', mood = 'normal') {
+  const s = String(speaker).toLowerCase();
+  const m = String(mood).toLowerCase();
+
+  let slug = 'tion_normal';
+  let gradient = 'from-sky-500/25 to-blue-700/15';
+  let border = 'border-sky-400/60';
+  let textColor = 'text-sky-300';
+
+  // 1. Tion / Yon (Protagonis / Kurir MMG)
+  if (s.includes('tion') || s.includes('yon') || s.includes('supir') || s.includes('kurir')) {
+    gradient = 'from-sky-500/25 to-blue-700/15';
+    border = 'border-sky-400/60';
+    textColor = 'text-sky-300';
+    if (m.includes('blush') || m.includes('shy') || m.includes('salting')) {
+      slug = 'tion_blush';
+    } else if (m.includes('focus') || m.includes('drive') || m.includes('menanjak')) {
+      slug = 'tion_focus';
+    } else {
+      slug = 'tion_normal';
+    }
+  }
+  // 2. Bu Yulie (Guru Puspa Bangsa - Batik Mega Mendung)
+  else if (s.includes('yulie') || s.includes('guru')) {
+    gradient = 'from-amber-400/25 to-yellow-600/15';
+    border = 'border-amber-400/60';
+    textColor = 'text-amber-300';
+    if (m.includes('concern') || m.includes('worry') || m.includes('khawatir') || m.includes('perhatian')) {
+      slug = 'bu_yulie_concern';
+    } else if (m.includes('happy') || m.includes('joy') || m.includes('gembira') || m.includes('terkesan') || m.includes('laugh')) {
+      slug = 'bu_yulie_happy';
+    } else {
+      slug = 'bu_yulie_warm';
+    }
+  }
+  // 3. Husna (Siswi SMA Putih-Abu-Abu)
+  else if (s.includes('husna') || s.includes('siswi')) {
+    gradient = 'from-pink-500/25 to-cyan-500/15';
+    border = 'border-pink-400/60';
+    textColor = 'text-pink-300';
+    if (m.includes('hungry') || m.includes('lapar') || m.includes('makan')) {
+      slug = 'husna_hungry';
+    } else if (m.includes('flirt') || m.includes('tease') || m.includes('kedip') || m.includes('jahil')) {
+      slug = 'husna_tease';
+    } else {
+      slug = 'husna_cheer';
+    }
+  }
+  // 4. Mang Abdul (Sopir Senior Veteran Safari)
+  else if (s.includes('abdul') || s.includes('mang')) {
+    gradient = 'from-amber-700/25 to-yellow-900/15';
+    border = 'border-amber-600/60';
+    textColor = 'text-amber-400';
+    slug = 'mang_abdul_laugh';
+  }
+  // 5. Zacky (Montir Balap Merah-Hitam)
+  else if (s.includes('zacky') || s.includes('montir') || s.includes('mekanik')) {
+    gradient = 'from-red-600/25 to-slate-900/35';
+    border = 'border-red-500/60';
+    textColor = 'text-red-400';
+    if (m.includes('thinking') || m.includes('analyze') || m.includes('inspeksi') || m.includes('tanya')) {
+      slug = 'zacky_analyze';
+    } else {
+      slug = 'zacky_confident';
+    }
+  }
+
+  return {
+    slug,
+    webpUrl: `assets/refresh/v11/characters/${slug}.webp`,
+    pngUrl: `assets/refresh/v11/characters/${slug}.png`,
+    gradient,
+    border,
+    textColor
+  };
+}
+
