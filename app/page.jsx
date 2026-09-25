@@ -84,7 +84,7 @@ export default function GamePage() {
   // Load progress from localStorage on mount
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('mbg_savedata_react');
+      const saved = localStorage.getItem('mmg_savedata_react') || localStorage.getItem('mbg_savedata_react');
       if (saved) {
         const parsed = JSON.parse(saved);
         const ul = typeof parsed.unlockedLevel === 'number' ? Math.max(1, Math.min(20, parsed.unlockedLevel)) : 1;
@@ -141,6 +141,7 @@ export default function GamePage() {
         purchasedRims,
         levelStars
       };
+      localStorage.setItem('mmg_savedata_react', JSON.stringify(data));
       localStorage.setItem('mbg_savedata_react', JSON.stringify(data));
     } catch (_) {}
   }, [coins, unlockedLevel, upgrades, selectedSkin, selectedRim, purchasedSkins, purchasedRims, levelStars, loadedFromStorage]);

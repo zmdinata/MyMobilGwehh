@@ -15,6 +15,8 @@ import {
   Flag
 } from 'lucide-react';
 
+import CharacterAvatar from './CharacterAvatar';
+
 export default function DialogueModal({
   level = 1,
   dialogues = [],
@@ -34,23 +36,14 @@ export default function DialogueModal({
     }
   };
 
-  const speakerAvatars = {
-    'Tion': <Truck className="text-cyan-200 w-8 h-8 sm:w-10 sm:h-10" />,
-    'Bu Yulie': <GraduationCap className="text-pink-300 w-8 h-8 sm:w-10 sm:h-10" />,
-    'Husna': <Smile className="text-yellow-300 w-8 h-8 sm:w-10 sm:h-10" />,
-    'Zacky': <Wrench className="text-amber-300 w-8 h-8 sm:w-10 sm:h-10" />,
-    'Mang Abdul': <UserCheck className="text-sky-300 w-8 h-8 sm:w-10 sm:h-10" />,
-    'Pak RT': <ShieldCheck className="text-emerald-300 w-8 h-8 sm:w-10 sm:h-10" />
-  };
-
-  const avatar = speakerAvatars[currentLine.speaker] || <User className="text-slate-300 w-8 h-8 sm:w-10 sm:h-10" />;
-
   return (
-    <div id="dialogueModal" className="absolute inset-0 z-40 bg-slate-950/75 backdrop-blur-sm flex items-end justify-center p-3 sm:p-6 pb-6 sm:pb-8">
-      <div className="max-w-2xl w-full bg-slate-900/95 border-2 border-cyan-500/70 rounded-3xl p-4 sm:p-5 shadow-2xl flex items-center gap-4">
-        {/* Character Portrait Avatar */}
-        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-b from-cyan-600 to-blue-900 border-2 border-cyan-300 flex items-center justify-center text-3xl sm:text-4xl shadow-inner shrink-0">
-          <span id="dialogueAvatar">{avatar}</span>
+    <div id="dialogueModal" className="absolute inset-0 z-40 bg-slate-950/80 backdrop-blur-sm flex items-end justify-center p-3 sm:p-6 pb-[max(1.5rem,env(safe-area-inset-bottom,1.5rem))] pointer-events-auto">
+      <div className="max-w-2xl w-full bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-cyan-500/80 rounded-3xl p-4 sm:p-5 shadow-2xl relative overflow-hidden flex flex-col sm:flex-row items-center sm:items-start gap-4">
+        {/* Character Portrait Avatar (Vector SVG Comic Art) */}
+        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-slate-800 border-2 border-amber-400/60 flex items-center justify-center overflow-hidden flex-shrink-0 shadow-lg">
+          <span id="dialogueAvatar" className="w-full h-full flex items-center justify-center">
+            <CharacterAvatar speaker={currentLine.speaker} mood={currentLine.mood} className="w-full h-full" />
+          </span>
         </div>
 
         {/* Dialogue Box */}
