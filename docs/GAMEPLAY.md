@@ -128,6 +128,10 @@ Game ditenagai oleh mesin sintesis **Hybrid Web Audio API & Procedural Waveforms
    - Disertai semburan partikel not musik melayang dari atap kabin truk.
 
 4. **Deru Angin Aerodinamika & Atmosfer 8 Biome**:
-   - **Dynamic Aerodynamic Wind**: Deru hembusan angin (*wind whoosh*) menguat secara eksponensial seiring kecepatan melaju ($|v_x| > 180\text{ px/s}$) dan saat melayang tinggi di udara (*airborne*).
+   - **Dynamic Aerodynamic Wind**: Deru hembusan angin (*wind whoosh*) menguat secara halus seiring kecepatan melaju ($|v_x| > 140\text{ px/s}$) dan saat melayang tinggi di udara (*airborne*).
    - **Ambient Biome Generator**: Menghadirkan atmosfer prosedural khas masing-masing bioma (deburan ombak laut pesisir Pantura, jangkrik sawah asri, desau rimba Alas Roban, siulan angin dingin lereng gunung, hingga dengung metropolitan).
+
+5. **Master Bus Loudness & Dynamic Brickwall Limiter**:
+   - Master bus dilengkapi **DynamicsCompressorNode** (Threshold: -14 dB, Ratio: 8:1, Knee: 14 dB, Attack: 3ms, Release: 200ms) dengan gain makeup 1.35x.
+   - Buffer pink noise prosedural dikalibrasi ulang (faktor redaman ditingkatkan dari 0.11 ke 0.35) untuk memastikan suara ban, angin, dan atmosfer terdengar jernih, lantang, dan bertenaga tanpa distorsi digital (clipping-free).
 

@@ -34,8 +34,15 @@ Dokumen ini mencatat seluruh kronologi pembaruan teknis, audit, dan evolusi fitu
    - Upgrade Mesin, Grip, dan Suspensi (Level 1–20) dengan formula biaya eksponensial.
    - Kustomisasi 5 skin bodi truk dan 4 desain velg roda.
    - Koin tersimpan permanen di `localStorage`.
-6. **Verifikasi Kualitas**:
-   - **80/80 Unit Test Lulus 100% (0 Gagal)** via `npm test`.
+7. **Sintesis Audio Prosedural & Peningkatan Kenyaringan (Loudness Boost)**:
+   - Dibuat arsitektur audio murni Web Audio API tanpa dependensi file eksternal (zero bandwidth, zero lag).
+   - Profil mesin unik untuk 5 kendaraan (frekuensi, sub-harmonics, filter, turbo whistle, blowoff valve).
+   - Suara gesekan ban dinamis untuk 6 jenis permukaan material (aspal, kerikil, lumpur, air rob, kayu, tanah).
+   - Melodi klakson Telolet Basuri V3 12 nada dengan dual air-horn oscillation dan LFO vibrato.
+   - Deru angin dinamis aerodinamis dan ambient sound unik untuk 8 bioma.
+   - Kalibrasi volume menyeluruh: kenaikan gain 2.5x–4x di seluruh subsistem, redaman pink noise dioptimalkan (0.35), serta master dynamics compressor bus (-14 dB threshold, 8:1 ratio, 1.35x makeup gain) untuk audio yang lantang, punchy, dan bebas distorsi.
+8. **Verifikasi Kualitas**:
+   - **91/91 Unit Test Lulus 100% (0 Gagal)** via `npm test`.
    - **Build Produksi Next.js Lulus 100% (0 Error, 0 Warning)** via `npm run build`.
 
 ---

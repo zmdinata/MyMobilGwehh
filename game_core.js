@@ -1862,8 +1862,9 @@ export const VEHICLE_AUDIO_PROFILES = {
     filterIdle: 220,
     filterMax: 780,
     filterAirborne: 1450,
-    gainIdle: 0.07,
-    gainGas: 0.13,
+    gainIdle: 0.28,
+    gainGas: 0.52,
+    airborneGain: 0.60,
     subHarmonic: true,
     hasTurbo: false,
     hasValveTick: false,
@@ -1881,8 +1882,9 @@ export const VEHICLE_AUDIO_PROFILES = {
     filterIdle: 380,
     filterMax: 1450,
     filterAirborne: 2200,
-    gainIdle: 0.06,
-    gainGas: 0.12,
+    gainIdle: 0.25,
+    gainGas: 0.48,
+    airborneGain: 0.56,
     subHarmonic: false,
     hasTurbo: false,
     hasValveTick: false,
@@ -1900,8 +1902,9 @@ export const VEHICLE_AUDIO_PROFILES = {
     filterIdle: 190,
     filterMax: 680,
     filterAirborne: 1200,
-    gainIdle: 0.08,
-    gainGas: 0.15,
+    gainIdle: 0.30,
+    gainGas: 0.55,
+    airborneGain: 0.62,
     subHarmonic: true,
     hasTurbo: false,
     hasValveTick: false,
@@ -1919,8 +1922,9 @@ export const VEHICLE_AUDIO_PROFILES = {
     filterIdle: 180,
     filterMax: 560,
     filterAirborne: 1100,
-    gainIdle: 0.08,
-    gainGas: 0.14,
+    gainIdle: 0.28,
+    gainGas: 0.50,
+    airborneGain: 0.58,
     subHarmonic: false,
     hasTurbo: false,
     hasValveTick: true,
@@ -1938,8 +1942,9 @@ export const VEHICLE_AUDIO_PROFILES = {
     filterIdle: 450,
     filterMax: 2100,
     filterAirborne: 2900,
-    gainIdle: 0.07,
-    gainGas: 0.16,
+    gainIdle: 0.26,
+    gainGas: 0.55,
+    airborneGain: 0.65,
     subHarmonic: false,
     hasTurbo: true,
     hasValveTick: false,
@@ -1953,7 +1958,7 @@ export const SURFACE_AUDIO_TYPES = {
     filterType: 'highpass',
     freq: 1600,
     q: 1.0,
-    gainMult: 0.055,
+    gainMult: 0.32,
     name: 'Aspal Halus (Tire Hiss)'
   },
   soil: {
@@ -1961,7 +1966,7 @@ export const SURFACE_AUDIO_TYPES = {
     filterType: 'bandpass',
     freq: 650,
     q: 1.2,
-    gainMult: 0.08,
+    gainMult: 0.40,
     name: 'Tanah Berumput (Soil Roll)'
   },
   gravel: {
@@ -1969,7 +1974,7 @@ export const SURFACE_AUDIO_TYPES = {
     filterType: 'bandpass',
     freq: 1100,
     q: 2.0,
-    gainMult: 0.11,
+    gainMult: 0.45,
     name: 'Kerikil Bebatuan (Gravel Crunch)'
   },
   mud: {
@@ -1977,7 +1982,7 @@ export const SURFACE_AUDIO_TYPES = {
     filterType: 'lowpass',
     freq: 260,
     q: 3.2,
-    gainMult: 0.14,
+    gainMult: 0.52,
     name: 'Lumpur Becek (Mud Suction)'
   },
   water: {
@@ -1985,7 +1990,7 @@ export const SURFACE_AUDIO_TYPES = {
     filterType: 'bandpass',
     freq: 1250,
     q: 1.4,
-    gainMult: 0.13,
+    gainMult: 0.48,
     name: 'Genangan Air Rob (Water Churn)'
   },
   wood: {
@@ -1993,7 +1998,7 @@ export const SURFACE_AUDIO_TYPES = {
     filterType: 'bandpass',
     freq: 380,
     q: 3.8,
-    gainMult: 0.12,
+    gainMult: 0.46,
     name: 'Jembatan Kayu (Hollow Wood)'
   }
 };
@@ -2047,7 +2052,7 @@ export const BIOME_AUDIO_CONFIG = {
     q: 1.2,
     sweepDepth: 180,
     period: 4.5,
-    gain: 0.05,
+    gain: 0.22,
     name: 'Coastal Surf'
   },
   jalur_pantura: {
@@ -2056,7 +2061,7 @@ export const BIOME_AUDIO_CONFIG = {
     q: 1.0,
     sweepDepth: 120,
     period: 4.0,
-    gain: 0.05,
+    gain: 0.20,
     name: 'Pantura Breeze'
   },
   sawah: {
@@ -2065,7 +2070,7 @@ export const BIOME_AUDIO_CONFIG = {
     q: 3.5,
     sweepDepth: 60,
     period: 2.0,
-    gain: 0.035,
+    gain: 0.18,
     name: 'Sawah Chirp & Breeze'
   },
   desa_sawah: {
@@ -2074,7 +2079,7 @@ export const BIOME_AUDIO_CONFIG = {
     q: 3.0,
     sweepDepth: 50,
     period: 2.2,
-    gain: 0.035,
+    gain: 0.18,
     name: 'Rural Kampung Meadow'
   },
   alas_roban: {
@@ -2083,7 +2088,7 @@ export const BIOME_AUDIO_CONFIG = {
     q: 2.0,
     sweepDepth: 150,
     period: 3.8,
-    gain: 0.045,
+    gain: 0.24,
     name: 'Alas Roban Rainforest Draft'
   },
   gunung: {
@@ -2092,7 +2097,7 @@ export const BIOME_AUDIO_CONFIG = {
     q: 4.2,
     sweepDepth: 220,
     period: 3.0,
-    gain: 0.055,
+    gain: 0.28,
     name: 'Mountain Whistling Gale'
   },
   tanjakan: {
@@ -2101,7 +2106,7 @@ export const BIOME_AUDIO_CONFIG = {
     q: 3.8,
     sweepDepth: 200,
     period: 3.2,
-    gain: 0.05,
+    gain: 0.26,
     name: 'Highland Ridge Draft'
   },
   pinus: {
@@ -2110,7 +2115,7 @@ export const BIOME_AUDIO_CONFIG = {
     q: 2.4,
     sweepDepth: 140,
     period: 3.6,
-    gain: 0.04,
+    gain: 0.22,
     name: 'Pine Canopy Murmur'
   },
   kota: {
@@ -2119,7 +2124,7 @@ export const BIOME_AUDIO_CONFIG = {
     q: 1.5,
     sweepDepth: 40,
     period: 5.0,
-    gain: 0.04,
+    gain: 0.20,
     name: 'Metropolitan Sub-Hum'
   },
   sekolah: {
@@ -2128,7 +2133,7 @@ export const BIOME_AUDIO_CONFIG = {
     q: 1.2,
     sweepDepth: 70,
     period: 4.0,
-    gain: 0.035,
+    gain: 0.18,
     name: 'School Morning Ambience'
   }
 };
@@ -2200,14 +2205,14 @@ export class SoundSynthesizer {
   setupMasterBus() {
     if (!this.ctx) return;
     this.masterCompressor = this.ctx.createDynamicsCompressor();
-    this.masterCompressor.threshold.setValueAtTime(-8, this.ctx.currentTime);
-    this.masterCompressor.knee.setValueAtTime(18, this.ctx.currentTime);
-    this.masterCompressor.ratio.setValueAtTime(12, this.ctx.currentTime);
+    this.masterCompressor.threshold.setValueAtTime(-14, this.ctx.currentTime);
+    this.masterCompressor.knee.setValueAtTime(14, this.ctx.currentTime);
+    this.masterCompressor.ratio.setValueAtTime(8, this.ctx.currentTime);
     this.masterCompressor.attack.setValueAtTime(0.003, this.ctx.currentTime);
-    this.masterCompressor.release.setValueAtTime(0.25, this.ctx.currentTime);
+    this.masterCompressor.release.setValueAtTime(0.20, this.ctx.currentTime);
 
     this.masterGain = this.ctx.createGain();
-    this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 1.0, this.ctx.currentTime);
+    this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 1.35, this.ctx.currentTime);
 
     this.masterGain.connect(this.masterCompressor);
     this.masterCompressor.connect(this.ctx.destination);
@@ -2230,7 +2235,7 @@ export class SoundSynthesizer {
       b3 = 0.86650 * b3 + white * 0.3104856;
       b4 = 0.55000 * b4 + white * 0.5329522;
       b5 = -0.7616 * b5 - white * 0.0168980;
-      data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+      data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.35;
       b6 = white * 0.115926;
     }
     return buffer;
@@ -2404,13 +2409,13 @@ export class SoundSynthesizer {
 
     let targetFreq = profile.idleFreq + speedRatio * (profile.maxFreq - profile.idleFreq) + (isGas ? 25 : 0);
     let targetFilter = profile.filterIdle + speedRatio * (profile.filterMax - profile.filterIdle) + (isGas ? 350 : 0);
-    let targetGain = isGas ? profile.gainGas : (profile.gainIdle + speedRatio * 0.04);
+    let targetGain = isGas ? profile.gainGas : (profile.gainIdle + speedRatio * 0.12);
 
     // Airborne engine over-rev
     if (isAirborne && isGas) {
       targetFreq = profile.airborneFreq || 180;
       targetFilter = profile.filterAirborne || 1450;
-      targetGain = 0.15;
+      targetGain = profile.airborneGain || 0.60;
     }
 
     if (this.engineOsc) {
@@ -2429,7 +2434,7 @@ export class SoundSynthesizer {
     // Sport turbo whistle & blow-off valve release
     if (profile.hasTurbo && this.turboOsc && this.turboGain) {
       const turboFreq = 1400 + speedRatio * 2000 + (isGas ? 600 : 0);
-      const turboVol = isGas ? (0.04 + speedRatio * 0.08) : 0.001;
+      const turboVol = isGas ? (0.16 + speedRatio * 0.22) : 0.001;
       this.turboOsc.frequency.setTargetAtTime(turboFreq, now, 0.08);
       this.turboGain.gain.setTargetAtTime(turboVol, now, 0.08);
 
@@ -2454,7 +2459,7 @@ export class SoundSynthesizer {
 
     const mat = SURFACE_AUDIO_TYPES[surfaceType] || SURFACE_AUDIO_TYPES.asphalt;
     const speedRatio = Math.min(1.0, absSpeed / 500);
-    const targetGain = mat.gainMult * (0.3 + speedRatio * 0.7);
+    const targetGain = mat.gainMult * (0.35 + speedRatio * 0.65);
 
     this.tireFilter.type = mat.filterType;
     this.tireFilter.frequency.setTargetAtTime(mat.freq + speedRatio * 250, now, 0.06);
@@ -2476,9 +2481,9 @@ export class SoundSynthesizer {
     if (this.windGain && this.windFilter) {
       let windVol = 0;
       let windFreq = 250;
-      if (absSpeed > 180 || isAirborne) {
+      if (absSpeed > 140 || isAirborne) {
         const speedRatio = Math.min(1.0, absSpeed / 550);
-        windVol = (speedRatio * 0.08) + (isAirborne ? 0.05 : 0.0);
+        windVol = (speedRatio * 0.35) + (isAirborne ? 0.25 : 0.0);
         windFreq = 300 + speedRatio * 900 + (isAirborne ? 400 : 0);
       }
       this.windGain.gain.setTargetAtTime(windVol, now, 0.1);
@@ -2501,7 +2506,7 @@ export class SoundSynthesizer {
   playBlowoffValve() {
     if (!this.ctx || this.isMuted) return;
     try {
-      this.playNoiseBurst(0.28, 2200, 7000, 0.18);
+      this.playNoiseBurst(0.30, 2200, 7000, 0.45);
     } catch (_) {}
   }
 
@@ -2513,7 +2518,7 @@ export class SoundSynthesizer {
       const gain = this.ctx.createGain();
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(800 + Math.random() * 1200, now);
-      gain.gain.setValueAtTime(0.04, now);
+      gain.gain.setValueAtTime(0.18, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
       osc.connect(gain);
       gain.connect(this.masterGain || this.ctx.destination);
@@ -2563,7 +2568,7 @@ export class SoundSynthesizer {
 
       const gain = this.ctx.createGain();
       gain.gain.setValueAtTime(0, noteStart);
-      gain.gain.linearRampToValueAtTime(0.19, noteStart + 0.02);
+      gain.gain.linearRampToValueAtTime(0.65, noteStart + 0.02);
       gain.gain.exponentialRampToValueAtTime(0.001, noteEnd);
 
       osc1.connect(filter);
@@ -2597,7 +2602,7 @@ export class SoundSynthesizer {
       modGain.gain.setValueAtTime(45, now);
       modOsc.connect(osc.frequency);
 
-      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.setValueAtTime(0.42, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
 
       osc.connect(gain);
@@ -2619,7 +2624,7 @@ export class SoundSynthesizer {
     osc.frequency.setValueAtTime(987.77, now);
     osc.frequency.setValueAtTime(1318.51, now + 0.07);
 
-    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.setValueAtTime(0.36, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
 
     osc.connect(gain);
@@ -2637,7 +2642,7 @@ export class SoundSynthesizer {
     osc.frequency.setValueAtTime(220, now);
     osc.frequency.exponentialRampToValueAtTime(650, now + 0.25);
 
-    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.setValueAtTime(0.42, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
 
     osc.connect(gain);
@@ -2648,12 +2653,12 @@ export class SoundSynthesizer {
 
   playSplashSound() {
     if (!this.ctx || this.isMuted) return;
-    this.playNoiseBurst(0.25, 600, 1800, 0.16);
+    this.playNoiseBurst(0.28, 600, 1800, 0.40);
   }
 
   playMudSound() {
     if (!this.ctx || this.isMuted) return;
-    this.playNoiseBurst(0.3, 180, 450, 0.2);
+    this.playNoiseBurst(0.32, 180, 450, 0.48);
   }
 
   playImpactSound() {
@@ -2665,7 +2670,7 @@ export class SoundSynthesizer {
     osc.frequency.setValueAtTime(110, now);
     osc.frequency.exponentialRampToValueAtTime(35, now + 0.15);
 
-    gain.gain.setValueAtTime(0.3, now);
+    gain.gain.setValueAtTime(0.55, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
 
     osc.connect(gain);
@@ -2676,14 +2681,14 @@ export class SoundSynthesizer {
 
   playCrashSound() {
     if (!this.ctx || this.isMuted) return;
-    this.playNoiseBurst(0.6, 120, 600, 0.4);
+    this.playNoiseBurst(0.65, 120, 600, 0.70);
     const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     osc.type = 'sawtooth';
     osc.frequency.setValueAtTime(200, now);
     osc.frequency.exponentialRampToValueAtTime(40, now + 0.5);
-    gain.gain.setValueAtTime(0.35, now);
+    gain.gain.setValueAtTime(0.65, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
     osc.connect(gain);
     gain.connect(this.masterGain || this.ctx.destination);
@@ -2705,7 +2710,7 @@ export class SoundSynthesizer {
       const gain = this.ctx.createGain();
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(c.f, now + c.t);
-      gain.gain.setValueAtTime(0.25, now + c.t);
+      gain.gain.setValueAtTime(0.55, now + c.t);
       gain.gain.exponentialRampToValueAtTime(0.001, now + c.t + c.d);
       osc.connect(gain);
       gain.connect(this.masterGain || this.ctx.destination);
