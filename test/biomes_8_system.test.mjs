@@ -99,3 +99,65 @@ test('TerrainSystem generates safe elevations across custom 8-biome levels', () 
     assert.ok(h >= 140 && h <= 660, `Height ${h} at x=${x} within safe envelope [140, 660]`);
   }
 });
+
+test('getBiomeBlend uses ±80m transition zone for smooth boundary cross-fade across level biomes', () => {
+  const level2 = LEVEL_CONFIGS.find(cfg => cfg.level === 2);
+  assert.ok(level2, 'Level 2 config must exist');
+  const terrain = new TerrainSystem(level2);
+
+  // In Level 2, biomes are [PESISIR_PANTURA (1), JALUR_PANTURA (2), PEMUKIMAN (7), SEKOLAH (8)]
+  assert.equal(terrain.segments.length, 4, 'Level 2 has 4 segments');
+  const b0 = terrain.segments[0].end;
+
+  // Before transition zone (< b0 - 80m)
+  const beforeB0 = terrain.getBiomeBlend(b0 - 85);
+  assert.equal(beforeB0.inTransition, false, 'Before b0 - 80m is not in transition');
+  assert.equal(beforeB0.fromBiome.id, 1, 'Active biome is Pesisir Pantura');
+
+  // Start of transition zone (b0 - 80m)
+  const atStart = terrain.getBiomeBlend(b0 - 80);
+  assert.equal(atStart.inTransition, true, 'At b0 - 80m transition begins');
+  assert.equal(atStart.fromBiome.id, 1);
+  assert.equal(atStart.toBiome.id, 2);
+  assert.equal(atStart.alphaPrev, 1);
+  assert.equal(atStart.alphaNext, 0);
+
+  // Midpoint of transition zone (b0)
+  const atMid = terrain.getBiomeBlend(b0);
+  assert.equal(atMid.inTransition, true, 'At midpoint transition is active');
+  assert.equal(atMid.alphaPrev, 0.5);
+  assert.equal(atMid.alphaNext, 0.5);
+
+  // End of transition zone (b0 + 80m)
+  const atEnd = terrain.getBiomeBlend(b0 + 80);
+  assert.equal(atEnd.inTransition, true, 'At b0 + 80m transition completes');
+  assert.equal(atEnd.alphaPrev, 0);
+  assert.equal(atEnd.alphaNext, 1);
+
+  // After transition zone (> b0 + 80m)
+  const afterB0 = terrain.getBiomeBlend(b0 + 85);
+  assert.equal(afterB0.inTransition, false, 'After b0 + 80m transition is done');
+  assert.equal(afterB0.fromBiome.id, 2, 'Active biome is now Jalur Arteri Pantura');
+
+  // Verify player position at 3778m (user screenshot position)
+  const at3778 = terrain.getBiomeBlend(3778);
+  assert.equal(at3778.fromBiome.id, 8, 'At 3778m active biome is Sekolah Puspa Bangsa (id 8)');
+  assert.equal(at3778.fromBiome.assetKey, 'biome4Midground', 'Dedicated assetKey is biome4Midground');
+});
+
+test('index.html and GameRenderer.js implement 1-to-1 full-height cover (0.0, 1.05) and 0.15 parallax rate', () => {
+  const gameRendererPath = path.resolve(__dirname, '../components/GameRenderer.js');
+  const gameRendererJs = fs.readFileSync(gameRendererPath, 'utf8');
+
+  for (const [name, content] of [['index.html', indexHtml], ['GameRenderer.js', gameRendererJs]]) {
+    // Parallax scroll rate 0.15
+    assert.ok(content.includes('camera.x * 0.15'), `${name} uses calibrated 0.15 parallax scroll rate`);
+    // Full-height canvas cover (topRatio: 0.0, heightRatio: 1.05)
+    assert.ok(content.includes('0.0, 1.05'), `${name} renders full-height cover from y=0 to h*1.05`);
+    // 1-to-1 biome asset mapping
+    for (let i = 1; i <= 8; i++) {
+      assert.ok(content.includes(`${i}: 'biome`), `${name} contains mapping for biome ${i}`);
+    }
+  }
+});
+

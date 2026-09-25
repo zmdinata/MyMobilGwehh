@@ -372,6 +372,10 @@ export function buildLevelSegments(levelConfig) {
 
 export class TerrainSystem {
   constructor(totalMeters = 4600, levelConfig = null) {
+    if (typeof totalMeters === 'object' && totalMeters !== null) {
+      levelConfig = totalMeters;
+      totalMeters = levelConfig.totalMeters || levelConfig.finishMeters || 4600;
+    }
     if (levelConfig) {
       this.levelConfig = levelConfig;
       this.totalMeters = levelConfig.totalMeters || totalMeters;
@@ -581,8 +585,8 @@ export class TerrainSystem {
     if (this.levelConfig && this.segments) {
       for (let i = 0; i < this.segments.length - 1; i++) {
         const boundary = this.segments[i].end;
-        const bStart = boundary - 60;
-        const bEnd = boundary + 60;
+        const bStart = boundary - 80;
+        const bEnd = boundary + 80;
         if (meterX >= bStart && meterX <= bEnd) {
           const rawT = (meterX - bStart) / (bEnd - bStart);
           const t = this.smoothstep(0, 1, rawT);
@@ -681,7 +685,8 @@ export class TerrainSystem {
 
     // Dynamic segments for custom 20-level mode (8 distinct biomes)
     const localM = Math.max(0, m - segStart);
-    const slopeScale = this.levelConfig ? (1 + (this.levelConfig.level - 1) * 0.028) : 1.0;
+    const levelNum = (this.levelConfig && typeof this.levelConfig.level === 'number') ? this.levelConfig.level : 1;
+    const slopeScale = 1 + (levelNum - 1) * 0.028;
     switch (biomeId) {
       case 1: {
         // Biome 1: Pesisir Pantura (Pantai & Laut Lepas)

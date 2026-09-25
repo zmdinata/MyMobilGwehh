@@ -1621,7 +1621,15 @@
             biome3Distant: '#5b93c5',
             biome3Midground: '#35686d',
             biome4Distant: '#41697f',
-            biome4Midground: '#2b5b68'
+            biome4Midground: '#2b5b68',
+            biome1: '#3e93de',
+            biome2: '#8b8d61',
+            biome3: '#548a63',
+            biome4: '#598b66',
+            biome5: '#5b93c5',
+            biome6: '#35686d',
+            biome7: '#41697f',
+            biome8: '#2b5b68'
           };
           ctx.fillStyle = skirtColors[assetKey] || '#35686d';
           ctx.fillRect(0, y + drawHeight - 1, w, h - (y + drawHeight) + 2);
@@ -1918,55 +1926,46 @@
         ctx.fill();
         ctx.restore();
 
-        // Layer 2: Distant Mountains / Sea Horizon (Parallax Alpha Cross-Fade)
-        const scroll2 = this.camera.x * 0.08;
+        // Layer 2 & 3: Dedicated 1-to-1 Full-Height Biome Backdrops (Parallax Alpha Cross-Fade, 0.15 scroll rate)
+        const scroll = this.camera.x * 0.15;
         if (blend && blend.inTransition && blend.toBiome) {
           ctx.save();
           ctx.globalAlpha = blend.alphaPrev;
-          this.drawDistantParallaxLayer(blend.fromBiome.id, w, h, scroll2);
+          this.drawDistantParallaxLayer(blend.fromBiome.id, w, h, scroll);
+          this.drawMidgroundParallaxLayer(blend.fromBiome.id, w, h, scroll);
           ctx.restore();
 
           ctx.save();
           ctx.globalAlpha = blend.alphaNext;
-          this.drawDistantParallaxLayer(blend.toBiome.id, w, h, scroll2);
+          this.drawDistantParallaxLayer(blend.toBiome.id, w, h, scroll);
+          this.drawMidgroundParallaxLayer(blend.toBiome.id, w, h, scroll);
           ctx.restore();
         } else {
-          this.drawDistantParallaxLayer(biome.id, w, h, scroll2);
-        }
-
-        // Layer 3: Midground (Warteg, Terraces, Tea Hills, Suburban Houses - Alpha Cross-Fade)
-        const scroll3 = this.camera.x * 0.25;
-        if (blend && blend.inTransition && blend.toBiome) {
-          ctx.save();
-          ctx.globalAlpha = blend.alphaPrev;
-          this.drawMidgroundParallaxLayer(blend.fromBiome.id, w, h, scroll3);
-          ctx.restore();
-
-          ctx.save();
-          ctx.globalAlpha = blend.alphaNext;
-          this.drawMidgroundParallaxLayer(blend.toBiome.id, w, h, scroll3);
-          ctx.restore();
-        } else {
-          this.drawMidgroundParallaxLayer(biome.id, w, h, scroll3);
+          this.drawDistantParallaxLayer(biome.id, w, h, scroll);
+          this.drawMidgroundParallaxLayer(biome.id, w, h, scroll);
         }
       }
 
       drawDistantParallaxLayer(biomeId, w, h, scroll2) {
         const ctx = this.ctx;
         ctx.save();
-        const distantMap = {
-          1: 'biome1Distant',
-          2: 'biome1Distant',
-          3: 'biome2Distant',
-          4: 'biome2Distant',
-          5: 'biome3Distant',
-          6: 'biome3Distant',
-          7: 'biome4Distant',
-          8: 'biome4Distant'
+        // 1-to-1 dedicated background mapping for all 8 biomes:
+        const biomeAssetMap = {
+          1: 'biome1Distant',   // 1: Pesisir Pantai Pantura
+          2: 'biome1Midground', // 2: Jalur Arteri Pantura
+          3: 'biome2Distant',   // 3: Hamparan Lembah Sawah
+          4: 'biome2Midground', // 4: Pedesaan Lumbung Padi
+          5: 'biome3Distant',   // 5: Puncak Siluet Gn. Ciremai
+          6: 'biome3Midground', // 6: Lereng Hutan Pinus Terjal
+          7: 'biome4Distant',   // 7: Kawasan Pemukiman Suburb
+          8: 'biome4Midground'  // 8: Kompleks Sekolah Puspa Bangsa
         };
-        const distantKey = distantMap[biomeId] || `biome${biomeId}Distant`;
-        if (this.drawTiledBackground(distantKey, w, h, scroll2, 0.0, 0.92) ||
-            this.drawTiledBackground(`biome${biomeId}Distant`, w, h, scroll2, 0.0, 0.92)) {
+        const assetKey = biomeAssetMap[biomeId] || `biome${biomeId}`;
+        // Full-Height Canvas Cover: topRatio: 0.0, heightRatio: 1.05 to fill 100% of canvas height without leaving blank sky behind the HUD
+        if (this.drawTiledBackground(assetKey, w, h, scroll2, 0.0, 1.05) ||
+            this.drawTiledBackground(`biome${biomeId}`, w, h, scroll2, 0.0, 1.05) ||
+            this.drawTiledBackground(`biome${biomeId}Distant`, w, h, scroll2, 0.0, 1.05) ||
+            this.drawTiledBackground(`biome${biomeId}Midground`, w, h, scroll2, 0.0, 1.05)) {
           ctx.restore();
           return;
         }
@@ -2043,7 +2042,25 @@
       drawMidgroundParallaxLayer(biomeId, w, h, scroll3) {
         const ctx = this.ctx;
         ctx.save();
-        // Midground artwork maps even biomes to their dedicated midground scenery
+        const biomeAssetMap = {
+          1: 'biome1Distant',
+          2: 'biome1Midground',
+          3: 'biome2Distant',
+          4: 'biome2Midground',
+          5: 'biome3Distant',
+          6: 'biome3Midground',
+          7: 'biome4Distant',
+          8: 'biome4Midground'
+        };
+        const activeKey = biomeAssetMap[biomeId] || `biome${biomeId}`;
+        // If the authentic 1-to-1 full-height artwork for this biome is already rendered by drawDistantParallaxLayer,
+        // no redundant overlay or offset midground is needed.
+        if (this.backgroundAssets && ((this.backgroundAssets[activeKey] && this.backgroundAssets[activeKey].loaded) || (this.backgroundAssets[`biome${biomeId}`] && this.backgroundAssets[`biome${biomeId}`].loaded))) {
+          ctx.restore();
+          return;
+        }
+
+        // Midground artwork maps even biomes to their dedicated midground scenery (fallback compatibility)
         const midMap = {
           2: 'biome1Midground',
           4: 'biome2Midground',
