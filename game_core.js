@@ -385,9 +385,13 @@ export class TerrainSystem {
     // 4. Speed bumps in the school district approach
     this.speedBumps = [Math.max(100, fin - 240), Math.max(120, fin - 140), Math.max(140, fin - 60)];
 
-    // 5. Launch kickers spaced every ~380m
+    // 5. Launch kickers spaced every ~380m (deconflicted: >=40m clearance from mud and logs)
     for (let m = 280; m < fin - 150; m += 380) {
-      this.launchRamps.push({ start: m, rise: 12, drop: 6, height: 65 });
+      const inMud = this.mudPits.some(mud => (m >= mud.start - 40 && m <= mud.end + 40));
+      const inLogs = this.logs.some(l => Math.abs(m - l.x) < 40);
+      if (!inMud && !inLogs) {
+        this.launchRamps.push({ start: m, rise: 16, drop: 12, height: 42 });
+      }
     }
 
     // 6. Food Parcels / Ompreng Refill (+20% Cargo Integrity)
@@ -1536,7 +1540,8 @@ export class PhysicsVehicle {
 
   triggerImpactShock(intensity) {
     if (intensity < 120) return;
-    const damage = Math.min(25, (intensity - 100) * 0.06);
+    const suspFactor = Math.max(0.65, 1 - ((this.suspLvl || 1) - 1) * (0.35 / 19));
+    const damage = Math.min(25, (intensity - 100) * 0.06 * suspFactor);
     this.cargoIntegrity = Math.max(0, this.cargoIntegrity - damage);
 
     // Eject comical food particles
@@ -1598,18 +1603,19 @@ export class PhysicsVehicle {
       }
     }
 
-    // Transit Delivery Checkpoints (+50% Fuel & secures cargo checkpoint)
+    // Transit Delivery Checkpoints (+50% Fuel, +35% Cargo Restock, & secures checkpoint)
     if (terrain.checkpoints && Array.isArray(terrain.checkpoints)) {
       for (const cp of terrain.checkpoints) {
         if (!cp.collected && Math.abs(truckMeterX - cp.x) < 3.5) {
           cp.collected = true;
           this.fuel = Math.min(100, this.fuel + 50);
+          this.cargoIntegrity = Math.min(100, this.cargoIntegrity + 35);
           this.lastCheckpoint = {
             x: cp.x,
             name: cp.name,
             cargo: this.cargoIntegrity
           };
-          this.checkpointNotice = `${cp.name} Terlewati! +Bensin & Kargo Diamankan`;
+          this.checkpointNotice = `${cp.name} Terlewati! +Bensin & Kargo Diisi Ulang`;
         }
       }
     }
