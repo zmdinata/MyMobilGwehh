@@ -3511,6 +3511,8 @@
           upgrades: { engine: 1, grip: 1, suspension: 1 },
           selectedSkin: 'standard',
           selectedRim: 'standard',
+          purchasedSkins: ['standard'],
+          purchasedRims: ['standard'],
           levelStars: {}
         };
         try {
@@ -3527,6 +3529,8 @@
             },
             selectedSkin: parsed.selectedSkin || 'standard',
             selectedRim: parsed.selectedRim || 'standard',
+            purchasedSkins: Array.isArray(parsed.purchasedSkins) && parsed.purchasedSkins.length ? parsed.purchasedSkins : ['standard'],
+            purchasedRims: Array.isArray(parsed.purchasedRims) && parsed.purchasedRims.length ? parsed.purchasedRims : ['standard'],
             levelStars: parsed.levelStars || {}
           };
         } catch (_) {
@@ -3547,7 +3551,7 @@
       }
 
       applyUpgrades() {
-        this.vehicle.applyUpgrades(this.saveData.upgrades);
+        this.vehicle.applyUpgrades(this.saveData.upgrades, this.saveData.selectedSkin);
         if (this.renderer) {
           this.renderer.selectedSkin = this.saveData.selectedSkin || 'standard';
           this.renderer.selectedRim = this.saveData.selectedRim || 'standard';
@@ -3733,8 +3737,10 @@
         this.btnUpgradeGrip.addEventListener('click', () => this.purchaseUpgrade('grip'));
         this.btnUpgradeSusp.addEventListener('click', () => this.purchaseUpgrade('suspension'));
 
-        // Skin Selector Buttons with Level Unlock Validation
+        // Skin Selector Buttons with Level Unlock Validation & Coin Purchase
         const skinLevelRequirements = { standard: 1, speedy: 4, mountain: 8, retro: 12, sport: 16 };
+        const skinPrices = { standard: 0, speedy: 200, mountain: 500, retro: 1200, sport: 3000 };
+        const skinNames = { standard: 'Standard MBG', speedy: 'Speedy Courier', mountain: 'Mountain Explorer', retro: 'Retro Food Truck', sport: 'Sport Racing' };
         ['standard', 'speedy', 'mountain', 'retro', 'sport'].forEach((key) => {
           const btn = this.skinButtons[key];
           if (btn) {
@@ -3744,16 +3750,34 @@
                 if (window.showMbgToast) window.showMbgToast(`Skin ini terbuka mulai Level ${reqLvl}!`, 'lock');
                 return;
               }
-              this.saveData.selectedSkin = key;
+              const purchased = this.saveData.purchasedSkins || ['standard'];
+              const isOwned = purchased.includes(key);
+              const price = skinPrices[key] || 0;
+              if (!isOwned) {
+                if (this.saveData.coins < price) {
+                  if (window.showMbgToast) window.showMbgToast(`Koin tidak cukup! Butuh ${price} koin`, 'alert');
+                  return;
+                }
+                this.saveData.coins -= price;
+                if (!this.saveData.purchasedSkins) this.saveData.purchasedSkins = ['standard'];
+                this.saveData.purchasedSkins.push(key);
+                this.saveData.selectedSkin = key;
+                if (window.showMbgToast) window.showMbgToast(`Skin ${skinNames[key]} berhasil dibeli & dipasang!`, 'check');
+              } else {
+                this.saveData.selectedSkin = key;
+              }
               this.saveProgress();
+              this.updateSaveUI();
               this.applyUpgrades();
               this.updateGarageUI();
             });
           }
         });
 
-        // Rim Selector Buttons with Level Unlock Validation
+        // Rim Selector Buttons with Level Unlock Validation & Coin Purchase
         const rimLevelRequirements = { standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
+        const rimPrices = { standard: 0, gold: 250, beadlock: 800, whitewall: 2000 };
+        const rimNames = { standard: 'Standard Steel', gold: 'Gold Alloy', beadlock: 'Mud Beadlock', whitewall: 'White-Wall Retro' };
         ['standard', 'gold', 'beadlock', 'whitewall'].forEach((key) => {
           const btn = this.rimButtons[key];
           if (btn) {
@@ -3763,8 +3787,24 @@
                 if (window.showMbgToast) window.showMbgToast(`Velg ini terbuka mulai Level ${reqLvl}!`, 'lock');
                 return;
               }
-              this.saveData.selectedRim = key;
+              const purchased = this.saveData.purchasedRims || ['standard'];
+              const isOwned = purchased.includes(key);
+              const price = rimPrices[key] || 0;
+              if (!isOwned) {
+                if (this.saveData.coins < price) {
+                  if (window.showMbgToast) window.showMbgToast(`Koin tidak cukup! Butuh ${price} koin`, 'alert');
+                  return;
+                }
+                this.saveData.coins -= price;
+                if (!this.saveData.purchasedRims) this.saveData.purchasedRims = ['standard'];
+                this.saveData.purchasedRims.push(key);
+                this.saveData.selectedRim = key;
+                if (window.showMbgToast) window.showMbgToast(`Velg ${rimNames[key]} berhasil dibeli & dipasang!`, 'check');
+              } else {
+                this.saveData.selectedRim = key;
+              }
               this.saveProgress();
+              this.updateSaveUI();
               this.applyUpgrades();
               this.updateGarageUI();
             });
@@ -4077,40 +4117,62 @@
           this.btnUpgradeSusp.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-fredoka font-bold bg-slate-800 text-emerald-400 border border-emerald-500/40 cursor-default';
         }
 
-        // Highlight selected skin & show unlock level badges
+        // Highlight selected skin & show unlock level badges and purchase prices
         const skinReqs = { standard: 1, speedy: 4, mountain: 8, retro: 12, sport: 16 };
         const skinNames = { standard: 'Standard MBG', speedy: 'Speedy Courier', mountain: 'Mountain Explorer', retro: 'Retro Food Truck', sport: 'Sport Racing' };
+        const skinPrices = { standard: 0, speedy: 200, mountain: 500, retro: 1200, sport: 3000 };
+        const skinBonuses = { standard: 'Standard', speedy: '+5% Speed', mountain: '+5% Grip', retro: '+5% Shock', sport: '+10% Speed' };
+        const purchasedSkins = this.saveData.purchasedSkins || ['standard'];
+
         for (const [key, btn] of Object.entries(this.skinButtons)) {
           if (!btn) continue;
           const reqLvl = skinReqs[key] || 1;
           const isUnlocked = (this.saveData.unlockedLevel || 1) >= reqLvl;
+          const isOwned = purchasedSkins.includes(key);
+          const price = skinPrices[key] || 0;
+          const bonus = skinBonuses[key] || '';
+
           if (!isUnlocked) {
             btn.innerHTML = `<span class="opacity-70">${skinNames[key]}</span><span class="block text-[9px] text-amber-400 font-mono mt-0.5 flex items-center justify-center gap-1"><svg class="w-2.5 h-2.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Lvl ${reqLvl}</span></span>`;
             btn.className = 'p-2 rounded-xl bg-slate-900/60 border border-slate-800 text-xs font-fredoka text-slate-500 text-center opacity-70 cursor-not-allowed';
           } else if (key === this.saveData.selectedSkin) {
-            btn.innerHTML = `<span>${skinNames[key]}</span><span class="block text-[9px] text-cyan-300 font-mono mt-0.5 flex items-center justify-center gap-1"><svg class="w-2.5 h-2.5 inline text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Terpasang</span></span>`;
+            btn.innerHTML = `<span>${skinNames[key]}</span><span class="block text-[9px] text-cyan-300 font-mono mt-0.5 flex items-center justify-center gap-1"><svg class="w-2.5 h-2.5 inline text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Terpasang (${bonus})</span></span>`;
             btn.className = 'p-2 rounded-xl bg-slate-700 border-2 border-cyan-400 text-xs font-fredoka text-white text-center shadow-md';
+          } else if (!isOwned) {
+            const canAfford = (this.saveData.coins || 0) >= price;
+            btn.innerHTML = `<span>${skinNames[key]}</span><span class="block text-[9px] ${canAfford ? 'text-amber-300 font-bold' : 'text-slate-500'} font-mono mt-0.5">Beli: ${price} Koin (${bonus})</span>`;
+            btn.className = `p-2 rounded-xl text-xs font-fredoka text-center ${canAfford ? 'bg-emerald-950/60 border border-emerald-500/60 text-emerald-300 hover:bg-emerald-900/70 cursor-pointer' : 'bg-slate-900 border border-slate-800 text-slate-500 cursor-not-allowed opacity-75'}`;
           } else {
-            btn.innerHTML = `<span>${skinNames[key]}</span>`;
+            btn.innerHTML = `<span>${skinNames[key]}</span><span class="block text-[9px] text-slate-400 font-mono mt-0.5">Pasang (${bonus})</span>`;
             btn.className = 'p-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-fredoka text-slate-300 text-center hover:bg-slate-700 cursor-pointer';
           }
         }
 
-        // Highlight selected rim & show unlock level badges
+        // Highlight selected rim & show unlock level badges and purchase prices
         const rimReqs = { standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
         const rimNames = { standard: 'Standard Steel', gold: 'Gold Alloy', beadlock: 'Mud Beadlock', whitewall: 'White-Wall Retro' };
+        const rimPrices = { standard: 0, gold: 250, beadlock: 800, whitewall: 2000 };
+        const purchasedRims = this.saveData.purchasedRims || ['standard'];
+
         for (const [key, btn] of Object.entries(this.rimButtons)) {
           if (!btn) continue;
           const reqLvl = rimReqs[key] || 1;
           const isUnlocked = (this.saveData.unlockedLevel || 1) >= reqLvl;
+          const isOwned = purchasedRims.includes(key);
+          const price = rimPrices[key] || 0;
+
           if (!isUnlocked) {
             btn.innerHTML = `<span class="opacity-70">${rimNames[key]}</span><span class="block text-[9px] text-amber-400 font-mono mt-0.5 flex items-center justify-center gap-1"><svg class="w-2.5 h-2.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Lvl ${reqLvl}</span></span>`;
             btn.className = 'p-2 rounded-xl bg-slate-900/60 border border-slate-800 text-xs font-fredoka text-slate-500 text-center opacity-70 cursor-not-allowed';
           } else if (key === this.saveData.selectedRim) {
             btn.innerHTML = `<span>${rimNames[key]}</span><span class="block text-[9px] text-amber-300 font-mono mt-0.5 flex items-center justify-center gap-1"><svg class="w-2.5 h-2.5 inline text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Terpasang</span></span>`;
             btn.className = 'p-2 rounded-xl bg-slate-700 border-2 border-amber-400 text-xs font-fredoka text-white text-center shadow-md';
+          } else if (!isOwned) {
+            const canAfford = (this.saveData.coins || 0) >= price;
+            btn.innerHTML = `<span>${rimNames[key]}</span><span class="block text-[9px] ${canAfford ? 'text-amber-300 font-bold' : 'text-slate-500'} font-mono mt-0.5">Beli: ${price} Koin</span>`;
+            btn.className = `p-2 rounded-xl text-xs font-fredoka text-center ${canAfford ? 'bg-emerald-950/60 border border-emerald-500/60 text-emerald-300 hover:bg-emerald-900/70 cursor-pointer' : 'bg-slate-900 border border-slate-800 text-slate-500 cursor-not-allowed opacity-75'}`;
           } else {
-            btn.innerHTML = `<span>${rimNames[key]}</span>`;
+            btn.innerHTML = `<span>${rimNames[key]}</span><span class="block text-[9px] text-slate-400 font-mono mt-0.5">Pasang</span>`;
             btn.className = 'p-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-fredoka text-slate-300 text-center hover:bg-slate-700 cursor-pointer';
           }
         }

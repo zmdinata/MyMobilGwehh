@@ -35,7 +35,7 @@ export default function GameCanvas({
     const startX = 150;
     const startY = terrain.getHeight(startX) - 34;
     const vehicle = new Vehicle(startX, startY);
-    vehicle.applyUpgrades(upgrades);
+    vehicle.applyUpgrades(upgrades, selectedSkin);
 
     const gameState = new GameStateManager({
       targetDistanceMeters: lvlCfg.finishMeters,

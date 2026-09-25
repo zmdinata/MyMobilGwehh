@@ -19,10 +19,14 @@ export default function GarageModal({
   upgrades = { engine: 1, grip: 1, suspension: 1 },
   selectedSkin = 'standard',
   selectedRim = 'stock',
+  purchasedSkins = ['standard'],
+  purchasedRims = ['stock'],
   unlockedLevel = 1,
   onUpgrade = () => {},
   onSelectSkin = () => {},
   onSelectRim = () => {},
+  onBuySkin = () => {},
+  onBuyRim = () => {},
   onClose = () => {}
 }) {
   const previewCanvasRef = useRef(null);
@@ -32,18 +36,18 @@ export default function GarageModal({
   };
 
   const skins = [
-    { id: 'standard', name: 'Standard MBG Box', unlockLevel: 1, color: '#0d9488' },
-    { id: 'speedy', name: 'Speedy Courier', unlockLevel: 4, color: '#0284c7' },
-    { id: 'mountain', name: 'Mountain 4x4', unlockLevel: 8, color: '#b45309' },
-    { id: 'retro', name: 'Retro Classic', unlockLevel: 12, color: '#be123c' },
-    { id: 'sport', name: 'Sport Tuned', unlockLevel: 16, color: '#4338ca' }
+    { id: 'standard', name: 'Standard MBG Box', unlockLevel: 1, price: 0, color: '#0d9488', bonus: 'Standard' },
+    { id: 'speedy', name: 'Speedy Courier', unlockLevel: 4, price: 200, color: '#0284c7', bonus: '+5% Speed' },
+    { id: 'mountain', name: 'Mountain 4x4', unlockLevel: 8, price: 500, color: '#b45309', bonus: '+5% Grip' },
+    { id: 'retro', name: 'Retro Classic', unlockLevel: 12, price: 1200, color: '#be123c', bonus: '+5% Shock' },
+    { id: 'sport', name: 'Sport Tuned', unlockLevel: 16, price: 3000, color: '#4338ca', bonus: '+10% Speed' }
   ];
 
   const rims = [
-    { id: 'stock', name: 'Stock Steelie', unlockLevel: 1, color: '#64748b' },
-    { id: 'gold', name: 'Gold Racing Alloy', unlockLevel: 5, color: '#eab308' },
-    { id: 'beadlock', name: 'Mud Offroad Beadlock', unlockLevel: 10, color: '#ef4444' },
-    { id: 'whitewall', name: 'White-Wall Classic', unlockLevel: 15, color: '#f8fafc' }
+    { id: 'stock', name: 'Stock Steelie', unlockLevel: 1, price: 0, color: '#64748b', bonus: 'Standard' },
+    { id: 'gold', name: 'Gold Racing Alloy', unlockLevel: 5, price: 250, color: '#eab308', bonus: 'Gold Rim' },
+    { id: 'beadlock', name: 'Mud Offroad Beadlock', unlockLevel: 10, price: 800, color: '#ef4444', bonus: 'Mud Beadlock' },
+    { id: 'whitewall', name: 'White-Wall Classic', unlockLevel: 15, price: 2000, color: '#f8fafc', bonus: 'White-Wall' }
   ];
 
   // Render live truck preview on mini canvas
@@ -267,26 +271,51 @@ export default function GarageModal({
           <div className="flex flex-wrap gap-2 mb-3">
             {skins.map(s => {
               const isUnlocked = unlockedLevel >= s.unlockLevel;
+              const isOwned = (purchasedSkins || ['standard']).includes(s.id);
               const isSelected = selectedSkin === s.id;
+              const canAfford = coins >= s.price;
+
               return (
                 <button
                   key={s.id}
                   id={`skinBtn_${s.id}`}
-                  disabled={!isUnlocked}
-                  onClick={() => onSelectSkin(s.id)}
-                  className={`px-3 py-1 rounded-xl text-xs font-fredoka transition-all flex items-center gap-1.5 ${
+                  disabled={!isUnlocked || (!isOwned && !canAfford)}
+                  onClick={() => {
+                    if (!isUnlocked) return;
+                    if (!isOwned) {
+                      onBuySkin(s);
+                    } else {
+                      onSelectSkin(s.id);
+                    }
+                  }}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-fredoka transition-all flex flex-col items-center gap-0.5 ${
                     isSelected
-                      ? 'bg-amber-500 text-slate-950 font-bold border-2 border-amber-300'
+                      ? 'bg-amber-500 text-slate-950 font-bold border-2 border-amber-300 shadow-md'
+                      : isOwned
+                      ? 'bg-slate-800 text-slate-200 border border-slate-700 hover:bg-slate-700 cursor-pointer'
                       : isUnlocked
-                      ? 'bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700'
-                      : 'bg-slate-900 text-slate-500 border border-slate-800 cursor-not-allowed'
+                      ? canAfford
+                        ? 'bg-emerald-950/70 text-emerald-300 border border-emerald-500/60 hover:bg-emerald-900/80 cursor-pointer'
+                        : 'bg-slate-900 text-slate-500 border border-slate-800 cursor-not-allowed opacity-75'
+                      : 'bg-slate-900 text-slate-600 border border-slate-800 cursor-not-allowed opacity-60'
                   }`}
                 >
-                  <span>{s.name}</span>
-                  {!isUnlocked && (
-                    <span className="inline-flex items-center gap-1 text-[10px] opacity-75">
+                  <div className="flex items-center gap-1.5">
+                    <span>{s.name}</span>
+                    <span className="text-[10px] px-1 py-0.2 rounded bg-black/30 font-mono text-cyan-300">{s.bonus}</span>
+                  </div>
+                  {!isUnlocked ? (
+                    <span className="inline-flex items-center gap-1 text-[10px] text-amber-400 font-mono">
                       <Lock className="w-2.5 h-2.5" /> Lvl {s.unlockLevel}
                     </span>
+                  ) : !isOwned ? (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-300 font-mono">
+                      <Coins className="w-2.5 h-2.5 text-amber-400" /> Beli: {s.price}
+                    </span>
+                  ) : isSelected ? (
+                    <span className="text-[10px] text-slate-950 font-bold font-mono">✓ Terpasang</span>
+                  ) : (
+                    <span className="text-[10px] text-slate-400 font-mono">Pasang</span>
                   )}
                 </button>
               );
@@ -299,26 +328,50 @@ export default function GarageModal({
           <div className="flex flex-wrap gap-2">
             {rims.map(r => {
               const isUnlocked = unlockedLevel >= r.unlockLevel;
+              const isOwned = (purchasedRims || ['stock', 'standard']).includes(r.id);
               const isSelected = selectedRim === r.id;
+              const canAfford = coins >= r.price;
+
               return (
                 <button
                   key={r.id}
                   id={`rimBtn_${r.id}`}
-                  disabled={!isUnlocked}
-                  onClick={() => onSelectRim(r.id)}
-                  className={`px-3 py-1 rounded-xl text-xs font-fredoka transition-all flex items-center gap-1.5 ${
+                  disabled={!isUnlocked || (!isOwned && !canAfford)}
+                  onClick={() => {
+                    if (!isUnlocked) return;
+                    if (!isOwned) {
+                      onBuyRim(r);
+                    } else {
+                      onSelectRim(r.id);
+                    }
+                  }}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-fredoka transition-all flex flex-col items-center gap-0.5 ${
                     isSelected
-                      ? 'bg-amber-500 text-slate-950 font-bold border-2 border-amber-300'
+                      ? 'bg-amber-500 text-slate-950 font-bold border-2 border-amber-300 shadow-md'
+                      : isOwned
+                      ? 'bg-slate-800 text-slate-200 border border-slate-700 hover:bg-slate-700 cursor-pointer'
                       : isUnlocked
-                      ? 'bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700'
-                      : 'bg-slate-900 text-slate-500 border border-slate-800 cursor-not-allowed'
+                      ? canAfford
+                        ? 'bg-emerald-950/70 text-emerald-300 border border-emerald-500/60 hover:bg-emerald-900/80 cursor-pointer'
+                        : 'bg-slate-900 text-slate-500 border border-slate-800 cursor-not-allowed opacity-75'
+                      : 'bg-slate-900 text-slate-600 border border-slate-800 cursor-not-allowed opacity-60'
                   }`}
                 >
-                  <span>{r.name}</span>
-                  {!isUnlocked && (
-                    <span className="inline-flex items-center gap-1 text-[10px] opacity-75">
+                  <div className="flex items-center gap-1.5">
+                    <span>{r.name}</span>
+                  </div>
+                  {!isUnlocked ? (
+                    <span className="inline-flex items-center gap-1 text-[10px] text-amber-400 font-mono">
                       <Lock className="w-2.5 h-2.5" /> Lvl {r.unlockLevel}
                     </span>
+                  ) : !isOwned ? (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-300 font-mono">
+                      <Coins className="w-2.5 h-2.5 text-amber-400" /> Beli: {r.price}
+                    </span>
+                  ) : isSelected ? (
+                    <span className="text-[10px] text-slate-950 font-bold font-mono">✓ Terpasang</span>
+                  ) : (
+                    <span className="text-[10px] text-slate-400 font-mono">Pasang</span>
                   )}
                 </button>
               );

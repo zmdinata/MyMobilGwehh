@@ -20,7 +20,7 @@ Snapshot teknis dan panduan operasional proyek. Jika terdapat diskrepansi antara
   - `game_core.js` & `public/game_core.js` digunakan bersama oleh browser, React runtime, dan test runner Node.js (`test/*.test.mjs`).
   - Query runtime: `game_core.js?v=20260925-gameplay11`.
 - **Hasil Pengujian**:
-  - **79/80 Unit Test Lulus (1 Gagal Pre-existing: Level 8 height bounds)** dijalankan via `npm test` (`node --test test/*.test.mjs`).
+  - **80 Unit Test Lulus 100% (0 Gagal)** dijalankan via `npm test` (`node --test test/*.test.mjs`).
   - **Next.js Production Build Lulus 100% (0 Error, 0 Warning)** via `npm run build`.
 
 ---
@@ -188,3 +188,43 @@ Seluruh perubahan di atas diterapkan secara identik di:
 - `game_core.js` (TerrainSystem + PhysicsVehicle logic) � diimpor oleh kedua stack.
 - `components/GameRenderer.js` (rendering React/Next.js).
 - `index.html` (rendering standalone HTML5 Canvas).
+
+---
+
+## 9. Overhaul Garasi Zacky: Fisika Komponen, Top Speed Dinamis, dan Toko Skin
+
+### A. Top Speed Dinamis (99 km/h -> 180 km/h)
+1. **Batas Kecepatan Progresif**:
+   - `this.maxForwardSpeed` sekarang dinamis pada instance `PhysicsVehicle` (default: 550 px/s = 99 km/h).
+   - Naik bertahap dari Level 1 (99 km/h / 550 px/s) hingga Level 20 (180 km/h / 1000 px/s) menggunakan formula:
+     _max = 550 + (engineLvl - 1) * (450 / 19)
+   - Pada Level 7, top speed mencapai ~125 km/h (sebelumnya mentok di 99 km/h).
+   - Responsivitas throttle (`this.throttleRampUp`) meningkat seiring level mesin, memberikan tarikan akselerasi yang jauh lebih instan.
+
+### B. Fisika Komponen Terasa Nyata
+1. **Grip Ban (Tire Grip)**:
+   - Hambatan lumpur (*mud drag rate*) kini berkurang sebanding dengan peningkatan grip ban:
+     mudDragMag = mudDragRate / max(0.6, tireGrip)
+   - Truk level tinggi dapat menerobos kubangan lumpur terasering tanpa kehilangan momentum drastis.
+2. **Shockbreaker (Suspension)**:
+   - Kontrol rotasi udara (`this.airPitchTorque`) meningkat +3% per level suspensi, memudahkan manuver salto dan orientasi pendaratan.
+   - Peredaman benturan keras saat landing curam (`handleLanding`) mengurangi kerusakan kargo hingga 35% pada level maksimal:
+     shockFactor = max(0.65, 1.0 - (suspLvl - 1) * 0.018)
+
+### C. Sistem Toko & Kepemilikan Skin Bodi & Velg
+1. **Harga & Bonus Statistik**:
+   - **Standard MBG Box**: Bawaan awal (0 koin)
+   - **Speedy Courier** (Unlock Lvl 4): 200 koin (+5% Top Speed)
+   - **Mountain 4x4 / Explorer** (Unlock Lvl 8): 500 koin (+5% Tire Grip)
+   - **Retro Classic / Food Truck** (Unlock Lvl 12): 1.200 koin (+5% Suspension Damping)
+   - **Sport Tuned / Racing** (Unlock Lvl 16): 3.000 koin (+10% Top Speed)
+   - **Velg**: Standard Steel (0 koin), Gold Alloy (250 koin, Lvl 5), Mud Beadlock (800 koin, Lvl 10), White-Wall Retro (2.000 koin, Lvl 15).
+2. **State & UI**:
+   - Tiga status tombol: 🔒 Lvl X (Terkunci) -> Beli: X Koin (Belum dimiliki) -> Pasang / ✓ Terpasang (Dimiliki).
+   - Bonus statistik aktif langsung diaplikasikan ke mesin fisika via `vehicle.applyUpgrades(upgrades, activeSkin)`.
+3. **Persistensi Data**:
+   - `index.html` menyimpan `purchasedSkins` dan `purchasedRims` ke `localStorage['mbg_savedata']`.
+   - Next.js (`app/page.jsx`) menyimpan seluruh progres ke `localStorage['mbg_savedata_react']`.
+
+### D. Perbaikan Elevasi Lintasan (Level 8 Bounds Fix)
+- Ditambahkan pengaman elevasi `Math.max(150, Math.min(650, y))` di akhir `TerrainSystem.getHeight()`, menuntaskan kegagalan uji ketinggian level 8 sehingga **80/80 Unit Test Lulus 100% (0 Gagal)**.

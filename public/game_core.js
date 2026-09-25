@@ -718,7 +718,7 @@ export class TerrainSystem {
         }
       }
 
-      return y;
+      return Math.max(150, Math.min(650, y));
     }
 
     const blendDist = 100; // 200m continuous transition zones (1100-1300m, 2700-2900m, 4100-4300m)
@@ -769,7 +769,7 @@ export class TerrainSystem {
       }
     }
 
-    return y;
+    return Math.max(150, Math.min(650, y));
   }
 
   // Returns slope dY/dX
@@ -936,6 +936,13 @@ export class PhysicsVehicle {
     this.omprengNoticeTimer = 0;
     this.foodParcelsCollected = 0;
 
+    // Upgrades and dynamic speed limits
+    this.maxForwardSpeed = PHYSICS_CONSTANTS.MAX_FORWARD_SPEED;
+    this.throttleRampUp = PHYSICS_CONSTANTS.THROTTLE_RAMP_UP;
+    this.engineLvl = 1;
+    this.gripLvl = 1;
+    this.suspLvl = 1;
+
     // Food particles ejected during shocks
     this.foodParticles = [];
     // Fixed-step accumulator keeps suspension and collision results stable when
@@ -948,16 +955,42 @@ export class PhysicsVehicle {
     this.soundEngine = sound;
   }
 
-  applyUpgrades(upgrades = {}) {
+  applyUpgrades(upgrades = {}, activeSkin = 'standard') {
     const engineLvl = Math.max(1, Math.min(20, upgrades.engine || 1));
     const gripLvl = Math.max(1, Math.min(20, upgrades.grip || 1));
     const suspLvl = Math.max(1, Math.min(20, upgrades.suspension || 1));
+    this.engineLvl = engineLvl;
+    this.gripLvl = gripLvl;
+    this.suspLvl = suspLvl;
 
     // Baseline Level 1 WAJIB TETAP: enginePower = 2200, kSpring = 180, kDamper = 18.8
     this.enginePower = 2200 + (engineLvl - 1) * 80;
     this.tireGrip = 1.0 + (gripLvl - 1) * 0.03;
     this.kSpring = 180 + (suspLvl - 1) * 4;
     this.kDamper = 18.8 + (suspLvl - 1) * 0.4;
+
+    // Dynamic top speed: scales from 550 px/s (99 km/h) at Level 1 up to 1000 px/s (180 km/h) at Level 20
+    let topSpeed = 550 + (engineLvl - 1) * (450 / 19);
+
+    // Dynamic air pitch torque: scales with suspension level (+3% per level)
+    this.airPitchTorque = PHYSICS_CONSTANTS.AIR_PITCH_TORQUE * (1 + (suspLvl - 1) * 0.03);
+
+    // Throttle response: punchier ramp-up on higher engine levels
+    this.throttleRampUp = PHYSICS_CONSTANTS.THROTTLE_RAMP_UP + (engineLvl - 1) * 0.25;
+
+    // Skin bonuses (selected skin grants tactical gameplay buffs)
+    if (activeSkin === 'speedy') {
+      topSpeed *= 1.05; // +5% Top Speed
+    } else if (activeSkin === 'sport') {
+      topSpeed *= 1.10; // +10% Top Speed
+    } else if (activeSkin === 'mountain') {
+      this.tireGrip *= 1.05; // +5% Tire Grip
+    } else if (activeSkin === 'retro') {
+      this.kSpring *= 1.05;
+      this.kDamper *= 1.05;
+    }
+
+    this.maxForwardSpeed = topSpeed;
   }
 
   // Update step with sub-stepping
@@ -1019,7 +1052,7 @@ export class PhysicsVehicle {
     );
     const throttleTarget = inputs.gas && this.fuel > 0 ? 1 : 0;
     const throttleRate = throttleTarget > this.engineThrottle
-      ? PHYSICS_CONSTANTS.THROTTLE_RAMP_UP
+      ? (this.throttleRampUp || PHYSICS_CONSTANTS.THROTTLE_RAMP_UP)
       : PHYSICS_CONSTANTS.THROTTLE_RAMP_DOWN;
     this.engineThrottle += Math.sign(throttleTarget - this.engineThrottle)
       * Math.min(Math.abs(throttleTarget - this.engineThrottle), throttleRate * dt);
@@ -1088,8 +1121,9 @@ export class PhysicsVehicle {
             : 1.0;
         // Engine reaction pitches the nose up. Fade that torque as forward
         // speed rises so a long throttle hold cannot wind the chassis into flips.
-        const speedTorqueScale = Math.max(0.25,
-          1 - Math.abs(this.vx) / PHYSICS_CONSTANTS.MAX_FORWARD_SPEED);
+        const activeMaxSpeed = this.maxForwardSpeed || PHYSICS_CONSTANTS.MAX_FORWARD_SPEED;
+        const speedTorqueScale = Math.max(0.20,
+          1 - Math.abs(this.vx) / activeMaxSpeed);
         const highPitchRisk = Math.abs(chassisPitch) > 45 * Math.PI / 180;
         const pitchThrottle = highPitchRisk ? 1 : this.engineThrottle;
         driveTorque += PHYSICS_CONSTANTS.GROUND_GAS_PITCH_TORQUE * pitchThrottle
@@ -1135,10 +1169,10 @@ export class PhysicsVehicle {
 
     // Linear acceleration & integration
     this.vx += fx * dt;
-    // A fixed arcade speed envelope prevents constant-force runaway on long
-    // descents while leaving enough pace to finish within the game deadline.
+    // Dynamic speed envelope scales with engine upgrades and skin bonuses
+    const activeForwardSpeed = this.maxForwardSpeed || PHYSICS_CONSTANTS.MAX_FORWARD_SPEED;
     this.vx = Math.max(-PHYSICS_CONSTANTS.MAX_REVERSE_SPEED,
-      Math.min(PHYSICS_CONSTANTS.MAX_FORWARD_SPEED, this.vx));
+      Math.min(activeForwardSpeed, this.vx));
     this.vy += fy * dt;
     this.x += this.vx * dt;
     this.y += this.vy * dt;
@@ -1192,7 +1226,8 @@ export class PhysicsVehicle {
       // A steeply misaligned impact damages cargo by incoming speed along the
       // surface normal, even when the world-vertical component is small.
       if (normalImpactSpeed > 60) {
-        this.applyImpactShock(normalImpactSpeed + 40);
+        const suspDamping = Math.max(0.65, 1.0 - ((this.suspLvl || 1) - 1) * 0.018);
+        this.applyImpactShock((normalImpactSpeed + 40) * suspDamping);
         this.absorbLandingNormalVelocity(this.rearWheel, terrain.getNormal(this.rearWheel.x), 0.8);
         this.absorbLandingNormalVelocity(this.frontWheel, terrain.getNormal(this.frontWheel.x), 0.8);
         this.absorbLandingNormalVelocity(this, normal, 0.8);
@@ -1340,7 +1375,7 @@ export class PhysicsVehicle {
       // Mud drag must reach the chassis. Damping only the free wheel velocity
       // before engine force was ineffective and could make mud retain more speed.
       const mudDragMag = terrain.isInMudPit(meterX)
-        ? -vDotT * PHYSICS_CONSTANTS.MUD_DRAG_RATE * 0.5
+        ? -vDotT * (PHYSICS_CONSTANTS.MUD_DRAG_RATE / Math.max(0.6, this.tireGrip || 1.0)) * 0.5
         : 0;
       groundFx += tangent.x * mudDragMag;
       groundFy += tangent.y * mudDragMag;
