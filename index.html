@@ -315,6 +315,15 @@
           <svg class="w-4 h-4 text-rose-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
           <span><b class="text-white">Misi Kamu:</b> Antar <b>500 porsi paket gizi hangat</b> (nasi pulen, ayam serundeng, tahu-tempe orek, sayur lodeh, dan susu murni) menuju kawasan sekolah fiktif <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b> sebelum bel masuk berbunyi tepat pukul <b>09:45 WIB!</b></span>
         </p>
+        <div class="bg-emerald-950/60 border border-emerald-500/40 rounded-xl p-2.5 text-left text-xs text-emerald-200 flex items-start gap-2 shadow-inner">
+          <img src="assets/refresh/v11/ui/icon_cargo.png" class="w-5 h-5 object-contain shrink-0 mt-0.5 drop-shadow" alt="Gizi" />
+          <div>
+            <b class="text-emerald-300 block font-fredoka">Standar Gizi Isi Piringku Kemenkes RI (~650–700 kkal):</b>
+            <span class="text-[11px] text-emerald-100/90 leading-tight block mt-0.5">
+              Karbohidrat kompleks, protein hewani pencegah stunting, protein nabati, aneka sayuran kaya serat, buah lokal manis, dan susu murni Kuningan untuk stamina belajar murid-murid!
+            </span>
+          </div>
+        </div>
         <p class="text-amber-200/90 text-[11px] sm:text-xs flex items-start gap-1.5">
           <svg class="w-4 h-4 text-amber-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
           <span>Hati-hati: Rob Pantura licin, kubangan lumpur sawah seret, dan balok kayu gunung bisa merontokkan sayur lodeh!</span>
@@ -4068,35 +4077,47 @@
             const isCurrent = i === this.currentLevel;
             card.className = `p-3 rounded-2xl border transition-all cursor-pointer transform active:scale-95 flex flex-col justify-between ${
               isCurrent
-                ? 'bg-blue-900/60 border-cyan-400 shadow-lg shadow-cyan-500/20'
-                : 'bg-slate-800/80 border-slate-700 hover:border-slate-500 hover:bg-slate-800'
+                ? 'bg-gradient-to-b from-blue-950/80 via-slate-900/90 to-cyan-950/90 border-cyan-400 shadow-xl shadow-cyan-500/25 ring-1 ring-cyan-300/40'
+                : 'bg-gradient-to-b from-slate-900/85 to-slate-950/90 border-cyan-500/25 hover:border-cyan-400/60 hover:bg-slate-800/80 shadow-md'
             }`;
             const starsHtml = stars > 0
               ? Array.from({ length: stars }).map(() => '<svg class="w-3.5 h-3.5 inline text-amber-400 fill-amber-400" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>').join('')
               : '<span class="text-slate-500 text-[10px]">Belum Bintang</span>';
 
+            const menuBadge = cfg && cfg.menuGizi
+              ? `<div class="bg-cyan-950/60 border border-cyan-500/30 rounded-lg px-2 py-0.5 my-1 text-[10px] text-cyan-200 flex items-center gap-1.5 truncate">
+                  <img src="assets/refresh/v11/ui/icon_cargo.png" class="w-3.5 h-3.5 object-contain shrink-0 drop-shadow" alt="" />
+                  <span class="truncate font-medium">${cfg.menuGizi}</span>
+                </div>`
+              : '';
+
             card.innerHTML = `
-              <div class="flex items-center justify-between mb-1">
+              <div class="flex items-center justify-between mb-0.5">
                 <span class="font-fredoka text-sm text-cyan-300">Level ${i}</span>
                 <span class="text-xs text-amber-400 tracking-wider">${starsHtml}</span>
               </div>
-              <p class="text-[11px] text-white font-bold truncate mb-1">${cfg ? cfg.name : 'Trayek Gizi'}</p>
+              <p class="text-[11px] text-white font-bold truncate mb-0.5">${cfg ? cfg.name : 'Trayek Gizi'}</p>
+              ${menuBadge}
               <div class="flex items-center justify-between text-[10px] text-slate-400 font-mono mt-auto pt-1 border-t border-slate-700/60">
-                <span>Rute: ${cfg ? (cfg.distanceMeters >= 1000 ? (cfg.distanceMeters / 1000).toFixed(1) + 'km' : cfg.distanceMeters + 'm') : '3.0km'}</span>
-                <span class="text-cyan-400 font-bold flex items-center gap-0.5"><span>GAS</span><svg class="w-2.5 h-2.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+                <span>Rute: ${cfg ? (cfg.distanceMeters >= 1000 ? (cfg.distanceMeters / 1000).toFixed(1) + 'km' : cfg.distanceMeters + 'm') : '3.0km'} · <b class="text-emerald-400">${cfg ? cfg.kalori || '~650 kkal' : ''}</b></span>
+                <span class="text-cyan-400 font-bold flex items-center gap-0.5 bg-cyan-950/50 px-1.5 py-0.5 rounded border border-cyan-500/30 hover:bg-cyan-500 hover:text-slate-950 transition-all"><span>GAS</span><svg class="w-2.5 h-2.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
               </div>
             `;
             card.addEventListener('click', () => {
               this.startLevel(i, true);
             });
           } else {
-            card.className = 'p-3 rounded-2xl bg-slate-900/50 border border-slate-800/80 opacity-50 cursor-not-allowed flex flex-col justify-between';
+            const lockedMenu = cfg && cfg.menuGizi
+              ? `<div class="bg-slate-900/50 border border-slate-800 rounded-lg px-2 py-0.5 my-1 text-[10px] text-slate-500 truncate font-mono">${cfg.menuGizi}</div>`
+              : '';
+            card.className = 'p-3 rounded-2xl bg-slate-900/40 border border-slate-800/80 opacity-50 cursor-not-allowed flex flex-col justify-between';
             card.innerHTML = `
-              <div class="flex items-center justify-between mb-1">
+              <div class="flex items-center justify-between mb-0.5">
                 <span class="font-fredoka text-sm text-slate-500">Level ${i}</span>
                 <span class="text-xs text-slate-500"><svg class="w-3.5 h-3.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
               </div>
-              <p class="text-[11px] text-slate-500 font-medium truncate mb-1">${cfg ? cfg.name : 'Trayek Terkunci'}</p>
+              <p class="text-[11px] text-slate-500 font-medium truncate mb-0.5">${cfg ? cfg.name : 'Trayek Terkunci'}</p>
+              ${lockedMenu}
               <div class="flex items-center justify-between text-[10px] text-slate-600 font-mono mt-auto pt-1 border-t border-slate-800">
                 <span>Rute: ${cfg ? (cfg.distanceMeters >= 1000 ? (cfg.distanceMeters / 1000).toFixed(1) + 'km' : cfg.distanceMeters + 'm') : '3.0km'}</span>
                 <span>Terkunci</span>

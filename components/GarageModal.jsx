@@ -170,6 +170,19 @@ export default function GarageModal({
           </span>
         </div>
 
+        {/* Bang Zacky's Mechanic Advice Card */}
+        <div className="bg-gradient-to-r from-amber-950/40 via-slate-900/60 to-cyan-950/40 border border-amber-500/30 rounded-2xl p-2.5 mb-3 flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center shrink-0">
+            <Wrench className="w-5 h-5 text-amber-300" />
+          </div>
+          <div className="text-left text-xs leading-snug">
+            <span className="text-amber-300 font-bold block font-fredoka">Tips Oprek Bang Zacky:</span>
+            <span className="text-slate-300 text-[11px]">
+              "Mesin kuat bikin napas panjang nanjak lereng Ciremai, Ban kompon lunak gigit jalan Pantura, dan Shockbreaker ganda kunci utama kuah lodeh gak tumpah!"
+            </span>
+          </div>
+        </div>
+
         {/* Performance Upgrades Section */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-4">
           {/* Engine */}

@@ -48,9 +48,23 @@ export default function WelcomeModal({ onStart = () => {} }) {
           <p className="flex items-start gap-2">
             <Target className="text-rose-400 w-4 h-4 mt-0.5 shrink-0" />
             <span>
-              <b className="text-white">Misi Kamu:</b> Antar <b>500 porsi paket gizi hangat</b> (nasi pulen, ayam serundeng, tahu-tempe orek, sayur lodeh, dan susu murni) menuju kawasan sekolah fiktif <b>Sekolah Puspa Bangsa</b> sebelum bel masuk berbunyi tepat pukul <b>09:45 WIB!</b>
+              <b className="text-white">Misi Kamu:</b> Antar <b>500 porsi paket gizi hangat</b> (nasi pulen, ayam serundeng, tahu-tempe orek, sayur lodeh, dan susu murni) menuju kawasan sekolah fiktif <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b> sebelum bel masuk berbunyi tepat pukul <b>09:45 WIB!</b>
             </span>
           </p>
+          <div className="bg-emerald-950/60 border border-emerald-500/40 rounded-xl p-2.5 text-left text-xs text-emerald-200 flex items-start gap-2 shadow-inner">
+            <img
+              src="/assets/refresh/v11/ui/icon_cargo.png"
+              className="w-5 h-5 object-contain shrink-0 mt-0.5 drop-shadow"
+              alt="Gizi"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            />
+            <div>
+              <b className="text-emerald-300 block font-fredoka">Standar Gizi Isi Piringku Kemenkes RI (~650–700 kkal):</b>
+              <span className="text-[11px] text-emerald-100/90 leading-tight block mt-0.5">
+                Karbohidrat kompleks, protein hewani pencegah stunting, protein nabati, aneka sayuran kaya serat, buah lokal manis, dan susu murni Kuningan untuk stamina belajar murid-murid!
+              </span>
+            </div>
+          </div>
           <p className="text-amber-200/90 text-[11px] sm:text-xs flex items-center gap-1.5">
             <AlertTriangle className="text-amber-400 shrink-0 w-3.5 h-3.5" />
             <span>Hati-hati: Rob Pantura licin, kubangan lumpur sawah seret, dan balok kayu gunung bisa merontokkan sayur lodeh!</span>
