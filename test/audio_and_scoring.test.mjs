@@ -5,7 +5,13 @@ import {
   PHYSICS_CONSTANTS,
   TerrainSystem,
   PhysicsVehicle,
-  GameStateManager
+  GameStateManager,
+  VEHICLE_AUDIO_PROFILES,
+  SURFACE_AUDIO_TYPES,
+  detectSurfaceMaterial,
+  TELOLET_MELODY_BASURI_V3,
+  BIOME_AUDIO_CONFIG,
+  SoundSynthesizer
 } from '../game_core.js';
 
 test('Audio Synthesizer - Frequency calculations and Telolet notes', () => {
@@ -220,3 +226,107 @@ test('GameStateManager - Stunt coins and track collectibles accumulate into coin
 
   assert.equal(game.coinsCollected, 27, 'Both track coins and stunt coins remain accumulated');
 });
+
+test('VEHICLE_AUDIO_PROFILES - Distinct acoustic parameters across all 5 vehicle skins', () => {
+  const expectedSkins = ['standard', 'speedy', 'mountain', 'retro', 'sport'];
+  for (const s of expectedSkins) {
+    const prof = VEHICLE_AUDIO_PROFILES[s];
+    assert.ok(prof, `Profile exists for skin ${s}`);
+    assert.ok(prof.idleFreq >= 30 && prof.idleFreq <= 80, `Idle freq for ${s} is in valid low-rpm range (${prof.idleFreq}Hz)`);
+    assert.ok(prof.maxFreq > prof.idleFreq, `Max rev freq exceeds idle freq for ${s}`);
+    assert.ok(prof.airborneFreq >= prof.maxFreq || prof.airborneFreq === 180, `Airborne rev configured for ${s}`);
+    assert.ok(prof.filterIdle >= 150 && prof.filterMax <= 3000, `Filter cutoff frequencies bounded for ${s}`);
+  }
+
+  // Profile-specific acoustic mechanics
+  assert.equal(VEHICLE_AUDIO_PROFILES.standard.subHarmonic, true, 'Standard Canter diesel has sub-harmonic rumble');
+  assert.equal(VEHICLE_AUDIO_PROFILES.mountain.subHarmonic, true, 'Mountain 4x4 has sub-harmonic torque thrum');
+  assert.equal(VEHICLE_AUDIO_PROFILES.sport.hasTurbo, true, 'Sport Tuned truck has turbo spool and blow-off valve');
+  assert.equal(VEHICLE_AUDIO_PROFILES.retro.hasValveTick, true, 'Retro truck has vintage valve ticking overtone');
+  assert.ok(VEHICLE_AUDIO_PROFILES.speedy.maxFreq > VEHICLE_AUDIO_PROFILES.standard.maxFreq, 'Speedy GranMax revs higher than Standard diesel');
+});
+
+test('detectSurfaceMaterial - Material classification across biomes and hazards', () => {
+  const terrain = new TerrainSystem(4600);
+
+  // In water puddle (e.g. at 280m where puddle starts at 250m)
+  assert.equal(detectSurfaceMaterial(terrain, 280), 'water', 'Puddle at 280m detected as water');
+
+  // In mud pit (e.g. at 1440m where mud pit is 1400m-1480m)
+  assert.equal(detectSurfaceMaterial(terrain, 1440), 'mud', 'Mud pit at 1440m detected as mud');
+
+  // Near wooden log (e.g. at 2950m)
+  assert.equal(detectSurfaceMaterial(terrain, 2950), 'wood', 'Log at 2950m detected as wood');
+
+  // Mountain / tanjakan biome
+  const mtnX = 3200; // in tanjakan / gunung biome (2800m - 4200m)
+  assert.equal(detectSurfaceMaterial(terrain, mtnX), 'gravel', 'Mountain climb detected as gravel');
+
+  // Sawah biome
+  const sawahX = 1600;
+  assert.equal(detectSurfaceMaterial(terrain, sawahX), 'soil', 'Sawah plain detected as soil');
+
+  // Highway / Pantura
+  const panturaX = 100;
+  assert.equal(detectSurfaceMaterial(terrain, panturaX), 'asphalt', 'Pantura road detected as asphalt');
+});
+
+test('TELOLET_MELODY_BASURI_V3 - 12-note extended fanfare with dual horn vibrato finale', () => {
+  assert.equal(TELOLET_MELODY_BASURI_V3.length, 12, 'Basuri V3 has 12 distinct melodic steps');
+
+  // Timing check
+  for (let i = 0; i < TELOLET_MELODY_BASURI_V3.length; i++) {
+    const note = TELOLET_MELODY_BASURI_V3[i];
+    assert.ok(note.f >= 600 && note.f <= 1500, `Frequency for note ${i} is in musical brass horn range: ${note.f}Hz`);
+    assert.ok(note.d > 0.1, `Note ${i} has sufficient duration: ${note.d}s`);
+    if (i > 0) {
+      assert.ok(note.t > TELOLET_MELODY_BASURI_V3[i - 1].t, `Note ${i} timing is monotonically increasing`);
+    }
+  }
+
+  // Final note has long duration for vibrato decay
+  const finalNote = TELOLET_MELODY_BASURI_V3[11];
+  assert.ok(finalNote.d >= 0.7, 'Final fanfare note sustains for over 0.7s');
+  assert.equal(finalNote.note, 'F6_VIBRATO', 'Final note designated with vibrato modulation');
+  const totalDuration = finalNote.t + finalNote.d;
+  assert.ok(totalDuration >= 3.0, `Total fanfare duration is extended (~${totalDuration.toFixed(2)}s)`);
+});
+
+test('BIOME_AUDIO_CONFIG - Dynamic procedural background atmosphere for 8 biomes', () => {
+  const biomesToCheck = ['pantura', 'jalur_pantura', 'sawah', 'desa_sawah', 'alas_roban', 'gunung', 'tanjakan', 'pinus', 'kota', 'sekolah'];
+  for (const b of biomesToCheck) {
+    const cfg = BIOME_AUDIO_CONFIG[b];
+    assert.ok(cfg, `Biome audio config exists for ${b}`);
+    assert.ok(cfg.filterFreq > 50 && cfg.filterFreq < 5000, `Filter frequency within audible spectrum for ${b}`);
+    assert.ok(cfg.q > 0.5, `Filter Q resonance defined for ${b}`);
+    assert.ok(cfg.gain > 0, `Ambient gain defined for ${b}`);
+  }
+});
+
+test('SoundSynthesizer - Safe instantiation in Node.js and API interface completeness', () => {
+  const synth = new SoundSynthesizer();
+  assert.equal(synth.isMuted, false, 'Default audio is not muted');
+  assert.equal(synth.currentSkin, 'standard', 'Default active skin is standard');
+
+  // Verify safe method calls without window.AudioContext crashing in Node
+  synth.init();
+  synth.setSkin('sport');
+  assert.equal(synth.currentSkin, 'sport', 'Skin switched to sport');
+
+  synth.updateEngine(200, true, false, 'mountain');
+  assert.equal(synth.currentSkin, 'mountain', 'Skin dynamically updated to mountain');
+
+  synth.updateSurfaceContact(150, 'gravel', true);
+  synth.updateWindAndAmbient(300, false, 'gunung');
+
+  const mutedState = synth.toggleMute();
+  assert.equal(mutedState, true, 'toggleMute sets muted to true');
+  synth.setMuted(false);
+  assert.equal(synth.isMuted, false, 'setMuted resets mute state');
+
+  synth.pauseEngine();
+  synth.resumeEngine();
+  synth.stopEngine();
+  assert.equal(synth.isEngineRunning, false, 'stopEngine resets engine running state');
+});
+

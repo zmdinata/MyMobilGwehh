@@ -7,7 +7,9 @@ import {
   TerrainSystem,
   GameStateManager,
   LEVEL_CONFIGS,
-  BIOMES
+  BIOMES,
+  SoundSynthesizer,
+  detectSurfaceMaterial
 } from '@/game_core.js';
 import { GameRenderer, Vehicle } from '@/components/GameRenderer.js';
 
@@ -17,6 +19,7 @@ export default function GameCanvas({
   selectedSkin = 'standard',
   selectedRim = 'standard',
   inputs = { gas: false, brake: false, horn: false },
+  isAudioMuted = false,
   onTelemetry = () => {},
   onGameOver = () => {},
   onVictory = () => {},
@@ -48,19 +51,36 @@ export default function GameCanvas({
     renderer.selectedSkin = selectedSkin;
     renderer.selectedRim = selectedRim;
 
+    const sound = new SoundSynthesizer();
+    sound.setSkin(selectedSkin);
+    sound.setMuted(isAudioMuted);
+    vehicle.soundEngine = sound;
+
     const game = {
       canvas,
       terrain,
       vehicle,
       gameState,
       renderer,
+      sound,
       lastTime: performance.now(),
       running: true
     };
     gameRef.current = game;
 
+    // First user gesture handler to ensure audio is initialized
+    const handleGesture = () => {
+      sound.init();
+      window.removeEventListener('pointerdown', handleGesture);
+      window.removeEventListener('keydown', handleGesture);
+    };
+    window.addEventListener('pointerdown', handleGesture, { once: true });
+    window.addEventListener('keydown', handleGesture, { once: true });
+
     // Main animation frame loop
     let animId;
+    let hasPlayedEndSound = false;
+
     const loop = (now) => {
       if (!game.running) return;
 
@@ -68,8 +88,23 @@ export default function GameCanvas({
       game.lastTime = now;
 
       if (!isPaused && gameState.state === 'PLAYING') {
+        if ((inputs.gas || inputs.brake) && !sound.isEngineRunning) {
+          sound.init();
+        }
+
         vehicle.update(dt, inputs, terrain);
         gameState.update(dt, vehicle, terrain);
+
+        const isAirborne = !vehicle.rearWheel.onGround && !vehicle.frontWheel.onGround;
+        const onGround = !isAirborne;
+        const meterX = vehicle.x / PHYSICS_CONSTANTS.METER_SCALE;
+        const surfaceType = detectSurfaceMaterial(terrain, meterX);
+        const biome = terrain.getBiomeAt ? terrain.getBiomeAt(meterX) : null;
+        const biomeId = biome ? biome.id : 'pantura';
+
+        sound.updateEngine(vehicle.vx, inputs.gas, isAirborne, selectedSkin);
+        sound.updateSurfaceContact(vehicle.vx, surfaceType, onGround);
+        sound.updateWindAndAmbient(vehicle.vx, isAirborne, biomeId);
 
         // Telemetry update to React parent (throttled)
         onTelemetry({
@@ -80,12 +115,22 @@ export default function GameCanvas({
           fuel: (vehicle.fuel / vehicle.maxFuel) * 100,
           timeRemaining: gameState.timeRemaining,
           coins: gameState.coinsCollected,
-          biomeName: terrain.getBiomeAt(vehicle.x / PHYSICS_CONSTANTS.METER_SCALE).name
+          biomeName: biome ? biome.name : 'Pantura'
         });
 
         if (gameState.state === 'GAMEOVER') {
+          if (!hasPlayedEndSound) {
+            hasPlayedEndSound = true;
+            sound.pauseEngine();
+            sound.playCrashSound();
+          }
           onGameOver(gameState.gameOverReason);
         } else if (gameState.state === 'VICTORY') {
+          if (!hasPlayedEndSound) {
+            hasPlayedEndSound = true;
+            sound.pauseEngine();
+            sound.playVictoryFanfare();
+          }
           onVictory({
             stars: gameState.starRating || 3,
             cargo: vehicle.cargoIntegrity,
@@ -93,6 +138,8 @@ export default function GameCanvas({
             timeRemaining: gameState.timeRemaining
           });
         }
+      } else if (isPaused) {
+        sound.pauseEngine();
       }
 
       // Render world with full GameRenderer (all 8 biomes, parallax, vehicle, struts, particles, finish gate)
@@ -108,13 +155,29 @@ export default function GameCanvas({
     return () => {
       game.running = false;
       cancelAnimationFrame(animId);
+      sound.stopEngine();
+      window.removeEventListener('pointerdown', handleGesture);
+      window.removeEventListener('keydown', handleGesture);
     };
   }, [level, isPaused, selectedSkin, selectedRim, upgrades]);
 
+  // Handle mute changes
+  useEffect(() => {
+    if (gameRef.current && gameRef.current.sound) {
+      gameRef.current.sound.setMuted(isAudioMuted);
+    }
+  }, [isAudioMuted]);
+
   // Handle horn trigger
   useEffect(() => {
-    if (inputs.horn && gameRef.current && gameRef.current.vehicle) {
-      gameRef.current.vehicle.triggerTeloletNotes();
+    if (inputs.horn && gameRef.current) {
+      if (gameRef.current.vehicle) {
+        gameRef.current.vehicle.triggerTeloletNotes();
+      }
+      if (gameRef.current.sound) {
+        gameRef.current.sound.init();
+        gameRef.current.sound.playTeloletHorn();
+      }
     }
   }, [inputs.horn]);
 

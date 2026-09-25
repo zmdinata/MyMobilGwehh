@@ -1844,3 +1844,935 @@ export class GameStateManager {
     return s;
   }
 }
+
+// ==========================================
+// ADVANCED HYBRID AUDIO SYSTEM & CONSTANTS
+// ==========================================
+
+export const VEHICLE_AUDIO_PROFILES = {
+  standard: {
+    id: 'standard',
+    name: 'Canter Diesel',
+    idleFreq: 40,
+    maxFreq: 115,
+    airborneFreq: 180,
+    oscType: 'sawtooth',
+    real: [0, 0, 0, 0, 0, 0, 0],
+    imag: [0, 1.0, 0.75, 0.55, 0.35, 0.20, 0.10],
+    filterIdle: 220,
+    filterMax: 780,
+    filterAirborne: 1450,
+    gainIdle: 0.07,
+    gainGas: 0.13,
+    subHarmonic: true,
+    hasTurbo: false,
+    hasValveTick: false,
+    qResonance: 1.4
+  },
+  speedy: {
+    id: 'speedy',
+    name: 'GranMax Bensin',
+    idleFreq: 65,
+    maxFreq: 215,
+    airborneFreq: 260,
+    oscType: 'sawtooth',
+    real: [0, 0, 0, 0, 0, 0, 0],
+    imag: [0, 0.9, 0.85, 0.70, 0.50, 0.35, 0.25],
+    filterIdle: 380,
+    filterMax: 1450,
+    filterAirborne: 2200,
+    gainIdle: 0.06,
+    gainGas: 0.12,
+    subHarmonic: false,
+    hasTurbo: false,
+    hasValveTick: false,
+    qResonance: 1.0
+  },
+  mountain: {
+    id: 'mountain',
+    name: 'Mountain 4x4',
+    idleFreq: 38,
+    maxFreq: 125,
+    airborneFreq: 170,
+    oscType: 'square',
+    real: [0, 0, 0, 0, 0, 0, 0],
+    imag: [0, 1.0, 0.25, 0.80, 0.15, 0.45, 0.08],
+    filterIdle: 190,
+    filterMax: 680,
+    filterAirborne: 1200,
+    gainIdle: 0.08,
+    gainGas: 0.15,
+    subHarmonic: true,
+    hasTurbo: false,
+    hasValveTick: false,
+    qResonance: 2.8
+  },
+  retro: {
+    id: 'retro',
+    name: 'Retro Truk Bagong',
+    idleFreq: 36,
+    maxFreq: 105,
+    airborneFreq: 160,
+    oscType: 'triangle',
+    real: [0, 0, 0, 0, 0, 0, 0],
+    imag: [0, 1.0, 0.55, 0.35, 0.22, 0.12, 0.05],
+    filterIdle: 180,
+    filterMax: 560,
+    filterAirborne: 1100,
+    gainIdle: 0.08,
+    gainGas: 0.14,
+    subHarmonic: false,
+    hasTurbo: false,
+    hasValveTick: true,
+    qResonance: 1.5
+  },
+  sport: {
+    id: 'sport',
+    name: 'Racing Canter Tuned',
+    idleFreq: 72,
+    maxFreq: 275,
+    airborneFreq: 340,
+    oscType: 'sawtooth',
+    real: [0, 0, 0, 0, 0, 0, 0, 0],
+    imag: [0, 1.0, 0.95, 0.85, 0.70, 0.55, 0.40, 0.30],
+    filterIdle: 450,
+    filterMax: 2100,
+    filterAirborne: 2900,
+    gainIdle: 0.07,
+    gainGas: 0.16,
+    subHarmonic: false,
+    hasTurbo: true,
+    hasValveTick: false,
+    qResonance: 1.8
+  }
+};
+
+export const SURFACE_AUDIO_TYPES = {
+  asphalt: {
+    type: 'asphalt',
+    filterType: 'highpass',
+    freq: 1600,
+    q: 1.0,
+    gainMult: 0.055,
+    name: 'Aspal Halus (Tire Hiss)'
+  },
+  soil: {
+    type: 'soil',
+    filterType: 'bandpass',
+    freq: 650,
+    q: 1.2,
+    gainMult: 0.08,
+    name: 'Tanah Berumput (Soil Roll)'
+  },
+  gravel: {
+    type: 'gravel',
+    filterType: 'bandpass',
+    freq: 1100,
+    q: 2.0,
+    gainMult: 0.11,
+    name: 'Kerikil Bebatuan (Gravel Crunch)'
+  },
+  mud: {
+    type: 'mud',
+    filterType: 'lowpass',
+    freq: 260,
+    q: 3.2,
+    gainMult: 0.14,
+    name: 'Lumpur Becek (Mud Suction)'
+  },
+  water: {
+    type: 'water',
+    filterType: 'bandpass',
+    freq: 1250,
+    q: 1.4,
+    gainMult: 0.13,
+    name: 'Genangan Air Rob (Water Churn)'
+  },
+  wood: {
+    type: 'wood',
+    filterType: 'bandpass',
+    freq: 380,
+    q: 3.8,
+    gainMult: 0.12,
+    name: 'Jembatan Kayu (Hollow Wood)'
+  }
+};
+
+export function detectSurfaceMaterial(terrain, meterX) {
+  if (!terrain) return 'asphalt';
+  if (typeof terrain.isInWaterPuddle === 'function' && terrain.isInWaterPuddle(meterX)) {
+    return 'water';
+  }
+  if (typeof terrain.isInMudPit === 'function' && terrain.isInMudPit(meterX)) {
+    return 'mud';
+  }
+  if (terrain.logs && terrain.logs.some(l => Math.abs(l.x - meterX) < 18)) {
+    return 'wood';
+  }
+  const biome = terrain.getBiomeAt ? terrain.getBiomeAt(meterX) : null;
+  const bId = biome ? biome.id : '';
+  const bName = (biome && biome.name ? biome.name.toLowerCase() : '');
+
+  if (bId === 5 || bId === 6 || bId === 'gunung' || bId === 'tanjakan' || bName.includes('gunung') || bName.includes('tanjakan')) {
+    return 'gravel';
+  }
+  if (bId === 3 || bId === 4 || bId === 'sawah' || bId === 'desa_sawah' || bName.includes('sawah') || bName.includes('desa')) {
+    return 'soil';
+  }
+  if (bId === 'alas_roban' || bId === 'pinus' || bName.includes('pinus') || bName.includes('roban')) {
+    return 'soil';
+  }
+  return 'asphalt';
+}
+
+export const TELOLET_MELODY_BASURI_V3 = [
+  { f: 698.46, d: 0.16, t: 0.00, note: 'F5' },
+  { f: 880.00, d: 0.16, t: 0.18, note: 'A5' },
+  { f: 1046.50, d: 0.22, t: 0.36, note: 'C6' },
+  { f: 1396.91, d: 0.24, t: 0.60, note: 'F6' },
+  { f: 1174.66, d: 0.20, t: 0.86, note: 'D6' },
+  { f: 1046.50, d: 0.22, t: 1.08, note: 'C6' },
+  { f: 932.33, d: 0.18, t: 1.32, note: 'Bb5' },
+  { f: 880.00, d: 0.20, t: 1.52, note: 'A5' },
+  { f: 783.99, d: 0.20, t: 1.74, note: 'G5' },
+  { f: 880.00, d: 0.22, t: 1.96, note: 'A5' },
+  { f: 1046.50, d: 0.26, t: 2.20, note: 'C6' },
+  { f: 1396.91, d: 0.85, t: 2.48, note: 'F6_VIBRATO' }
+];
+
+export const BIOME_AUDIO_CONFIG = {
+  pantura: {
+    type: 'ocean',
+    filterFreq: 260,
+    q: 1.2,
+    sweepDepth: 180,
+    period: 4.5,
+    gain: 0.05,
+    name: 'Coastal Surf'
+  },
+  jalur_pantura: {
+    type: 'coastal_highway',
+    filterFreq: 320,
+    q: 1.0,
+    sweepDepth: 120,
+    period: 4.0,
+    gain: 0.05,
+    name: 'Pantura Breeze'
+  },
+  sawah: {
+    type: 'crickets',
+    filterFreq: 3800,
+    q: 3.5,
+    sweepDepth: 60,
+    period: 2.0,
+    gain: 0.035,
+    name: 'Sawah Chirp & Breeze'
+  },
+  desa_sawah: {
+    type: 'crickets',
+    filterFreq: 3400,
+    q: 3.0,
+    sweepDepth: 50,
+    period: 2.2,
+    gain: 0.035,
+    name: 'Rural Kampung Meadow'
+  },
+  alas_roban: {
+    type: 'jungle',
+    filterFreq: 480,
+    q: 2.0,
+    sweepDepth: 150,
+    period: 3.8,
+    gain: 0.045,
+    name: 'Alas Roban Rainforest Draft'
+  },
+  gunung: {
+    type: 'mountain_wind',
+    filterFreq: 620,
+    q: 4.2,
+    sweepDepth: 220,
+    period: 3.0,
+    gain: 0.055,
+    name: 'Mountain Whistling Gale'
+  },
+  tanjakan: {
+    type: 'mountain_wind',
+    filterFreq: 580,
+    q: 3.8,
+    sweepDepth: 200,
+    period: 3.2,
+    gain: 0.05,
+    name: 'Highland Ridge Draft'
+  },
+  pinus: {
+    type: 'pine_canopy',
+    filterFreq: 400,
+    q: 2.4,
+    sweepDepth: 140,
+    period: 3.6,
+    gain: 0.04,
+    name: 'Pine Canopy Murmur'
+  },
+  kota: {
+    type: 'city_hum',
+    filterFreq: 120,
+    q: 1.5,
+    sweepDepth: 40,
+    period: 5.0,
+    gain: 0.04,
+    name: 'Metropolitan Sub-Hum'
+  },
+  sekolah: {
+    type: 'school_morning',
+    filterFreq: 350,
+    q: 1.2,
+    sweepDepth: 70,
+    period: 4.0,
+    gain: 0.035,
+    name: 'School Morning Ambience'
+  }
+};
+
+export class SoundSynthesizer {
+  constructor() {
+    this.ctx = null;
+    this.isMuted = false;
+    this.currentSkin = 'standard';
+    this.isEngineRunning = false;
+
+    // Persistent master nodes
+    this.masterGain = null;
+    this.masterCompressor = null;
+
+    // Engine nodes
+    this.engineOsc = null;
+    this.engineSubOsc = null;
+    this.engineFilter = null;
+    this.engineGain = null;
+    this.turboOsc = null;
+    this.turboGain = null;
+    this.lastWasGas = false;
+    this.lastEngineSpeed = 0;
+
+    // Tire surface continuous audio
+    this.tireNoise = null;
+    this.tireFilter = null;
+    this.tireGain = null;
+    this.currentSurface = 'asphalt';
+
+    // Aerodynamic wind & Biome ambient audio
+    this.windNoise = null;
+    this.windFilter = null;
+    this.windGain = null;
+    this.ambientNoise = null;
+    this.ambientFilter = null;
+    this.ambientGain = null;
+    this.currentBiome = 'pantura';
+
+    // Shared noise buffer
+    this.noiseBuffer = null;
+    this.lastHornTime = 0;
+    this.lastSpringTime = 0;
+  }
+
+  init() {
+    if (typeof window === 'undefined') return;
+    try {
+      if (!this.ctx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        this.ctx = new AudioContext();
+      }
+      if (this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
+      if (!this.masterCompressor) {
+        this.setupMasterBus();
+      }
+      if (!this.isEngineRunning) {
+        this.startContinuousAudio();
+      }
+    } catch (e) {
+      console.warn('AudioSynthesizer init failed:', e);
+    }
+  }
+
+  setupMasterBus() {
+    if (!this.ctx) return;
+    this.masterCompressor = this.ctx.createDynamicsCompressor();
+    this.masterCompressor.threshold.setValueAtTime(-8, this.ctx.currentTime);
+    this.masterCompressor.knee.setValueAtTime(18, this.ctx.currentTime);
+    this.masterCompressor.ratio.setValueAtTime(12, this.ctx.currentTime);
+    this.masterCompressor.attack.setValueAtTime(0.003, this.ctx.currentTime);
+    this.masterCompressor.release.setValueAtTime(0.25, this.ctx.currentTime);
+
+    this.masterGain = this.ctx.createGain();
+    this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 1.0, this.ctx.currentTime);
+
+    this.masterGain.connect(this.masterCompressor);
+    this.masterCompressor.connect(this.ctx.destination);
+
+    // Create 2-second pink noise buffer for tire, wind, and ambient generators
+    this.noiseBuffer = this.createPinkNoiseBuffer(2.0);
+  }
+
+  createPinkNoiseBuffer(seconds = 2.0) {
+    if (!this.ctx) return null;
+    const bufferSize = Math.floor(this.ctx.sampleRate * seconds);
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+    for (let i = 0; i < bufferSize; i++) {
+      const white = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.96900 * b2 + white * 0.1538520;
+      b3 = 0.86650 * b3 + white * 0.3104856;
+      b4 = 0.55000 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.0168980;
+      data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+      b6 = white * 0.115926;
+    }
+    return buffer;
+  }
+
+  startContinuousAudio() {
+    if (!this.ctx || this.isEngineRunning) return;
+    try {
+      this.startEngineAudio();
+      this.startTireSurfaceAudio();
+      this.startWindAndAmbientAudio();
+      this.isEngineRunning = true;
+    } catch (e) {
+      console.warn('Continuous audio start failed:', e);
+    }
+  }
+
+  startEngineAudio() {
+    if (!this.ctx) return;
+    const profile = VEHICLE_AUDIO_PROFILES[this.currentSkin] || VEHICLE_AUDIO_PROFILES.standard;
+    const now = this.ctx.currentTime;
+
+    // Main Engine Oscillator with custom PeriodicWave or Fallback
+    this.engineOsc = this.ctx.createOscillator();
+    try {
+      if (profile.real && profile.imag && typeof this.ctx.createPeriodicWave === 'function') {
+        const wave = this.ctx.createPeriodicWave(new Float32Array(profile.real), new Float32Array(profile.imag));
+        this.engineOsc.setPeriodicWave(wave);
+      } else {
+        this.engineOsc.type = profile.oscType || 'sawtooth';
+      }
+    } catch (_) {
+      this.engineOsc.type = profile.oscType || 'sawtooth';
+    }
+    this.engineOsc.frequency.setValueAtTime(profile.idleFreq, now);
+
+    this.engineFilter = this.ctx.createBiquadFilter();
+    this.engineFilter.type = 'lowpass';
+    this.engineFilter.frequency.setValueAtTime(profile.filterIdle, now);
+    this.engineFilter.Q.setValueAtTime(profile.qResonance || 1.2, now);
+
+    this.engineGain = this.ctx.createGain();
+    this.engineGain.gain.setValueAtTime(this.isMuted ? 0 : profile.gainIdle, now);
+
+    this.engineOsc.connect(this.engineFilter);
+    this.engineFilter.connect(this.engineGain);
+    this.engineGain.connect(this.masterGain);
+    this.engineOsc.start();
+
+    // Sub-harmonic diesel rumble oscillator for heavy trucks
+    if (profile.subHarmonic) {
+      this.engineSubOsc = this.ctx.createOscillator();
+      this.engineSubOsc.type = 'sine';
+      this.engineSubOsc.frequency.setValueAtTime(profile.idleFreq * 0.5, now);
+      this.engineSubOsc.connect(this.engineFilter);
+      this.engineSubOsc.start();
+    }
+
+    // Turbo spool oscillator for racing/sport skin
+    if (profile.hasTurbo) {
+      this.turboOsc = this.ctx.createOscillator();
+      this.turboOsc.type = 'sine';
+      this.turboOsc.frequency.setValueAtTime(1400, now);
+      this.turboGain = this.ctx.createGain();
+      this.turboGain.gain.setValueAtTime(0, now);
+      this.turboOsc.connect(this.turboGain);
+      this.turboGain.connect(this.masterGain);
+      this.turboOsc.start();
+    }
+  }
+
+  setSkin(skinId) {
+    if (this.currentSkin === skinId && this.engineOsc) return;
+    this.currentSkin = skinId || 'standard';
+    if (this.isEngineRunning) {
+      this.stopEngineAudio();
+      this.startEngineAudio();
+    }
+  }
+
+  stopEngineAudio() {
+    try {
+      if (this.engineOsc) {
+        this.engineOsc.stop();
+        this.engineOsc.disconnect();
+        this.engineOsc = null;
+      }
+      if (this.engineSubOsc) {
+        this.engineSubOsc.stop();
+        this.engineSubOsc.disconnect();
+        this.engineSubOsc = null;
+      }
+      if (this.turboOsc) {
+        this.turboOsc.stop();
+        this.turboOsc.disconnect();
+        this.turboOsc = null;
+      }
+    } catch (_) {}
+  }
+
+  startTireSurfaceAudio() {
+    if (!this.ctx || !this.noiseBuffer) return;
+    this.tireNoise = this.ctx.createBufferSource();
+    this.tireNoise.buffer = this.noiseBuffer;
+    this.tireNoise.loop = true;
+
+    this.tireFilter = this.ctx.createBiquadFilter();
+    this.tireFilter.type = 'bandpass';
+    this.tireFilter.frequency.setValueAtTime(800, this.ctx.currentTime);
+    this.tireFilter.Q.setValueAtTime(1.5, this.ctx.currentTime);
+
+    this.tireGain = this.ctx.createGain();
+    this.tireGain.gain.setValueAtTime(0, this.ctx.currentTime);
+
+    this.tireNoise.connect(this.tireFilter);
+    this.tireFilter.connect(this.tireGain);
+    this.tireGain.connect(this.masterGain);
+    this.tireNoise.start();
+  }
+
+  startWindAndAmbientAudio() {
+    if (!this.ctx || !this.noiseBuffer) return;
+    const now = this.ctx.currentTime;
+
+    // Aerodynamic Wind
+    this.windNoise = this.ctx.createBufferSource();
+    this.windNoise.buffer = this.noiseBuffer;
+    this.windNoise.loop = true;
+
+    this.windFilter = this.ctx.createBiquadFilter();
+    this.windFilter.type = 'bandpass';
+    this.windFilter.frequency.setValueAtTime(350, now);
+    this.windFilter.Q.setValueAtTime(1.8, now);
+
+    this.windGain = this.ctx.createGain();
+    this.windGain.gain.setValueAtTime(0, now);
+
+    this.windNoise.connect(this.windFilter);
+    this.windFilter.connect(this.windGain);
+    this.windGain.connect(this.masterGain);
+    this.windNoise.start();
+
+    // Procedural Biome Ambience
+    this.ambientNoise = this.ctx.createBufferSource();
+    this.ambientNoise.buffer = this.noiseBuffer;
+    this.ambientNoise.loop = true;
+
+    this.ambientFilter = this.ctx.createBiquadFilter();
+    this.ambientFilter.type = 'lowpass';
+    this.ambientFilter.frequency.setValueAtTime(280, now);
+    this.ambientFilter.Q.setValueAtTime(1.2, now);
+
+    this.ambientGain = this.ctx.createGain();
+    this.ambientGain.gain.setValueAtTime(this.isMuted ? 0 : 0.04, now);
+
+    this.ambientNoise.connect(this.ambientFilter);
+    this.ambientFilter.connect(this.ambientGain);
+    this.ambientGain.connect(this.masterGain);
+    this.ambientNoise.start();
+  }
+
+  updateEngine(speed, isGas, isAirborne = false, skinId = null) {
+    if (skinId && skinId !== this.currentSkin) {
+      this.setSkin(skinId);
+    }
+    if (!this.ctx || !this.isEngineRunning || this.isMuted) return;
+    const profile = VEHICLE_AUDIO_PROFILES[this.currentSkin] || VEHICLE_AUDIO_PROFILES.standard;
+    const now = this.ctx.currentTime;
+    const absSpeed = Math.abs(speed);
+    const speedRatio = Math.min(1.0, absSpeed / 500);
+
+    let targetFreq = profile.idleFreq + speedRatio * (profile.maxFreq - profile.idleFreq) + (isGas ? 25 : 0);
+    let targetFilter = profile.filterIdle + speedRatio * (profile.filterMax - profile.filterIdle) + (isGas ? 350 : 0);
+    let targetGain = isGas ? profile.gainGas : (profile.gainIdle + speedRatio * 0.04);
+
+    // Airborne engine over-rev
+    if (isAirborne && isGas) {
+      targetFreq = profile.airborneFreq || 180;
+      targetFilter = profile.filterAirborne || 1450;
+      targetGain = 0.15;
+    }
+
+    if (this.engineOsc) {
+      this.engineOsc.frequency.setTargetAtTime(targetFreq, now, 0.05);
+    }
+    if (this.engineSubOsc) {
+      this.engineSubOsc.frequency.setTargetAtTime(targetFreq * 0.5, now, 0.05);
+    }
+    if (this.engineFilter) {
+      this.engineFilter.frequency.setTargetAtTime(targetFilter, now, 0.05);
+    }
+    if (this.engineGain) {
+      this.engineGain.gain.setTargetAtTime(targetGain, now, 0.05);
+    }
+
+    // Sport turbo whistle & blow-off valve release
+    if (profile.hasTurbo && this.turboOsc && this.turboGain) {
+      const turboFreq = 1400 + speedRatio * 2000 + (isGas ? 600 : 0);
+      const turboVol = isGas ? (0.04 + speedRatio * 0.08) : 0.001;
+      this.turboOsc.frequency.setTargetAtTime(turboFreq, now, 0.08);
+      this.turboGain.gain.setTargetAtTime(turboVol, now, 0.08);
+
+      if (this.lastWasGas && !isGas && this.lastEngineSpeed > 240) {
+        this.playBlowoffValve();
+      }
+    }
+
+    this.lastWasGas = !!isGas;
+    this.lastEngineSpeed = absSpeed;
+  }
+
+  updateSurfaceContact(speed, surfaceType = 'asphalt', onGround = true) {
+    if (!this.ctx || !this.tireGain || !this.tireFilter || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    const absSpeed = Math.abs(speed);
+
+    if (!onGround || absSpeed < 6) {
+      this.tireGain.gain.setTargetAtTime(0.0001, now, 0.08);
+      return;
+    }
+
+    const mat = SURFACE_AUDIO_TYPES[surfaceType] || SURFACE_AUDIO_TYPES.asphalt;
+    const speedRatio = Math.min(1.0, absSpeed / 500);
+    const targetGain = mat.gainMult * (0.3 + speedRatio * 0.7);
+
+    this.tireFilter.type = mat.filterType;
+    this.tireFilter.frequency.setTargetAtTime(mat.freq + speedRatio * 250, now, 0.06);
+    this.tireFilter.Q.setTargetAtTime(mat.q, now, 0.06);
+    this.tireGain.gain.setTargetAtTime(targetGain, now, 0.06);
+
+    // Random micro pebble crackle on gravel
+    if (surfaceType === 'gravel' && absSpeed > 60 && Math.random() < 0.18) {
+      this.playPebbleClick();
+    }
+  }
+
+  updateWindAndAmbient(speed, isAirborne = false, biomeId = 'pantura') {
+    if (!this.ctx || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    const absSpeed = Math.abs(speed);
+
+    // 1. Aerodynamic Wind Whoosh
+    if (this.windGain && this.windFilter) {
+      let windVol = 0;
+      let windFreq = 250;
+      if (absSpeed > 180 || isAirborne) {
+        const speedRatio = Math.min(1.0, absSpeed / 550);
+        windVol = (speedRatio * 0.08) + (isAirborne ? 0.05 : 0.0);
+        windFreq = 300 + speedRatio * 900 + (isAirborne ? 400 : 0);
+      }
+      this.windGain.gain.setTargetAtTime(windVol, now, 0.1);
+      this.windFilter.frequency.setTargetAtTime(windFreq, now, 0.1);
+    }
+
+    // 2. Biome Ambient Morph
+    if (this.ambientGain && this.ambientFilter) {
+      const cfg = BIOME_AUDIO_CONFIG[biomeId] || BIOME_AUDIO_CONFIG.pantura;
+      // Gentle cyclic oscillation (surf swell / wind wave)
+      const cycle = Math.sin((now * 2 * Math.PI) / (cfg.period || 4.0));
+      const targetFreq = Math.max(80, cfg.filterFreq + cycle * (cfg.sweepDepth || 100));
+
+      this.ambientFilter.frequency.setTargetAtTime(targetFreq, now, 0.2);
+      this.ambientFilter.Q.setTargetAtTime(cfg.q, now, 0.2);
+      this.ambientGain.gain.setTargetAtTime(cfg.gain, now, 0.2);
+    }
+  }
+
+  playBlowoffValve() {
+    if (!this.ctx || this.isMuted) return;
+    try {
+      this.playNoiseBurst(0.28, 2200, 7000, 0.18);
+    } catch (_) {}
+  }
+
+  playPebbleClick() {
+    if (!this.ctx || this.isMuted) return;
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(800 + Math.random() * 1200, now);
+      gain.gain.setValueAtTime(0.04, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      osc.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.04);
+    } catch (_) {}
+  }
+
+  playTeloletHorn() {
+    if (!this.ctx || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    if (this.lastHornTime && (now - this.lastHornTime) < 1.4) return;
+    this.lastHornTime = now;
+
+    // Full 12-Note Basuri V3 Extended Fanfare with Dual Air-Horn Brass Acoustics
+    TELOLET_MELODY_BASURI_V3.forEach((n, idx) => {
+      const noteStart = now + n.t;
+      const noteEnd = noteStart + n.d;
+
+      // Primary Horn Oscillator (Sawtooth)
+      const osc1 = this.ctx.createOscillator();
+      osc1.type = 'sawtooth';
+      osc1.frequency.setValueAtTime(n.f, noteStart);
+
+      // Secondary Horn Oscillator (Slightly detuned for rich acoustic beating)
+      const osc2 = this.ctx.createOscillator();
+      osc2.type = 'sawtooth';
+      osc2.frequency.setValueAtTime(n.f * 1.004, noteStart);
+
+      // Rich Brass Air-Horn Filter
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(2200, noteStart);
+      filter.Q.setValueAtTime(2.2, noteStart);
+
+      // Final note vibrato modulation
+      if (idx === TELOLET_MELODY_BASURI_V3.length - 1) {
+        const lfo = this.ctx.createOscillator();
+        const lfoGain = this.ctx.createGain();
+        lfo.frequency.setValueAtTime(5.8, noteStart); // 5.8Hz vibrato
+        lfoGain.gain.setValueAtTime(18, noteStart); // +/-18Hz depth
+        lfo.connect(osc1.frequency);
+        lfo.connect(osc2.frequency);
+        lfo.start(noteStart);
+        lfo.stop(noteEnd);
+      }
+
+      const gain = this.ctx.createGain();
+      gain.gain.setValueAtTime(0, noteStart);
+      gain.gain.linearRampToValueAtTime(0.19, noteStart + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, noteEnd);
+
+      osc1.connect(filter);
+      osc2.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+
+      osc1.start(noteStart);
+      osc2.start(noteStart);
+      osc1.stop(noteEnd);
+      osc2.stop(noteEnd);
+    });
+  }
+
+  playSuspensionSpringSound() {
+    if (!this.ctx || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    if (this.lastSpringTime && (now - this.lastSpringTime) < 0.22) return;
+    this.lastSpringTime = now;
+
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(320, now);
+      osc.frequency.exponentialRampToValueAtTime(140, now + 0.18);
+
+      const modOsc = this.ctx.createOscillator();
+      const modGain = this.ctx.createGain();
+      modOsc.frequency.setValueAtTime(38, now);
+      modGain.gain.setValueAtTime(45, now);
+      modOsc.connect(osc.frequency);
+
+      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+      osc.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+
+      modOsc.start(now);
+      osc.start(now);
+      modOsc.stop(now + 0.22);
+      osc.stop(now + 0.22);
+    } catch (_) {}
+  }
+
+  playCoinSound() {
+    if (!this.ctx || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(987.77, now);
+    osc.frequency.setValueAtTime(1318.51, now + 0.07);
+
+    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+    osc.connect(gain);
+    gain.connect(this.masterGain || this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.22);
+  }
+
+  playFuelSound() {
+    if (!this.ctx || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(220, now);
+    osc.frequency.exponentialRampToValueAtTime(650, now + 0.25);
+
+    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+    osc.connect(gain);
+    gain.connect(this.masterGain || this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.3);
+  }
+
+  playSplashSound() {
+    if (!this.ctx || this.isMuted) return;
+    this.playNoiseBurst(0.25, 600, 1800, 0.16);
+  }
+
+  playMudSound() {
+    if (!this.ctx || this.isMuted) return;
+    this.playNoiseBurst(0.3, 180, 450, 0.2);
+  }
+
+  playImpactSound() {
+    if (!this.ctx || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(110, now);
+    osc.frequency.exponentialRampToValueAtTime(35, now + 0.15);
+
+    gain.gain.setValueAtTime(0.3, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+    osc.connect(gain);
+    gain.connect(this.masterGain || this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.2);
+  }
+
+  playCrashSound() {
+    if (!this.ctx || this.isMuted) return;
+    this.playNoiseBurst(0.6, 120, 600, 0.4);
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(200, now);
+    osc.frequency.exponentialRampToValueAtTime(40, now + 0.5);
+    gain.gain.setValueAtTime(0.35, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+    osc.connect(gain);
+    gain.connect(this.masterGain || this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.5);
+  }
+
+  playVictoryFanfare() {
+    if (!this.ctx || this.isMuted) return;
+    const now = this.ctx.currentTime;
+    const victoryChords = [
+      { f: 523.25, d: 0.15, t: 0.00 }, // C5
+      { f: 659.25, d: 0.15, t: 0.16 }, // E5
+      { f: 783.99, d: 0.18, t: 0.32 }, // G5
+      { f: 1046.5, d: 0.55, t: 0.50 }  // C6
+    ];
+    victoryChords.forEach(c => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(c.f, now + c.t);
+      gain.gain.setValueAtTime(0.25, now + c.t);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + c.t + c.d);
+      osc.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+      osc.start(now + c.t);
+      osc.stop(now + c.t + c.d);
+    });
+  }
+
+  playNoiseBurst(duration, lowFreq, highFreq, volume) {
+    if (!this.ctx) return;
+    try {
+      const bufferSize = Math.floor(this.ctx.sampleRate * duration);
+      const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.35));
+      }
+      const noise = this.ctx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.value = (lowFreq + highFreq) / 2;
+      filter.Q.value = 1.2;
+
+      const gain = this.ctx.createGain();
+      gain.gain.value = volume;
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+      noise.start();
+    } catch (_) {}
+  }
+
+  pauseEngine() {
+    if (!this.ctx || !this.engineGain) return;
+    this.engineGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.05);
+    if (this.tireGain) this.tireGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.05);
+    if (this.windGain) this.windGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.05);
+  }
+
+  resumeEngine() {
+    if (!this.ctx || !this.engineGain || this.isMuted) return;
+    const profile = VEHICLE_AUDIO_PROFILES[this.currentSkin] || VEHICLE_AUDIO_PROFILES.standard;
+    this.engineGain.gain.setTargetAtTime(profile.gainIdle, this.ctx.currentTime, 0.05);
+  }
+
+  stopEngine() {
+    this.pauseEngine();
+    this.isEngineRunning = false;
+    this.stopEngineAudio();
+  }
+
+  toggleMute() {
+    this.isMuted = !this.isMuted;
+    if (this.masterGain && this.ctx) {
+      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 1.0, this.ctx.currentTime);
+    }
+    return this.isMuted;
+  }
+
+  setMuted(muted) {
+    this.isMuted = !!muted;
+    if (this.masterGain && this.ctx) {
+      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 1.0, this.ctx.currentTime);
+    }
+  }
+}
+

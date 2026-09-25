@@ -101,3 +101,33 @@ Pemain dapat memodifikasi kendaraan di Garasi Zacky menggunakan koin gizi yang d
 
 > [!TIP]
 > Seluruh koin yang berhasil diambil di lintasan tetap menjadi milik pemain meskipun mobil mengalami kegagalan. Gunakan koin tersebut di Garasi Zacky untuk memperkuat mobil sebelum mencoba kembali!
+
+---
+
+## 6. Sistem Audio Hybrid & Akustik Otentik
+
+Game ditenagai oleh mesin sintesis **Hybrid Web Audio API & Procedural Waveforms** berpresisi tinggi dengan zero-latency dan master dynamic compressor bebas distorsi:
+
+1. **Akustik Mesin Unik per Skin Kendaraan**:
+   - **Standard Canter Diesel**: Degupan berat solar khas Pantura (38–115 Hz), sub-harmonic piston rumble, dan lowpass filter tebal.
+   - **Speedy Courier (GranMax/Carry)**: Karakter bensin 4-silinder putaran tinggi (65–215 Hz), knalpot garing dan lincah.
+   - **Mountain 4x4 (Hardtop)**: Torsi berat low-end bertenaga (38–125 Hz) dengan resonansi Q tinggi untuk medan tanjakan.
+   - **Retro Classic (Truk Bagong)**: Irama mesin antik berdetik (36–105 Hz) dengan harmonik *mechanical valve-tap*.
+   - **Sport Tuned (Racing Canter)**: Teriakan twin-cam agresif (72–275 Hz), siulan spooling turbocharger (1400–3800 Hz), serta desis *Blow-off Valve* (`psshhh`) saat pedal gas dilepas dari kecepatan tinggi.
+
+2. **Gesekan Ban Granular Sesuai Permukaan Material**:
+   - **Aspal Kering**: Desis halus ban karet berkecepatan tinggi (*tire hiss / pavement hum* pada bandpass 1600 Hz).
+   - **Tanah Berumput**: Gesekan berbutir empuk (*soil & grass roll* pada bandpass 650 Hz).
+   - **Kerikil Bebatuan**: Gemeretak loncatan kerikil acak (*gravel clatter & pebble crackles* pada 1100 Hz).
+   - **Lumpur Becek**: Decakan hisap kental (*mud suction squelch & viscous bubbling* pada 260 Hz).
+   - **Air Rob Pantura**: Gemercik semburan air membelah rob secara kontinyu (*water churn & spray* pada 1250 Hz).
+   - **Jembatan Kayu / Batang Pohon**: Resonansi getaran papan kayu berongga (*hollow wood rattle* pada 380 Hz).
+
+3. **Klakson Telolet Basuri V3 Extended**:
+   - Rangkaian melodi fanfare 12-nada epik berdurasi ~3.5 detik dengan akustik ganda *dual air-horn brass*, harmonisasi terts, dan modulasi vibrato LFO pada nada penutup.
+   - Disertai semburan partikel not musik melayang dari atap kabin truk.
+
+4. **Deru Angin Aerodinamika & Atmosfer 8 Biome**:
+   - **Dynamic Aerodynamic Wind**: Deru hembusan angin (*wind whoosh*) menguat secara eksponensial seiring kecepatan melaju ($|v_x| > 180\text{ px/s}$) dan saat melayang tinggi di udara (*airborne*).
+   - **Ambient Biome Generator**: Menghadirkan atmosfer prosedural khas masing-masing bioma (deburan ombak laut pesisir Pantura, jangkrik sawah asri, desau rimba Alas Roban, siulan angin dingin lereng gunung, hingga dengung metropolitan).
+

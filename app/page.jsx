@@ -215,6 +215,7 @@ export default function GamePage() {
         selectedSkin={selectedSkin}
         selectedRim={selectedRim}
         inputs={inputs}
+        isAudioMuted={isAudioMuted}
         onTelemetry={setTelemetry}
         onGameOver={handleGameOver}
         onVictory={handleVictory}
