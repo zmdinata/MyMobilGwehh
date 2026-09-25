@@ -338,6 +338,42 @@ export class GameRenderer {
           ctx.restore();
         }
 
+        // Draw Live Airborne / Wheelie / Stoppie Floating HUD Badge
+        if (vehicle.airborneBadge) {
+          ctx.save();
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.font = 'bold 14px "Chakra Petch", Fredoka One, sans-serif';
+
+          const badgeText = vehicle.airborneBadge;
+          const textMetrics = ctx.measureText(badgeText);
+          const badgeWidth = textMetrics.width + 24;
+          const badgeHeight = 24;
+          const badgeX = vehicle.x - badgeWidth / 2;
+          const badgeY = vehicle.y - 68;
+
+          // Glassmorphic / Neon pill background
+          ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+          ctx.beginPath();
+          if (typeof ctx.roundRect === 'function') {
+            ctx.roundRect(badgeX, badgeY, badgeWidth, badgeHeight, 12);
+          } else {
+            ctx.rect(badgeX, badgeY, badgeWidth, badgeHeight);
+          }
+          ctx.fill();
+
+          // Glowing border
+          const isWheelie = badgeText.includes('WHEELIE') || badgeText.includes('STOPPIE');
+          ctx.strokeStyle = isWheelie ? '#f59e0b' : '#38bdf8';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+
+          // Text with slight shadow
+          ctx.fillStyle = isWheelie ? '#fde047' : '#e0f2fe';
+          ctx.fillText(badgeText, vehicle.x, badgeY + badgeHeight / 2);
+          ctx.restore();
+        }
+
         // Draw Flip Stunt Banner
         if (vehicle.stuntTimer > 0 && vehicle.stuntMessage) {
           ctx.save();

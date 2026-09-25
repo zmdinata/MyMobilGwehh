@@ -141,3 +141,82 @@ test('Audio Synthesizer - Airborne engine rev (180Hz) and suspension squeak soun
   assert.ok(springBaseFreq > springDecayFreq, 'Spring boing frequency sweeps downward');
   assert.ok(springModFreq > 20 && springModFreq < 60, 'Spring FM modulation frequency produces metallic squeak');
 });
+
+test('PhysicsVehicle - Airborne detection, timer accumulation, and floating badge', () => {
+  const terrain = new TerrainSystem(4600);
+  const vehicle = new PhysicsVehicle(500, 50); // high in air
+  for (let i = 0; i < 40; i++) {
+    vehicle.update(0.02, { gas: false, brake: false }, terrain);
+  }
+  assert.ok(vehicle.airTime >= 0.75, 'Airborne timer accumulates during flight');
+  assert.ok(vehicle.airborneBadge.includes('AIR TIME'), 'Airborne floating badge is active');
+
+  // Safe landing awards airborne bonus
+  vehicle.y = terrain.getHeight(vehicle.x) - 34;
+  vehicle.rearWheel.onGround = true;
+  vehicle.frontWheel.onGround = true;
+  vehicle.angle = 0;
+  vehicle.wasAirborne = true;
+  vehicle.handleLanding(terrain);
+  assert.ok(vehicle.stuntCoinsAwarded > 0, 'Sustained safe jump awards bonus stunt coins');
+  assert.ok(vehicle.stuntMessage.includes('AIR TIME'), 'Stunt banner displays air time achievement');
+});
+
+test('PhysicsVehicle - Wheelie and stoppie ground stunt detection and rewards', () => {
+  const terrain = new TerrainSystem(4600);
+  const v = new PhysicsVehicle(150, terrain.getHeight(150) - 34);
+
+  // Wheelie (rear wheel on ground, front wheel lifted, tilted up)
+  for (let i = 0; i < 35; i++) {
+    v.rearWheel.y = terrain.getHeight(v.rearWheel.x) - v.wheelRadius + 1;
+    v.frontWheel.y = terrain.getHeight(v.frontWheel.x) - v.wheelRadius - 20;
+    v.angle = -0.35;
+    v.physicsSubStep(0.02, { gas: true, brake: false }, terrain);
+  }
+  assert.ok(v.wheelieTime >= 0.6, 'Wheelie time accumulates on one wheel');
+  assert.ok(v.airborneBadge.includes('WHEELIE'), 'Wheelie badge displayed in real-time');
+
+  // Both wheels touch ground -> awards wheelie stunt bonus
+  v.angle = 0;
+  v.frontWheel.y = terrain.getHeight(v.frontWheel.x) - v.wheelRadius + 1;
+  v.physicsSubStep(0.02, { gas: false, brake: false }, terrain);
+  assert.ok(v.stuntCoinsAwarded > 0, 'Wheelie completion awards stunt coins');
+  assert.ok(v.stuntMessage.includes('WHEELIE'), 'Wheelie completion banner displayed');
+
+  // Stoppie (front wheel on ground, rear wheel lifted, tilted down)
+  for (let i = 0; i < 35; i++) {
+    v.frontWheel.y = terrain.getHeight(v.frontWheel.x) - v.wheelRadius + 1;
+    v.rearWheel.y = terrain.getHeight(v.rearWheel.x) - v.wheelRadius - 20;
+    v.angle = 0.35;
+    v.physicsSubStep(0.02, { gas: false, brake: true }, terrain);
+  }
+  assert.ok(v.stoppieTime >= 0.6, 'Stoppie time accumulates on front wheel');
+  assert.ok(v.airborneBadge.includes('STOPPIE'), 'Stoppie badge displayed in real-time');
+
+  // Both wheels touch ground -> awards stoppie stunt bonus
+  v.angle = 0;
+  v.rearWheel.y = terrain.getHeight(v.rearWheel.x) - v.wheelRadius + 1;
+  v.physicsSubStep(0.02, { gas: false, brake: false }, terrain);
+  assert.ok(v.stuntCoinsAwarded > 0, 'Stoppie completion awards stunt coins');
+  assert.ok(v.stuntMessage.includes('STOPPIE'), 'Stoppie completion banner displayed');
+});
+
+test('GameStateManager - Stunt coins and track collectibles accumulate into coinsCollected', () => {
+  const terrain = new TerrainSystem(4600);
+  const vehicle = new PhysicsVehicle(150, terrain.getHeight(150) - 34);
+  const game = new GameStateManager();
+  game.state = 'PLAYING';
+
+  vehicle.stuntCoinsAwarded = 25;
+  game.update(0.02, vehicle, terrain);
+
+  assert.equal(game.coinsCollected, 25, 'Stunt coins added to coinsCollected');
+  assert.equal(vehicle.stuntCoinsAwarded, 0, 'Awarded coins drained from vehicle');
+
+  // Collect 2 track coins
+  terrain.coins[0].collected = true;
+  terrain.coins[1].collected = true;
+  game.update(0.02, vehicle, terrain);
+
+  assert.equal(game.coinsCollected, 27, 'Both track coins and stunt coins remain accumulated');
+});

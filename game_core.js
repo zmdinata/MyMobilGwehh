@@ -35,7 +35,7 @@ export const PHYSICS_CONSTANTS = {
   MAX_REVERSE_SPEED: 220,   // px/s; reverse is slower than forward drive
   MAX_ANGULAR_SPEED: 3.0,   // rad/s; preserves controllable wheelies and airborne recovery
   ANGULAR_DAMPING: 3.5,     // per second; settles pitch after releasing the controls
-  AIR_PITCH_TORQUE: 4.0,    // rad/s^2; air control is deliberate rather than instant flips
+  AIR_PITCH_TORQUE: 6.5,    // rad/s^2; responsive mid-air pitch adjustment and flip capability
   GROUND_GAS_PITCH_TORQUE: 260,
   GROUND_BRAKE_PITCH_TORQUE: 120, // sequential high-speed test: lifts rear tire while staying within recoverable pitch
   THROTTLE_RAMP_UP: 6.0,    // per second; softens launch and wheelie onset
@@ -927,6 +927,12 @@ export class PhysicsVehicle {
     // Airborne, stunt, and landing tracking
     this.wasAirborne = false;
     this.airRotation = 0;
+    this.airTime = 0;
+    this.totalAirTime = 0;
+    this.airborneBadge = '';
+    this.wheelieTime = 0;
+    this.stoppieTime = 0;
+    this.stuntCoinsAwarded = 0;
     this.perfectLandingTimer = 0;
     this.lastLandingPitchDiff = 0;
     this.stuntMessage = '';
@@ -1099,6 +1105,11 @@ export class PhysicsVehicle {
 
     if (inAir) {
       this.wasAirborne = true;
+      this.airTime += dt;
+      this.totalAirTime += dt;
+      if (this.airTime >= 0.35) {
+        this.airborneBadge = `AIR TIME ${this.airTime.toFixed(1)}s ✈️`;
+      }
       this.airRotation += this.angularVelocity * dt;
       if (inputs.gas) {
         // Pitch nose up (counter-clockwise in canvas)
@@ -1113,6 +1124,53 @@ export class PhysicsVehicle {
         this.handleLanding(terrain);
         this.wasAirborne = false;
         this.airRotation = 0;
+        this.airTime = 0;
+        this.airborneBadge = '';
+      }
+
+      // Wheelie & Stoppie Stunt Tracking
+      const isWheelie = this.rearWheel.onGround && !this.frontWheel.onGround && chassisPitch < -0.15;
+      const isStoppie = this.frontWheel.onGround && !this.rearWheel.onGround && chassisPitch > 0.15;
+
+      if (isWheelie) {
+        this.wheelieTime += dt;
+        this.stoppieTime = 0;
+        if (this.wheelieTime >= 0.35) {
+          this.airborneBadge = `WHEELIE ${this.wheelieTime.toFixed(1)}s ⚡`;
+        }
+      } else if (isStoppie) {
+        this.stoppieTime += dt;
+        this.wheelieTime = 0;
+        if (this.stoppieTime >= 0.35) {
+          this.airborneBadge = `STOPPIE ${this.stoppieTime.toFixed(1)}s 🛑`;
+        }
+      } else {
+        if (this.wheelieTime >= 0.6) {
+          const bonusCoins = Math.min(25, Math.floor(this.wheelieTime * 8));
+          this.stuntCoinsAwarded += bonusCoins;
+          this.stuntMessage = `WHEELIE ${this.wheelieTime.toFixed(1)}s! +${bonusCoins} KOIN ⚡`;
+          this.stuntTimer = 1.8;
+          if (this.soundEngine && typeof this.soundEngine.playCoinPickupSound === 'function') {
+            this.soundEngine.playCoinPickupSound();
+          } else if (this.soundEngine && typeof this.soundEngine.playCoinSound === 'function') {
+            this.soundEngine.playCoinSound();
+          }
+        } else if (this.stoppieTime >= 0.6) {
+          const bonusCoins = Math.min(25, Math.floor(this.stoppieTime * 8));
+          this.stuntCoinsAwarded += bonusCoins;
+          this.stuntMessage = `STOPPIE ${this.stoppieTime.toFixed(1)}s! +${bonusCoins} KOIN 🛑`;
+          this.stuntTimer = 1.8;
+          if (this.soundEngine && typeof this.soundEngine.playCoinPickupSound === 'function') {
+            this.soundEngine.playCoinPickupSound();
+          } else if (this.soundEngine && typeof this.soundEngine.playCoinSound === 'function') {
+            this.soundEngine.playCoinSound();
+          }
+        }
+        this.wheelieTime = 0;
+        this.stoppieTime = 0;
+        if (!inAir) {
+          this.airborneBadge = '';
+        }
       }
 
       // Hill Climb Racing Ground Torque & Weight Transfer:
@@ -1201,9 +1259,26 @@ export class PhysicsVehicle {
     const totalFlips = Math.round(Math.abs(this.airRotation) / (2 * Math.PI));
     if (totalFlips >= 1) {
       const isBackflip = this.airRotation < 0;
+      const flipBonus = totalFlips * 25;
       const flipName = totalFlips > 1 ? `${totalFlips}x ${isBackflip ? 'BACKFLIP' : 'FRONTFLIP'}` : (isBackflip ? 'BACKFLIP' : 'FRONTFLIP');
-      this.stuntMessage = `${flipName}! ⭐`;
+      this.stuntCoinsAwarded += flipBonus;
+      this.stuntMessage = `${flipName}! +${flipBonus} KOIN ⭐`;
+      this.stuntTimer = 2.0;
+      if (this.soundEngine && typeof this.soundEngine.playCoinPickupSound === 'function') {
+        this.soundEngine.playCoinPickupSound();
+      } else if (this.soundEngine && typeof this.soundEngine.playCoinSound === 'function') {
+        this.soundEngine.playCoinSound();
+      }
+    } else if (this.airTime >= 0.75 && angleDiffDeg <= 35) {
+      const airBonus = Math.min(30, Math.floor(this.airTime * 10));
+      this.stuntCoinsAwarded += airBonus;
+      this.stuntMessage = `AIR TIME ${this.airTime.toFixed(1)}s! +${airBonus} KOIN ✈️`;
       this.stuntTimer = 1.8;
+      if (this.soundEngine && typeof this.soundEngine.playCoinPickupSound === 'function') {
+        this.soundEngine.playCoinPickupSound();
+      } else if (this.soundEngine && typeof this.soundEngine.playCoinSound === 'function') {
+        this.soundEngine.playCoinSound();
+      }
     }
 
     if (angleDiffDeg <= 22) {
@@ -1631,6 +1706,7 @@ export class GameStateManager {
     this.timeLimitSeconds = 210; // 3m 30s countdown to 09:45:00 WIB
     this.timeRemaining = this.timeLimitSeconds;
     this.coinsCollected = 0;
+    this.stuntCoins = 0;
     this.stars = 0;
   }
 
@@ -1666,8 +1742,15 @@ export class GameStateManager {
       return;
     }
 
-    // Count collected coins
-    this.coinsCollected = terrain.coins.filter(c => c.collected).length;
+    // Collect stunt coins
+    if (vehicle && vehicle.stuntCoinsAwarded > 0) {
+      this.stuntCoins = (this.stuntCoins || 0) + vehicle.stuntCoinsAwarded;
+      vehicle.stuntCoinsAwarded = 0;
+    }
+
+    // Count collected coins (track collectibles + stunt coins)
+    const trackCoins = terrain && terrain.coins ? terrain.coins.filter(c => c.collected).length : 0;
+    this.coinsCollected = trackCoins + (this.stuntCoins || 0);
 
     // Victory condition: crossed finish line at 4500m
     const meterX = vehicle.x / PHYSICS_CONSTANTS.METER_SCALE;
