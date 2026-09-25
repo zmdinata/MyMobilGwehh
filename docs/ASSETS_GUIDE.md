@@ -14,9 +14,9 @@ assets/manifest.json versi 11 adalah sumber path, dimensi sumber, dan pivot. 16 
 | Jeriken/koin/log | assets/refresh/v11/sprites/fuel_can.png, coin_gizi.png, obstacle_log.png | Item dan hazard |
 | Paket makanan | assets/refresh/v11/sprites/food_parcel.png | Ikon HUD dan layar kemenangan |
 | Gerbang/logo | assets/refresh/v11/sprites/finish_gate.png, logo.png | Garis finis sekolah dan logo modal awal |
-| Latar jauh/tengah | assets/refresh/v11/backgrounds/biome1..4*.webp | Parallax empat bioma (8 background PNG sumber) |
+| 8 Bioma Dedikasi | assets/refresh/v11/backgrounds/biome1..4*.webp (alias biome1..8) | 8 bioma terpisah: Pesisir Pantura, Jalur Pantura, Lembah Sawah, Desa Sawah, Puncak Ciremai, Lereng Pinus, Pemukiman Suburb, Kompleks Sekolah |
 
-Jumlahnya 8 PNG + 8 WebP (seluruh 16 slot aktif kini menggunakan aset visual hasil unggahan PNG, dengan SVG dipertahankan sebagai fallback). Seluruh sprite PNG telah dipotong presisi (<200 KB per berkas), dengan ground baseline gerbang sekolah menyentuh aspal tanah secara akurat dan logo badge tampil proporsional.
+Jumlahnya 8 PNG sprite + 8 WebP background (seluruh 16 slot aktif dan alias biome1..8 kini menggunakan aset visual hasil unggahan PNG asli pengguna). Delapan background PNG dialokasikan menjadi 8 bioma terpisah dalam alur kampanye 20 level, di mana setiap level berujung di Bioma 8 (Kompleks Sekolah Puspa Bangsa). Seluruh sprite PNG telah dipotong presisi (<200 KB per berkas), dengan ground baseline gerbang sekolah menyentuh aspal tanah secara akurat dan logo badge tampil proporsional.
 
 
 ## Sumber dan transparansi

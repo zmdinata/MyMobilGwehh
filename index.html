@@ -1659,10 +1659,14 @@
 
         // Dynamic Skybox Color Interpolation (RGBA Lerp) across 200m zone
         const skyPalettes = {
-          1: { top: [6, 182, 212], mid: [103, 232, 249], bot: [254, 215, 170], midStop: 0.6 },  // Pantura cyan-peach
-          2: { top: [56, 189, 248], mid: [186, 230, 253], bot: [254, 240, 138], midStop: 0.5 }, // Sawah golden-green
-          3: { top: [51, 65, 85], mid: [100, 116, 139], bot: [148, 163, 184], midStop: 0.6 },   // Gunung slate mist
-          4: { top: [2, 132, 199], mid: [125, 211, 252], bot: [251, 207, 232], midStop: 0.7 }   // School district cyan-pink
+          1: { top: [6, 182, 212], mid: [103, 232, 249], bot: [254, 215, 170], midStop: 0.6 },  // 1: Pesisir Pantura (cyan-peach)
+          2: { top: [14, 165, 233], mid: [125, 211, 252], bot: [253, 230, 138], midStop: 0.55 }, // 2: Jalur Arteri Pantura (azure-amber)
+          3: { top: [56, 189, 248], mid: [186, 230, 253], bot: [254, 240, 138], midStop: 0.5 },  // 3: Lembah Sawah (golden-green)
+          4: { top: [34, 197, 94], mid: [134, 239, 172], bot: [254, 249, 195], midStop: 0.65 },  // 4: Pedesaan Sawah (lush green)
+          5: { top: [51, 65, 85], mid: [100, 116, 139], bot: [148, 163, 184], midStop: 0.6 },    // 5: Puncak Gn. Ciremai (slate mist)
+          6: { top: [30, 58, 79], mid: [74, 107, 130], bot: [178, 190, 195], midStop: 0.55 },   // 6: Lereng Hutan Pinus (alpine fog)
+          7: { top: [59, 130, 246], mid: [147, 197, 253], bot: [254, 205, 211], midStop: 0.6 },  // 7: Kawasan Pemukiman (morning pink)
+          8: { top: [2, 132, 199], mid: [125, 211, 252], bot: [251, 207, 232], midStop: 0.7 }    // 8: Sekolah Puspa Bangsa (bright cyan-pink)
         };
 
         const lerpColor = (c1, c2, t) => {
@@ -1674,15 +1678,15 @@
 
         let topColor, midColor, botColor, midStop;
         if (blend && blend.inTransition && blend.toBiome) {
-          const p1 = skyPalettes[blend.fromBiome.id];
-          const p2 = skyPalettes[blend.toBiome.id];
+          const p1 = skyPalettes[blend.fromBiome.id] || skyPalettes[1];
+          const p2 = skyPalettes[blend.toBiome.id] || skyPalettes[8] || skyPalettes[1];
           const t = blend.t;
           topColor = lerpColor(p1.top, p2.top, t);
           midColor = lerpColor(p1.mid, p2.mid, t);
           botColor = lerpColor(p1.bot, p2.bot, t);
           midStop = p1.midStop + (p2.midStop - p1.midStop) * t;
         } else {
-          const p = skyPalettes[biome.id];
+          const p = skyPalettes[biome.id] || skyPalettes[1];
           topColor = `rgb(${p.top.join(',')})`;
           midColor = `rgb(${p.mid.join(',')})`;
           botColor = `rgb(${p.bot.join(',')})`;
@@ -1744,11 +1748,23 @@
       drawDistantParallaxLayer(biomeId, w, h, scroll2) {
         const ctx = this.ctx;
         ctx.save();
-        if (this.drawTiledBackground(`biome${biomeId}Distant`, w, h, scroll2, 0.12, 0.75)) {
+        const distantMap = {
+          1: 'biome1Distant',
+          2: 'biome1Distant',
+          3: 'biome2Distant',
+          4: 'biome2Distant',
+          5: 'biome3Distant',
+          6: 'biome3Distant',
+          7: 'biome4Distant',
+          8: 'biome4Distant'
+        };
+        const distantKey = distantMap[biomeId] || `biome${biomeId}Distant`;
+        if (this.drawTiledBackground(distantKey, w, h, scroll2, 0.12, 0.75) ||
+            this.drawTiledBackground(`biome${biomeId}Distant`, w, h, scroll2, 0.12, 0.75)) {
           ctx.restore();
           return;
         }
-        if (biomeId === 1) {
+        if (biomeId === 1 || biomeId === 2) {
           // Pantura Sea with Traditional Fishing Boats (Perahu Nelayan)
           ctx.fillStyle = '#0284c7';
           ctx.fillRect(0, h * 0.48, w, h * 0.2);
@@ -1772,14 +1788,42 @@
             ctx.closePath();
             ctx.fill();
           }
-        } else {
+        } else if (biomeId === 3 || biomeId === 4) {
+          // Hamparan Sawah green mountain horizon
+          ctx.fillStyle = 'rgba(16, 185, 129, 0.35)';
+          ctx.beginPath();
+          ctx.moveTo(0, h * 0.65);
+          for (let x = 0; x <= w + 40; x += 40) {
+            const worldX = x + scroll2;
+            const my = h * 0.46 + Math.sin(worldX * 0.0025) * 50 + Math.cos(worldX * 0.0012) * 35;
+            ctx.lineTo(x, my);
+          }
+          ctx.lineTo(w, h);
+          ctx.lineTo(0, h);
+          ctx.closePath();
+          ctx.fill();
+        } else if (biomeId === 5 || biomeId === 6) {
           // Silhouette of Mt. Ciremai in misty blue
-          ctx.fillStyle = biomeId === 3 ? 'rgba(51, 65, 85, 0.45)' : 'rgba(14, 116, 144, 0.35)';
+          ctx.fillStyle = 'rgba(51, 65, 85, 0.45)';
           ctx.beginPath();
           ctx.moveTo(0, h * 0.65);
           for (let x = 0; x <= w + 40; x += 40) {
             const worldX = x + scroll2;
             const my = h * 0.42 + Math.sin(worldX * 0.003) * 60 + Math.cos(worldX * 0.001) * 45;
+            ctx.lineTo(x, my);
+          }
+          ctx.lineTo(w, h);
+          ctx.lineTo(0, h);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          // Suburban skyline and school arrival horizon
+          ctx.fillStyle = 'rgba(14, 116, 144, 0.35)';
+          ctx.beginPath();
+          ctx.moveTo(0, h * 0.65);
+          for (let x = 0; x <= w + 40; x += 40) {
+            const worldX = x + scroll2;
+            const my = h * 0.44 + Math.sin(worldX * 0.002) * 40;
             ctx.lineTo(x, my);
           }
           ctx.lineTo(w, h);
@@ -1793,6 +1837,18 @@
       drawMidgroundParallaxLayer(biomeId, w, h, scroll3) {
         const ctx = this.ctx;
         ctx.save();
+        // Midground artwork maps even biomes to their dedicated midground scenery
+        const midMap = {
+          2: 'biome1Midground',
+          4: 'biome2Midground',
+          6: 'biome3Midground',
+          8: 'biome4Midground'
+        };
+        const midKey = midMap[biomeId];
+        if (midKey && this.drawTiledBackground(midKey, w, h, scroll3, 0.12, 0.68)) {
+          ctx.restore();
+          return;
+        }
         // Midground PNGs include a broad foreground band near their lower edge.
         // Keep that band above the physical terrain; the old 0.28/0.80 placement
         // put the beach/fields/buildings behind the terrain fill on most screens.
@@ -1800,7 +1856,7 @@
           ctx.restore();
           return;
         }
-        if (biomeId === 1) {
+        if (biomeId === 1 || biomeId === 2) {
           // Coconut palms & Warteg Bahari roadside stalls
           for (let i = 0; i < 5; i++) {
             const px = ((i * 280 - scroll3) % w + w) % w;
@@ -1837,7 +1893,7 @@
               ctx.fillText('WARTEG', wx + 4, py - 18);
             }
           }
-        } else if (biomeId === 2) {
+        } else if (biomeId === 3 || biomeId === 4) {
           // Lush terraced sawah layers & bamboo saung
           ctx.fillStyle = 'rgba(34, 197, 94, 0.4)';
           ctx.beginPath();
@@ -1851,7 +1907,7 @@
           ctx.lineTo(0, h);
           ctx.closePath();
           ctx.fill();
-        } else if (biomeId === 3) {
+        } else if (biomeId === 5 || biomeId === 6) {
           // Rolling tea plantation hills with pine trees
           ctx.fillStyle = 'rgba(21, 128, 61, 0.5)';
           ctx.beginPath();
@@ -1904,10 +1960,14 @@
 
         // Road & Surface Material Blending (200m smooth transition)
         const terrainPalettes = {
-          1: { surface: [30, 41, 59], subsoil: [15, 23, 42], dashAlpha: 1.0 },   // Pantura asphalt
-          2: { surface: [77, 124, 15], subsoil: [113, 63, 18], dashAlpha: 0.0 }, // Sawah earthen/muddy bunds
-          3: { surface: [120, 53, 15], subsoil: [69, 26, 3], dashAlpha: 0.0 },   // Mountain dirt/gravel
-          4: { surface: [51, 65, 85], subsoil: [30, 41, 59], dashAlpha: 1.0 }    // Neat school district pavement
+          1: { surface: [30, 41, 59], subsoil: [15, 23, 42], dashAlpha: 1.0 },   // 1: Pesisir Pantura asphalt
+          2: { surface: [40, 50, 68], subsoil: [20, 28, 45], dashAlpha: 1.0 },   // 2: Jalur Arteri highway asphalt
+          3: { surface: [77, 124, 15], subsoil: [113, 63, 18], dashAlpha: 0.0 }, // 3: Lembah Sawah earthen bunds
+          4: { surface: [65, 105, 20], subsoil: [85, 45, 12], dashAlpha: 0.0 },  // 4: Pedesaan Sawah packed mud/soil
+          5: { surface: [120, 53, 15], subsoil: [69, 26, 3], dashAlpha: 0.0 },   // 5: Puncak Gunung rock/gravel
+          6: { surface: [92, 64, 40], subsoil: [50, 30, 15], dashAlpha: 0.0 },   // 6: Lereng Pinus pine loam
+          7: { surface: [71, 85, 105], subsoil: [30, 41, 59], dashAlpha: 0.8 },  // 7: Pemukiman asphalt & curb
+          8: { surface: [51, 65, 85], subsoil: [30, 41, 59], dashAlpha: 1.0 }    // 8: Sekolah Puspa Bangsa pavement
         };
 
         const lerpColor = (c1, c2, t) => {
@@ -1919,13 +1979,13 @@
 
         let surfaceColor, subsoilColor, dashAlpha;
         if (blend && blend.inTransition && blend.toBiome) {
-          const pal1 = terrainPalettes[blend.fromBiome.id];
-          const pal2 = terrainPalettes[blend.toBiome.id];
+          const pal1 = terrainPalettes[blend.fromBiome.id] || terrainPalettes[1];
+          const pal2 = terrainPalettes[blend.toBiome.id] || terrainPalettes[8] || terrainPalettes[1];
           surfaceColor = lerpColor(pal1.surface, pal2.surface, blend.t);
           subsoilColor = lerpColor(pal1.subsoil, pal2.subsoil, blend.t);
           dashAlpha = pal1.dashAlpha * blend.alphaPrev + pal2.dashAlpha * blend.alphaNext;
         } else {
-          const pal = terrainPalettes[biome.id];
+          const pal = terrainPalettes[biome.id] || terrainPalettes[1];
           surfaceColor = `rgb(${pal.surface.join(',')})`;
           subsoilColor = `rgb(${pal.subsoil.join(',')})`;
           dashAlpha = pal.dashAlpha;
@@ -4011,8 +4071,18 @@
         this.sound.resumeEngine();
         if (this.domBiomeTicks && this.terrain && this.terrain.segments) {
           const segs = this.terrain.segments;
+          const biomeNames = {
+            1: 'Pesisir',
+            2: 'Pantura',
+            3: 'Lembah Sawah',
+            4: 'Desa Sawah',
+            5: 'Puncak Gn.',
+            6: 'Lereng Gn.',
+            7: 'Pemukiman',
+            8: 'Sekolah'
+          };
           const ticksHtml = segs.map((s) => {
-            const shortName = s.id === 1 ? 'Pantura' : s.id === 2 ? 'Sawah' : s.id === 3 ? 'Gunung' : 'Sekolah';
+            const shortName = biomeNames[s.id] || (s.id === 1 ? 'Pantura' : s.id === 2 ? 'Sawah' : s.id === 3 ? 'Gunung' : 'Sekolah');
             const km = s.start === 0 ? '0m' : (s.start >= 1000 ? (s.start / 1000).toFixed(1) + 'k' : s.start + 'm');
             return `<span>${km} ${shortName}</span>`;
           });

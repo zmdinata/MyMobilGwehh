@@ -165,6 +165,66 @@
         "x": 80,
         "y": 80
       }
+    },
+    "biome1": {
+      "src": "assets/refresh/v11/backgrounds/biome1Distant.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 533,
+      "pivot": { "x": 0, "y": 0 }
+    },
+    "biome2": {
+      "src": "assets/refresh/v11/backgrounds/biome1Midground.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 309,
+      "pivot": { "x": 0, "y": 0 },
+      "tileAspect": 3.0
+    },
+    "biome3": {
+      "src": "assets/refresh/v11/backgrounds/biome2Distant.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 533,
+      "pivot": { "x": 0, "y": 0 }
+    },
+    "biome4": {
+      "src": "assets/refresh/v11/backgrounds/biome2Midground.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 341,
+      "pivot": { "x": 0, "y": 0 },
+      "tileAspect": 3.0
+    },
+    "biome5": {
+      "src": "assets/refresh/v11/backgrounds/biome3Distant.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 533,
+      "pivot": { "x": 0, "y": 0 }
+    },
+    "biome6": {
+      "src": "assets/refresh/v11/backgrounds/biome3Midground.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 325,
+      "pivot": { "x": 0, "y": 0 },
+      "tileAspect": 3.0
+    },
+    "biome7": {
+      "src": "assets/refresh/v11/backgrounds/biome4Distant.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 598,
+      "pivot": { "x": 0, "y": 0 }
+    },
+    "biome8": {
+      "src": "assets/refresh/v11/backgrounds/biome4Midground.webp",
+      "fallback": null,
+      "width": 1600,
+      "height": 437,
+      "pivot": { "x": 0, "y": 0 },
+      "tileAspect": 3.0
     }
   }
 }
