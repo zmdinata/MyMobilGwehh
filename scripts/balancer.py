@@ -23,7 +23,7 @@ LEVELS = [
     {"level": 7, "name": "Botol Air Minum Bu Yulie", "dist": 8600, "time": 600, "cps": [2800, 5700]},
     {"level": 8, "name": "Misi Mak Comblang Husna", "dist": 9800, "time": 670, "cps": [3200, 6500]},
     {"level": 9, "name": "Uji Shockbreaker Anyar", "dist": 11000, "time": 740, "cps": [3600, 7300]},
-    {"level": 10, "name": "Petuah Sang Legenda Mang Ucup", "dist": 12500, "time": 820, "cps": [4000, 8300]},
+    {"level": 10, "name": "Petuah Sang Legenda Mang Abdul", "dist": 12500, "time": 820, "cps": [4000, 8300]},
     {"level": 11, "name": "Tanjakan Kabut Perbukitan", "dist": 13800, "time": 890, "cps": [4500, 9200]},
     {"level": 12, "name": "Melayang Demi Bu Guru", "dist": 15000, "time": 960, "cps": [5000, 10000]},
     {"level": 13, "name": "Surat Rantang Rahasia", "dist": 16500, "time": 1040, "cps": [4200, 8500, 12600]},

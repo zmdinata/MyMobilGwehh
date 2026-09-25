@@ -1,7 +1,7 @@
 {
   "name": "game",
   "version": "1.0.0",
-  "description": "Game side-scrolling 2D tentang Mas Tion yang mengantar 500 porsi paket gizi hangat menuju sekolah fiktif SD, SMP, dan SMA Puspa Bangsa, Cirebon, didampingi wejangan Mang Ucup.",
+  "description": "Game side-scrolling 2D tentang Mas Tion yang mengantar 500 porsi paket gizi hangat menuju sekolah fiktif SD, SMP, dan SMA Puspa Bangsa, Cirebon, didampingi wejangan Mang Abdul.",
   "main": "game_core.js",
   "directories": {
     "doc": "docs",

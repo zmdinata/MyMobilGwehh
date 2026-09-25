@@ -63,7 +63,7 @@ test('STORY_DIALOGUES - All 20 levels have rich Intro & Outro dialogues with all
   assert.ok(charactersFound.has('Bu Yulie'), 'Love interest Bu Yulie is featured');
   assert.ok(charactersFound.has('Husna'), 'Schoolgirl Husna is featured');
   assert.ok(charactersFound.has('Zacky'), 'Mechanic Zacky is featured');
-  assert.ok(charactersFound.has('Mang Ucup'), 'Veteran driver Mang Ucup is featured');
+  assert.ok(charactersFound.has('Mang Abdul'), 'Veteran driver Mang Abdul is featured');
 });
 
 test('PhysicsVehicle - Upgrades scaling (Engine power, Tire Grip, Suspension spring & damping)', () => {

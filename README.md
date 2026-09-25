@@ -1,6 +1,6 @@
 # MBG: Road To School (My Mobil Gwehh)
 
-Game side-scrolling 2D physics platformer tentang perjuangan **Mas Tion** mengantarkan 500 porsi paket gizi hangat menuju kawasan sekolah fiktif **SD, SMP, dan SMA Puspa Bangsa Cirebon** demi Bu Yulie dan siswa-siswi, didampingi petuah bijak supir veteran **Mang Ucup**.
+Game side-scrolling 2D physics platformer tentang perjuangan **Mas Tion** mengantarkan 500 porsi paket gizi hangat menuju kawasan sekolah fiktif **SD, SMP, dan SMA Puspa Bangsa Cirebon** demi Bu Yulie dan siswa-siswi, didampingi petuah bijak supir veteran **Mang Abdul**.
 
 Didukung arsitektur ganda: **React 19 & Next.js 16 (Turbopack)** untuk pengalaman aplikasi web modern, serta **Standalone HTML5 Canvas** untuk kemudahan bermain tanpa build.
 
@@ -45,7 +45,7 @@ Buka browser di: [http://localhost:8000](http://localhost:8000)
 
 1. **Kampanye 20 Level Penuh Cerita**:
    - Peningkatan jarak bertahap dari 800m (Level 1) hingga 4500m (Level 20).
-   - Dialog Visual Novel (Intro & Outro) di setiap level dengan karakter Mas Tion, Bu Yulie, Zacky, Husna, Mang Ucup, dan Pak RT.
+   - Dialog Visual Novel (Intro & Outro) di setiap level dengan karakter Mas Tion, Bu Yulie, Zacky, Husna, Mang Abdul, dan Pak RT.
 2. **Garasi Zacky (Upgrade Komponen & Kustomisasi)**:
    - Tingkatkan **Mesin** (torsi & tanjakan), **Grip Ban** (traksi aspal & lumpur), dan **Suspensi** (pegas & peredam kejut) dari Level 1 hingga 20.
    - Pilihan 5 varian skin bodi truk (*Standard Box, Speedy Courier, Mountain 4x4, Retro Classic, Sport Tuned*) dan 4 desain velg roda (*Stock Steelie, Gold Racing, Mud Beadlock, White-Wall*).

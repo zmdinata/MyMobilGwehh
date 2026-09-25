@@ -96,7 +96,7 @@ test('Story Dialogue Completeness - Full character presence across the campaign'
   assert.ok(charactersFound.has('Bu Yulie'), 'Bu Yulie appears in dialogues');
   assert.ok(charactersFound.has('Husna'), 'Husna appears in dialogues');
   assert.ok(charactersFound.has('Zacky'), 'Zacky appears in dialogues');
-  assert.ok(charactersFound.has('Mang Ucup'), 'Mang Ucup appears in dialogues');
+  assert.ok(charactersFound.has('Mang Abdul'), 'Mang Abdul appears in dialogues');
 });
 
 test('Level Progression - Distance and Time limits increase monotonically', () => {

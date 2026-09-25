@@ -64,7 +64,7 @@ export default function VictoryModal({
         </div>
 
         <p className="text-xs text-slate-300 mb-4 italic">
-          "Siswa-siswi bersorak gembira mengacungkan sendok gizi! Bu Yulie tersenyum bangga menyambut Mas Tion sang pahlawan katering MBG binaan Mang Ucup!"
+          "Siswa-siswi bersorak gembira mengacungkan sendok gizi! Bu Yulie tersenyum bangga menyambut Mas Tion sang pahlawan katering MBG binaan Mang Abdul!"
         </p>
 
         {/* Victory Score Card */}

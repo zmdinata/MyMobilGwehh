@@ -116,5 +116,5 @@ Manifest runtime dimuat dari [`assets/manifest.json`](file:///c:/Projects/game/a
 | :--- | :--- |
 | **Gagal muat aset gambar** | Loader manifest mengeksekusi primary path, fallback path, dan prosedur procedural canvas jika gambar gagal ter-decode. |
 | **Regresi fisika gameplay** | Suite 80 unit test otomatis memvalidasi konstanta, daya mesin, suspensi, pendaratan miring, dan simulasi 20 level. |
-| **Inkonsistensi narasi** | Test suite memvalidasi teks lore kanonik (Mas Tion supir utama, Bu Yulie, Mang Ucup supir senior/mentor). |
+| **Inkonsistensi narasi** | Test suite memvalidasi teks lore kanonik (Mas Tion supir utama, Bu Yulie, Mang Abdul supir senior/mentor). |
 | **Cache browser lama** | Query modul `?v=...`, header cache Vercel, dan static bundle Next.js dengan hash unik pada setiap build. |

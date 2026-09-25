@@ -4,7 +4,7 @@
 
 Pemain berperan sebagai **Mas Tion**, supir kurir logistik gizi nomor wahid yang mengemudikan armada truk MBG (*My Mobil Gwehh*) untuk mengantarkan **500 porsi paket gizi hangat** (nasi pulen, ayam serundeng, tahu-tempe orek, sayur lodeh, dan susu murni) ke sekolah fiktif **SD, SMP, dan SMA Puspa Bangsa Cirebon**. 
 
-Misi ini didedikasikan untuk menyambut **Bu Yulie** (guru muda yang disukai Tion) dan para murid sebelum bel masuk berbunyi tepat pukul **09:45 WIB**, di bawah bimbingan wejangan supir veteran legendaris **Mang Ucup** dan racikan bengkel sahabat karib **Zacky**.
+Misi ini didedikasikan untuk menyambut **Bu Yulie** (guru muda yang disukai Tion) dan para murid sebelum bel masuk berbunyi tepat pukul **09:45 WIB**, di bawah bimbingan wejangan supir veteran legendaris **Mang Abdul** dan racikan bengkel sahabat karib **Zacky**.
 
 ---
 
@@ -45,7 +45,7 @@ Setiap level memiliki target jarak tempuh dan kombinasi bioma yang semakin menan
 | **7** | Botol Air Minum Bu Yulie | 1500 m | 125 s | Pesisir $\to$ Lembah $\to$ Puncak Gn. Ciremai $\to$ Sekolah |
 | **8** | Misi Mak Comblang Husna | 1650 m | 130 s | Lembah $\to$ Pedesaan $\to$ Lereng Terjal $\to$ Sekolah |
 | **9** | Uji Shockbreaker Anyar | 1800 m | 135 s | Jalur Arteri $\to$ Pedesaan $\to$ Puncak $\to$ Lereng $\to$ Sekolah |
-| **10** | Petuah Sang Legenda Mang Ucup | 2000 m | 140 s | Pesisir $\to$ Lembah $\to$ Puncak $\to$ Pemukiman $\to$ Sekolah |
+| **10** | Petuah Sang Legenda Mang Abdul | 2000 m | 140 s | Pesisir $\to$ Lembah $\to$ Puncak $\to$ Pemukiman $\to$ Sekolah |
 | **11** | Tanjakan Kabut Perbukitan | 2200 m | 150 s | Pedesaan $\to$ Puncak $\to$ Lereng $\to$ Pemukiman $\to$ Sekolah |
 | **12** | Melayang Demi Bu Guru | 2400 m | 155 s | Pesisir $\to$ Jalur $\to$ Puncak $\to$ Lereng $\to$ Sekolah |
 | **13** | Surat Rantang Rahasia | 2600 m | 160 s | Lembah $\to$ Pedesaan $\to$ Puncak $\to$ Lereng $\to$ Sekolah |

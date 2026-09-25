@@ -20,7 +20,7 @@ node --test test/*.test.mjs
 - `node --test test/game_core.test.mjs`: Menguji terrain, bioma, vektor tangent/normal, integrasi pegas-redam ganda, weight transfer, landing shock absorption, fuel consumption, rollover grace timer, dan manifest v11.
 - `node --test test/audio_and_scoring.test.mjs`: Menguji sintesis Web Audio, penghitungan skor bintang 1–3, partikel makanan, dan jeriken darurat.
 - `node --test test/verify_index_html.test.mjs`: Menguji integritas berkas `index.html`, sintaks skrip browser, DOM modal, tombol kemudi, linkage suspensi mekanis, dan konstanta geometri bodi 100x50.
-- `node --test test/verify_story_and_ui.test.mjs`: Menguji kelengkapan 20 level, ketiadaan bioma terputus, kehadiran karakter (Mas Tion, Bu Yulie, Zacky, Husna, Mang Ucup, Pak RT), skala upgrade komponen 1–20, dan preview canvas bengkel.
+- `node --test test/verify_story_and_ui.test.mjs`: Menguji kelengkapan 20 level, ketiadaan bioma terputus, kehadiran karakter (Mas Tion, Bu Yulie, Zacky, Husna, Mang Abdul, Pak RT), skala upgrade komponen 1–20, dan preview canvas bengkel.
 - `node --test test/stress_test_campaign.test.mjs`: Menjalankan simulasi fisika programatik end-to-end melintasi seluruh 20 level tanpa crash atau nilai NaN, memvalidasi elevasi start yang aman, dan kurva biaya koin eksponensial.
 
 ---
@@ -88,6 +88,6 @@ Route (app)
 | **Fisika Baseline** | 64 regression tests (`kSpring=180`, `kDamper=18.8`, `engine=2200`) | ✅ PASS |
 | **Kampanye 20 Level** | Automated step simulation & distance monotonicity check | ✅ PASS |
 | **Garasi & Upgrade** | Formula curve test ($50 \times 1.35^{L-1}$) & wallet deduction | ✅ PASS |
-| **Kanon Cerita** | String match testing (Mas Tion, Bu Yulie, Mang Ucup, Puspa Bangsa) | ✅ PASS |
+| **Kanon Cerita** | String match testing (Mas Tion, Bu Yulie, Mang Abdul, Puspa Bangsa) | ✅ PASS |
 | **Visual & UI** | Syntax extraction, canvas preview forward context, no scanlines | ✅ PASS |
 | **Build Bundler** | Next.js 16 Turbopack production compilation | ✅ PASS |

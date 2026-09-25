@@ -320,7 +320,7 @@ export class GameRenderer {
         // Draw Floating Telolet Musical Notes
         this.drawTeloletNotes(vehicle.teloletNotes);
 
-        // Draw Truck Vehicle (Chassis, Boks Tosca, Mang Ucup, Rims)
+        // Draw Truck Vehicle (Chassis, Boks Tosca, Mang Abdul, Rims)
         this.drawVehicle(vehicle, inputs);
 
         // Draw Perfect Landing Floating Banner

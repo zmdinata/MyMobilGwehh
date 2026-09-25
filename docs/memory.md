@@ -29,7 +29,7 @@ Snapshot teknis dan panduan operasional proyek. Jika terdapat diskrepansi antara
 
 - **Protagonis & Driver Utama**: **Mas Tion** — pemuda tangguh pengemudi truk logistik gizi MBG yang berjuang mengantarkan 500 porsi paket gizi hangat (nasi pulen, ayam serundeng, tahu-tempe orek, sayur lodeh, dan susu murni) tepat waktu sebelum pukul 09:45 WIB.
 - **Tokoh Idaman**: **Bu Yulie** — guru muda bersahaja dan penuh dedikasi di Sekolah Puspa Bangsa Cirebon yang menjadi inspirasi dan tujuan perjuangan Mas Tion.
-- **Mentor Veteran**: **Mang Ucup** — mantan supir elf balap legendaris trayek Cirebon–Kuningan yang sudah tobat dan kini membimbing Mas Tion dengan petuah bijak (*gas itu keberanian, rem itu kebijaksanaan*). **Mang Ucup BUKAN supir utama**, melainkan mentor pendamping.
+- **Mentor Veteran**: **Mang Abdul** — mantan supir elf balap legendaris trayek Cirebon–Kuningan yang sudah tobat dan kini membimbing Mas Tion dengan petuah bijak (*gas itu keberanian, rem itu kebijaksanaan*). **Mang Abdul BUKAN supir utama**, melainkan mentor pendamping.
 - **Montir Bengkel**: **Zacky** — sahabat karib Tion yang memodifikasi armada truk di Garasi Zacky (upgrade mesin, ban, dan shockbreaker).
 - **Mak Comblang Ceria**: **Husna** — siswi SMA Puspa Bangsa yang usil dan kerap menggoda kedekatan Mas Tion dengan Bu Yulie (*"Cieee Mas Tion!"*).
 - **Tokoh Pendukung**: **Pak RT** — tokoh warga pesisir yang memotivasi pengantaran gizi anak bangsa.
@@ -133,7 +133,7 @@ Pada setiap level panjang (3.000m - 25.000m), ditempatkan 1 hingga 4 titik Pos T
 
 1. **Invarian Baseline Fisika**: Nilai level 1 (`enginePower = 2200`, `kSpring = 180`, `kDamper = 18.8`) tidak boleh diubah sembarangan karena menjadi baseline kelulusan 80 suite unit test.
 2. **Kesesuaian Teks Lore pada Pengujian**:
-   - `test/verify_index_html.test.mjs` dan `test/verify_story_and_ui.test.mjs` memvalidasi keberadaan string: `'MBG (My Mobil Gweh)'`, `'Mang Ucup'`, `'Mas Tion'`, `'SD, SMP, dan SMA Puspa Bangsa Cirebon'`, `'500 porsi'`, `'09:45 WIB'`, `'MOBIL GWEH TERGULING'`.
+   - `test/verify_index_html.test.mjs` dan `test/verify_story_and_ui.test.mjs` memvalidasi keberadaan string: `'MBG (My Mobil Gweh)'`, `'Mang Abdul'`, `'Mas Tion'`, `'SD, SMP, dan SMA Puspa Bangsa Cirebon'`, `'500 porsi'`, `'09:45 WIB'`, `'MOBIL GWEH TERGULING'`.
 3. **Penyimpanan Aset & Junction Windows**:
    - Di Windows, direktori `public/assets` dibuat sebagai junction (`mklink /J public\assets assets`) agar Next.js dapat menyajikan aset secara statis dari URL `/assets/...` tanpa menduplikasi storage disk.
 4. **Keamanan & Kredensial**:

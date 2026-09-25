@@ -53,7 +53,7 @@ export const LEVEL_CONFIGS = [
   { level: 7, name: 'Botol Air Minum Bu Yulie', finishMeters: 8600, distanceMeters: 8600, totalMeters: 8750, timeLimit: 600, timeLimitSec: 600, checkpoints: [2800, 5700], biomes: [BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.PESISIR_PANTURA, BIOMES.JALUR_PANTURA, BIOMES.SEKOLAH] },
   { level: 8, name: 'Misi Mak Comblang Husna', finishMeters: 9800, distanceMeters: 9800, totalMeters: 9950, timeLimit: 670, timeLimitSec: 670, checkpoints: [3200, 6500], biomes: [BIOMES.PESISIR_PANTURA, BIOMES.DESA_SAWAH, BIOMES.LERENG_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
   { level: 9, name: 'Uji Shockbreaker Anyar', finishMeters: 11000, distanceMeters: 11000, totalMeters: 11150, timeLimit: 740, timeLimitSec: 740, checkpoints: [3600, 7300], biomes: [BIOMES.JALUR_PANTURA, BIOMES.PUNCAK_GUNUNG, BIOMES.LEMBAH_SAWAH, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
-  { level: 10, name: 'Petuah Sang Legenda Mang Ucup', finishMeters: 12500, distanceMeters: 12500, totalMeters: 12650, timeLimit: 820, timeLimitSec: 820, checkpoints: [4000, 8300], biomes: [BIOMES.DESA_SAWAH, BIOMES.PESISIR_PANTURA, BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.SEKOLAH] },
+  { level: 10, name: 'Petuah Sang Legenda Mang Abdul', finishMeters: 12500, distanceMeters: 12500, totalMeters: 12650, timeLimit: 820, timeLimitSec: 820, checkpoints: [4000, 8300], biomes: [BIOMES.DESA_SAWAH, BIOMES.PESISIR_PANTURA, BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.SEKOLAH] },
   { level: 11, name: 'Tanjakan Kabut Perbukitan', finishMeters: 13800, distanceMeters: 13800, totalMeters: 13950, timeLimit: 890, timeLimitSec: 890, checkpoints: [4500, 9200], biomes: [BIOMES.LERENG_GUNUNG, BIOMES.LEMBAH_SAWAH, BIOMES.DESA_SAWAH, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
   { level: 12, name: 'Melayang Demi Bu Guru', finishMeters: 15000, distanceMeters: 15000, totalMeters: 15150, timeLimit: 960, timeLimitSec: 960, checkpoints: [5000, 10000], biomes: [BIOMES.PESISIR_PANTURA, BIOMES.JALUR_PANTURA, BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.SEKOLAH] },
   { level: 13, name: 'Surat Rantang Rahasia', finishMeters: 16500, distanceMeters: 16500, totalMeters: 16650, timeLimit: 1040, timeLimitSec: 1040, checkpoints: [4200, 8500, 12600], biomes: [BIOMES.LEMBAH_SAWAH, BIOMES.PUNCAK_GUNUNG, BIOMES.PESISIR_PANTURA, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
@@ -69,7 +69,7 @@ export const LEVEL_CONFIGS = [
 export const STORY_DIALOGUES = {
   1: {
     intro: [
-      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Tion, tugas perdana lu bawa armada MBG 500 porsi! Rutenya lempang pesisir Pantura, tapi angin laut kencang. Gas itu keberanian, rem itu kebijaksanaan, bawa kargo aman itu kehormatan!' },
+      { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Tion, tugas perdana lu bawa armada MBG 500 porsi! Rutenya lempang pesisir Pantura, tapi angin laut kencang. Gas itu keberanian, rem itu kebijaksanaan, bawa kargo aman itu kehormatan!' },
       { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Siap Mang Abdul! Nasi pulen karbohidrat kompleks 150 gram per porsi (total ~650 kkal AKG Kemenkes) aman terkunci di boks pemanas. Biar adik-adik SD Puspa Bangsa bertenaga penuh!' }
     ],
     outro: [
@@ -109,7 +109,7 @@ export const STORY_DIALOGUES = {
   },
   5: {
     intro: [
-      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Tion! Rute lumpur terasering makin licin! Ingat ilmu Mang Abdul: licinnya jalanan itu kayak ujian asmara, kalau panik lu ngepot terbalik, kalau tenang lu selamat! Bawa bandeng presto tanpa durinya utuh!' },
+      { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Tion! Rute lumpur terasering makin licin! Ingat ilmu Mang Abdul: licinnya jalanan itu kayak ujian asmara, kalau panik lu ngepot terbalik, kalau tenang lu selamat! Bawa bandeng presto tanpa durinya utuh!' },
       { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Siap Mang Abdul! Bandeng presto khas Pantura kaya asam lemak omega-3 EPA & DHA 1200mg buat ketajaman daya pikir murid-murid harus tiba selamat!' }
     ],
     outro: [
@@ -150,7 +150,7 @@ export const STORY_DIALOGUES = {
   },
   9: {
     intro: [
-      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Tion! Rute perkebunan kopi mulai menanjak tajam! Susu murni pasteurisasi dari peternakan sapi lokal Kuningan di boks pendingin harus aman! Kalsium 300mg dan vitamin D itu investasi tulang anak bangsa!' },
+      { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Tion! Rute perkebunan kopi mulai menanjak tajam! Susu murni pasteurisasi dari peternakan sapi lokal Kuningan di boks pendingin harus aman! Kalsium 300mg dan vitamin D itu investasi tulang anak bangsa!' },
       { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Siap Mang Abdul! Susu pasteurisasi dingin terjaga higienis di 4 derajat Celsius. Bodi aerodinamis siap melesat menanjak!' }
     ],
     outro: [
@@ -160,7 +160,7 @@ export const STORY_DIALOGUES = {
   },
   10: {
     intro: [
-      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Udah level 10, Tion! Separuh perjalanan! Ingat filosofi Mang Abdul: di tanjakan terjal jangan bernafsu geber gas pol, jaga momentum dan putaran mesin! Ngedeketin cewek juga sama, jangan terburu-buru tapi harus konsisten!' },
+      { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Udah level 10, Tion! Separuh perjalanan! Ingat filosofi Mang Abdul: di tanjakan terjal jangan bernafsu geber gas pol, jaga momentum dan putaran mesin! Ngedeketin cewek juga sama, jangan terburu-buru tapi harus konsisten!' },
       { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Petuah emas Mang Abdul selalu meresap di sanubari! Hari ini ada capcay sayur pelangi kaya beta-karoten, likopen, dan vitamin K pembekuan darah sehat!' }
     ],
     outro: [
@@ -211,7 +211,7 @@ export const STORY_DIALOGUES = {
   },
   15: {
     intro: [
-      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Angin lembah bertiup kencang di jembatan tebing, Tion! Ingat petuah Mang Abdul: sop ayam kaldu hangat ini butuh keseimbangan bodi tingkat dewa. Miring sedikit kuah tumpah! Rilekskan tangan di kemudi!' },
+      { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Angin lembah bertiup kencang di jembatan tebing, Tion! Ingat petuah Mang Abdul: sop ayam kaldu hangat ini butuh keseimbangan bodi tingkat dewa. Miring sedikit kuah tumpah! Rilekskan tangan di kemudi!' },
       { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Siap Mang Abdul! Sop ayam kampung makaroni kaya kolagen alami 1500mg dan elektrolit ini bakal sampai di mangkok murid-murid dalam suhu prima!' }
     ],
     outro: [
@@ -251,7 +251,7 @@ export const STORY_DIALOGUES = {
   },
   19: {
     intro: [
-      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Besok hari penentuan, Tion! Hari ini gladi resik rute terberat 24.000 meter! Ingat petuah Mang Abdul: sopir sejati gak cuma piawai tancap gas di aspal, tapi juga punya keberanian sejati memperjuangkan cinta hidupnya!' },
+      { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Besok hari penentuan, Tion! Hari ini gladi resik rute terberat 24.000 meter! Ingat petuah Mang Abdul: sopir sejati gak cuma piawai tancap gas di aspal, tapi juga punya keberanian sejati memperjuangkan cinta hidupnya!' },
       { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Siap Mang Abdul! Rantang komplit 4 Sehat 5 Sempurna MBG (680 kkal standar Kemenkes RI AKG makan siang) siap kita antarkan tanpa kurang sebutir nasi pun!' }
     ],
     outro: [
@@ -263,14 +263,14 @@ export const STORY_DIALOGUES = {
     intro: [
       { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Ini dia Grand Finale Jon! 20 level udah lu taklukkan! Bodi truk baru berkilau, mesin bertenaga 3720 watt, ban mencengkeram tanah dengan sempurna!' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Seluruh murid SD, SMP, SMA Puspa Bangsa udah berkumpul bawa spanduk selamat datang Mas Tion sang pahlawan gizi!' },
-      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Buktikan jiwa kesatria kurir MBG Pantura sejati! Gas itu keberanian, rem itu kebijaksanaan, cinta Bu Yulie itu tujuan akhirmu! Berangkatkan kargo cintamu, Tion!' },
+      { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Buktikan jiwa kesatria kurir MBG Pantura sejati! Gas itu keberanian, rem itu kebijaksanaan, cinta Bu Yulie itu tujuan akhirmu! Berangkatkan kargo cintamu, Tion!' },
       { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'BISMILLAH! GAS POLLL DEMI GIZI 500 SISWA DAN CINTA SEJATI BU YULIE!' }
     ],
     outro: [
       { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Mas Tion... selama 20 perjalanan penuh tantangan ini, saya melihat ketulusan, tanggung jawab, dan kebaikan hati Mas Tion. Hari ini di depan seluruh sekolah, saya menerima perasaan Mas Tion...' },
       { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'HOREEEE! AKHIRNYA MAS TION GAK JOMBLO LAGI! MAKAN GIZI GRATIS SETIAP HARI!' },
       { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Selamat Jon! Lu resmi dinobatkan jadi Pahlawan Logistik Gizi dan Juara Cinta Pantura!' },
-      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Air mata bahagia Mang Abdul tumpah ruah... ini kemenangan terindah seorang sopir sejati!' },
+      { speaker: 'Mang Abdul', role: 'Sopir Senior Pantura', mood: 'wise', text: 'Air mata bahagia Mang Abdul tumpah ruah... ini kemenangan terindah seorang sopir sejati!' },
       { speaker: 'Tion', role: 'Kurir MBG', mood: 'happy', text: 'Alhamdulillah ya Allah... terima kasih semuanya! Misi MBG Sukses Sempurna, dan cintaku berlabuh di hati Bu Guru tercinta!' }
     ]
   }

@@ -309,7 +309,7 @@
       <!-- Story Narrative Box -->
       <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 text-xs sm:text-sm text-slate-300 leading-relaxed text-left space-y-2 mb-4 w-full">
         <p>
-          <b class="text-cyan-300">Kisah Mas Tion:</b> Driver muda tangguh armada MBG yang berjuang mengantar <b>500 porsi</b> paket gizi hangat demi Bu Yulie dan siswa-siswi <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b>, didampingi petuah bijak sang legenda supir elf Pantura, <b>Mang Ucup</b>!
+          <b class="text-cyan-300">Kisah Mas Tion:</b> Driver muda tangguh armada MBG yang berjuang mengantar <b>500 porsi</b> paket gizi hangat demi Bu Yulie dan siswa-siswi <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b>, didampingi petuah bijak sang legenda supir elf Pantura, <b>Mang Abdul</b>!
         </p>
         <p class="flex items-start gap-1.5">
           <svg class="w-4 h-4 text-rose-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
@@ -454,7 +454,7 @@
       </div>
 
       <p class="text-xs text-slate-300 mb-3 italic">
-        "Siswa-siswi bersorak gembira mengacungkan sendok gizi! Bu Yulie tersenyum bangga menyambut Mas Tion sang pahlawan katering MBG binaan Mang Ucup!"
+        "Siswa-siswi bersorak gembira mengacungkan sendok gizi! Bu Yulie tersenyum bangga menyambut Mas Tion sang pahlawan katering MBG binaan Mang Abdul!"
       </p>
 
       <!-- Victory Score Card -->
@@ -816,7 +816,7 @@
             <span id="dialogueLevelBadge" class="text-[10px] text-cyan-300 font-mono bg-cyan-950/80 border border-cyan-800/80 px-2 py-0.5 rounded-full">LEVEL 1</span>
           </div>
           <p id="dialogueText" class="text-xs sm:text-sm text-slate-200 leading-relaxed min-h-[44px]">
-            Siap Mang Ucup! 500 porsi paket gizi hangat aman terkunci di boks belakang!
+            Siap Mang Abdul! 500 porsi paket gizi hangat aman terkunci di boks belakang!
           </p>
         </div>
 
@@ -1009,15 +1009,15 @@
         </svg>`;
       }
 
-      // Default: Mang Ucup (Sopir Senior)
+      // Default: Mang Abdul (Sopir Senior)
       return `<svg viewBox="0 0 120 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <radialGradient id="ucupBg" cx="50%" cy="40%" r="50%">
+          <radialGradient id="abdulBg" cx="50%" cy="40%" r="50%">
             <stop offset="0%" stop-color="#a3e635" stop-opacity="0.3"/>
             <stop offset="100%" stop-color="#4d7c0f" stop-opacity="0.05"/>
           </radialGradient>
         </defs>
-        <circle cx="60" cy="60" r="54" fill="url(#ucupBg)" stroke="#84cc16" stroke-width="2"/>
+        <circle cx="60" cy="60" r="54" fill="url(#abdulBg)" stroke="#84cc16" stroke-width="2"/>
         <path d="M22 114 C24 92 36 84 60 84 C84 84 96 92 98 114 Z" fill="#854d0e" stroke="#0d2b52" stroke-width="2.5"/>
         <polygon points="60,84 50,98 60,114 70,98" fill="#713f12"/>
         <rect x="52" y="70" width="16" height="18" fill="#e2a374" stroke="#0d2b52" stroke-width="2"/>
@@ -1686,7 +1686,7 @@
         // Draw Floating Telolet Musical Notes
         this.drawTeloletNotes(vehicle.teloletNotes);
 
-        // Draw Truck Vehicle (Chassis, Boks Tosca, Mang Ucup, Rims)
+        // Draw Truck Vehicle (Chassis, Boks Tosca, Mang Abdul, Rims)
         this.drawVehicle(vehicle, inputs);
 
         // Draw Perfect Landing Floating Banner
@@ -4442,7 +4442,7 @@
         if (reason === 'ROLLOVER') {
           goIcon.innerHTML = '<svg class="w-14 h-14 text-rose-500 mx-auto drop-shadow-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>';
           if (goSubtitle) goSubtitle.innerText = 'Omprengmu telah tumpah!';
-          goDesc.innerText = 'MOBIL GWEH TERGULING! Atap truk menghantam tanah, boks toska ambyar, 500 botol susu meletus, kuah sayur lodeh tumpah ambyar ke layar kaca, dan Mas Tion terduduk lemas meratapi rantang gizi yang berserakan di depan Mang Ucup!';
+          goDesc.innerText = 'MOBIL GWEH TERGULING! Atap truk menghantam tanah, boks toska ambyar, 500 botol susu meletus, kuah sayur lodeh tumpah ambyar ke layar kaca, dan Mas Tion terduduk lemas meratapi rantang gizi yang berserakan di depan Mang Abdul!';
           if (this.renderer) {
             this.renderer.isLodehActive = true;
             this.renderer.lodehTimer = 3.5;

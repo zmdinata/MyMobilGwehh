@@ -39,7 +39,6 @@ export default function DialogueModal({
     'Bu Yulie': <GraduationCap className="text-pink-300 w-8 h-8 sm:w-10 sm:h-10" />,
     'Husna': <Smile className="text-yellow-300 w-8 h-8 sm:w-10 sm:h-10" />,
     'Zacky': <Wrench className="text-amber-300 w-8 h-8 sm:w-10 sm:h-10" />,
-    'Mang Ucup': <UserCheck className="text-sky-300 w-8 h-8 sm:w-10 sm:h-10" />,
     'Mang Abdul': <UserCheck className="text-sky-300 w-8 h-8 sm:w-10 sm:h-10" />,
     'Pak RT': <ShieldCheck className="text-emerald-300 w-8 h-8 sm:w-10 sm:h-10" />
   };

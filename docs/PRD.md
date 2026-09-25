@@ -2,7 +2,7 @@
 
 ## 1. Tujuan & Ruang Lingkup Produk
 
-**MBG: Road To School** adalah game browser 2D side-scrolling physics platformer bertema edukasi gizi dan petualangan cinta lokal. Pemain mengendalikan truk katering gizi **Mas Tion** yang mengarungi rute Pantura hingga pegunungan untuk mengantarkan 500 porsi paket makanan sehat hangat ke **Bu Yulie** di sekolah fiktif **SD, SMP, dan SMA Puspa Bangsa Cirebon** sebelum pukul 09:45 WIB, didampingi petuah supir veteran **Mang Ucup** dan bengkel modifikasi **Zacky**.
+**MBG: Road To School** adalah game browser 2D side-scrolling physics platformer bertema edukasi gizi dan petualangan cinta lokal. Pemain mengendalikan truk katering gizi **Mas Tion** yang mengarungi rute Pantura hingga pegunungan untuk mengantarkan 500 porsi paket makanan sehat hangat ke **Bu Yulie** di sekolah fiktif **SD, SMP, dan SMA Puspa Bangsa Cirebon** sebelum pukul 09:45 WIB, didampingi petuah supir veteran **Mang Abdul** dan bengkel modifikasi **Zacky**.
 
 Aplikasi menyediakan dua moda runtime:
 1. **Mode Modern Fullstack**: Next.js 16 (App Router) + React 19 + Turbopack + Tailwind v4, dengan UI modular, animasi VN, dan live preview bengkel.
@@ -15,7 +15,7 @@ Aplikasi menyediakan dua moda runtime:
 - **Kampanye 20 Level**: Mengarungi 20 rute dengan kenaikan jarak bertahap (800m hingga 4500m) melintasi 8 bioma berurutan.
 - **Dinamika Suspensi & Kargo**: Menjaga keseimbangan truk bermuatan rantang sayur lodeh dan botol susu murni agar tidak tumpah saat menanjak, melompat, atau mendarat di lereng terjal.
 - **Koleksi Koin & Upgrade Garasi**: Mengumpulkan koin gizi di lintasan untuk menaikkan level Mesin, Cengkeraman Ban, dan Suspensi di Garasi Zacky (Level 1–20), serta membuka skin bodi dan velg balap.
-- **Cerita Visual Novel Interaktif**: Menikmati dialog jenaka dan menghangatkan hati antara Mas Tion, Bu Yulie, Husna, Zacky, Mang Ucup, dan Pak RT di setiap awal dan akhir level.
+- **Cerita Visual Novel Interaktif**: Menikmati dialog jenaka dan menghangatkan hati antara Mas Tion, Bu Yulie, Husna, Zacky, Mang Abdul, dan Pak RT di setiap awal dan akhir level.
 
 ---
 
@@ -35,7 +35,7 @@ Aplikasi menyediakan dua moda runtime:
 
 - **Mas Tion**: Protagonis dan pengemudi utama truk MBG.
 - **Bu Yulie**: Guru muda teladan di Sekolah Puspa Bangsa, tokoh idaman Tion.
-- **Mang Ucup**: Supir veteran pembimbing Mas Tion (memberi nasihat mengemudi dan petuah hidup).
+- **Mang Abdul**: Supir veteran pembimbing Mas Tion (memberi nasihat mengemudi dan petuah hidup).
 - **Zacky**: Montir handal pemilik bengkel Garasi Zacky.
 - **Husna**: Siswi SMA ceria yang sering menggoda kedekatan Tion dan Bu Yulie.
 - **Pak RT**: Tokoh masyarakat pendukung program gizi anak sekolah.

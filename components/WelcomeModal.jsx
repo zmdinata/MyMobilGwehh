@@ -43,7 +43,7 @@ export default function WelcomeModal({ onStart = () => {} }) {
         {/* Story Narrative Box */}
         <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 text-xs sm:text-sm text-slate-300 leading-relaxed text-left space-y-2 mb-4 w-full">
           <p>
-            <b className="text-cyan-300">Kisah Mas Tion:</b> Driver muda tangguh armada MBG yang berjuang mengantar <b>500 porsi</b> paket gizi hangat demi Bu Yulie dan siswa-siswi <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b>, didampingi petuah bijak sang legenda supir elf Pantura, <b>Mang Ucup</b>!
+            <b className="text-cyan-300">Kisah Mas Tion:</b> Driver muda tangguh armada MBG yang berjuang mengantar <b>500 porsi</b> paket gizi hangat demi Bu Yulie dan siswa-siswi <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b>, didampingi petuah bijak sang legenda supir elf Pantura, <b>Mang Abdul</b>!
           </p>
           <p className="flex items-start gap-2">
             <Target className="text-rose-400 w-4 h-4 mt-0.5 shrink-0" />

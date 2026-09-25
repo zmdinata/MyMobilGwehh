@@ -22,7 +22,7 @@ export default function GameOverModal({
   let iconComponent = <AlertOctagon className="w-12 h-12 text-red-500 mx-auto mb-2 drop-shadow-lg" />;
   let title = 'MOBIL GWEH TERGULING';
   let subtitle = 'Omprengmu telah tumpah!';
-  let desc = 'MOBIL GWEH TERGULING! Atap truk menghantam tanah, boks toska ambyar, 500 botol susu meletus, kuah sayur lodeh tumpah ambyar ke layar kaca, dan Mas Tion terduduk lemas meratapi rantang gizi yang berserakan di depan Mang Ucup!';
+  let desc = 'MOBIL GWEH TERGULING! Atap truk menghantam tanah, boks toska ambyar, 500 botol susu meletus, kuah sayur lodeh tumpah ambyar ke layar kaca, dan Mas Tion terduduk lemas meratapi rantang gizi yang berserakan di depan Mang Abdul!';
 
   if (reason === 'FUEL') {
     iconComponent = <Fuel className="w-12 h-12 text-amber-500 mx-auto mb-2 drop-shadow-lg" />;

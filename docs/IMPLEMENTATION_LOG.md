@@ -19,10 +19,10 @@ Dokumen ini mencatat seluruh kronologi pembaruan teknis, audit, dan evolusi fitu
      - `app/api/levels/route.js`: Menyajikan konfigurasi 20 level dan transisi bioma.
      - `app/api/story/route.js`: Menyajikan seluruh naskah visual novel Intro & Outro.
      - `app/api/upgrades/route.js`: Menyajikan formula penskalaan upgrade komponen dan varian kosmetik.
-2. **Koreksi Kanon Karakter (Mas Tion vs. Mang Ucup)**:
-   - Menghapus kekeliruan narasi lama di mana Mang Ucup tertulis sebagai pengemudi.
+2. **Koreksi Kanon Karakter (Mas Tion vs. Mang Abdul)**:
+   - Menghapus kekeliruan narasi lama di mana mentor tertulis dengan nama supir lain.
    - **Mas Tion** dikukuhkan sebagai protagonis dan supir utama pengantar 500 porsi makanan gizi ke **Bu Yulie**.
-   - **Mang Ucup** ditempatkan pada posisi aslinya sebagai **Supir Veteran / Mentor Legendaris** pembimbing Tion.
+   - **Mang Abdul** ditempatkan pada posisi aslinya sebagai **Supir Veteran / Mentor Legendaris** pembimbing Tion.
 3. **Pembaruan Logo Resmi & Pembersihan "AI Slop"**:
    - Logo pita SVG lama digantikan dengan logo resmi PNG beresolusi tinggi: `assets/refresh/v11/sprites/logo.png`.
    - Lapisan scanline CRT dihilangkan agar tampilan grafis jernih dan bebas noise garis horizontal.
