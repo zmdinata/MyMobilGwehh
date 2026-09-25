@@ -13,12 +13,11 @@ assets/manifest.json versi 11 adalah sumber path, dimensi sumber, dan pivot. 16 
 | Bodi/roda | assets/refresh/v11/sprites/truck_body.png, truck_wheel.png | Canvas kendaraan dan hub suspensi |
 | Jeriken/koin/log | assets/refresh/v11/sprites/fuel_can.png, coin_gizi.png, obstacle_log.png | Item dan hazard |
 | Paket makanan | assets/refresh/v11/sprites/food_parcel.png | Ikon HUD dan layar kemenangan |
-| Latar jauh/tengah | assets/refresh/v11/backgrounds/biome1..4*.webp | Parallax empat bioma |
-| Logo/gate | assets/refresh/v3/ui/logo.svg, assets/refresh/v3/sprites/finish_gate.svg | Logo dan garis finis sekolah |
+| Gerbang/logo | assets/refresh/v11/sprites/finish_gate.png, logo.png | Garis finis sekolah dan logo modal awal |
+| Latar jauh/tengah | assets/refresh/v11/backgrounds/biome1..4*.webp | Parallax empat bioma (8 background PNG sumber) |
 
-Jumlahnya 6 PNG + 8 WebP + 2 SVG. Lima sprite dirender Canvas; paket makanan lewat elemen DOM. PNG logo/gerbang tidak ada pada unggahan yang tercatat, maka SVG v3 tetap aktif. Terrain fisik, sky dasar, collision, dan partikel bukan gambar panorama.
+Jumlahnya 8 PNG + 8 WebP (seluruh 16 slot aktif kini menggunakan aset visual hasil unggahan PNG, dengan SVG dipertahankan sebagai fallback). Seluruh sprite PNG telah dipotong presisi (<200 KB per berkas), dengan ground baseline gerbang sekolah menyentuh aspal tanah secara akurat dan logo badge tampil proporsional.
 
-File aktif saat audit: tiap PNG sprite <200 KB; tiap WebP <200 KB; delapan WebP latar berjumlah sekitar 815.6 KB. Ukuran berubah jika aset diganti; hitung ulang sebelum rilis. Dimensi dan pivot eksak lihat manifest.
 
 ## Sumber dan transparansi
 

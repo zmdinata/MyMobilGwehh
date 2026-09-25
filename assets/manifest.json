@@ -46,30 +46,30 @@
       "src": "assets/refresh/v11/sprites/obstacle_log.png",
       "fallback": "assets/refresh/v3/sprites/obstacle_log.svg",
       "width": 192,
-      "height": 192,
+      "height": 80,
       "pivot": {
         "x": 96,
-        "y": 96
+        "y": 40
       }
     },
     "finishGate": {
-      "src": "assets/refresh/v3/sprites/finish_gate.svg",
-      "fallback": null,
-      "width": 420,
-      "height": 300,
+      "src": "assets/refresh/v11/sprites/finish_gate.png",
+      "fallback": "assets/refresh/v3/sprites/finish_gate.svg",
+      "width": 520,
+      "height": 200,
       "pivot": {
         "x": 0,
-        "y": 300
+        "y": 200
       }
     },
     "gameLogo": {
-      "src": "assets/refresh/v3/ui/logo.svg",
-      "fallback": null,
-      "width": 720,
-      "height": 200,
+      "src": "assets/refresh/v11/sprites/logo.png",
+      "fallback": "assets/refresh/v3/ui/logo.svg",
+      "width": 350,
+      "height": 350,
       "pivot": {
-        "x": 360,
-        "y": 100
+        "x": 175,
+        "y": 175
       }
     },
     "biome1Distant": {

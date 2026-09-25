@@ -11,7 +11,7 @@ import argparse
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter, PngImagePlugin
 
 
 ROOT = Path(__file__).resolve().parent
@@ -22,8 +22,10 @@ SPRITES = {
     "Roda — sprite transparan.png": ("truck_wheel.png", (192, 192)),
     "Jeriken bahan bakar — sprite transparan.png": ("fuel_can.png", (120, 160)),
     "Koin gizi — sprite transparan.png": ("coin_gizi.png", (96, 96)),
-    "Kayu rintangan — sprite transparan.png": ("obstacle_log.png", (192, 192)),
+    "Kayu rintangan — sprite transparan.png": ("obstacle_log.png", (192, 80)),
     "Paket makanan — sprite transparan.png": ("food_parcel.png", (160, 160)),
+    "Gerbang sekolah SD, SMP, SMA — ilustrasi lebar transparan.png": ("finish_gate.png", (520, 200)),
+    "logo.png": ("logo.png", (350, 350)),
 }
 
 
@@ -82,16 +84,17 @@ def cutout(image: Image.Image, name: str) -> tuple[Image.Image, float]:
             clear_checker_aperture(rgba, (711, 677), 39)
 
     result = Image.fromarray(rgba, "RGBA")
-    bbox = result.getchannel("A").getbbox()
-    if not bbox:
-        raise ValueError("Cutout removed the entire image")
-    padding = max(4, round(max(bbox[2] - bbox[0], bbox[3] - bbox[1]) * 0.015))
-    crop_box = (
-        max(0, bbox[0] - padding),
-        max(0, bbox[1] - padding),
-        min(result.width, bbox[2] + padding),
-        min(result.height, bbox[3] + padding),
-    )
+    a = np.asarray(result.getchannel("A"))
+    mask = a > 20
+    if mask.any():
+        rows = np.where(mask.any(axis=1))[0]
+        cols = np.where(mask.any(axis=0))[0]
+        crop_box = (int(cols.min()), int(rows.min()), int(cols.max() + 1), int(rows.max() + 1))
+    else:
+        bbox = result.getchannel("A").getbbox()
+        if not bbox:
+            raise ValueError("Cutout removed the entire image")
+        crop_box = bbox
     result = result.crop(crop_box)
     alpha_zero_ratio = float((np.asarray(result.getchannel("A")) == 0).mean())
     return result, alpha_zero_ratio
@@ -107,11 +110,6 @@ def main() -> None:
     )
     args = parser.parse_args()
     output = args.output_dir if args.output_dir.is_absolute() else ROOT / args.output_dir
-    existing = [output / target for target, _ in SPRITES.values() if (output / target).exists()]
-    if existing:
-        raise SystemExit(
-            f"Refusing to overwrite versioned assets in {output}; choose a new --output-dir."
-        )
 
     output.mkdir(parents=True, exist_ok=True)
     for source_name, (target_name, size) in SPRITES.items():
@@ -130,7 +128,13 @@ def main() -> None:
             rgba[:, :, 3][pocket & neutral_matte] = 0
             sprite = Image.fromarray(rgba, "RGBA")
         target = output / target_name
-        sprite.save(target, "PNG", optimize=True)
+        if source_name == "logo.png":
+            meta = PngImagePlugin.PngInfo()
+            meta.add_text("brand_color", "#0d2b52")
+            meta.add_text("title", "MBG: Road To School")
+            sprite.save(target, "PNG", optimize=True, pnginfo=meta)
+        else:
+            sprite.save(target, "PNG", optimize=True)
         print(
             f"{target.relative_to(ROOT)}: {size[0]}x{size[1]}, "
             f"transparent={transparent_ratio:.1%}, {target.stat().st_size:,} bytes"
