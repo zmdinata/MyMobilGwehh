@@ -65,14 +65,24 @@ Setiap level memiliki target jarak tempuh dan kombinasi bioma yang semakin menan
 
 ## 4. Garasi Zacky (Upgrade & Kustomisasi)
 
-Pemain dapat memodifikasi kendaraan di Garasi Zacky menggunakan koin gizi yang diperoleh dari lintasan:
+Pemain dapat memodifikasi kendaraan di Garasi Zacky menggunakan koin gizi yang diperoleh dari lintasan maupun bonus akrobatik stunt:
 - **Upgrade Komponen (Level 1 – 20)**:
+  - **Formula Biaya Eksponensial Agresif**: $\text{Cost}(\text{level}) = \text{round}\left(100 \times 1.25^{\text{level} - 1}\right)$ (Level 1: 100 koin, Level 5: 244 koin, Level 10: 745 koin, Level 20: 5.551 koin; total $\approx 26.540$ koin per komponen).
   - **Mesin (*Engine*)**: Meningkatkan daya dorong tanjakan curam dari `2200` hingga `3720`.
   - **Grip Ban (*Tires*)**: Mengurangi selip dan meningkatkan cengkeraman jalan dari `1.00x` hingga `1.57x`.
-  - **Suspensi (*Suspension*)**: Menguatkan pegas $K$ (180 s.d. 256) dan damper $C$ (18.8 s.d. 26.4) agar bodi mobil tidak mudah terpelanting.
-- **Kustomisasi Kosmetik**:
-  - 5 Varian Skin Bodi Truk: *Standard MBG Box*, *Speedy Courier (Lv 4)*, *Mountain 4x4 (Lv 8)*, *Retro Classic (Lv 12)*, *Sport Tuned (Lv 16)*.
-  - 4 Varian Velg Roda: *Stock Steelie*, *Gold Racing Alloy (Lv 5)*, *Mud Beadlock (Lv 10)*, *White-Wall Cruiser (Lv 15)*.
+  - **Suspensi (*Suspension*)**: Menguatkan pegas $K$ (180 s.d. 256) dan damper $C$ (18.8 s.d. 26.4) serta torsi putaran udara (+3%/level) agar bodi mobil tidak mudah terpelanting.
+- **Kustomisasi Kosmetik (Skala Dinamis Level Unlock)**:
+  - 5 Varian Skin Bodi Truk:
+    - *Standard MBG Box* (Unlock Lv 1): **0 Koin (Gratis)** — Standard Box
+    - *Speedy Courier* (Unlock Lv 4): **580 Koin** (+5% Top Speed)
+    - *Mountain 4x4* (Unlock Lv 8): **1.430 Koin** (+5% Tire Grip)
+    - *Retro Classic* (Unlock Lv 12): **3.500 Koin** (+5% Shock Damping)
+    - *Sport Tuned* (Unlock Lv 16): **9.500 Koin** (+10% Top Speed)
+  - 4 Varian Velg Roda:
+    - *Stock Steelie* (Unlock Lv 1): **0 Koin (Gratis)**
+    - *Gold Racing Alloy* (Unlock Lv 5): **730 Koin**
+    - *Mud Beadlock* (Unlock Lv 10): **2.200 Koin**
+    - *White-Wall Cruiser* (Unlock Lv 15): **6.800 Koin**
 
 ---
 

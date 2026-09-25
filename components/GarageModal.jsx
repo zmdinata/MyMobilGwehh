@@ -32,22 +32,22 @@ export default function GarageModal({
   const previewCanvasRef = useRef(null);
 
   const getUpgradeCost = (currentLvl) => {
-    return Math.round(50 * Math.pow(1.35, currentLvl - 1));
+    return Math.round(100 * Math.pow(1.25, currentLvl - 1));
   };
 
   const skins = [
     { id: 'standard', name: 'Standard MBG Box', unlockLevel: 1, price: 0, color: '#0d9488', bonus: 'Standard' },
-    { id: 'speedy', name: 'Speedy Courier', unlockLevel: 4, price: 200, color: '#0284c7', bonus: '+5% Speed' },
-    { id: 'mountain', name: 'Mountain 4x4', unlockLevel: 8, price: 500, color: '#b45309', bonus: '+5% Grip' },
-    { id: 'retro', name: 'Retro Classic', unlockLevel: 12, price: 1200, color: '#be123c', bonus: '+5% Shock' },
-    { id: 'sport', name: 'Sport Tuned', unlockLevel: 16, price: 3000, color: '#4338ca', bonus: '+10% Speed' }
+    { id: 'speedy', name: 'Speedy Courier', unlockLevel: 4, price: 580, color: '#0284c7', bonus: '+5% Speed' },
+    { id: 'mountain', name: 'Mountain 4x4', unlockLevel: 8, price: 1430, color: '#b45309', bonus: '+5% Grip' },
+    { id: 'retro', name: 'Retro Classic', unlockLevel: 12, price: 3500, color: '#be123c', bonus: '+5% Shock' },
+    { id: 'sport', name: 'Sport Tuned', unlockLevel: 16, price: 9500, color: '#4338ca', bonus: '+10% Speed' }
   ];
 
   const rims = [
     { id: 'stock', name: 'Stock Steelie', unlockLevel: 1, price: 0, color: '#64748b', bonus: 'Standard' },
-    { id: 'gold', name: 'Gold Racing Alloy', unlockLevel: 5, price: 250, color: '#eab308', bonus: 'Gold Rim' },
-    { id: 'beadlock', name: 'Mud Offroad Beadlock', unlockLevel: 10, price: 800, color: '#ef4444', bonus: 'Mud Beadlock' },
-    { id: 'whitewall', name: 'White-Wall Classic', unlockLevel: 15, price: 2000, color: '#f8fafc', bonus: 'White-Wall' }
+    { id: 'gold', name: 'Gold Racing Alloy', unlockLevel: 5, price: 730, color: '#eab308', bonus: 'Gold Rim' },
+    { id: 'beadlock', name: 'Mud Offroad Beadlock', unlockLevel: 10, price: 2200, color: '#ef4444', bonus: 'Mud Beadlock' },
+    { id: 'whitewall', name: 'White-Wall Classic', unlockLevel: 15, price: 6800, color: '#f8fafc', bonus: 'White-Wall' }
   ];
 
   // Render live truck preview on mini canvas

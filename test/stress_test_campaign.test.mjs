@@ -56,10 +56,10 @@ test('Campaign Simulation - Verify all 20 levels can be generated and simulated 
 });
 
 test('Economy & Upgrades - Progression cost curve and wallet deduction', () => {
-  // Level upgrade costs formula: round(15 * (1.18)^(level - 1))
+  // Aggressive exponential upgrade cost formula: round(100 * (1.25)^(level - 1))
   function getCost(lvl) {
     if (lvl >= 20) return null;
-    return Math.round(15 * Math.pow(1.18, lvl - 1));
+    return Math.round(100 * Math.pow(1.25, lvl - 1));
   }
 
   let totalCostPerStat = 0;
@@ -68,8 +68,8 @@ test('Economy & Upgrades - Progression cost curve and wallet deduction', () => {
     assert.ok(cost > 0, `Cost for Level ${l} -> ${l + 1} is positive (${cost})`);
     totalCostPerStat += cost;
   }
-  // Total cost from level 1 to 20 should be around 1800-2000 coins
-  assert.ok(totalCostPerStat > 1500 && totalCostPerStat < 2500, `Total cost to max upgrade is balanced (~${totalCostPerStat})`);
+  // Total cost from level 1 to 20 should be around 25000-29000 coins
+  assert.ok(totalCostPerStat > 24000 && totalCostPerStat < 29000, `Total cost to max upgrade is balanced (~${totalCostPerStat})`);
 
   // Max level returns null
   assert.equal(getCost(20), null, 'Level 20 cannot be upgraded further');

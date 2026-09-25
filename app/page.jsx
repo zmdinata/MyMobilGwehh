@@ -160,7 +160,7 @@ export default function GamePage() {
   };
 
   const handleUpgrade = (type) => {
-    const cost = Math.round(50 * Math.pow(1.35, upgrades[type] - 1));
+    const cost = Math.round(100 * Math.pow(1.25, upgrades[type] - 1));
     if (coins >= cost && upgrades[type] < 20) {
       setCoins(coins - cost);
       setUpgrades(prev => ({ ...prev, [type]: prev[type] + 1 }));

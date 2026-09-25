@@ -3818,7 +3818,7 @@
 
       getUpgradeCost(level) {
         if (level >= 20) return null;
-        return Math.floor(10 + level * 8);
+        return Math.round(100 * Math.pow(1.25, level - 1));
       }
 
       initDOM() {
@@ -3997,7 +3997,7 @@
 
         // Skin Selector Buttons with Level Unlock Validation & Coin Purchase
         const skinLevelRequirements = { standard: 1, speedy: 4, mountain: 8, retro: 12, sport: 16 };
-        const skinPrices = { standard: 0, speedy: 200, mountain: 500, retro: 1200, sport: 3000 };
+        const skinPrices = { standard: 0, speedy: 580, mountain: 1430, retro: 3500, sport: 9500 };
         const skinNames = { standard: 'Standard MBG', speedy: 'Speedy Courier', mountain: 'Mountain Explorer', retro: 'Retro Food Truck', sport: 'Sport Racing' };
         ['standard', 'speedy', 'mountain', 'retro', 'sport'].forEach((key) => {
           const btn = this.skinButtons[key];
@@ -4035,7 +4035,7 @@
 
         // Rim Selector Buttons with Level Unlock Validation & Coin Purchase
         const rimLevelRequirements = { standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
-        const rimPrices = { standard: 0, gold: 250, beadlock: 800, whitewall: 2000 };
+        const rimPrices = { standard: 0, gold: 730, beadlock: 2200, whitewall: 6800 };
         const rimNames = { standard: 'Standard Steel', gold: 'Gold Alloy', beadlock: 'Mud Beadlock', whitewall: 'White-Wall Retro' };
         ['standard', 'gold', 'beadlock', 'whitewall'].forEach((key) => {
           const btn = this.rimButtons[key];
@@ -4392,7 +4392,7 @@
         // Highlight selected skin & show unlock level badges and purchase prices
         const skinReqs = { standard: 1, speedy: 4, mountain: 8, retro: 12, sport: 16 };
         const skinNames = { standard: 'Standard MBG', speedy: 'Speedy Courier', mountain: 'Mountain Explorer', retro: 'Retro Food Truck', sport: 'Sport Racing' };
-        const skinPrices = { standard: 0, speedy: 200, mountain: 500, retro: 1200, sport: 3000 };
+        const skinPrices = { standard: 0, speedy: 580, mountain: 1430, retro: 3500, sport: 9500 };
         const skinBonuses = { standard: 'Standard', speedy: '+5% Speed', mountain: '+5% Grip', retro: '+5% Shock', sport: '+10% Speed' };
         const purchasedSkins = this.saveData.purchasedSkins || ['standard'];
 
@@ -4423,7 +4423,7 @@
         // Highlight selected rim & show unlock level badges and purchase prices
         const rimReqs = { standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
         const rimNames = { standard: 'Standard Steel', gold: 'Gold Alloy', beadlock: 'Mud Beadlock', whitewall: 'White-Wall Retro' };
-        const rimPrices = { standard: 0, gold: 250, beadlock: 800, whitewall: 2000 };
+        const rimPrices = { standard: 0, gold: 730, beadlock: 2200, whitewall: 6800 };
         const purchasedRims = this.saveData.purchasedRims || ['standard'];
 
         for (const [key, btn] of Object.entries(this.rimButtons)) {
