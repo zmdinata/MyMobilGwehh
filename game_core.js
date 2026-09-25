@@ -33,11 +33,281 @@ export const PHYSICS_CONSTANTS = {
   REVERSE_RAMP_UP: 4.0      // per second; prevents an abrupt reverse snap
 };
 
+export const LEVEL_CONFIGS = [
+  { level: 1, name: 'Tugas Pagi Pertama', finishMeters: 800, distanceMeters: 800, totalMeters: 900, timeLimit: 90, timeLimitSec: 90, biomes: [BIOMES.PANTURA, BIOMES.SEKOLAH] },
+  { level: 2, name: 'Angin Pesisir & Senyum Pertama', finishMeters: 900, distanceMeters: 900, totalMeters: 1000, timeLimit: 95, timeLimitSec: 95, biomes: [BIOMES.PANTURA, BIOMES.SEKOLAH] },
+  { level: 3, name: 'Cieee Mas Tion!', finishMeters: 1000, distanceMeters: 1000, totalMeters: 1100, timeLimit: 100, timeLimitSec: 100, biomes: [BIOMES.PANTURA, BIOMES.SAWAH, BIOMES.SEKOLAH] },
+  { level: 4, name: 'Setelan Bengkel Zacky', finishMeters: 1100, distanceMeters: 1100, totalMeters: 1200, timeLimit: 105, timeLimitSec: 105, biomes: [BIOMES.PANTURA, BIOMES.SAWAH, BIOMES.SEKOLAH] },
+  { level: 5, name: 'Hujan Gerimis Pantura', finishMeters: 1200, distanceMeters: 1200, totalMeters: 1300, timeLimit: 110, timeLimitSec: 110, biomes: [BIOMES.PANTURA, BIOMES.SAWAH, BIOMES.SEKOLAH] },
+  { level: 6, name: 'Kubangan Lumpur Terasering', finishMeters: 1350, distanceMeters: 1350, totalMeters: 1450, timeLimit: 120, timeLimitSec: 120, biomes: [BIOMES.SAWAH, BIOMES.PANTURA, BIOMES.SEKOLAH] },
+  { level: 7, name: 'Botol Air Minum Bu Yulie', finishMeters: 1500, distanceMeters: 1500, totalMeters: 1600, timeLimit: 125, timeLimitSec: 125, biomes: [BIOMES.PANTURA, BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.SEKOLAH] },
+  { level: 8, name: 'Misi Mak Comblang Husna', finishMeters: 1650, distanceMeters: 1650, totalMeters: 1750, timeLimit: 130, timeLimitSec: 130, biomes: [BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.PANTURA, BIOMES.SEKOLAH] },
+  { level: 9, name: 'Uji Shockbreaker Anyar', finishMeters: 1800, distanceMeters: 1800, totalMeters: 1900, timeLimit: 135, timeLimitSec: 135, biomes: [BIOMES.GUNUNG, BIOMES.SAWAH, BIOMES.PANTURA, BIOMES.SEKOLAH] },
+  { level: 10, name: 'Petuah Sang Legenda Mang Ucup', finishMeters: 2000, distanceMeters: 2000, totalMeters: 2100, timeLimit: 140, timeLimitSec: 140, biomes: [BIOMES.PANTURA, BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.SEKOLAH] },
+  { level: 11, name: 'Tanjakan Kabut Perbukitan', finishMeters: 2200, distanceMeters: 2200, totalMeters: 2300, timeLimit: 150, timeLimitSec: 150, biomes: [BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.SEKOLAH] },
+  { level: 12, name: 'Melayang Demi Bu Guru', finishMeters: 2400, distanceMeters: 2400, totalMeters: 2500, timeLimit: 155, timeLimitSec: 155, biomes: [BIOMES.PANTURA, BIOMES.GUNUNG, BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.SEKOLAH] },
+  { level: 13, name: 'Surat Rantang Rahasia', finishMeters: 2600, distanceMeters: 2600, totalMeters: 2700, timeLimit: 160, timeLimitSec: 160, biomes: [BIOMES.GUNUNG, BIOMES.SAWAH, BIOMES.PANTURA, BIOMES.GUNUNG, BIOMES.SEKOLAH] },
+  { level: 14, name: 'Pipi Merah di Ruang Guru', finishMeters: 2800, distanceMeters: 2800, totalMeters: 2900, timeLimit: 170, timeLimitSec: 170, biomes: [BIOMES.PANTURA, BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.SEKOLAH] },
+  { level: 15, name: 'Batu Curam & Mesin Stage 15', finishMeters: 3000, distanceMeters: 3000, totalMeters: 3100, timeLimit: 175, timeLimitSec: 175, biomes: [BIOMES.GUNUNG, BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.PANTURA, BIOMES.GUNUNG, BIOMES.SEKOLAH] },
+  { level: 16, name: 'Payung Teduh di Depan Gerbang', finishMeters: 3300, distanceMeters: 3300, totalMeters: 3400, timeLimit: 180, timeLimitSec: 180, biomes: [BIOMES.PANTURA, BIOMES.GUNUNG, BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.SAWAH, BIOMES.SEKOLAH] },
+  { level: 17, name: 'Dukungan Penuh Zacky & Husna', finishMeters: 3600, distanceMeters: 3600, totalMeters: 3700, timeLimit: 190, timeLimitSec: 190, biomes: [BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.PANTURA, BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.PANTURA, BIOMES.SEKOLAH] },
+  { level: 18, name: 'Tanjakan Penentu Nyali', finishMeters: 3900, distanceMeters: 3900, totalMeters: 4000, timeLimit: 195, timeLimitSec: 195, biomes: [BIOMES.GUNUNG, BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.PANTURA, BIOMES.GUNUNG, BIOMES.SAWAH, BIOMES.SEKOLAH] },
+  { level: 19, name: 'Persiapan Pesta Gizi Akbar', finishMeters: 4200, distanceMeters: 4200, totalMeters: 4300, timeLimit: 200, timeLimitSec: 200, biomes: [BIOMES.PANTURA, BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.PANTURA, BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.SAWAH, BIOMES.SEKOLAH] },
+  { level: 20, name: 'Rute Pamungkas: Demi Bu Guru Tercinta', finishMeters: 4500, distanceMeters: 4500, totalMeters: 4600, timeLimit: 210, timeLimitSec: 210, biomes: [BIOMES.PANTURA, BIOMES.SAWAH, BIOMES.GUNUNG, BIOMES.SEKOLAH] }
+];
+
+export const STORY_DIALOGUES = {
+  1: {
+    intro: [
+      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Tion, hari ini tugas perdana lu bawa armada MBG. Rutenya lempang pesisir Pantura, tapi jangan lengah!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Siap Mang Ucup! 500 porsi paket gizi hangat aman terkunci di boks belakang. Gaskeun!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Selamat pagi! Mas Tion ya? Terima kasih banyak ya, kiriman makanannya tiba tepat waktu.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(A-aduh manis banget senyumnya... jantungku kok malah balapan melebihi rpm mesin!)' }
+    ]
+  },
+  2: {
+    intro: [
+      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'craftsman', text: 'Gimana armada kemarin, Jon? Masih enak kan tarikannya? Rajin-rajin kumpulin koin gizi di jalan buat modal upgrade!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Aman Zack! Pagi ini hawanya sejuk, semangat antar makanan ke Bu Yulie... eh, maksudnya ke sekolah!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion kelihatan keringetan? Ini ada teh manis hangat dari ruang guru, diminum dulu Mas.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'E-eh, terima kasih banyak Bu Yulie... berkah banget rasanya pagi-pagi begini.' }
+    ]
+  },
+  3: {
+    intro: [
+      { speaker: 'Husna', role: 'Siswi SMA', mood: 'flirt', text: 'Hehehe, Mas Tion! Dari kejauhan suara klakson teloletnya udah ketebak banget!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Husna! Jangan nongkrong di pinggir jalan, nanti telat masuk kelas lho!' }
+    ],
+    outro: [
+      { speaker: 'Husna', role: 'Siswi SMA', mood: 'flirt', text: 'Cieee Mas Tion! Matanya curi-curi pandang ke Bu Yulie mulu. Mau aku comblangin gak nih?' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Hush! Husna ngomongnya kenceng amat, malu didenger guru lain tau!' }
+    ]
+  },
+  4: {
+    intro: [
+      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'craftsman', text: 'Hari ini rute mulai masuk area persawahan, Jon. Tanahnya gembur dan licin, lu butuh grip ban lebih mantap!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Untung koin gizi kemarin udah kekumpul buat poles grip di bengkel lu, Zack!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Anak-anak suka sekali menu hari ini, Mas Tion. Sayur lodeh dan ayam serundengnya gurih hangat!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Alhamdulillah Bu! Selama Bu Yulie dan murid-murid suka, saya gas terus sekuat tenaga!' }
+    ]
+  },
+  5: {
+    intro: [
+      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Langit mendung di atas pesisir, Tion. Jalanan aspal basah gampang bikin mobil melintir. Mainkan pedal rem sehalus sutra!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Siap Mang Ucup, kestabilan mobil dan keamanan kargo gizi nomor satu!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'concern', text: 'Untung Mas Tion tiba sebelum hujan lebat turun. Hati-hati ya Mas kalau jalanan licin.' },
+      { speaker: 'Husna', role: 'Siswi SMA', mood: 'flirt', text: 'Tuh kan Mas Tion! Bu Yulie dari tadi nengok ke pintu gerbang terus nungguin Mas Tion!' }
+    ]
+  },
+  6: {
+    intro: [
+      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'thinking', text: 'Kubangan lumpur di persawahan depan cukup dalam, Jon! Jangan asal bejek gas biar ban gak slip di tempat!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Fokus penuh! Rantang gizi gak boleh ada yang terciprat lumpur kotor!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Hebat sekali! Bodi truknya penuh cipratan lumpur, tapi ompreng makanannya tetap higienis dan rapi.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Dedikasi kurir gizi sejati, Bu Yulie! Bersih di dalam, tangguh di luar.' }
+    ]
+  },
+  7: {
+    intro: [
+      { speaker: 'Husna', role: 'Siswi SMA', mood: 'hungry', text: 'Mas Tion! Tadi Bu Yulie nitip pesan, katanya jangan ngebut-ngebut di tanjakan bukit ya!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Beneran Bu Yulie yang titip pesan, atau kamu yang iseng ngarang-ngarang, Husna?' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'concern', text: 'Husna benar kok Mas Tion, saya memang khawatir tanjakan bukit semakin terjal.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(Duh Gusti... diperhatikan begini bikin mesin mobil kalah panas sama pipi!)' }
+    ]
+  },
+  8: {
+    intro: [
+      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'craftsman', text: 'Gua denger gosip lu makin rajin narik gara-gara Bu Guru ya? Nih suspensi udah gua kencengin biar gak goyang!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Bantuin doa aja Zack, semoga tanjakan dan rintangan balok kayu hari ini lancar jaya!' }
+    ],
+    outro: [
+      { speaker: 'Husna', role: 'Siswi SMA', mood: 'flirt', text: 'Bocoran intel gratis nih Mas Tion! Bu Yulie sukanya cowok pekerja keras yang bertanggung jawab!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Makasih infonya detektif Husna! Nanti kutraktir susu murni porsi dobel!' }
+    ]
+  },
+  9: {
+    intro: [
+      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Bebatuan lepas di lereng kebun teh bisa bikin mobil mental kalau suspensinya kaku, Tion.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Zacky udah pasang per shockbreaker empuk Mang, siap melompat dan mendarat mulus!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Tadi dari jendela kantor guru, saya lihat mobil Mas Tion melompat anggun sekali di bukit!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Hehehe, demi mendaratkan senyuman di hadapan Bu Yulie tepat waktu!' }
+    ]
+  },
+  10: {
+    intro: [
+      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Udah level 10, Tion! Ingat ilmu Mang Ucup: gas itu keberanian, rem itu kebijaksanaan. Deketin cewek juga sama!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Siap petuah emasnya Mang! Bakal saya terapkan di pedal gas dan di lubuk hati!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Sudah sepuluh trayek Mas Tion mengantar tanpa pernah terlambat. Anak-anak makin sehat dan ceria.' },
+      { speaker: 'Husna', role: 'Siswi SMA', mood: 'cheer', text: 'Dan Mas Tion makin keren ya Bu kalau pakai kemeja kurir biru begini!' }
+    ]
+  },
+  11: {
+    intro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'concern', text: 'Mas Tion, jalur pegunungan atas berkabut pekat pagi ini. Jaga jarak pandang dan hati-hati ya.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Tenang Bu Yulie, klakson telolet MBG siap berkumandang menembus kabut!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Hati saya langsung tenang begitu mendengar alunan telolet Mas Tion di gerbang sekolah...' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Alunan telolet itu memang nada rindu khusus buat Bu Yulie kok...' }
+    ]
+  },
+  12: {
+    intro: [
+      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'thinking', text: 'Tanjakan grade 12 makin menantang, Jon! Lu butuh tenaga kuda lebih besar kalau mau nanjak tanpa tekor bensin!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Tabungan koin gizi udah siap buat upgrade mesin di bengkel lu, Zack!' }
+    ],
+    outro: [
+      { speaker: 'Husna', role: 'Siswi SMA', mood: 'cheer', text: 'Keren banget tadi standing wheelie di tikungan atas Mas! Udah kayak film action!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Yang penting paket gizinya mendarat dengan selamat tanpa tumpah setetes pun!' }
+    ]
+  },
+  13: {
+    intro: [
+      { speaker: 'Husna', role: 'Siswi SMA', mood: 'flirt', text: 'Mas Tion, aku ada ide cemerlang! Kita selipin kartu ucapan manis di rantang makan siang Bu Yulie!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Ehhh jangan Husna! Nanti kalau ketahuan kepala sekolah gimana urusannya?!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: '"Semangat mengajar bidadari Puspa Bangsa"... ini tulisan siapa ya Mas Tion?' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'A-anu Bu... itu... Husna yang nulis tapi idenya... eh bukan, maaf Bu!' }
+    ]
+  },
+  14: {
+    intro: [
+      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'craftsman', text: 'Gimana suratnya kemarin Jon? Sukses bikin Bu Guru baper gak? Hari ini rutenya panjang 2800 meter!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Gua hampir pingsan nahan grogi Zack! Sekarang harus fokus libas 6 bioma berliku!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion... kartu ucapan kemarin lucu dan manis sekali. Terima kasih sudah bikin saya tersenyum.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(Alhamdulillah ya Allah! Ternyata Bu Yulie suka!)' }
+    ]
+  },
+  15: {
+    intro: [
+      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Tanjakan ekstrem di depan dijuluki Tanjakan Gigi Satu. Mesin dan nyali lu harus siap penuh, Tion!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Zacky udah pasang komponen stage 15 Mang! Tanjakan terjal pun bakal kita taklukkan!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Luar biasa, tanjakan securam itu bisa dilewati tanpa terlambat satu detik pun.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Karena ada senyuman Bu Guru yang selalu saya nantikan di garis finis.' }
+    ]
+  },
+  16: {
+    intro: [
+      { speaker: 'Husna', role: 'Siswi SMA', mood: 'cheer', text: 'Mas Tion, bocoran berharga! Hari ini Bu Yulie ulang tahun lho! Mau kasih kejutan apa?' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Wah serius?! Aku harus bawa pengantaran paling sempurna dan kado terindah!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion basah kuyup karena gerimis? Mari payungan berdua sampai ke beranda sekolah...' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(Payungan berdua sama Bu Yulie... rasanya dunia serasa milik berdua!)' }
+    ]
+  },
+  17: {
+    intro: [
+      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'craftsman', text: 'Waktunya pembuktian Jon! 17 level udah lu taklukkan, keahlian nyetir lu udah sekelas juara reli!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Demi kesehatan anak-anak dan masa depan bersama Bu Yulie, gaskeun pol!' }
+    ],
+    outro: [
+      { speaker: 'Husna', role: 'Siswi SMA', mood: 'cheer', text: 'Ayo dong Mas Tion, jangan digantung terus! Nyatakan perasaan ke Bu Yulie pas festival besok!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Husnaaa! Jangan teriak-teriak di depan umum, malu didenger orang!' }
+    ]
+  },
+  18: {
+    intro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'concern', text: 'Angin kencang berhembus di bibir tebing Mas Tion. Jaga kestabilan bodi mobilnya ya.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Bodi aerodinamis dan ban berpola cengkeram tinggi siap menerjang angin bukit, Bu Yulie!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Saya bangga sekali melihat kegigihan dan tanggung jawab Mas Tion setiap hari.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Mendengar apresiasi dari Bu Yulie adalah bahan bakar terkuat di hati saya.' }
+    ]
+  },
+  19: {
+    intro: [
+      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Besok pesta gizi akbar 500 porsi paket komplit. Ini gladi resik rute terberat, Tion!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Siap Mang Ucup! Semua komponen mobil sudah di puncak performa maksimal!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Semua persiapan lancar berkat Mas Tion. Besok selesai acara... ada yang ingin saya bicarakan berdua.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(Deg-degan luar biasa! Apakah impian hatiku bakal terwujud besok?!)' }
+    ]
+  },
+  20: {
+    intro: [
+      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'craftsman', text: 'Ini dia Grand Finale Jon! Rute 4500 meter penuh melintasi seluruh Pantura, Sawah, Gunung, sampai Sekolah!' },
+      { speaker: 'Husna', role: 'Siswi SMA', mood: 'cheer', text: 'Semangat Mas Tion! Seluruh murid dan guru menanti di gerbang Puspa Bangsa!' },
+      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Buktikan jiwa kesatria kurir gizi sejati! Berangkatkan kargo cintamu, Tion!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'GAS POLL! DEMI GIZI ANAK BANGSA DAN CINTA BU YULIE!' }
+    ],
+    outro: [
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Mas Tion... perjalanan panjang ini membuktikan ketulusan dan ketangguhan hatimu. Saya menerima perasaan Mas Tion.' },
+      { speaker: 'Husna', role: 'Siswi SMA', mood: 'cheer', text: 'HOREEEE! AKHIRNYA JADIAN JUGA! MAKAN-MAKAN GIZI GRATIS!' },
+      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'craftsman', text: 'Selamat Jon! Lu resmi jadi Pahlawan Cinta dan Logistik Pantura!' },
+      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Tangis haru Mang Ucup gak terbendung lagi... selamat Tion dan Bu Yulie!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'happy', text: 'Alhamdulillah... terima kasih semuanya! Misi MBG Sukses Sempurna!' }
+    ]
+  }
+};
+
+export function buildLevelSegments(levelConfig) {
+  const biomes = levelConfig.biomes;
+  const count = biomes.length;
+  const total = levelConfig.totalMeters;
+  const schoolLen = Math.max(200, Math.min(400, Math.floor(total * 0.15)));
+  const remaining = total - schoolLen;
+  const otherCount = count - 1;
+  const chunk = otherCount > 0 ? remaining / otherCount : remaining;
+
+  const segments = [];
+  let currentStart = 0;
+  for (let i = 0; i < otherCount; i++) {
+    const nextEnd = Math.round(currentStart + chunk);
+    segments.push({
+      id: biomes[i].id,
+      name: biomes[i].name,
+      start: currentStart,
+      end: nextEnd
+    });
+    currentStart = nextEnd;
+  }
+  segments.push({
+    id: BIOMES.SEKOLAH.id,
+    name: BIOMES.SEKOLAH.name,
+    start: currentStart,
+    end: total
+  });
+  return segments;
+}
+
 export class TerrainSystem {
-  constructor(totalMeters = 4600) {
-    this.totalMeters = totalMeters;
-    this.totalPx = totalMeters * PHYSICS_CONSTANTS.METER_SCALE;
-    this.finishLineMeters = 4500;
+  constructor(totalMeters = 4600, levelConfig = null) {
+    if (levelConfig) {
+      this.levelConfig = levelConfig;
+      this.totalMeters = levelConfig.totalMeters || totalMeters;
+      this.finishLineMeters = levelConfig.finishMeters || (this.totalMeters - 100);
+      this.segments = buildLevelSegments(levelConfig);
+    } else {
+      this.levelConfig = null;
+      this.totalMeters = totalMeters;
+      this.finishLineMeters = 4500;
+      this.segments = null;
+    }
+    this.totalPx = this.totalMeters * PHYSICS_CONSTANTS.METER_SCALE;
     this.finishLinePx = this.finishLineMeters * PHYSICS_CONSTANTS.METER_SCALE;
 
     // Hazards and collectibles caches
@@ -49,7 +319,60 @@ export class TerrainSystem {
     this.fuelCans = []; // [meterX, collected]
     this.coins = [];    // [meterX, collected]
 
-    this.initHazardsAndItems();
+    if (this.levelConfig) {
+      this.initCustomLevelHazardsAndItems(this.levelConfig);
+    } else {
+      this.initHazardsAndItems();
+    }
+  }
+
+  initCustomLevelHazardsAndItems(cfg) {
+    this.puddles = [];
+    this.mudPits = [];
+    this.logs = [];
+    this.speedBumps = [];
+    this.launchRamps = [];
+    this.fuelCans = [];
+    this.coins = [];
+
+    // Distribute hazards according to segment biomes
+    for (const seg of this.segments) {
+      const segLen = seg.end - seg.start;
+      if (seg.id === 1 && segLen > 150) {
+        // Pantura puddles
+        const pMid = seg.start + segLen * 0.45;
+        this.puddles.push({ start: pMid - 35, end: pMid + 35 });
+      } else if (seg.id === 2 && segLen > 150) {
+        // Sawah mud pits
+        const mMid = seg.start + segLen * 0.5;
+        this.mudPits.push({ start: mMid - 40, end: mMid + 40 });
+      } else if (seg.id === 3 && segLen > 150) {
+        // Mountain wooden logs
+        const lMid = seg.start + segLen * 0.55;
+        this.logs.push({ x: Math.round(lMid), radius: 14 });
+      }
+    }
+
+    // Speed bumps in the school district approach
+    const fin = cfg.finishMeters;
+    this.speedBumps = [Math.max(100, fin - 240), Math.max(120, fin - 140), Math.max(140, fin - 60)];
+
+    // Launch kickers spaced every ~350m
+    for (let m = 280; m < fin - 150; m += 380) {
+      this.launchRamps.push({ start: m, rise: 12, drop: 6, height: 65 });
+    }
+
+    // Fuel canisters every ~380m
+    for (let m = 220; m < fin - 100; m += 380) {
+      this.fuelCans.push({ x: m, collected: false, dynamic: false });
+    }
+
+    // Coins scattered along hills
+    for (let m = 40; m < fin; m += 40) {
+      if (Math.sin(m * 0.05) > -0.2) {
+        this.coins.push({ x: m, collected: false });
+      }
+    }
   }
 
   initHazardsAndItems() {
@@ -106,6 +429,15 @@ export class TerrainSystem {
   }
 
   getBiomeAt(meterX) {
+    if (this.levelConfig && this.segments) {
+      for (let i = 0; i < this.segments.length; i++) {
+        if (meterX < this.segments[i].end) {
+          const id = this.segments[i].id;
+          return id === 1 ? BIOMES.PANTURA : id === 2 ? BIOMES.SAWAH : id === 3 ? BIOMES.GUNUNG : BIOMES.SEKOLAH;
+        }
+      }
+      return BIOMES.SEKOLAH;
+    }
     if (meterX < BIOMES.PANTURA.end) return BIOMES.PANTURA;
     if (meterX < BIOMES.SAWAH.end) return BIOMES.SAWAH;
     if (meterX < BIOMES.GUNUNG.end) return BIOMES.GUNUNG;
@@ -114,6 +446,39 @@ export class TerrainSystem {
 
   // Returns smooth 200m transition zone blend state (1100m-1300m, 2700m-2900m, 4100m-4300m)
   getBiomeBlend(meterX) {
+    if (this.levelConfig && this.segments) {
+      for (let i = 0; i < this.segments.length - 1; i++) {
+        const boundary = this.segments[i].end;
+        const bStart = boundary - 60;
+        const bEnd = boundary + 60;
+        if (meterX >= bStart && meterX <= bEnd) {
+          const rawT = (meterX - bStart) / (bEnd - bStart);
+          const t = this.smoothstep(0, 1, rawT);
+          const fromId = this.segments[i].id;
+          const toId = this.segments[i + 1].id;
+          const fromB = fromId === 1 ? BIOMES.PANTURA : fromId === 2 ? BIOMES.SAWAH : fromId === 3 ? BIOMES.GUNUNG : BIOMES.SEKOLAH;
+          const toB = toId === 1 ? BIOMES.PANTURA : toId === 2 ? BIOMES.SAWAH : toId === 3 ? BIOMES.GUNUNG : BIOMES.SEKOLAH;
+          return {
+            inTransition: true,
+            fromBiome: fromB,
+            toBiome: toB,
+            t: t,
+            alphaPrev: 1 - t,
+            alphaNext: t
+          };
+        }
+      }
+      const cur = this.getBiomeAt(meterX);
+      return {
+        inTransition: false,
+        fromBiome: cur,
+        toBiome: null,
+        t: 0,
+        alphaPrev: 1,
+        alphaNext: 0
+      };
+    }
+
     const transitions = [
       { start: 1100, end: 1300, from: BIOMES.PANTURA, to: BIOMES.SAWAH },
       { start: 2700, end: 2900, from: BIOMES.SAWAH, to: BIOMES.GUNUNG },
@@ -151,35 +516,59 @@ export class TerrainSystem {
     return x * x * (3 - 2 * x);
   }
 
-  getRawBiomeHeight(m, biomeId) {
+  getRawBiomeHeight(m, biomeId, segStart = null) {
     const baseElevation = 520;
+    if (segStart === null) {
+      if (biomeId === 1) {
+        // Biome 1: Pantura - Smooth start runway (0-160m) then coastal highway & launch ramps
+        if (m < 160) return baseElevation;
+        const smoothStart = Math.min(1.0, (m - 160) / 40);
+        const h1 = Math.sin((m - 160) * 0.08) * 40;
+        const h2 = Math.sin((m - 160) * 0.03) * 50;
+        const ramp = Math.sin((m - 160) * 0.12) * 25;
+        return baseElevation + (h1 + h2 + ramp) * smoothStart;
+      }
+      if (biomeId === 2) {
+        // Biome 2: Sawah - Stepped terraced rice paddies with table jumps and rolling mounds
+        const localM = m - 1200;
+        const terrace = Math.sin(localM * 0.07) * 55;
+        const rolls = Math.sin(localM * 0.14) * 26;
+        const baseWave = Math.sin(localM * 0.025) * 45;
+        return baseElevation - 30 + terrace + rolls + baseWave;
+      }
+      if (biomeId === 3) {
+        // Biome 3: Gunung - Mountain slopes & tea plantations with steep launch kickers
+        const localM = m - 2800;
+        const bigClimb = -Math.min(160, localM * 0.11);
+        const kicker = Math.sin(localM * 0.08) * 80;
+        const mountainWave = Math.sin(localM * 0.025) * 60;
+        return baseElevation - 50 + bigClimb + kicker + mountainWave;
+      }
+      // Biome 4: Suburb Cirebon - Approaching the fictional school district
+      const localM = m - 4200;
+      return baseElevation - 90 + Math.sin(localM * 0.04) * 20;
+    }
+
+    // Dynamic segments for custom 20-level mode
+    const localM = Math.max(0, m - segStart);
     if (biomeId === 1) {
-      // Biome 1: Pantura - Smooth start runway (0-160m) then coastal highway & launch ramps
-      if (m < 160) return baseElevation;
-      const smoothStart = Math.min(1.0, (m - 160) / 40);
-      const h1 = Math.sin((m - 160) * 0.08) * 40;
-      const h2 = Math.sin((m - 160) * 0.03) * 50;
-      const ramp = Math.sin((m - 160) * 0.12) * 25;
-      return baseElevation + (h1 + h2 + ramp) * smoothStart;
+      const h1 = Math.sin(localM * 0.08) * 40;
+      const h2 = Math.sin(localM * 0.03) * 50;
+      const ramp = Math.sin(localM * 0.12) * 25;
+      return baseElevation + (h1 + h2 + ramp);
     }
     if (biomeId === 2) {
-      // Biome 2: Sawah - Stepped terraced rice paddies with table jumps and rolling mounds
-      const localM = m - 1200;
       const terrace = Math.sin(localM * 0.07) * 55;
       const rolls = Math.sin(localM * 0.14) * 26;
       const baseWave = Math.sin(localM * 0.025) * 45;
       return baseElevation - 30 + terrace + rolls + baseWave;
     }
     if (biomeId === 3) {
-      // Biome 3: Gunung - Mountain slopes & tea plantations with steep launch kickers
-      const localM = m - 2800;
       const bigClimb = -Math.min(160, localM * 0.11);
       const kicker = Math.sin(localM * 0.08) * 80;
       const mountainWave = Math.sin(localM * 0.025) * 60;
       return baseElevation - 50 + bigClimb + kicker + mountainWave;
     }
-    // Biome 4: Suburb Cirebon - Approaching the fictional school district
-    const localM = m - 4200;
     return baseElevation - 90 + Math.sin(localM * 0.04) * 20;
   }
 
@@ -187,6 +576,62 @@ export class TerrainSystem {
   getHeight(pxX) {
     const m = pxX / PHYSICS_CONSTANTS.METER_SCALE;
     const baseElevation = 520; // Canvas baseline
+
+    if (this.levelConfig && this.segments) {
+      let y = baseElevation;
+      const blendDist = 60;
+      let matched = false;
+
+      for (let i = 0; i < this.segments.length - 1; i++) {
+        const b = this.segments[i].end;
+        if (m >= b - blendDist && m <= b + blendDist) {
+          const t = this.smoothstep(b - blendDist, b + blendDist, m);
+          y = (1 - t) * this.getRawBiomeHeight(m, this.segments[i].id, this.segments[i].start) + t * this.getRawBiomeHeight(m, this.segments[i + 1].id, this.segments[i + 1].start);
+          matched = true;
+          break;
+        }
+      }
+      if (!matched) {
+        if (m >= this.finishLineMeters - 20 && m <= this.finishLineMeters + 20) {
+          const t = this.smoothstep(this.finishLineMeters - 20, this.finishLineMeters + 20, m);
+          const lastSeg = this.segments[this.segments.length - 1];
+          y = (1 - t) * this.getRawBiomeHeight(m, BIOMES.SEKOLAH.id, lastSeg ? lastSeg.start : null) + t * (baseElevation - 100);
+        } else if (m > this.finishLineMeters + 20) {
+          y = baseElevation - 100;
+        } else {
+          let seg = this.segments.find(s => m >= s.start && m < s.end) || this.segments[this.segments.length - 1];
+          y = this.getRawBiomeHeight(m, seg.id, seg.start);
+        }
+      }
+
+      // Flat launch runway at start (0-140m) ensuring grounded vehicle placement
+      if (m < 100) {
+        y = baseElevation;
+      } else if (m < 140) {
+        const st = (m - 100) / 40;
+        y = baseElevation * (1 - st) + y * st;
+      }
+
+      for (const ramp of this.launchRamps) {
+        const crest = ramp.start + ramp.rise;
+        const end = crest + ramp.drop;
+        if (m >= ramp.start && m < crest) {
+          y -= ramp.height * this.smoothstep(ramp.start, crest, m);
+        } else if (m >= crest && m < end) {
+          y -= ramp.height * (1 - this.smoothstep(crest, end, m));
+        }
+      }
+
+      for (const sb of this.speedBumps) {
+        const dist = Math.abs(m - sb);
+        if (dist < 1.2) {
+          y -= Math.cos((dist / 1.2) * Math.PI * 0.5) * 10;
+        }
+      }
+
+      return y;
+    }
+
     const blendDist = 100; // 200m continuous transition zones (1100-1300m, 2700-2900m, 4100-4300m)
 
     let y;
@@ -372,6 +817,7 @@ export class PhysicsVehicle {
     this.cargoIntegrity = 100; // 0 to 100%
     this.enginePower = 2200;
     this.brakePower = 850;
+    this.tireGrip = 1.0;
     this.airPitchTorque = PHYSICS_CONSTANTS.AIR_PITCH_TORQUE;
     this.engineThrottle = 0;
     this.reverseThrottle = 0;
@@ -402,6 +848,18 @@ export class PhysicsVehicle {
 
   setSoundEngine(sound) {
     this.soundEngine = sound;
+  }
+
+  applyUpgrades(upgrades = {}) {
+    const engineLvl = Math.max(1, Math.min(20, upgrades.engine || 1));
+    const gripLvl = Math.max(1, Math.min(20, upgrades.grip || 1));
+    const suspLvl = Math.max(1, Math.min(20, upgrades.suspension || 1));
+
+    // Baseline Level 1 WAJIB TETAP: enginePower = 2200, kSpring = 180, kDamper = 18.8
+    this.enginePower = 2200 + (engineLvl - 1) * 80;
+    this.tireGrip = 1.0 + (gripLvl - 1) * 0.03;
+    this.kSpring = 180 + (suspLvl - 1) * 4;
+    this.kDamper = 18.8 + (suspLvl - 1) * 0.4;
   }
 
   // Update step with sub-stepping
@@ -735,6 +1193,7 @@ export class PhysicsVehicle {
       } else if (terrain.isInMudPit(meterX)) {
         tractionFactor = PHYSICS_CONSTANTS.MUD_SLIP_TRACTION;
       }
+      tractionFactor *= (this.tireGrip || 1.0);
 
       const vDotT = wheel.vx * tangent.x + wheel.vy * tangent.y;
 

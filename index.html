@@ -37,6 +37,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;800&family=Fredoka+One&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet" />
 
+  <!-- React 18 & ReactDOM via CDN (production UMD) -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
   <style>
     * {
       -webkit-tap-highlight-color: transparent;
@@ -148,8 +152,11 @@
       <!-- Center: Track Progress Bar with Biome Badges -->
       <div id="progressHud" class="flex-1 max-w-xs sm:max-w-md md:max-w-xl mx-2 pointer-events-auto bg-slate-900/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-2 sm:p-2.5 shadow-xl flex flex-col justify-center">
         <div class="flex justify-between items-center text-[10px] sm:text-xs font-bold text-slate-300 mb-1 px-1">
-          <span id="biomeLabel" class="text-cyan-300 uppercase tracking-wider truncate">Pantura Coastline</span>
-          <span class="font-mono text-slate-300"><span id="distVal" class="text-amber-300 font-bold">0</span> / 4500m</span>
+          <div class="flex items-center gap-1.5 overflow-hidden">
+            <span class="bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold">LVL <span id="hudLevelVal">1</span></span>
+            <span id="biomeLabel" class="text-cyan-300 uppercase tracking-wider truncate">Pantura Coastline</span>
+          </div>
+          <span class="font-mono text-slate-300"><span id="distVal" class="text-amber-300 font-bold">0</span> / <span id="hudTargetDist">4500</span>m</span>
         </div>
         <!-- Progress track container -->
         <div class="relative w-full h-4 sm:h-5 bg-slate-950 rounded-full p-0.5 border border-slate-700 overflow-visible flex items-center">
@@ -326,10 +333,11 @@
         *Disclaimer: Game dan sekolah Puspa Bangsa (SD, SMP, SMA) adalah fiktif untuk hiburan dan edukasi gizi; tidak berafiliasi dengan institusi nyata.
       </p>
 
-      <!-- Start Button -->
+      <!-- Start / Welcome Button -->
       <button id="startGameBtn" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 hover:from-blue-600 hover:to-sky-400 text-white font-fredoka text-lg sm:text-xl shadow-lg shadow-blue-500/30 transform active:scale-95 transition-all">
-        GASKEUN! BERANGKATKAN GIZI 🚚💨
+        MASUK KE MENU UTAMA (TAP TO START) 🚚💨
       </button>
+      <p id="startTapNotice" class="text-[11px] text-cyan-300 font-mono mt-2 animate-pulse">[ Sentuh layar atau klik tombol untuk mengaktifkan audio & masuk Menu Utama ]</p>
     </div>
   </div>
 
@@ -368,10 +376,18 @@
       </div>
 
       <!-- Action Buttons -->
-      <div class="flex gap-3 w-full">
-        <button id="goRestartBtn" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-red-500 to-amber-500 hover:from-red-400 hover:to-amber-400 text-slate-950 font-fredoka text-base sm:text-lg shadow-lg active:scale-95 transition-all">
+      <div class="flex flex-col gap-2 w-full">
+        <button id="goRestartBtn" class="w-full py-3 rounded-2xl bg-gradient-to-r from-red-500 to-amber-500 hover:from-red-400 hover:to-amber-400 text-slate-950 font-fredoka text-base sm:text-lg shadow-lg active:scale-95 transition-all">
           COBA LAGI [R] 🔄
         </button>
+        <div class="flex gap-2 w-full">
+          <button id="goGarageBtn" class="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-fredoka text-xs sm:text-sm shadow-md active:scale-95 transition-all">
+            KE GARASI ZACKY 🔧
+          </button>
+          <button id="goMenuBtn" class="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fredoka text-xs sm:text-sm border border-slate-600 shadow-md active:scale-95 transition-all">
+            MENU UTAMA 🏠
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -403,7 +419,7 @@
       </p>
 
       <!-- Victory Score Card -->
-      <div class="w-full bg-slate-800/80 border border-slate-700 rounded-2xl p-4 mb-5 text-xs sm:text-sm space-y-2 text-left font-mono">
+      <div class="w-full bg-slate-800/80 border border-slate-700 rounded-2xl p-4 mb-3 text-xs sm:text-sm space-y-2 text-left font-mono">
         <div class="flex justify-between">
           <span class="text-slate-400">Keutuhan Kargo:</span>
           <span id="vicCargo" class="text-emerald-400 font-bold">88%</span>
@@ -422,10 +438,29 @@
         </div>
       </div>
 
-      <!-- Action Button -->
-      <button id="vicRestartBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-blue-500 via-blue-600 to-sky-500 text-white font-fredoka text-lg shadow-lg shadow-blue-500/40 active:scale-95 transition-all">
-        GAS LAGI TRAYEK BERIKUTNYA! 🚀
-      </button>
+      <!-- Total Permanent Coins Display -->
+      <div class="w-full bg-slate-900/90 border border-amber-500/40 rounded-xl py-1.5 px-3 mb-4 text-xs font-mono text-amber-300 flex items-center justify-between">
+        <span>Tabungan Koin Gizi:</span>
+        <span class="font-bold text-amber-400 flex items-center gap-1">🪙 <span id="vicTotalCoins">0</span></span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col gap-2 w-full">
+        <button id="vicNextLevelBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-fredoka text-lg shadow-lg shadow-emerald-500/30 active:scale-95 transition-all">
+          LEVEL SELANJUTNYA 🚀
+        </button>
+        <div class="flex gap-2 w-full">
+          <button id="vicGarageBtn" class="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-fredoka text-xs sm:text-sm shadow-md active:scale-95 transition-all">
+            KE GARASI ZACKY 🔧
+          </button>
+          <button id="vicMenuBtn" class="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fredoka text-xs sm:text-sm border border-slate-600 shadow-md active:scale-95 transition-all">
+            MENU UTAMA 🏠
+          </button>
+        </div>
+        <button id="vicRestartBtn" class="w-full py-2 rounded-xl bg-slate-800/60 hover:bg-slate-700 text-slate-400 font-fredoka text-xs border border-slate-700">
+          GAS LAGI TRAYEK INI! 🔄
+        </button>
+      </div>
     </div>
   </div>
 
@@ -437,19 +472,464 @@
       <button id="resumeBtn" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-fredoka text-base mb-2">
         LANJUTKAN [ESC]
       </button>
-      <button id="pauseRestartBtn" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fredoka text-sm border border-slate-700">
+      <button id="pauseRestartBtn" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fredoka text-sm border border-slate-700 mb-2">
         ULANG DARI AWAL
+      </button>
+      <button id="pauseMenuBtn" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fredoka text-sm border border-slate-700">
+        MENU UTAMA 🏠
       </button>
     </div>
   </div>
 
+  <!-- MAIN MENU MODAL -->
+  <div id="mainMenuModal" class="hidden absolute inset-0 z-40 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div class="max-w-lg w-full bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-2 border-cyan-500/50 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden flex flex-col items-center text-center my-auto">
+      <div class="absolute -top-24 -right-24 w-52 h-52 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-52 h-52 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Badge row -->
+      <div class="flex items-center gap-2 mb-2">
+        <span class="bg-blue-500/20 border border-blue-400/60 text-sky-300 px-3 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider">
+          MBG Story Mode: 20 Level
+        </span>
+      </div>
+
+      <img src="assets/refresh/v3/ui/logo.svg" alt="" class="w-56 sm:w-72 h-auto max-h-20 object-contain mb-1" />
+      <h1 class="font-fredoka text-2xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-amber-300 drop-shadow mb-1">
+        MBG: Road To School
+      </h1>
+      <p class="text-xs text-slate-300 font-mono mb-4">
+        Kisah Cinta & Misi Antar 500 Porsi Gizi Mas Tion Menuju Bu Yulie
+      </p>
+
+      <!-- Player Save Status Bar -->
+      <div class="w-full bg-slate-800/80 border border-slate-700 rounded-2xl p-3 mb-5 flex items-center justify-between text-xs sm:text-sm font-mono">
+        <div class="flex items-center gap-2">
+          <span class="text-slate-400">Progres:</span>
+          <span class="text-cyan-300 font-bold">Level <span id="menuCurrentLevel">1</span> / 20</span>
+        </div>
+        <div class="flex items-center gap-1.5 text-amber-400 font-bold">
+          🪙 <span id="menuCoinCount">0</span> Koin Gizi
+        </div>
+      </div>
+
+      <!-- Menu Navigation Buttons -->
+      <div class="flex flex-col gap-3 w-full">
+        <button id="btnStoryContinue" class="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 hover:from-blue-500 hover:to-cyan-300 text-white font-fredoka text-lg sm:text-xl shadow-lg shadow-blue-500/30 transform active:scale-95 transition-all flex items-center justify-center gap-2">
+          <span>MULAI CERITA</span> <span>🚚💨</span>
+        </button>
+
+        <button id="btnLevelSelect" class="w-full py-3.5 rounded-2xl bg-slate-800 hover:bg-slate-700/90 text-cyan-300 font-fredoka text-base sm:text-lg border border-cyan-500/40 shadow-md transform active:scale-95 transition-all flex items-center justify-center gap-2">
+          <span>PILIH LEVEL (1 - 20)</span> <span>🗺️</span>
+        </button>
+
+        <button id="btnGarage" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 text-slate-950 font-fredoka text-base sm:text-lg shadow-lg shadow-amber-500/30 transform active:scale-95 transition-all flex items-center justify-center gap-2">
+          <span>GARASI ZACKY (UPGRADE & SKIN)</span> <span>🔧</span>
+        </button>
+
+        <button id="btnHowToPlay" class="w-full py-2.5 rounded-xl bg-slate-800/70 hover:bg-slate-700 text-slate-400 font-fredoka text-xs sm:text-sm border border-slate-700 active:scale-95 transition-all">
+          📖 PANDUAN KONTROL & KISAH MANG UCUP
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEVEL SELECT MODAL -->
+  <div id="levelSelectModal" class="hidden absolute inset-0 z-40 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="max-w-3xl w-full bg-slate-900 border-2 border-cyan-500/60 rounded-3xl p-4 sm:p-6 shadow-2xl flex flex-col my-auto max-h-[92vh]">
+      <div class="flex items-center justify-between mb-4 border-b border-slate-700 pb-3">
+        <div>
+          <h2 class="font-fredoka text-xl sm:text-2xl text-cyan-300">PILIH LEVEL PERJALANAN 🗺️</h2>
+          <p class="text-[11px] sm:text-xs text-slate-400 font-mono">20 Level Menuju Gerbang Puspa Bangsa</p>
+        </div>
+        <button id="levelSelectBackBtn" class="py-1.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-sm border border-slate-700">
+          KEMBALI ✕
+        </button>
+      </div>
+
+      <!-- Level 1-20 Grid Container -->
+      <div id="levelGridContainer" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2.5 overflow-y-auto pr-1 flex-1 min-h-[280px]">
+        <!-- Cards generated dynamically by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- GARASI ZACKY MODAL -->
+  <div id="garageModal" class="hidden absolute inset-0 z-40 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="max-w-2xl w-full bg-slate-900 border-2 border-amber-500/60 rounded-3xl p-4 sm:p-6 shadow-2xl flex flex-col my-auto max-h-[92vh]">
+      <!-- Header -->
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-10 h-10 rounded-full bg-slate-800 border border-amber-400 flex items-center justify-center text-xl">
+            👨‍🔧
+          </div>
+          <div>
+            <h2 class="font-fredoka text-lg sm:text-xl text-amber-300">BENGKEL MODIFIKASI ZACKY 🔧</h2>
+            <p class="text-[10px] sm:text-xs text-slate-400 font-mono">"Oprek mesin, perkuat grip, dan ganti skin biar makin ngacir!"</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="bg-slate-800 border border-amber-400/60 text-amber-400 px-3 py-1 rounded-xl text-xs sm:text-sm font-mono font-bold flex items-center gap-1">
+            🪙 <span id="garageCoins">0</span>
+          </div>
+          <button id="closeGarageBtn" class="py-1.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-fredoka text-sm border border-slate-700">
+            TUTUP ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabs Bar -->
+      <div class="flex gap-2 mb-3">
+        <button id="garageTabUpgradesBtn" class="flex-1 py-2 rounded-xl bg-amber-500 text-slate-950 font-fredoka text-sm font-bold shadow-md transition-all">
+          ⚡ UPGRADE KOMPONEN (LVL 1-20)
+        </button>
+        <button id="garageTabCustomBtn" class="flex-1 py-2 rounded-xl bg-slate-800 text-slate-300 font-fredoka text-sm border border-slate-700 hover:bg-slate-700 transition-all">
+          🎨 BODI & VELG
+        </button>
+      </div>
+
+      <!-- Tab 1: 3 Upgrades (Engine, Grip, Suspension) -->
+      <div id="garageUpgradesView" class="space-y-2.5 overflow-y-auto pr-1 flex-1">
+        <!-- 1. Engine Power Card -->
+        <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex-1">
+            <div class="flex items-center justify-between text-xs sm:text-sm font-bold mb-1">
+              <span class="text-cyan-300 flex items-center gap-1.5">⚡ TENAGA MESIN (GAS / TANJAKAN)</span>
+              <span class="text-cyan-400 font-mono">Level <span id="engineLevelVal">1</span>/20</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-slate-700 mb-1">
+              <div id="engineBar" class="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full transition-all" style="width: 5%;"></div>
+            </div>
+            <p class="text-[11px] text-slate-400">Tenaga: <b id="engineStatVal" class="text-white font-mono">2200</b> HP • Melesat di tanjakan curam gunung</p>
+          </div>
+          <button id="btnUpgradeEngine" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-fredoka text-xs sm:text-sm font-bold shadow active:scale-95 transition-all whitespace-nowrap">
+            UPGRADE (🪙 <span id="engineCostVal">12</span>)
+          </button>
+        </div>
+
+        <!-- 2. Tire Grip Card -->
+        <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex-1">
+            <div class="flex items-center justify-between text-xs sm:text-sm font-bold mb-1">
+              <span class="text-emerald-300 flex items-center gap-1.5">🛞 GRIP BAN (ANTI LICIN & LUMPUR)</span>
+              <span class="text-emerald-400 font-mono">Level <span id="gripLevelVal">1</span>/20</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-slate-700 mb-1">
+              <div id="gripBar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all" style="width: 5%;"></div>
+            </div>
+            <p class="text-[11px] text-slate-400">Daya Cengkeram: <b id="gripStatVal" class="text-white font-mono">100%</b> • Anti selip air rob dan lumpur</p>
+          </div>
+          <button id="btnUpgradeGrip" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-fredoka text-xs sm:text-sm font-bold shadow active:scale-95 transition-all whitespace-nowrap">
+            UPGRADE (🪙 <span id="gripCostVal">12</span>)
+          </button>
+        </div>
+
+        <!-- 3. Shockbreaker Card -->
+        <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex-1">
+            <div class="flex items-center justify-between text-xs sm:text-sm font-bold mb-1">
+              <span class="text-amber-300 flex items-center gap-1.5">🔩 SHOCKBREAKER (PER & WHEELIE)</span>
+              <span class="text-amber-400 font-mono">Level <span id="suspLevelVal">1</span>/20</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-slate-700 mb-1">
+              <div id="suspBar" class="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full transition-all" style="width: 5%;"></div>
+            </div>
+            <p class="text-[11px] text-slate-400">Pegas: <b id="suspStatVal" class="text-white font-mono">180</b> K_Spring • Redam benturan keras & manuver wheeli</p>
+          </div>
+          <button id="btnUpgradeSusp" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-fredoka text-xs sm:text-sm font-bold shadow active:scale-95 transition-all whitespace-nowrap">
+            UPGRADE (🪙 <span id="suspCostVal">12</span>)
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab 2: Customization (Skins & Rims with Preview Canvas) -->
+      <div id="garageCustomView" class="hidden flex-col gap-3 overflow-y-auto pr-1 flex-1">
+        <!-- Live Preview Canvas -->
+        <div class="flex flex-col items-center justify-center p-2 bg-slate-950/70 border border-slate-700 rounded-2xl">
+          <span class="text-[10px] text-slate-400 font-mono mb-1">PRATINJAU ARMADA TRUK MBG</span>
+          <canvas id="garagePreviewCanvas" width="280" height="110" class="rounded-xl"></canvas>
+        </div>
+
+        <!-- Skin Selector -->
+        <div>
+          <span class="text-xs font-bold text-cyan-300 block mb-1">PILIHAN SKIN BODI TRUK:</span>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+            <button id="skinBtn_standard" class="p-2 rounded-xl bg-slate-800 border border-cyan-400 text-xs font-fredoka text-white text-center hover:bg-slate-700">
+              Standard MBG
+            </button>
+            <button id="skinBtn_speedy" class="p-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-fredoka text-slate-300 text-center hover:bg-slate-700">
+              Speedy Courier
+            </button>
+            <button id="skinBtn_mountain" class="p-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-fredoka text-slate-300 text-center hover:bg-slate-700">
+              Mountain Explorer
+            </button>
+            <button id="skinBtn_retro" class="p-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-fredoka text-slate-300 text-center hover:bg-slate-700">
+              Retro Food Truck
+            </button>
+            <button id="skinBtn_sport" class="p-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-fredoka text-slate-300 text-center hover:bg-slate-700">
+              Sport Racing
+            </button>
+          </div>
+        </div>
+
+        <!-- Rim Selector -->
+        <div>
+          <span class="text-xs font-bold text-amber-300 block mb-1">PILIHAN VELG RODA:</span>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <button id="rimBtn_standard" class="p-2 rounded-xl bg-slate-800 border border-amber-400 text-xs font-fredoka text-white text-center hover:bg-slate-700">
+              Standard Steel
+            </button>
+            <button id="rimBtn_gold" class="p-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-fredoka text-slate-300 text-center hover:bg-slate-700">
+              Gold Alloy
+            </button>
+            <button id="rimBtn_beadlock" class="p-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-fredoka text-slate-300 text-center hover:bg-slate-700">
+              Mud Beadlock
+            </button>
+            <button id="rimBtn_whitewall" class="p-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-fredoka text-slate-300 text-center hover:bg-slate-700">
+              White-Wall Retro
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORY DIALOGUE (VISUAL NOVEL) MODAL -->
+  <div id="dialogueModal" class="hidden absolute inset-0 z-40 bg-slate-950/80 backdrop-blur-sm flex items-end justify-center p-3 sm:p-6 pb-6 sm:pb-12 pointer-events-auto">
+    <div class="max-w-2xl w-full bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-cyan-500/80 rounded-3xl p-4 sm:p-5 shadow-2xl relative overflow-hidden flex flex-col sm:flex-row items-center sm:items-start gap-4">
+      <!-- Character Bust Portrait -->
+      <div id="dialogueAvatarContainer" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-slate-800 border-2 border-amber-400/60 flex items-center justify-center overflow-hidden flex-shrink-0 shadow-lg">
+        <!-- SVG Character Avatar injected here -->
+      </div>
+
+      <!-- Dialogue Content -->
+      <div class="flex-1 flex flex-col justify-between w-full min-h-[90px]">
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <span id="dialogueSpeakerName" class="font-fredoka text-lg text-amber-300 drop-shadow">Tion</span>
+            <span id="dialogueLevelBadge" class="text-[10px] text-cyan-300 font-mono bg-cyan-950/80 border border-cyan-800/80 px-2 py-0.5 rounded-full">LEVEL 1</span>
+          </div>
+          <p id="dialogueText" class="text-xs sm:text-sm text-slate-200 leading-relaxed min-h-[44px]">
+            Siap Mang Ucup! 500 porsi paket gizi hangat aman terkunci di boks belakang!
+          </p>
+        </div>
+
+        <!-- Dialogue Action Buttons -->
+        <div class="flex items-center justify-end gap-2 mt-2 pt-2 border-t border-slate-800">
+          <button id="dialogueSkipBtn" class="py-1 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 font-fredoka text-xs border border-slate-700 active:scale-95 transition-all">
+            LEWATI / SKIP ⏩
+          </button>
+          <button id="dialogueNextBtn" class="py-1.5 px-5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-fredoka text-sm shadow active:scale-95 transition-all">
+            LANJUT ▶
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dedicated React Mounting Container -->
+  <div id="reactAppRoot" class="absolute inset-0 z-30 pointer-events-none"></div>
+
   <!-- Browser controller and renderer; shared physics/state are imported from game_core.js. -->
   <script type="module">
     import { BIOMES, PHYSICS_CONSTANTS, TerrainSystem as WorldTerrain, PhysicsVehicle, GameStateManager } from './game_core.js?v=20260925-gameplay11';
+    import { LEVEL_CONFIGS, STORY_DIALOGUES } from './game_core.js?v=20260925-story1';
 
     // =========================================================================
-    // 1. SOUND SYNTHESIZER (Web Audio API - Zero External Audio Files)
+    // CHARACTER BUST AVATAR GENERATOR (SVG Vector Art)
     // =========================================================================
+    function getCharacterAvatarSvg(speaker = 'Tion', mood = 'normal') {
+      const s = String(speaker).toLowerCase();
+      const m = String(mood).toLowerCase();
+
+      if (s.includes('tion')) {
+        const isBlush = m.includes('blush') || m.includes('shy');
+        const isFocus = m.includes('focus') || m.includes('drive');
+        return `<svg viewBox="0 0 120 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="tionBg" cx="50%" cy="40%" r="50%">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#0284c7" stop-opacity="0.05"/>
+            </radialGradient>
+            <linearGradient id="tionShirt" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#2563eb"/>
+              <stop offset="100%" stop-color="#1e40af"/>
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="60" r="54" fill="url(#tionBg)" stroke="#38bdf8" stroke-width="2"/>
+          <path d="M22 114 C24 92 36 84 60 84 C84 84 96 92 98 114 Z" fill="url(#tionShirt)" stroke="#0d2b52" stroke-width="2.5"/>
+          <polygon points="60,84 46,96 52,106 60,94 68,106 74,96" fill="#0d2b52"/>
+          <polygon points="56,86 60,92 64,86" fill="#fef3c7"/>
+          <circle cx="78" cy="100" r="4.5" fill="#f59e0b" stroke="#b45309" stroke-width="1"/>
+          <path d="M78 97 C76 99 76 102 78 103 C80 102 80 99 78 97 Z" fill="#fef3c7"/>
+          <rect x="52" y="70" width="16" height="18" fill="#f4b28c" stroke="#0d2b52" stroke-width="2"/>
+          <ellipse cx="60" cy="56" rx="22" ry="24" fill="#f4b28c" stroke="#0d2b52" stroke-width="2.5"/>
+          <circle cx="38" cy="56" r="5" fill="#f4b28c" stroke="#0d2b52" stroke-width="2"/>
+          <circle cx="82" cy="56" r="5" fill="#f4b28c" stroke="#0d2b52" stroke-width="2"/>
+          <path d="M37 50 C36 32 46 22 60 22 C74 22 84 32 83 50 C80 40 74 38 68 38 C62 38 58 35 52 38 C46 38 40 42 37 50 Z" fill="#0f172a" stroke="#0d2b52" stroke-width="2.5"/>
+          <path d="M48 38 L54 44 L60 38 L66 45" fill="none" stroke="#0f172a" stroke-width="2"/>
+          ${isFocus
+            ? '<path d="M44 48 L55 51" stroke="#0f172a" stroke-width="2.8" stroke-linecap="round"/><path d="M76 48 L65 51" stroke="#0f172a" stroke-width="2.8" stroke-linecap="round"/>'
+            : '<path d="M44 49 Q50 46 56 49" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round" fill="none"/><path d="M64 49 Q70 46 76 49" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round" fill="none"/>'
+          }
+          <circle cx="50" cy="55" r="3.2" fill="#0f172a"/>
+          <circle cx="70" cy="55" r="3.2" fill="#0f172a"/>
+          <circle cx="51" cy="54" r="1" fill="#ffffff"/>
+          <circle cx="71" cy="54" r="1" fill="#ffffff"/>
+          <path d="M60 55 L58 60 L62 60" fill="none" stroke="#d97706" stroke-width="1.8" stroke-linecap="round"/>
+          ${isBlush
+            ? '<path d="M54 66 Q60 69 66 66" fill="none" stroke="#991b1b" stroke-width="2.5" stroke-linecap="round"/>'
+            : isFocus
+            ? '<path d="M52 66 L68 65" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round"/>'
+            : '<path d="M53 65 Q60 72 67 65" fill="#991b1b" stroke="#0d2b52" stroke-width="2" stroke-linecap="round"/>'
+          }
+          ${isBlush
+            ? '<ellipse cx="44" cy="62" rx="6" ry="3.5" fill="#f43f5e" opacity="0.6"/><ellipse cx="76" cy="62" rx="6" ry="3.5" fill="#f43f5e" opacity="0.6"/><path d="M42 61 L46 63 M74 61 L78 63" stroke="#e11d48" stroke-width="1.5"/>'
+            : ''
+          }
+          ${isFocus
+            ? '<path d="M78 44 C76 40 80 38 81 42 C82 45 79 46 78 44 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="1"/>'
+            : ''
+          }
+        </svg>`;
+      }
+
+      if (s.includes('yulie') || s.includes('guru')) {
+        const isConcern = m.includes('concern') || m.includes('worry');
+        const isHappy = m.includes('happy') || m.includes('joy');
+        return `<svg viewBox="0 0 120 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="yulieBg" cx="50%" cy="40%" r="50%">
+              <stop offset="0%" stop-color="#fbcfe8" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.05"/>
+            </radialGradient>
+            <linearGradient id="hijabGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#7dd3fc"/>
+              <stop offset="100%" stop-color="#0284c7"/>
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="60" r="54" fill="url(#yulieBg)" stroke="#f472b6" stroke-width="2"/>
+          <path d="M24 114 C26 86 38 74 60 74 C82 74 94 86 96 114 Z" fill="url(#hijabGrad)" stroke="#0d2b52" stroke-width="2.5"/>
+          <polygon points="60,94 48,114 72,114" fill="#0d2b52"/>
+          <circle cx="60" cy="98" r="3.5" fill="#f59e0b" stroke="#b45309" stroke-width="1"/>
+          <path d="M34 56 C34 32 44 20 60 20 C76 20 86 32 86 56 C86 78 74 86 60 86 C46 86 34 78 34 56 Z" fill="url(#hijabGrad)" stroke="#0d2b52" stroke-width="2.5"/>
+          <ellipse cx="60" cy="52" rx="19" ry="22" fill="#fef3c7"/>
+          <ellipse cx="60" cy="55" rx="16" ry="19" fill="#fed7aa" stroke="#0d2b52" stroke-width="2"/>
+          ${isConcern
+            ? '<path d="M46 47 Q52 50 56 48" stroke="#78350f" stroke-width="2" fill="none"/><path d="M64 48 Q68 50 74 47" stroke="#78350f" stroke-width="2" fill="none"/>'
+            : '<path d="M46 48 Q51 45 56 48" stroke="#78350f" stroke-width="2" fill="none"/><path d="M64 48 Q69 45 74 48" stroke="#78350f" stroke-width="2" fill="none"/>'
+          }
+          ${isHappy
+            ? '<path d="M47 55 Q51 51 55 55" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M65 55 Q69 51 73 55" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>'
+            : '<circle cx="51" cy="54" r="3" fill="#0f172a"/><circle cx="69" cy="54" r="3" fill="#0f172a"/><circle cx="52" cy="53" r="1.1" fill="#ffffff"/><circle cx="70" cy="53" r="1.1" fill="#ffffff"/><path d="M48 51 L46 50 M72 51 L74 50" stroke="#0f172a" stroke-width="1.5"/>'
+          }
+          <path d="M60 55 L59 59 L61 59" fill="none" stroke="#d97706" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M54 65 Q60 70 66 65" fill="#f43f5e" stroke="#0d2b52" stroke-width="1.8" stroke-linecap="round"/>
+          <ellipse cx="46" cy="61" rx="4" ry="2.5" fill="#fda4af" opacity="0.6"/>
+          <ellipse cx="74" cy="61" rx="4" ry="2.5" fill="#fda4af" opacity="0.6"/>
+        </svg>`;
+      }
+
+      if (s.includes('husna') || s.includes('siswi')) {
+        const isFlirt = m.includes('flirt') || m.includes('wink');
+        const isCheer = m.includes('cheer') || m.includes('happy');
+        return `<svg viewBox="0 0 120 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="husnaBg" cx="50%" cy="40%" r="50%">
+              <stop offset="0%" stop-color="#fef08a" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#eab308" stop-opacity="0.05"/>
+            </radialGradient>
+          </defs>
+          <circle cx="60" cy="60" r="54" fill="url(#husnaBg)" stroke="#facc15" stroke-width="2"/>
+          <circle cx="86" cy="40" r="8" fill="#e66b5d" stroke="#0d2b52" stroke-width="2"/>
+          <path d="M86 42 C98 48 102 62 94 74 C90 66 90 54 86 46 Z" fill="#0f172a" stroke="#0d2b52" stroke-width="2"/>
+          <path d="M26 114 C28 92 40 84 60 84 C80 84 92 92 94 114 Z" fill="#ffffff" stroke="#0d2b52" stroke-width="2.5"/>
+          <polygon points="60,86 52,98 56,114 64,114 68,98" fill="#0d2b52"/>
+          <rect x="53" y="72" width="14" height="15" fill="#fbcfe8" stroke="#0d2b52" stroke-width="2"/>
+          <ellipse cx="60" cy="56" rx="21" ry="23" fill="#fbcfe8" stroke="#0d2b52" stroke-width="2.5"/>
+          <path d="M38 52 C36 34 46 24 60 24 C74 24 82 34 82 52 C76 42 70 38 62 42 C56 46 48 40 38 52 Z" fill="#0f172a" stroke="#0d2b52" stroke-width="2.5"/>
+          <path d="M45 47 Q50 44 55 47" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          <path d="M65 47 Q70 44 75 47" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          ${isFlirt
+            ? '<circle cx="50" cy="54" r="3.2" fill="#0f172a"/><circle cx="51" cy="53" r="1.1" fill="#ffffff"/><path d="M66 54 Q71 50 76 54" stroke="#0f172a" stroke-width="2.8" stroke-linecap="round" fill="none"/>'
+            : isCheer
+            ? '<polygon points="50,50 52,55 57,55 53,58 55,63 50,60 45,63 47,58 43,55 48,55" fill="#f59e0b"/><polygon points="70,50 72,55 77,55 73,58 75,63 70,60 65,63 67,58 63,55 68,55" fill="#f59e0b"/>'
+            : '<circle cx="50" cy="54" r="3.2" fill="#0f172a"/><circle cx="70" cy="54" r="3.2" fill="#0f172a"/><circle cx="51" cy="53" r="1.1" fill="#ffffff"/><circle cx="71" cy="53" r="1.1" fill="#ffffff"/>'
+          }
+          <circle cx="60" cy="59" r="1.5" fill="#f43f5e"/>
+          ${isFlirt || isCheer
+            ? '<path d="M52 65 Q60 74 68 65 Z" fill="#e11d48" stroke="#0d2b52" stroke-width="2"/>'
+            : '<path d="M54 65 Q60 70 66 65" fill="none" stroke="#e11d48" stroke-width="2.2" stroke-linecap="round"/>'
+          }
+          <ellipse cx="44" cy="62" rx="5" ry="3" fill="#fb7185" opacity="0.6"/>
+          <ellipse cx="76" cy="62" rx="5" ry="3" fill="#fb7185" opacity="0.6"/>
+        </svg>`;
+      }
+
+      if (s.includes('zacky') || s.includes('montir')) {
+        const isThinking = m.includes('think');
+        return `<svg viewBox="0 0 120 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="zackyBg" cx="50%" cy="40%" r="50%">
+              <stop offset="0%" stop-color="#fb923c" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#ea580c" stop-opacity="0.05"/>
+            </radialGradient>
+          </defs>
+          <circle cx="60" cy="60" r="54" fill="url(#zackyBg)" stroke="#f97316" stroke-width="2"/>
+          <path d="M22 114 C24 92 36 84 60 84 C84 84 96 92 98 114 Z" fill="#475569" stroke="#0d2b52" stroke-width="2.5"/>
+          <path d="M22 114 C26 94 36 86 52 86 L48 114 Z" fill="#0d2b52"/>
+          <path d="M98 114 C94 94 84 86 68 86 L72 114 Z" fill="#0d2b52"/>
+          <rect x="74" y="90" width="6" height="20" rx="2" fill="#cbd5e1" stroke="#0d2b52" stroke-width="1.5" transform="rotate(15 77 100)"/>
+          <circle cx="75" cy="92" r="5" fill="none" stroke="#cbd5e1" stroke-width="2.5"/>
+          <rect x="52" y="70" width="16" height="18" fill="#f4b28c" stroke="#0d2b52" stroke-width="2"/>
+          <ellipse cx="60" cy="56" rx="22" ry="24" fill="#f4b28c" stroke="#0d2b52" stroke-width="2.5"/>
+          <ellipse cx="44" cy="62" rx="5" ry="3" fill="#334155" opacity="0.6" transform="rotate(-15 44 62)"/>
+          <circle cx="38" cy="56" r="5" fill="#f4b28c" stroke="#0d2b52" stroke-width="2"/>
+          <circle cx="82" cy="56" r="5" fill="#f4b28c" stroke="#0d2b52" stroke-width="2"/>
+          <path d="M37 46 C37 28 47 22 60 22 C73 22 83 28 83 46 Z" fill="#0d2b52" stroke="#0d2b52" stroke-width="2.5"/>
+          <path d="M48 44 Q60 38 72 44" fill="#0369a1" stroke="#0d2b52" stroke-width="2"/>
+          <ellipse cx="60" cy="45" rx="5" ry="3" fill="#f4b28c"/>
+          <path d="M36 50 L32 54 L38 56 M84 50 L88 54 L82 56" stroke="#0f172a" stroke-width="2.5" fill="none"/>
+          ${isThinking
+            ? '<path d="M44 46 L55 49" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round"/><path d="M65 48 L76 45" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round"/>'
+            : '<path d="M44 48 Q50 45 56 48" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M64 48 Q70 45 76 48" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" fill="none"/>'
+          }
+          <circle cx="50" cy="54" r="3.2" fill="#0f172a"/>
+          <circle cx="70" cy="54" r="3.2" fill="#0f172a"/>
+          <circle cx="51" cy="53" r="1.1" fill="#ffffff"/>
+          <circle cx="71" cy="53" r="1.1" fill="#ffffff"/>
+          <path d="M60 54 L58 60 L62 60" fill="none" stroke="#d97706" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M52 66 Q62 70 69 64" fill="none" stroke="#0d2b52" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>`;
+      }
+
+      // Default: Mang Ucup (Sopir Senior)
+      return `<svg viewBox="0 0 120 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="ucupBg" cx="50%" cy="40%" r="50%">
+            <stop offset="0%" stop-color="#a3e635" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#4d7c0f" stop-opacity="0.05"/>
+          </radialGradient>
+        </defs>
+        <circle cx="60" cy="60" r="54" fill="url(#ucupBg)" stroke="#84cc16" stroke-width="2"/>
+        <path d="M22 114 C24 92 36 84 60 84 C84 84 96 92 98 114 Z" fill="#854d0e" stroke="#0d2b52" stroke-width="2.5"/>
+        <polygon points="60,84 50,98 60,114 70,98" fill="#713f12"/>
+        <rect x="52" y="70" width="16" height="18" fill="#e2a374" stroke="#0d2b52" stroke-width="2"/>
+        <ellipse cx="60" cy="56" rx="22" ry="24" fill="#e2a374" stroke="#0d2b52" stroke-width="2.5"/>
+        <polygon points="34,44 42,22 78,22 86,44" fill="#78350f" stroke="#0d2b52" stroke-width="2.5"/>
+        <line x1="35" y1="42" x2="85" y2="42" stroke="#f59e0b" stroke-width="3"/>
+        <circle cx="38" cy="56" r="5" fill="#e2a374" stroke="#0d2b52" stroke-width="2"/>
+        <circle cx="82" cy="56" r="5" fill="#e2a374" stroke="#0d2b52" stroke-width="2"/>
+        <path d="M44 48 Q50 44 56 47" stroke="#475569" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <path d="M64 47 Q70 44 76 48" stroke="#475569" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <circle cx="50" cy="53" r="3" fill="#0f172a"/>
+        <circle cx="70" cy="53" r="3" fill="#0f172a"/>
+        <path d="M43 53 L45 54 M75 53 L77 54" stroke="#78350f" stroke-width="1.5"/>
+        <ellipse cx="60" cy="58" rx="3.5" ry="2.5" fill="#c2410c"/>
+        <path d="M45 66 C50 63 56 64 60 66 C64 64 70 63 75 66 C72 70 62 70 60 67 C58 70 48 70 45 66 Z" fill="#1e293b" stroke="#0d2b52" stroke-width="1.5"/>
+        <path d="M53 71 Q60 75 67 71" fill="none" stroke="#78350f" stroke-width="2" stroke-linecap="round"/>
+      </svg>`;
+    }
     class SoundSynthesizer {
       constructor() {
         this.ctx = null;
@@ -854,6 +1334,8 @@
         this.camera = { x: 0, y: 0, targetX: 0, targetY: 0, zoom: 1.0 };
         this.confetti = [];
         this.splatters = [];
+        this.selectedSkin = 'standard';
+        this.selectedRim = 'standard';
         this.initAssets();
         this.resize();
         window.addEventListener('resize', () => this.resize());
@@ -1841,139 +2323,21 @@
         ctx.translate(vehicle.x, vehicle.y);
         ctx.rotate(vehicle.angle);
 
-        if (this.assets && this.assets.truckBody.loaded) {
-          ctx.drawImage(this.assets.truckBody.img, -50, -45, 100, 50);
+        const skin = this.selectedSkin || 'standard';
+        if (skin === 'speedy') {
+          this.drawSpeedyCourierSkin(ctx);
+        } else if (skin === 'mountain') {
+          this.drawMountainExplorerSkin(ctx);
+        } else if (skin === 'retro') {
+          this.drawRetroOpletSkin(ctx);
+        } else if (skin === 'sport') {
+          this.drawSportDeliverySkin(ctx);
         } else {
-          // Procedural Vector Fallback: Original blue MBG utility truck cabin
-          const blueGrad = ctx.createLinearGradient(-48, -45, 10, 15);
-          blueGrad.addColorStop(0, '#58b7f2');
-          blueGrad.addColorStop(1, '#1769c2');
-
-          ctx.fillStyle = blueGrad;
-          ctx.strokeStyle = '#0d2b52';
-          ctx.lineWidth = 2.5;
-          ctx.beginPath();
-          ctx.roundRect(-48, -40, 60, 48, [6, 2, 2, 6]);
-          ctx.fill();
-          ctx.stroke();
-
-          // Metallic Borders & Panel Rivets
-          ctx.fillStyle = '#e2e8f0';
-          ctx.fillRect(-48, -40, 60, 4);
-          ctx.fillRect(-48, 4, 60, 4);
-          ctx.fillRect(-48, -40, 4, 48);
-
-          // Satirical Emblem: Golden Rooster holding nutrition plate
-          ctx.save();
-          ctx.translate(-18, -16);
-          ctx.fillStyle = '#f8fafc';
-          ctx.beginPath();
-          ctx.arc(0, 0, 14, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.strokeStyle = '#fbbf24';
-          ctx.lineWidth = 2;
-          ctx.stroke();
-
-          // Little Rooster & Spoon
-          ctx.fillStyle = '#d97706';
-          ctx.beginPath();
-          ctx.arc(0, -2, 5, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#ef4444';
-          ctx.fillRect(-1, -8, 3, 4); // Comb
-          ctx.restore();
-
-          // Stencil Text on Blue Box
-          ctx.fillStyle = '#0d2b52';
-          ctx.font = 'bold 5.5px sans-serif';
-          ctx.textAlign = 'center';
-          ctx.fillText('SATUAN GIZI', -18, 2);
-
-          // Front Cabin: White compact utility truck
-          ctx.fillStyle = '#f8fafc';
-          ctx.strokeStyle = '#475569';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(12, -40);
-          ctx.lineTo(26, -40);
-          ctx.lineTo(44, -18);
-          ctx.lineTo(48, 8);
-          ctx.lineTo(12, 8);
-          ctx.closePath();
-          ctx.fill();
-          ctx.stroke();
-
-          // Red Front Bumper Lip Accent
-          ctx.fillStyle = '#ef4444';
-          ctx.fillRect(38, 6, 12, 5);
-
-          // Front Headlight (Yellow Glass)
-          ctx.fillStyle = '#fef08a';
-          ctx.fillRect(45, -12, 4, 8);
-
-          // Tinted Driver Window & Mang Ucup Inside!
-          ctx.fillStyle = '#1e293b';
-          ctx.beginPath();
-          ctx.moveTo(15, -37);
-          ctx.lineTo(25, -37);
-          ctx.lineTo(39, -20);
-          ctx.lineTo(15, -20);
-          ctx.closePath();
-          ctx.fill();
-
-          // Mang Ucup Driver Silhouette with Trucker Cap & Mustache
-          ctx.save();
-          ctx.translate(22, -26);
-          ctx.fillStyle = '#fbcfe8';
-          ctx.beginPath();
-          ctx.arc(0, 0, 5, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#dc2626';
-          ctx.beginPath();
-          ctx.arc(0, -3, 6, Math.PI, Math.PI * 2);
-          ctx.lineTo(4, -3);
-          ctx.closePath();
-          ctx.fill();
-          ctx.fillStyle = '#0f172a';
-          ctx.fillRect(1, 1, 4, 2);
-          ctx.restore();
-
-          // Roof Warning Siren / Telolet Flasher
-          const sirenColor = (Date.now() % 300 < 150) ? '#f59e0b' : '#38bdf8';
-          ctx.fillStyle = sirenColor;
-          ctx.fillRect(-2, -45, 10, 5);
-
-          // Rear Mud Flap ("SABAR MAS")
-          ctx.fillStyle = '#0f172a';
-          ctx.fillRect(-48, 8, 4, 12);
-          ctx.fillStyle = '#ffffff';
-          ctx.font = '3.5px sans-serif';
-          ctx.fillText('SABAR', -46, 14);
-
-          // Exhaust Pipe
-          ctx.fillStyle = '#64748b';
-          ctx.fillRect(-47, 2, 4, 5);
-
-          // Heavy-duty Steel Undercarriage Frame Rail
-          ctx.fillStyle = '#1e293b';
-          ctx.fillRect(-48, 6, 96, 5);
-          ctx.fillStyle = '#334155';
-          ctx.fillRect(-48, 7, 96, 1.5);
-
-          // Protective Wheel Arches (Fender Flares at -30 and +30)
-          ctx.fillStyle = '#090d16';
-          ctx.beginPath();
-          ctx.arc(-30, 8, 14, Math.PI, 0);
-          ctx.fill();
-          ctx.beginPath();
-          ctx.arc(30, 8, 14, Math.PI, 0);
-          ctx.fill();
-
-          // Diesel Tank between wheels
-          ctx.fillStyle = '#475569';
-          ctx.fillRect(-12, 7, 24, 6);
-          ctx.fillStyle = '#64748b';
-          ctx.fillRect(-11, 8, 22, 2);
+          if (this.assets && this.assets.truckBody.loaded) {
+            ctx.drawImage(this.assets.truckBody.img, -50, -45, 100, 50);
+          } else {
+            this.drawStandardTruckBody(ctx);
+          }
         }
 
         ctx.restore();
@@ -1983,8 +2347,8 @@
         this.drawWheel(vehicle.frontWheel);
       }
 
-      drawSuspensionStrut(mx, my, wx, wy) {
-        const ctx = this.ctx;
+      drawSuspensionStrut(mx, my, wx, wy, targetCtx = null) {
+        const ctx = targetCtx || this.ctx;
         const dx = wx - mx;
         const dy = wy - my;
         const dist = Math.max(6, Math.sqrt(dx * dx + dy * dy));
@@ -2106,51 +2470,659 @@
         this.drawSuspensionStrut(worldMx, worldMy, wheel.x, wheel.y);
       }
 
-      drawWheel(wheel) {
-        const ctx = this.ctx;
+      drawWheel(wheel, targetCtx = null) {
+        const ctx = targetCtx || this.ctx;
         ctx.save();
         ctx.translate(wheel.x, wheel.y);
         ctx.rotate(wheel.rotation);
 
         const r = 18;
+        const rim = this.selectedRim || 'standard';
 
-        if (this.assets && this.assets.truckWheel.loaded) {
-          ctx.drawImage(this.assets.truckWheel.img, -r, -r, r * 2, r * 2);
+        if (rim === 'gold') {
+          this.drawGoldRacingRim(ctx, r);
+        } else if (rim === 'beadlock') {
+          this.drawBeadlockRim(ctx, r);
+        } else if (rim === 'whitewall') {
+          this.drawWhiteWallRim(ctx, r);
         } else {
-          // Knobby Black Off-Road Tire
-          ctx.fillStyle = '#0f172a';
-          ctx.beginPath();
-          ctx.arc(0, 0, r, 0, Math.PI * 2);
-          ctx.fill();
-
-          // Deep Tread Knobs around perimeter
-          ctx.fillStyle = '#1e293b';
-          for (let t = 0; t < 8; t++) {
-            const ta = (t * Math.PI) / 4;
-            ctx.fillRect(Math.cos(ta) * (r - 2) - 2, Math.sin(ta) * (r - 2) - 2, 4, 4);
-          }
-
-          // Silver Steel Rim
-          ctx.fillStyle = '#94a3b8';
-          ctx.beginPath();
-          ctx.arc(0, 0, r * 0.65, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.strokeStyle = '#64748b';
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
-
-          // Center Grease Cap & 5 Lug Nuts
-          ctx.fillStyle = '#334155';
-          ctx.beginPath();
-          ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
-          ctx.fill();
-
-          ctx.fillStyle = '#e2e8f0';
-          for (let n = 0; n < 5; n++) {
-            const na = (n * Math.PI * 2) / 5;
-            ctx.fillRect(Math.cos(na) * 6 - 1, Math.sin(na) * 6 - 1, 2.5, 2.5);
+          if (this.assets && this.assets.truckWheel.loaded) {
+            ctx.drawImage(this.assets.truckWheel.img, -r, -r, r * 2, r * 2);
+          } else {
+            this.drawStandardRim(ctx, r);
           }
         }
+
+        ctx.restore();
+      }
+
+      drawStandardRim(ctx, r) {
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#1e293b';
+        for (let t = 0; t < 8; t++) {
+          const ta = (t * Math.PI) / 4;
+          ctx.fillRect(Math.cos(ta) * (r - 2) - 2, Math.sin(ta) * (r - 2) - 2, 4, 4);
+        }
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 0.65, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#64748b';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.fillStyle = '#334155';
+        ctx.beginPath();
+        ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#e2e8f0';
+        for (let n = 0; n < 5; n++) {
+          const na = (n * Math.PI * 2) / 5;
+          ctx.fillRect(Math.cos(na) * 6 - 1, Math.sin(na) * 6 - 1, 2.5, 2.5);
+        }
+      }
+
+      drawGoldRacingRim(ctx, r) {
+        ctx.fillStyle = '#090d16';
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = '#f59e0b';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 0.72, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.fillStyle = '#fbbf24';
+        for (let i = 0; i < 5; i++) {
+          const a = (i * Math.PI * 2) / 5;
+          ctx.save();
+          ctx.rotate(a);
+          ctx.fillRect(-2, 0, 4, r * 0.7);
+          ctx.restore();
+        }
+
+        ctx.fillStyle = '#1e3a8a';
+        ctx.beginPath();
+        ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#e2e8f0';
+        ctx.beginPath();
+        ctx.arc(0, 0, 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      drawBeadlockRim(ctx, r) {
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#1e293b';
+        for (let t = 0; t < 10; t++) {
+          const ta = (t * Math.PI * 2) / 10;
+          ctx.fillRect(Math.cos(ta) * (r - 2) - 2.5, Math.sin(ta) * (r - 2) - 2.5, 5, 5);
+        }
+
+        ctx.strokeStyle = '#0284c7';
+        ctx.lineWidth = 3.5;
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 0.65, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.fillStyle = '#f8fafc';
+        for (let b = 0; b < 8; b++) {
+          const ba = (b * Math.PI * 2) / 8;
+          ctx.fillRect(Math.cos(ba) * (r * 0.65) - 1, Math.sin(ba) * (r * 0.65) - 1, 2, 2);
+        }
+
+        ctx.fillStyle = '#334155';
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 0.45, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#090d16';
+        ctx.beginPath();
+        ctx.arc(0, 0, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      drawWhiteWallRim(ctx, r) {
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 0.85, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#cbd5e1';
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 0.58, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.beginPath();
+        ctx.arc(-2, -2, r * 0.35, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#f59e0b';
+        ctx.beginPath();
+        ctx.arc(0, 0, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      drawStandardTruckBody(ctx) {
+        const blueGrad = ctx.createLinearGradient(-48, -45, 10, 15);
+        blueGrad.addColorStop(0, '#58b7f2');
+        blueGrad.addColorStop(1, '#1769c2');
+
+        ctx.fillStyle = blueGrad;
+        ctx.strokeStyle = '#0d2b52';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.roundRect(-48, -40, 60, 48, [6, 2, 2, 6]);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#e2e8f0';
+        ctx.fillRect(-48, -40, 60, 4);
+        ctx.fillRect(-48, 4, 60, 4);
+        ctx.fillRect(-48, -40, 4, 48);
+
+        ctx.save();
+        ctx.translate(-18, -16);
+        ctx.fillStyle = '#f8fafc';
+        ctx.beginPath();
+        ctx.arc(0, 0, 14, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#fbbf24';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#d97706';
+        ctx.beginPath();
+        ctx.arc(0, -2, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#ef4444';
+        ctx.fillRect(-1, -8, 3, 4);
+        ctx.restore();
+
+        ctx.fillStyle = '#0d2b52';
+        ctx.font = 'bold 5.5px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('SATUAN GIZI', -18, 2);
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.strokeStyle = '#475569';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(12, -40);
+        ctx.lineTo(26, -40);
+        ctx.lineTo(44, -18);
+        ctx.lineTo(48, 8);
+        ctx.lineTo(12, 8);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#ef4444';
+        ctx.fillRect(38, 6, 12, 5);
+
+        ctx.fillStyle = '#fef08a';
+        ctx.fillRect(45, -12, 4, 8);
+
+        ctx.fillStyle = '#1e293b';
+        ctx.beginPath();
+        ctx.moveTo(15, -37);
+        ctx.lineTo(25, -37);
+        ctx.lineTo(39, -20);
+        ctx.lineTo(15, -20);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.save();
+        ctx.translate(22, -26);
+        ctx.fillStyle = '#fbcfe8';
+        ctx.beginPath();
+        ctx.arc(0, 0, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#dc2626';
+        ctx.beginPath();
+        ctx.arc(0, -3, 6, Math.PI, Math.PI * 2);
+        ctx.lineTo(4, -3);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(1, 1, 4, 2);
+        ctx.restore();
+
+        const sirenColor = (Date.now() % 300 < 150) ? '#f59e0b' : '#38bdf8';
+        ctx.fillStyle = sirenColor;
+        ctx.fillRect(-2, -45, 10, 5);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(-48, 8, 4, 12);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '3.5px sans-serif';
+        ctx.fillText('SABAR', -46, 14);
+
+        ctx.fillStyle = '#64748b';
+        ctx.fillRect(-47, 2, 4, 5);
+
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(-48, 6, 96, 5);
+        ctx.fillStyle = '#334155';
+        ctx.fillRect(-48, 7, 96, 1.5);
+
+        ctx.fillStyle = '#090d16';
+        ctx.beginPath();
+        ctx.arc(-30, 8, 14, Math.PI, 0);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(30, 8, 14, Math.PI, 0);
+        ctx.fill();
+
+        ctx.fillStyle = '#475569';
+        ctx.fillRect(-12, 7, 24, 6);
+        ctx.fillStyle = '#64748b';
+        ctx.fillRect(-11, 8, 22, 2);
+      }
+
+      drawSpeedyCourierSkin(ctx) {
+        const grad = ctx.createLinearGradient(-48, -40, 10, 15);
+        grad.addColorStop(0, '#0284c7');
+        grad.addColorStop(1, '#1e40af');
+
+        ctx.fillStyle = '#fef08a';
+        ctx.strokeStyle = '#0d2b52';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(-48, -25, 54, 30, [4, 2, 2, 4]);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = '#ca8a04';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(-40, -25); ctx.lineTo(-40, 5);
+        ctx.moveTo(-24, -25); ctx.lineTo(-24, 5);
+        ctx.moveTo(-8, -25); ctx.lineTo(-8, 5);
+        ctx.stroke();
+
+        ctx.fillStyle = grad;
+        ctx.strokeStyle = '#0d2b52';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(6, -25);
+        ctx.lineTo(16, -38);
+        ctx.lineTo(34, -38);
+        ctx.lineTo(48, -12);
+        ctx.lineTo(48, 8);
+        ctx.lineTo(6, 8);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.moveTo(18, -35);
+        ctx.lineTo(32, -35);
+        ctx.lineTo(44, -14);
+        ctx.lineTo(18, -14);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.save();
+        ctx.translate(24, -22);
+        ctx.fillStyle = '#f4b28c';
+        ctx.beginPath();
+        ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#1d4ed8';
+        ctx.fillRect(-3, 4, 7, 5);
+        ctx.restore();
+
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillRect(8, -42, 26, 3.5);
+        ctx.fillStyle = '#0d2b52';
+        ctx.fillRect(10, -39, 4, 3);
+        ctx.fillRect(28, -39, 4, 3);
+
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(-44, -6);
+        ctx.lineTo(10, -6);
+        ctx.lineTo(32, -18);
+        ctx.stroke();
+
+        ctx.fillStyle = '#a5f3fc';
+        ctx.fillRect(45, -8, 4, 6);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(38, 6, 12, 4);
+
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(-48, 6, 96, 4);
+
+        ctx.fillStyle = '#090d16';
+        ctx.beginPath();
+        ctx.arc(-30, 8, 14, Math.PI, 0);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(30, 8, 14, Math.PI, 0);
+        ctx.fill();
+      }
+
+      drawMountainExplorerSkin(ctx) {
+        ctx.fillStyle = '#1e3a5f';
+        ctx.strokeStyle = '#0d2b52';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.roundRect(-48, -40, 58, 46, [4, 4, 2, 2]);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#64748b';
+        ctx.fillRect(-48, -2, 58, 8);
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 1;
+        for (let x = -44; x < 6; x += 6) {
+          ctx.beginPath();
+          ctx.moveTo(x, -1); ctx.lineTo(x + 3, 5);
+          ctx.stroke();
+        }
+
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 2.5;
+        ctx.strokeRect(-46, -46, 54, 6);
+
+        ctx.fillStyle = '#dc2626';
+        ctx.fillRect(-38, -52, 10, 8);
+        ctx.fillRect(-24, -52, 10, 8);
+        ctx.fillStyle = '#facc15';
+        ctx.fillRect(-35, -54, 4, 2.5);
+        ctx.fillRect(-21, -54, 4, 2.5);
+
+        ctx.fillStyle = '#1e293b';
+        ctx.strokeStyle = '#0d2b52';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(10, -40);
+        ctx.lineTo(24, -40);
+        ctx.lineTo(42, -18);
+        ctx.lineTo(46, 8);
+        ctx.lineTo(10, 8);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.moveTo(14, -36);
+        ctx.lineTo(22, -36);
+        ctx.lineTo(37, -19);
+        ctx.lineTo(14, -19);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 3.5;
+        ctx.beginPath();
+        ctx.moveTo(44, 7);
+        ctx.lineTo(50, -4);
+        ctx.lineTo(42, -10);
+        ctx.stroke();
+
+        ctx.fillStyle = '#fef08a';
+        ctx.beginPath();
+        ctx.arc(48, -3, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(-48, 6, 96, 5);
+
+        ctx.fillStyle = '#090d16';
+        ctx.beginPath();
+        ctx.arc(-30, 8, 14, Math.PI, 0);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(30, 8, 14, Math.PI, 0);
+        ctx.fill();
+      }
+
+      drawRetroOpletSkin(ctx) {
+        ctx.fillStyle = '#fef3c7';
+        ctx.strokeStyle = '#0d2b52';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(-48, -40, 58, 22, [8, 4, 0, 0]);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#1d4ed8';
+        ctx.beginPath();
+        ctx.roundRect(-48, -18, 58, 24, [0, 0, 4, 4]);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#92400e';
+        ctx.fillRect(-46, -14, 54, 4);
+        ctx.fillRect(-46, -8, 54, 4);
+        ctx.fillRect(-46, -2, 54, 4);
+        ctx.fillStyle = '#b45309';
+        ctx.fillRect(-46, -13, 54, 1.5);
+        ctx.fillRect(-46, -7, 54, 1.5);
+
+        ctx.fillStyle = '#fef3c7';
+        ctx.strokeStyle = '#0d2b52';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(10, -38);
+        ctx.quadraticCurveTo(24, -40, 30, -32);
+        ctx.lineTo(46, -14);
+        ctx.quadraticCurveTo(48, 0, 46, 8);
+        ctx.lineTo(10, 8);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(14, -34, 12, 16);
+        ctx.fillRect(28, -34, 12, 16);
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(14, -34, 12, 16);
+        ctx.strokeRect(28, -34, 12, 16);
+
+        ctx.fillStyle = '#fef08a';
+        ctx.beginPath();
+        ctx.arc(46, -4, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.fillStyle = '#cbd5e1';
+        ctx.beginPath();
+        ctx.arc(12, -26, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#475569';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.fillStyle = '#f59e0b';
+        ctx.beginPath();
+        ctx.arc(-20, -29, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(-48, 6, 96, 5);
+
+        ctx.fillStyle = '#090d16';
+        ctx.beginPath();
+        ctx.arc(-30, 8, 14, Math.PI, 0);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(30, 8, 14, Math.PI, 0);
+        ctx.fill();
+      }
+
+      drawSportDeliverySkin(ctx) {
+        const grad = ctx.createLinearGradient(-48, -42, 48, 8);
+        grad.addColorStop(0, '#1e1b4b');
+        grad.addColorStop(0.5, '#1e40af');
+        grad.addColorStop(1, '#0284c7');
+
+        ctx.fillStyle = grad;
+        ctx.strokeStyle = '#0d2b52';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.roundRect(-48, -40, 58, 46, [6, 2, 2, 6]);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.roundRect(-48, -40, 58, 46, [6, 2, 2, 6]);
+        ctx.clip();
+        ctx.fillStyle = '#f59e0b';
+        ctx.beginPath();
+        ctx.moveTo(-32, -40); ctx.lineTo(-18, -40); ctx.lineTo(-28, 8); ctx.lineTo(-42, 8);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = '#06b6d4';
+        ctx.beginPath();
+        ctx.moveTo(-15, -40); ctx.lineTo(-9, -40); ctx.lineTo(-19, 8); ctx.lineTo(-25, 8);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold italic 11px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('77', 0, -14);
+        ctx.restore();
+
+        ctx.fillStyle = '#0f172a';
+        ctx.strokeStyle = '#06b6d4';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(10, -38);
+        ctx.lineTo(24, -38);
+        ctx.lineTo(44, -16);
+        ctx.lineTo(48, 6);
+        ctx.lineTo(10, 6);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#0284c7';
+        ctx.fillRect(36, 6, 14, 5);
+
+        ctx.fillStyle = '#f59e0b';
+        ctx.fillRect(-48, -45, 18, 4);
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(-46, -41, 4, 3);
+        ctx.fillRect(-34, -41, 4, 3);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(-48, 6, 96, 4);
+
+        ctx.fillStyle = '#090d16';
+        ctx.beginPath();
+        ctx.arc(-30, 8, 14, Math.PI, 0);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(30, 8, 14, Math.PI, 0);
+        ctx.fill();
+      }
+
+      renderGaragePreview(canvas, skin = this.selectedSkin, rim = this.selectedRim) {
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width;
+        const h = canvas.height;
+
+        ctx.save();
+        ctx.clearRect(0, 0, w, h);
+
+        const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
+        bgGrad.addColorStop(0, '#090d16');
+        bgGrad.addColorStop(0.68, '#1e293b');
+        bgGrad.addColorStop(1, '#090d16');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, w, h);
+
+        const floorY = 86;
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.2)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, floorY);
+        ctx.lineTo(w, floorY);
+        for (let x = 10; x < w; x += 35) {
+          ctx.moveTo(x, floorY);
+          ctx.lineTo(x - 25, h);
+        }
+        ctx.stroke();
+
+        const spotGrad = ctx.createRadialGradient(w / 2, 25, 10, w / 2, 60, 80);
+        spotGrad.addColorStop(0, 'rgba(56, 189, 248, 0.25)');
+        spotGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = spotGrad;
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+        ctx.beginPath();
+        ctx.ellipse(w / 2, floorY, 62, 7, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        const cx = w / 2;
+        const cy = 48;
+
+        this.drawSuspensionStrut(cx - 30, cy, cx - 30, floorY - 10, ctx);
+        this.drawSuspensionStrut(cx + 30, cy, cx + 30, floorY - 10, ctx);
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        if (skin === 'speedy') {
+          this.drawSpeedyCourierSkin(ctx);
+        } else if (skin === 'mountain') {
+          this.drawMountainExplorerSkin(ctx);
+        } else if (skin === 'retro') {
+          this.drawRetroOpletSkin(ctx);
+        } else if (skin === 'sport') {
+          this.drawSportDeliverySkin(ctx);
+        } else {
+          if (this.assets && this.assets.truckBody.loaded) {
+            ctx.drawImage(this.assets.truckBody.img, -50, -45, 100, 50);
+          } else {
+            this.drawStandardTruckBody(ctx);
+          }
+        }
+        ctx.restore();
+
+        const dummyRear = { x: cx - 30, y: floorY - 10, rotation: 0 };
+        const dummyFront = { x: cx + 30, y: floorY - 10, rotation: 0 };
+        const oldRim = this.selectedRim;
+        this.selectedRim = rim;
+        this.drawWheel(dummyRear, ctx);
+        this.drawWheel(dummyFront, ctx);
+        this.selectedRim = oldRim;
 
         ctx.restore();
       }
@@ -2260,11 +3232,16 @@
         this.canvas = document.getElementById('gameCanvas');
         this.renderer = new GameRenderer(this.canvas);
         this.sound = new SoundSynthesizer();
-        this.terrain = new WorldTerrain(4600);
+        this.saveData = this.loadSaveData();
+        this.currentLevel = 1;
+        const levelCfg = LEVEL_CONFIGS[this.currentLevel - 1];
+        const trackLen = levelCfg ? levelCfg.distanceMeters : 4600;
+        this.terrain = new WorldTerrain(trackLen, levelCfg);
         const startX = 150;
         const startY = this.terrain.getHeight(startX) - 34; // suspension rest length + wheel radius; no artificial opening drop
         this.vehicle = new Vehicle(startX, startY);
         this.vehicle.setSoundEngine(this.sound);
+        this.applyUpgrades();
         this.gameStateManager = new GameStateManager();
 
         this.inputs = { gas: false, brake: false, horn: false };
@@ -2274,15 +3251,75 @@
 
         this.state = 'START'; // 'START' | 'PLAYING' | 'PAUSED' | 'GAMEOVER' | 'VICTORY'
         this.gameOverReason = null;
-        this.timeRemaining = 210; // 3m 30s countdown to 09:45:00 WIB
+        this.timeRemaining = levelCfg ? levelCfg.timeLimitSec : 210;
         this.startTime = Date.now();
         this.lastTime = performance.now();
         this.pausedForVisibility = false;
 
+        this.dialogueList = [];
+        this.dialogueIndex = 0;
+        this.dialogueOnComplete = null;
+
         this.initDOM();
         this.bindEvents();
+        this.updateSaveUI();
         this.loop = this.loop.bind(this);
         requestAnimationFrame(this.loop);
+      }
+
+      loadSaveData() {
+        const defaultData = {
+          coins: 0,
+          unlockedLevel: 1,
+          upgrades: { engine: 1, grip: 1, suspension: 1 },
+          selectedSkin: 'standard',
+          selectedRim: 'standard',
+          levelStars: {}
+        };
+        try {
+          const raw = localStorage.getItem('mbg_savedata');
+          if (!raw) return defaultData;
+          const parsed = JSON.parse(raw);
+          return {
+            coins: Math.max(0, parseInt(parsed.coins) || 0),
+            unlockedLevel: Math.max(1, Math.min(20, parseInt(parsed.unlockedLevel) || 1)),
+            upgrades: {
+              engine: Math.max(1, Math.min(20, parseInt(parsed.upgrades && parsed.upgrades.engine) || 1)),
+              grip: Math.max(1, Math.min(20, parseInt(parsed.upgrades && parsed.upgrades.grip) || 1)),
+              suspension: Math.max(1, Math.min(20, parseInt(parsed.upgrades && parsed.upgrades.suspension) || 1))
+            },
+            selectedSkin: parsed.selectedSkin || 'standard',
+            selectedRim: parsed.selectedRim || 'standard',
+            levelStars: parsed.levelStars || {}
+          };
+        } catch (_) {
+          return defaultData;
+        }
+      }
+
+      saveProgress() {
+        try {
+          localStorage.setItem('mbg_savedata', JSON.stringify(this.saveData));
+        } catch (_) {}
+      }
+
+      updateSaveUI() {
+        if (this.domMenuCurrentLevel) this.domMenuCurrentLevel.innerText = this.saveData.unlockedLevel;
+        if (this.domMenuCoinCount) this.domMenuCoinCount.innerText = this.saveData.coins;
+        if (this.domGarageCoins) this.domGarageCoins.innerText = this.saveData.coins;
+      }
+
+      applyUpgrades() {
+        this.vehicle.applyUpgrades(this.saveData.upgrades);
+        if (this.renderer) {
+          this.renderer.selectedSkin = this.saveData.selectedSkin || 'standard';
+          this.renderer.selectedRim = this.saveData.selectedRim || 'standard';
+        }
+      }
+
+      getUpgradeCost(level) {
+        if (level >= 20) return null;
+        return Math.floor(10 + level * 8);
       }
 
       initDOM() {
@@ -2292,7 +3329,10 @@
         this.domSpeedVal = document.getElementById('speedVal');
         this.domCoinVal = document.getElementById('coinVal');
         this.domBiomeLabel = document.getElementById('biomeLabel');
+        this.domBiomeTicks = document.getElementById('biomeTicks');
         this.domDistVal = document.getElementById('distVal');
+        this.domHudTargetDist = document.getElementById('hudTargetDist');
+        this.domHudLevelVal = document.getElementById('hudLevelVal');
         this.domProgressFill = document.getElementById('progressFill');
         this.domTruckMarker = document.getElementById('truckMarker');
         this.domFuelVal = document.getElementById('fuelVal');
@@ -2303,11 +3343,86 @@
 
         // Modals
         this.modalStart = document.getElementById('startModal');
+        this.domStartTapNotice = document.getElementById('startTapNotice');
         this.modalGameOver = document.getElementById('gameOverModal');
         this.modalVictory = document.getElementById('victoryModal');
         this.modalPause = document.getElementById('pauseModal');
+        this.modalMainMenu = document.getElementById('mainMenuModal');
+        this.modalLevelSelect = document.getElementById('levelSelectModal');
+        this.modalGarage = document.getElementById('garageModal');
+        this.modalDialogue = document.getElementById('dialogueModal');
 
-        // Buttons
+        // Main Menu elements
+        this.domMenuCurrentLevel = document.getElementById('menuCurrentLevel');
+        this.domMenuCoinCount = document.getElementById('menuCoinCount');
+        this.btnStoryContinue = document.getElementById('btnStoryContinue');
+        this.btnLevelSelect = document.getElementById('btnLevelSelect');
+        this.btnGarage = document.getElementById('btnGarage');
+        this.btnHowToPlay = document.getElementById('btnHowToPlay');
+
+        // Level Select elements
+        this.btnLevelSelectBack = document.getElementById('levelSelectBackBtn');
+        this.domLevelGridContainer = document.getElementById('levelGridContainer');
+
+        // Garage elements
+        this.domGarageCoins = document.getElementById('garageCoins');
+        this.btnCloseGarage = document.getElementById('closeGarageBtn');
+        this.btnGarageTabUpgrades = document.getElementById('garageTabUpgradesBtn');
+        this.btnGarageTabCustom = document.getElementById('garageTabCustomBtn');
+        this.domGarageUpgradesView = document.getElementById('garageUpgradesView');
+        this.domGarageCustomView = document.getElementById('garageCustomView');
+        this.garageCanvas = document.getElementById('garagePreviewCanvas');
+
+        this.domEngineLevelVal = document.getElementById('engineLevelVal');
+        this.domEngineBar = document.getElementById('engineBar');
+        this.domEngineStatVal = document.getElementById('engineStatVal');
+        this.domEngineCostVal = document.getElementById('engineCostVal');
+        this.btnUpgradeEngine = document.getElementById('btnUpgradeEngine');
+
+        this.domGripLevelVal = document.getElementById('gripLevelVal');
+        this.domGripBar = document.getElementById('gripBar');
+        this.domGripStatVal = document.getElementById('gripStatVal');
+        this.domGripCostVal = document.getElementById('gripCostVal');
+        this.btnUpgradeGrip = document.getElementById('btnUpgradeGrip');
+
+        this.domSuspLevelVal = document.getElementById('suspLevelVal');
+        this.domSuspBar = document.getElementById('suspBar');
+        this.domSuspStatVal = document.getElementById('suspStatVal');
+        this.domSuspCostVal = document.getElementById('suspCostVal');
+        this.btnUpgradeSusp = document.getElementById('btnUpgradeSusp');
+
+        // Skin & Rim buttons
+        this.skinButtons = {
+          standard: document.getElementById('skinBtn_standard'),
+          speedy: document.getElementById('skinBtn_speedy'),
+          mountain: document.getElementById('skinBtn_mountain'),
+          retro: document.getElementById('skinBtn_retro'),
+          sport: document.getElementById('skinBtn_sport')
+        };
+        this.rimButtons = {
+          standard: document.getElementById('rimBtn_standard'),
+          gold: document.getElementById('rimBtn_gold'),
+          beadlock: document.getElementById('rimBtn_beadlock'),
+          whitewall: document.getElementById('rimBtn_whitewall')
+        };
+
+        // Dialogue Modal elements
+        this.domDialogueAvatar = document.getElementById('dialogueAvatarContainer');
+        this.domDialogueSpeaker = document.getElementById('dialogueSpeakerName');
+        this.domDialogueBadge = document.getElementById('dialogueLevelBadge');
+        this.domDialogueText = document.getElementById('dialogueText');
+        this.btnDialogueNext = document.getElementById('dialogueNextBtn');
+        this.btnDialogueSkip = document.getElementById('dialogueSkipBtn');
+
+        // GameOver / Victory Extra Buttons
+        this.btnGoGarage = document.getElementById('goGarageBtn');
+        this.btnGoMenu = document.getElementById('goMenuBtn');
+        this.btnVicNextLevel = document.getElementById('vicNextLevelBtn');
+        this.btnVicGarage = document.getElementById('vicGarageBtn');
+        this.btnVicMenu = document.getElementById('vicMenuBtn');
+        this.btnPauseMenu = document.getElementById('pauseMenuBtn');
+
+        // Standard Buttons
         this.btnStart = document.getElementById('startGameBtn');
         this.btnGORestart = document.getElementById('goRestartBtn');
         this.btnVicRestart = document.getElementById('vicRestartBtn');
@@ -2321,20 +3436,140 @@
       }
 
       bindEvents() {
-        // Start Game
+        // Welcome Screen -> Main Menu
         this.btnStart.addEventListener('click', () => {
           this.sound.init();
           this.modalStart.classList.add('hidden');
-          this.state = 'PLAYING';
-          this.gameStateManager.state = 'PLAYING';
-          this.gameStateManager.timeRemaining = this.timeRemaining;
-          this.startTime = Date.now();
+          this.openMainMenu();
         });
+
+        // Main Menu Navigations
+        this.btnStoryContinue.addEventListener('click', () => {
+          this.startLevel(this.saveData.unlockedLevel, true);
+        });
+
+        this.btnLevelSelect.addEventListener('click', () => {
+          this.openLevelSelect();
+        });
+
+        this.btnLevelSelectBack.addEventListener('click', () => {
+          this.modalLevelSelect.classList.add('hidden');
+          this.openMainMenu();
+        });
+
+        this.btnGarage.addEventListener('click', () => {
+          this.openGarage();
+        });
+
+        this.btnCloseGarage.addEventListener('click', () => {
+          this.modalGarage.classList.add('hidden');
+          this.openMainMenu();
+        });
+
+        this.btnHowToPlay.addEventListener('click', () => {
+          this.modalMainMenu.classList.add('hidden');
+          this.modalStart.classList.remove('hidden');
+          if (this.btnStart) this.btnStart.innerText = 'KEMBALI KE MENU UTAMA 🏠';
+          if (this.domStartTapNotice) this.domStartTapNotice.innerText = '[ Panduan Kontrol & Kisah Mang Ucup ]';
+        });
+
+        // Garage Tabs
+        this.btnGarageTabUpgrades.addEventListener('click', () => {
+          this.domGarageUpgradesView.classList.remove('hidden');
+          this.domGarageCustomView.classList.add('hidden');
+          this.btnGarageTabUpgrades.className = 'flex-1 py-2 rounded-xl bg-amber-500 text-slate-950 font-fredoka text-sm font-bold shadow-md transition-all';
+          this.btnGarageTabCustom.className = 'flex-1 py-2 rounded-xl bg-slate-800 text-slate-300 font-fredoka text-sm border border-slate-700 hover:bg-slate-700 transition-all';
+        });
+
+        this.btnGarageTabCustom.addEventListener('click', () => {
+          this.domGarageUpgradesView.classList.add('hidden');
+          this.domGarageCustomView.classList.remove('hidden');
+          this.btnGarageTabCustom.className = 'flex-1 py-2 rounded-xl bg-amber-500 text-slate-950 font-fredoka text-sm font-bold shadow-md transition-all';
+          this.btnGarageTabUpgrades.className = 'flex-1 py-2 rounded-xl bg-slate-800 text-slate-300 font-fredoka text-sm border border-slate-700 hover:bg-slate-700 transition-all';
+          this.updateGarageUI();
+        });
+
+        // Garage Upgrades
+        this.btnUpgradeEngine.addEventListener('click', () => this.purchaseUpgrade('engine'));
+        this.btnUpgradeGrip.addEventListener('click', () => this.purchaseUpgrade('grip'));
+        this.btnUpgradeSusp.addEventListener('click', () => this.purchaseUpgrade('suspension'));
+
+        // Skin Selector Buttons with Level Unlock Validation
+        const skinLevelRequirements = { standard: 1, speedy: 4, mountain: 8, retro: 12, sport: 16 };
+        ['standard', 'speedy', 'mountain', 'retro', 'sport'].forEach((key) => {
+          const btn = this.skinButtons[key];
+          if (btn) {
+            btn.addEventListener('click', () => {
+              const reqLvl = skinLevelRequirements[key] || 1;
+              if ((this.saveData.unlockedLevel || 1) < reqLvl) {
+                if (window.showMbgToast) window.showMbgToast(`Skin ini terbuka mulai Level ${reqLvl}!`, '🔒');
+                return;
+              }
+              this.saveData.selectedSkin = key;
+              this.saveProgress();
+              this.applyUpgrades();
+              this.updateGarageUI();
+            });
+          }
+        });
+
+        // Rim Selector Buttons with Level Unlock Validation
+        const rimLevelRequirements = { standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
+        ['standard', 'gold', 'beadlock', 'whitewall'].forEach((key) => {
+          const btn = this.rimButtons[key];
+          if (btn) {
+            btn.addEventListener('click', () => {
+              const reqLvl = rimLevelRequirements[key] || 1;
+              if ((this.saveData.unlockedLevel || 1) < reqLvl) {
+                if (window.showMbgToast) window.showMbgToast(`Velg ini terbuka mulai Level ${reqLvl}!`, '🔒');
+                return;
+              }
+              this.saveData.selectedRim = key;
+              this.saveProgress();
+              this.applyUpgrades();
+              this.updateGarageUI();
+            });
+          }
+        });
+
+        // Dialogue Buttons
+        this.btnDialogueNext.addEventListener('click', () => this.advanceDialogue());
+        this.btnDialogueSkip.addEventListener('click', () => this.closeDialogue());
 
         // Restart buttons
         this.btnGORestart.addEventListener('click', () => this.restartGame());
         this.btnVicRestart.addEventListener('click', () => this.restartGame());
         this.btnPauseRestart.addEventListener('click', () => this.restartGame());
+
+        // Victory / Game Over / Pause to Garage & Menu
+        this.btnGoGarage.addEventListener('click', () => {
+          this.modalGameOver.classList.add('hidden');
+          this.openGarage();
+        });
+        this.btnGoMenu.addEventListener('click', () => {
+          this.modalGameOver.classList.add('hidden');
+          this.openMainMenu();
+        });
+        this.btnVicNextLevel.addEventListener('click', () => {
+          if (this.currentLevel < 20) {
+            this.startLevel(this.currentLevel + 1, true);
+          } else {
+            this.modalVictory.classList.add('hidden');
+            this.openMainMenu();
+          }
+        });
+        this.btnVicGarage.addEventListener('click', () => {
+          this.modalVictory.classList.add('hidden');
+          this.openGarage();
+        });
+        this.btnVicMenu.addEventListener('click', () => {
+          this.modalVictory.classList.add('hidden');
+          this.openMainMenu();
+        });
+        this.btnPauseMenu.addEventListener('click', () => {
+          this.modalPause.classList.add('hidden');
+          this.openMainMenu();
+        });
 
         // Pause / Resume
         this.btnPause.addEventListener('click', () => this.togglePause());
@@ -2398,7 +3633,7 @@
           }
         });
 
-        // Mobile Touch Pedals (True Multi-touch with Pointer Capture)
+        // Mobile Touch Pedals
         const setupPedal = (btn, isGas) => {
           btn.addEventListener('pointerdown', (e) => {
             e.preventDefault();
@@ -2433,6 +3668,272 @@
 
         setupPedal(this.btnPedalGas, true);
         setupPedal(this.btnPedalBrake, false);
+      }
+
+      purchaseUpgrade(type) {
+        const curLvl = this.saveData.upgrades[type] || 1;
+        if (curLvl >= 20) return;
+        const cost = this.getUpgradeCost(curLvl);
+        if (this.saveData.coins < cost) return;
+
+        this.saveData.coins -= cost;
+        this.saveData.upgrades[type] = curLvl + 1;
+        this.saveProgress();
+        this.applyUpgrades();
+        this.updateGarageUI();
+        this.updateSaveUI();
+        this.sound.playCoinSound();
+        if (window.showMbgToast) {
+          const names = { engine: 'Mesin Balap', grip: 'Grip Ban', suspension: 'Shockbreaker' };
+          window.showMbgToast(`Upgrade ${names[type] || type} berhasil ke Level ${curLvl + 1}!`, '⚡');
+        }
+      }
+
+      openMainMenu() {
+        this.state = 'START';
+        this.sound.pauseEngine();
+        this.updateSaveUI();
+        if (this.btnStart) this.btnStart.innerText = 'MASUK KE MENU UTAMA (TAP TO START) 🚚💨';
+        if (this.domStartTapNotice) this.domStartTapNotice.innerText = '[ Sentuh layar atau klik tombol untuk mengaktifkan audio & masuk Menu Utama ]';
+        this.modalMainMenu.classList.remove('hidden');
+        this.modalLevelSelect.classList.add('hidden');
+        this.modalGarage.classList.add('hidden');
+        this.modalDialogue.classList.add('hidden');
+        this.modalVictory.classList.add('hidden');
+        this.modalGameOver.classList.add('hidden');
+        this.modalPause.classList.add('hidden');
+      }
+
+      openLevelSelect() {
+        this.state = 'START';
+        this.sound.pauseEngine();
+        this.renderLevelSelect();
+        this.modalLevelSelect.classList.remove('hidden');
+      }
+
+      renderLevelSelect() {
+        if (!this.domLevelGridContainer) return;
+        this.domLevelGridContainer.innerHTML = '';
+        for (let i = 1; i <= 20; i++) {
+          const cfg = LEVEL_CONFIGS[i - 1];
+          const isUnlocked = i <= this.saveData.unlockedLevel;
+          const stars = this.saveData.levelStars[i] || 0;
+          const card = document.createElement('div');
+
+          if (isUnlocked) {
+            const isCurrent = i === this.currentLevel;
+            card.className = `p-3 rounded-2xl border transition-all cursor-pointer transform active:scale-95 flex flex-col justify-between ${
+              isCurrent
+                ? 'bg-blue-900/60 border-cyan-400 shadow-lg shadow-cyan-500/20'
+                : 'bg-slate-800/80 border-slate-700 hover:border-slate-500 hover:bg-slate-800'
+            }`;
+            card.innerHTML = `
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-fredoka text-sm text-cyan-300">Level ${i}</span>
+                <span class="text-xs text-amber-400 tracking-wider">${stars > 0 ? '⭐'.repeat(stars) : '<span class="text-slate-500 text-[10px]">Belum Bintang</span>'}</span>
+              </div>
+              <p class="text-[11px] text-white font-bold truncate mb-1">${cfg ? cfg.name : 'Trayek Gizi'}</p>
+              <div class="flex items-center justify-between text-[10px] text-slate-400 font-mono mt-auto pt-1 border-t border-slate-700/60">
+                <span>📏 ${cfg ? cfg.distanceMeters : 4500}m</span>
+                <span class="text-cyan-400 font-bold">GAS ▶</span>
+              </div>
+            `;
+            card.addEventListener('click', () => {
+              this.startLevel(i, true);
+            });
+          } else {
+            card.className = 'p-3 rounded-2xl bg-slate-900/50 border border-slate-800/80 opacity-50 cursor-not-allowed flex flex-col justify-between';
+            card.innerHTML = `
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-fredoka text-sm text-slate-500">Level ${i}</span>
+                <span class="text-xs">🔒</span>
+              </div>
+              <p class="text-[11px] text-slate-500 font-medium truncate mb-1">${cfg ? cfg.name : 'Trayek Terkunci'}</p>
+              <div class="flex items-center justify-between text-[10px] text-slate-600 font-mono mt-auto pt-1 border-t border-slate-800">
+                <span>📏 ${cfg ? cfg.distanceMeters : 4500}m</span>
+                <span>Terkunci</span>
+              </div>
+            `;
+          }
+          this.domLevelGridContainer.appendChild(card);
+        }
+      }
+
+      openGarage() {
+        this.state = 'START';
+        this.sound.pauseEngine();
+        this.updateGarageUI();
+        this.modalGarage.classList.remove('hidden');
+      }
+
+      updateGarageUI() {
+        if (!this.domGarageCoins) return;
+        this.domGarageCoins.innerText = this.saveData.coins;
+
+        // 1. Engine
+        const eLvl = this.saveData.upgrades.engine;
+        this.domEngineLevelVal.innerText = eLvl;
+        this.domEngineBar.style.width = `${(eLvl / 20) * 100}%`;
+        this.domEngineStatVal.innerText = `${2200 + (eLvl - 1) * 80}`;
+        const eCost = this.getUpgradeCost(eLvl);
+        if (eCost !== null) {
+          this.domEngineCostVal.innerText = eCost;
+          this.btnUpgradeEngine.disabled = this.saveData.coins < eCost;
+          this.btnUpgradeEngine.className = `px-4 py-2 rounded-xl text-xs sm:text-sm font-fredoka font-bold shadow active:scale-95 transition-all whitespace-nowrap ${
+            this.saveData.coins >= eCost
+              ? 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 cursor-pointer'
+              : 'bg-slate-700 text-slate-400 cursor-not-allowed opacity-60'
+          }`;
+        } else {
+          this.domEngineCostVal.innerText = 'MAX';
+          this.btnUpgradeEngine.disabled = true;
+          this.btnUpgradeEngine.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-fredoka font-bold bg-slate-800 text-emerald-400 border border-emerald-500/40 cursor-default';
+        }
+
+        // 2. Grip
+        const gLvl = this.saveData.upgrades.grip;
+        this.domGripLevelVal.innerText = gLvl;
+        this.domGripBar.style.width = `${(gLvl / 20) * 100}%`;
+        this.domGripStatVal.innerText = `${Math.round((1.0 + (gLvl - 1) * 0.03) * 100)}%`;
+        const gCost = this.getUpgradeCost(gLvl);
+        if (gCost !== null) {
+          this.domGripCostVal.innerText = gCost;
+          this.btnUpgradeGrip.disabled = this.saveData.coins < gCost;
+          this.btnUpgradeGrip.className = `px-4 py-2 rounded-xl text-xs sm:text-sm font-fredoka font-bold shadow active:scale-95 transition-all whitespace-nowrap ${
+            this.saveData.coins >= gCost
+              ? 'bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 cursor-pointer'
+              : 'bg-slate-700 text-slate-400 cursor-not-allowed opacity-60'
+          }`;
+        } else {
+          this.domGripCostVal.innerText = 'MAX';
+          this.btnUpgradeGrip.disabled = true;
+          this.btnUpgradeGrip.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-fredoka font-bold bg-slate-800 text-emerald-400 border border-emerald-500/40 cursor-default';
+        }
+
+        // 3. Suspension
+        const sLvl = this.saveData.upgrades.suspension;
+        this.domSuspLevelVal.innerText = sLvl;
+        this.domSuspBar.style.width = `${(sLvl / 20) * 100}%`;
+        this.domSuspStatVal.innerText = `${180 + (sLvl - 1) * 4}`;
+        const sCost = this.getUpgradeCost(sLvl);
+        if (sCost !== null) {
+          this.domSuspCostVal.innerText = sCost;
+          this.btnUpgradeSusp.disabled = this.saveData.coins < sCost;
+          this.btnUpgradeSusp.className = `px-4 py-2 rounded-xl text-xs sm:text-sm font-fredoka font-bold shadow active:scale-95 transition-all whitespace-nowrap ${
+            this.saveData.coins >= sCost
+              ? 'bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 cursor-pointer'
+              : 'bg-slate-700 text-slate-400 cursor-not-allowed opacity-60'
+          }`;
+        } else {
+          this.domSuspCostVal.innerText = 'MAX';
+          this.btnUpgradeSusp.disabled = true;
+          this.btnUpgradeSusp.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-fredoka font-bold bg-slate-800 text-emerald-400 border border-emerald-500/40 cursor-default';
+        }
+
+        // Highlight selected skin & show unlock level badges
+        const skinReqs = { standard: 1, speedy: 4, mountain: 8, retro: 12, sport: 16 };
+        const skinNames = { standard: 'Standard MBG', speedy: 'Speedy Courier', mountain: 'Mountain Explorer', retro: 'Retro Food Truck', sport: 'Sport Racing' };
+        for (const [key, btn] of Object.entries(this.skinButtons)) {
+          if (!btn) continue;
+          const reqLvl = skinReqs[key] || 1;
+          const isUnlocked = (this.saveData.unlockedLevel || 1) >= reqLvl;
+          if (!isUnlocked) {
+            btn.innerHTML = `<span class="opacity-70">${skinNames[key]}</span><span class="block text-[9px] text-amber-400 font-mono mt-0.5">🔒 Lvl ${reqLvl}</span>`;
+            btn.className = 'p-2 rounded-xl bg-slate-900/60 border border-slate-800 text-xs font-fredoka text-slate-500 text-center opacity-70 cursor-not-allowed';
+          } else if (key === this.saveData.selectedSkin) {
+            btn.innerHTML = `<span>${skinNames[key]}</span><span class="block text-[9px] text-cyan-300 font-mono mt-0.5">✓ Terpasang</span>`;
+            btn.className = 'p-2 rounded-xl bg-slate-700 border-2 border-cyan-400 text-xs font-fredoka text-white text-center shadow-md';
+          } else {
+            btn.innerHTML = `<span>${skinNames[key]}</span>`;
+            btn.className = 'p-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-fredoka text-slate-300 text-center hover:bg-slate-700 cursor-pointer';
+          }
+        }
+
+        // Highlight selected rim & show unlock level badges
+        const rimReqs = { standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
+        const rimNames = { standard: 'Standard Steel', gold: 'Gold Alloy', beadlock: 'Mud Beadlock', whitewall: 'White-Wall Retro' };
+        for (const [key, btn] of Object.entries(this.rimButtons)) {
+          if (!btn) continue;
+          const reqLvl = rimReqs[key] || 1;
+          const isUnlocked = (this.saveData.unlockedLevel || 1) >= reqLvl;
+          if (!isUnlocked) {
+            btn.innerHTML = `<span class="opacity-70">${rimNames[key]}</span><span class="block text-[9px] text-amber-400 font-mono mt-0.5">🔒 Lvl ${reqLvl}</span>`;
+            btn.className = 'p-2 rounded-xl bg-slate-900/60 border border-slate-800 text-xs font-fredoka text-slate-500 text-center opacity-70 cursor-not-allowed';
+          } else if (key === this.saveData.selectedRim) {
+            btn.innerHTML = `<span>${rimNames[key]}</span><span class="block text-[9px] text-amber-300 font-mono mt-0.5">✓ Terpasang</span>`;
+            btn.className = 'p-2 rounded-xl bg-slate-700 border-2 border-amber-400 text-xs font-fredoka text-white text-center shadow-md';
+          } else {
+            btn.innerHTML = `<span>${rimNames[key]}</span>`;
+            btn.className = 'p-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-fredoka text-slate-300 text-center hover:bg-slate-700 cursor-pointer';
+          }
+        }
+
+        // Live preview canvas
+        if (this.renderer && this.garageCanvas) {
+          this.renderer.renderGaragePreview(this.garageCanvas, this.saveData.selectedSkin, this.saveData.selectedRim);
+        }
+      }
+
+      openDialogueModal(dialogueList, onComplete) {
+        if (!dialogueList || !dialogueList.length) {
+          if (onComplete) onComplete();
+          return;
+        }
+        this.dialogueList = dialogueList;
+        this.dialogueIndex = 0;
+        this.dialogueOnComplete = onComplete;
+        this.renderDialogueStep();
+        this.modalDialogue.classList.remove('hidden');
+      }
+
+      renderDialogueStep() {
+        const item = this.dialogueList[this.dialogueIndex];
+        if (!item) return;
+
+        this.domDialogueAvatar.innerHTML = getCharacterAvatarSvg(item.speaker, item.mood);
+        this.domDialogueSpeaker.innerHTML = `${item.speaker} <span class="text-xs text-slate-400 font-mono font-normal">(${item.role || ''})</span>`;
+        this.domDialogueBadge.innerText = `LEVEL ${this.currentLevel}`;
+        this.domDialogueText.innerText = item.text;
+
+        const isLast = this.dialogueIndex === this.dialogueList.length - 1;
+        this.btnDialogueNext.innerText = isLast ? 'MULAI! 🚚💨' : 'LANJUT ▶';
+      }
+
+      advanceDialogue() {
+        this.dialogueIndex++;
+        if (this.dialogueIndex >= this.dialogueList.length) {
+          this.closeDialogue();
+        } else {
+          this.renderDialogueStep();
+        }
+      }
+
+      closeDialogue() {
+        this.modalDialogue.classList.add('hidden');
+        if (this.dialogueOnComplete) {
+          const cb = this.dialogueOnComplete;
+          this.dialogueOnComplete = null;
+          cb();
+        }
+      }
+
+      startLevel(lvlNumber, showIntro = true) {
+        this.currentLevel = Math.max(1, Math.min(20, lvlNumber));
+        this.modalMainMenu.classList.add('hidden');
+        this.modalLevelSelect.classList.add('hidden');
+        this.modalGarage.classList.add('hidden');
+        this.modalGameOver.classList.add('hidden');
+        this.modalVictory.classList.add('hidden');
+        this.modalStart.classList.add('hidden');
+
+        const dialogues = STORY_DIALOGUES[this.currentLevel];
+        if (showIntro && dialogues && dialogues.intro && dialogues.intro.length) {
+          this.openDialogueModal(dialogues.intro, () => {
+            this.restartGame();
+          });
+        } else {
+          this.restartGame();
+        }
       }
 
       updateInputStates() {
@@ -2484,12 +3985,15 @@
       }
 
       restartGame() {
-        this.terrain = new WorldTerrain(4600);
+        const levelCfg = LEVEL_CONFIGS[this.currentLevel - 1];
+        const trackLen = levelCfg ? levelCfg.distanceMeters : 4600;
+        this.terrain = new WorldTerrain(trackLen, levelCfg);
         const startX = 150;
         const startY = this.terrain.getHeight(startX) - 34;
         this.vehicle = new Vehicle(startX, startY);
         this.vehicle.setSoundEngine(this.sound);
-        this.timeRemaining = 210;
+        this.applyUpgrades();
+        this.timeRemaining = levelCfg ? levelCfg.timeLimitSec : 210;
         this.gameStateManager = new GameStateManager();
         this.gameStateManager.state = 'PLAYING';
         this.state = 'PLAYING';
@@ -2497,9 +4001,24 @@
         this.modalGameOver.classList.add('hidden');
         this.modalVictory.classList.add('hidden');
         this.modalPause.classList.add('hidden');
+        this.modalMainMenu.classList.add('hidden');
+        this.modalLevelSelect.classList.add('hidden');
+        this.modalGarage.classList.add('hidden');
+        this.modalDialogue.classList.add('hidden');
+        this.modalStart.classList.add('hidden');
         this.renderer.confetti = [];
         this.renderer.splatters = [];
         this.sound.resumeEngine();
+        if (this.domBiomeTicks && this.terrain && this.terrain.segments) {
+          const segs = this.terrain.segments;
+          const ticksHtml = segs.map((s) => {
+            const shortName = s.id === 1 ? 'Pantura' : s.id === 2 ? 'Sawah' : s.id === 3 ? 'Gunung' : 'Sekolah';
+            const km = s.start === 0 ? '0m' : (s.start >= 1000 ? (s.start / 1000).toFixed(1) + 'k' : s.start + 'm');
+            return `<span>${km} ${shortName}</span>`;
+          });
+          ticksHtml.push(`<span title="${this.terrain.finishLineMeters}m SD · SMP · SMA Puspa Bangsa">SD · SMP · SMA</span>`);
+          this.domBiomeTicks.innerHTML = ticksHtml.join('');
+        }
         this.startTime = Date.now();
         this.lastTime = performance.now();
       }
@@ -2525,6 +4044,11 @@
         this.gameStateManager.gameOverReason = reason;
         this.sound.pauseEngine();
         this.sound.playCrashSound();
+
+        const runCoins = this.terrain.coins.filter(c => c.collected).length;
+        this.saveData.coins += runCoins;
+        this.saveProgress();
+        this.updateSaveUI();
 
         const goTitle = document.getElementById('goTitle');
         const goSubtitle = document.getElementById('goSubtitle');
@@ -2557,9 +4081,12 @@
 
         const meterX = Math.floor(this.vehicle.x / PHYSICS_CONSTANTS.METER_SCALE);
         document.getElementById('goDist').innerText = `${meterX.toLocaleString()}m`;
-        document.getElementById('goCoins').innerText = this.terrain.coins.filter(c => c.collected).length;
+        document.getElementById('goCoins').innerText = runCoins;
         document.getElementById('goCargo').innerText = `${Math.round(this.vehicle.cargoIntegrity)}%`;
-          const elapsed = Math.max(0, Math.floor(210 - this.timeRemaining));
+
+        const levelCfg = LEVEL_CONFIGS[this.currentLevel - 1];
+        const timeLimit = levelCfg ? levelCfg.timeLimitSec : 210;
+        const elapsed = Math.max(0, Math.floor(timeLimit - this.timeRemaining));
         const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
         const secs = String(elapsed % 60).padStart(2, '0');
         document.getElementById('goTime').innerText = `${mins}:${secs}`;
@@ -2573,22 +4100,49 @@
         this.sound.pauseEngine();
         this.sound.playVictoryFanfare();
 
+        const runCoins = this.terrain.coins.filter(c => c.collected).length;
+        this.saveData.coins += runCoins;
+
         const stars = this.gameStateManager.calculateStars(this.vehicle);
+        this.saveData.levelStars[this.currentLevel] = Math.max(stars, this.saveData.levelStars[this.currentLevel] || 0);
+
+        if (this.currentLevel >= this.saveData.unlockedLevel && this.currentLevel < 20) {
+          this.saveData.unlockedLevel = this.currentLevel + 1;
+        }
+        this.saveProgress();
+        this.updateSaveUI();
 
         document.getElementById('vicStars').innerText = '⭐'.repeat(stars);
         document.getElementById('vicCargo').innerText = `${Math.round(this.vehicle.cargoIntegrity)}%`;
         document.getElementById('vicFuel').innerText = `${Math.round(this.vehicle.fuel)}%`;
-        document.getElementById('vicCoins').innerText = this.terrain.coins.filter(c => c.collected).length;
+        document.getElementById('vicCoins').innerText = runCoins;
+        document.getElementById('vicTotalCoins').innerText = this.saveData.coins;
 
-        const elapsed = Math.max(0, Math.floor(210 - this.timeRemaining));
+        const levelCfg = LEVEL_CONFIGS[this.currentLevel - 1];
+        const timeLimit = levelCfg ? levelCfg.timeLimitSec : 210;
+        const elapsed = Math.max(0, Math.floor(timeLimit - this.timeRemaining));
         const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
         const secs = String(elapsed % 60).padStart(2, '0');
         document.getElementById('vicTime').innerText = `${mins}:${secs} (Target 09:45 Tercapai!)`;
 
-        this.modalVictory.classList.remove('hidden');
+        if (this.btnVicNextLevel) {
+          this.btnVicNextLevel.innerText = this.currentLevel >= 20 ? 'TAMAT! MENU UTAMA 🏆' : 'LEVEL SELANJUTNYA 🚀';
+        }
+
+        const dialogues = STORY_DIALOGUES[this.currentLevel];
+        if (dialogues && dialogues.outro && dialogues.outro.length) {
+          this.openDialogueModal(dialogues.outro, () => {
+            this.modalVictory.classList.remove('hidden');
+          });
+        } else {
+          this.modalVictory.classList.remove('hidden');
+        }
       }
 
       updateHUD() {
+        const levelCfg = LEVEL_CONFIGS[this.currentLevel - 1];
+        const targetDist = levelCfg ? levelCfg.distanceMeters : 4500;
+
         // Cargo Bar & Value
         const cargo = Math.max(0, Math.round(this.vehicle.cargoIntegrity));
         this.domCargoVal.innerText = `${cargo}%`;
@@ -2605,18 +4159,20 @@
         const speedKmh = Math.max(0, Math.round(Math.abs(this.vehicle.vx) * 0.18));
         this.domSpeedVal.innerText = speedKmh;
 
-        // Coins
+        // Coins (current run)
         const coins = this.terrain.coins.filter(c => c.collected).length;
         this.domCoinVal.innerText = coins;
 
-        // Distance & Biome
-        const meterX = Math.max(0, Math.min(4500, Math.floor(this.vehicle.x / PHYSICS_CONSTANTS.METER_SCALE)));
+        // Level & Distance
+        if (this.domHudLevelVal) this.domHudLevelVal.innerText = this.currentLevel;
+        if (this.domHudTargetDist) this.domHudTargetDist.innerText = targetDist;
+        const meterX = Math.max(0, Math.min(targetDist, Math.floor(this.vehicle.x / PHYSICS_CONSTANTS.METER_SCALE)));
         this.domDistVal.innerText = meterX;
         const biome = this.terrain.getBiomeAt(meterX);
         this.domBiomeLabel.innerText = biome.name;
 
         // Progress bar percentage
-        const progressPct = Math.min(100, (meterX / 4500) * 100);
+        const progressPct = Math.min(100, (meterX / targetDist) * 100);
         this.domProgressFill.style.width = `${progressPct}%`;
         this.domTruckMarker.style.left = `${progressPct}%`;
 
@@ -2656,9 +4212,43 @@
       }
     }
 
+    // =========================================================================
+    // REACT 18 OVERLAY BRIDGE (Mounted to #reactAppRoot)
+    // =========================================================================
+    function initReactOverlay(gameInstance) {
+      if (typeof window === 'undefined' || !window.React || !window.ReactDOM) return;
+      const { useState, useEffect, createElement: h } = window.React;
+
+      function NotificationOverlay() {
+        const [toast, setToast] = useState(null);
+
+        useEffect(() => {
+          window.showMbgToast = (message, icon = '🚚') => {
+            setToast({ message, icon, id: Date.now() });
+            setTimeout(() => setToast(null), 3200);
+          };
+        }, []);
+
+        if (!toast) return null;
+        return h('div', {
+          className: 'absolute top-14 left-1/2 transform -translate-x-1/2 bg-slate-900/95 border-2 border-cyan-400 text-white px-5 py-2.5 rounded-2xl shadow-2xl backdrop-blur-md flex items-center gap-3 pointer-events-none transition-all duration-300'
+        }, [
+          h('span', { key: 'icon', className: 'text-2xl animate-bounce' }, toast.icon),
+          h('span', { key: 'msg', className: 'font-fredoka text-sm text-cyan-200 tracking-wide' }, toast.message)
+        ]);
+      }
+
+      const rootEl = document.getElementById('reactAppRoot');
+      if (rootEl) {
+        const root = window.ReactDOM.createRoot(rootEl);
+        root.render(h(NotificationOverlay));
+      }
+    }
+
     // Launch game once window loads
     window.addEventListener('DOMContentLoaded', () => {
       window.game = new GameController();
+      initReactOverlay(window.game);
     });
   </script>
 </body>
