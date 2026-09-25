@@ -21,11 +21,11 @@ test('LEVEL_CONFIGS - All 20 levels defined with proper stepped distances & endi
     const cfg = LEVEL_CONFIGS[i];
     assert.equal(cfg.level, i + 1, `Level numbering is 1-indexed (Level ${i + 1})`);
     assert.ok(cfg.name && typeof cfg.name === 'string', `Level ${i + 1} has a name`);
-    assert.ok(cfg.distanceMeters >= 800 && cfg.distanceMeters <= 4500, `Distance ${cfg.distanceMeters}m is within 800m-4500m`);
+    assert.ok(cfg.distanceMeters >= 3000 && cfg.distanceMeters <= 25000, `Distance ${cfg.distanceMeters}m is within 3000m-25000m`);
     assert.ok(cfg.distanceMeters >= prevDistance, `Distance monotonically increases or stays stepped (${cfg.distanceMeters} >= ${prevDistance})`);
     prevDistance = cfg.distanceMeters;
 
-    assert.ok(cfg.timeLimitSec >= 90 && cfg.timeLimitSec <= 260, `Time limit is balanced`);
+    assert.ok(cfg.timeLimitSec >= 240 && cfg.timeLimitSec <= 1800, `Time limit is balanced (${cfg.timeLimitSec}s)`);
     assert.ok(Array.isArray(cfg.biomes) && cfg.biomes.length >= 2, `Level has at least 2 biomes`);
 
     // ABSOLUTE RULE: Last biome must ALWAYS be BIOMES.SEKOLAH (id: 4)

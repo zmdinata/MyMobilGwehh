@@ -37,16 +37,16 @@ Snapshot teknis dan panduan operasional proyek. Jika terdapat diskrepansi antara
 
 ---
 
-## 3. Kampanye 20 Level & 8 Bioma Dedikasi
+## 3. Kampanye 20 Level & Permutasi 8 Bioma Dinamis
 
-Sistem kampanye terdiri dari 20 level dengan kenaikan jarak tempuh bertahap (800m s.d. 4500m) dan batas waktu yang menantang:
-- **Level 1–5**: Jarak 800m – 1200m (Pesisir Pantura & Lembah Sawah).
-- **Level 6–10**: Jarak 1350m – 2000m (Pedesaan Sawah, Kubangan Lumpur, Puncak Siluet).
-- **Level 11–15**: Jarak 2200m – 3000m (Lereng Hutan Pinus Terjal, Bebatuan Curam).
-- **Level 16–20**: Jarak 3300m – 4500m (Maraton Ekstrem 8 Bioma Menuju Sekolah).
+Sistem kampanye terdiri dari 20 level maraton dengan rentang jarak tempuh bertahap (**3.000m s.d. 25.000m**) dan variasi 64 kemungkinan rute transisi bioma:
+- **Level 1–5**: Jarak 3.000m – 6.500m (Dimulai dari Lembah Sawah, Pesisir, dan Lereng Hutan Pinus).
+- **Level 6–10**: Jarak 7.500m – 12.500m (Kombinasi Sawah, Gunung Ciremai, Arteri Pantura, dan Pemukiman).
+- **Level 11–15**: Jarak 13.800m – 19.000m (Jalur Ekstrem Lereng Gunung, Bebatuan Curam, dan Lembah Terasering).
+- **Level 16–20**: Jarak 20.200m – 25.000m (Maraton Puncak Pantura & Gunung Ciremai Menuju Gerbang Puspa Bangsa).
 
-### Pemetaan 8 Bioma Dedikasi:
-Setiap bioma terhubung 1:1 ke aset ilustrasi latar belakang dan transisi 200m yang halus:
+### Permutasi Rute & 64 Pasangan Transisi Bioma:
+Setiap level tidak lagi mengikuti pola linear kaku (Pesisir $\to$ Sawah $\to$ Gunung $\to$ Sekolah), melainkan memiliki permutasi segmen acak terarah unik:
 1. `BIOMES.PESISIR_PANTURA` (ID 1) $\to$ `biome1Distant` (*Pesisir Pantai Pantura*)
 2. `BIOMES.JALUR_PANTURA` (ID 2) $\to$ `biome1Midground` (*Jalur Arteri Pantura*)
 3. `BIOMES.LEMBAH_SAWAH` (ID 3) $\to$ `biome2Distant` (*Hamparan Lembah Sawah*)
@@ -57,7 +57,20 @@ Setiap bioma terhubung 1:1 ke aset ilustrasi latar belakang dan transisi 200m ya
 8. `BIOMES.SEKOLAH` (ID 8) $\to$ `biome4Midground` (*Kompleks Sekolah Puspa Bangsa*)
 
 > [!IMPORTANT]
-> **Invarian Garis Finis**: Seluruh 20 level secara algoritmik dijamin selalu berakhir pada bioma Sekolah Puspa Bangsa (`BIOMES.SEKOLAH` / ID 8) dengan gerbang sekolah, bendera merah putih, dan parkiran datar yang aman.
+> **Invarian Garis Finis**: Apapun permutasi rute bioma di tengah trayek, segmen paling akhir dari seluruh 20 level secara algoritmik dijamin selalu berujung di Kompleks Sekolah Puspa Bangsa (`BIOMES.SEKOLAH` / ID 8) dengan gerbang sekolah, bendera merah putih, dan parkiran datar yang aman.
+
+### Sistem Pos Transit Kargo Gizi (Checkpoints):
+Pada setiap level panjang (3.000m - 25.000m), ditempatkan 1 hingga 4 titik Pos Transit Checkpoint:
+- Menambah bahan bakar bensin (+50%).
+- Menyimpan sebagian porsi kargo gizi yang berhasil diantar sebagai safety net reward koin.
+- Menjadi titik respawn opsional jika mobil terguling di kilometer tinggi.
+
+### Python Simulation & Balancing Suite:
+- Terletak di [`scripts/balancer.py`](file:///c:/Projects/game/scripts/balancer.py), memvalidasi secara headless bahwa sudut kemiringan (15° s.d. 23.2° grade rata-rata, puncak tanjakan hingga 45°-65°) dapat ditaklukkan secara fisik oleh daya mesin dan cengkeraman ban.
+- Ekspor konfigurasi matematis ke [`public/campaign_balance.json`](file:///c:/Projects/game/public/campaign_balance.json).
+
+### Fondasi Godot Engine 4 (Fase 2):
+- Proyek Godot 4 tersedia di folder [`godot/`](file:///c:/Projects/game/godot/) dengan scene controller 2D physics [`godot/scripts/TruckVehicle.gd`](file:///c:/Projects/game/godot/scripts/TruckVehicle.gd) dan konfigurasi Web Export GL Compatibility untuk Vercel.
 
 ---
 

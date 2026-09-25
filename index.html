@@ -3876,7 +3876,7 @@
               </div>
               <p class="text-[11px] text-white font-bold truncate mb-1">${cfg ? cfg.name : 'Trayek Gizi'}</p>
               <div class="flex items-center justify-between text-[10px] text-slate-400 font-mono mt-auto pt-1 border-t border-slate-700/60">
-                <span>Rute: ${cfg ? cfg.distanceMeters : 4500}m</span>
+                <span>Rute: ${cfg ? (cfg.distanceMeters >= 1000 ? (cfg.distanceMeters / 1000).toFixed(1) + 'km' : cfg.distanceMeters + 'm') : '3.0km'}</span>
                 <span class="text-cyan-400 font-bold flex items-center gap-0.5"><span>GAS</span><svg class="w-2.5 h-2.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
               </div>
             `;
@@ -3892,7 +3892,7 @@
               </div>
               <p class="text-[11px] text-slate-500 font-medium truncate mb-1">${cfg ? cfg.name : 'Trayek Terkunci'}</p>
               <div class="flex items-center justify-between text-[10px] text-slate-600 font-mono mt-auto pt-1 border-t border-slate-800">
-                <span>Rute: ${cfg ? cfg.distanceMeters : 4500}m</span>
+                <span>Rute: ${cfg ? (cfg.distanceMeters >= 1000 ? (cfg.distanceMeters / 1000).toFixed(1) + 'km' : cfg.distanceMeters + 'm') : '3.0km'}</span>
                 <span>Terkunci</span>
               </div>
             `;

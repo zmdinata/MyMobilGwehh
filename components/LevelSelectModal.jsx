@@ -10,6 +10,7 @@ import {
   Milestone,
   Play
 } from 'lucide-react';
+import { LEVEL_CONFIGS } from '@/game_core.js';
 
 export default function LevelSelectModal({
   currentUnlockedLevel = 1,
@@ -19,10 +20,12 @@ export default function LevelSelectModal({
 }) {
   const levels = Array.from({ length: 20 }, (_, i) => {
     const lvl = i + 1;
-    const baseDist = 800 + (lvl - 1) * 190;
+    const cfg = LEVEL_CONFIGS[i] || {};
+    const baseDist = cfg.distanceMeters || (3000 + (lvl - 1) * 1100);
+    const distLabel = baseDist >= 1000 ? `${(baseDist / 1000).toFixed(1)} km` : `${baseDist}m`;
     return {
       level: lvl,
-      dist: baseDist,
+      dist: distLabel,
       isUnlocked: lvl <= currentUnlockedLevel,
       stars: levelStars[lvl] || 0
     };
@@ -90,7 +93,7 @@ export default function LevelSelectModal({
                 <div className="text-[10px] sm:text-xs text-slate-400 font-mono flex items-center justify-between mt-2 pt-1 border-t border-slate-700/50">
                   <span className="flex items-center gap-1">
                     <Milestone className="w-3 h-3 text-slate-500" />
-                    <span>{item.dist}m</span>
+                    <span>{item.dist}</span>
                   </span>
                   {item.isUnlocked && (
                     <span className="text-cyan-300 font-bold flex items-center gap-1">

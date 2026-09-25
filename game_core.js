@@ -44,26 +44,26 @@ export const PHYSICS_CONSTANTS = {
 };
 
 export const LEVEL_CONFIGS = [
-  { level: 1, name: 'Tugas Pagi Pertama', finishMeters: 800, distanceMeters: 800, totalMeters: 900, timeLimit: 90, timeLimitSec: 90, biomes: [BIOMES.PESISIR_PANTURA, BIOMES.SEKOLAH] },
-  { level: 2, name: 'Angin Pesisir & Senyum Pertama', finishMeters: 900, distanceMeters: 900, totalMeters: 1000, timeLimit: 95, timeLimitSec: 95, biomes: [BIOMES.PESISIR_PANTURA, BIOMES.JALUR_PANTURA, BIOMES.SEKOLAH] },
-  { level: 3, name: 'Cieee Mas Tion!', finishMeters: 1000, distanceMeters: 1000, totalMeters: 1100, timeLimit: 100, timeLimitSec: 100, biomes: [BIOMES.PESISIR_PANTURA, BIOMES.JALUR_PANTURA, BIOMES.LEMBAH_SAWAH, BIOMES.SEKOLAH] },
-  { level: 4, name: 'Setelan Bengkel Zacky', finishMeters: 1100, distanceMeters: 1100, totalMeters: 1200, timeLimit: 105, timeLimitSec: 105, biomes: [BIOMES.JALUR_PANTURA, BIOMES.LEMBAH_SAWAH, BIOMES.DESA_SAWAH, BIOMES.SEKOLAH] },
-  { level: 5, name: 'Hujan Gerimis Pantura', finishMeters: 1200, distanceMeters: 1200, totalMeters: 1300, timeLimit: 110, timeLimitSec: 110, biomes: [BIOMES.PESISIR_PANTURA, BIOMES.LEMBAH_SAWAH, BIOMES.DESA_SAWAH, BIOMES.SEKOLAH] },
-  { level: 6, name: 'Kubangan Lumpur Terasering', finishMeters: 1350, distanceMeters: 1350, totalMeters: 1450, timeLimit: 120, timeLimitSec: 120, biomes: [BIOMES.LEMBAH_SAWAH, BIOMES.DESA_SAWAH, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
-  { level: 7, name: 'Botol Air Minum Bu Yulie', finishMeters: 1500, distanceMeters: 1500, totalMeters: 1600, timeLimit: 125, timeLimitSec: 125, biomes: [BIOMES.PESISIR_PANTURA, BIOMES.JALUR_PANTURA, BIOMES.LEMBAH_SAWAH, BIOMES.PUNCAK_GUNUNG, BIOMES.SEKOLAH] },
-  { level: 8, name: 'Misi Mak Comblang Husna', finishMeters: 1650, distanceMeters: 1650, totalMeters: 1750, timeLimit: 130, timeLimitSec: 130, biomes: [BIOMES.LEMBAH_SAWAH, BIOMES.DESA_SAWAH, BIOMES.LERENG_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
-  { level: 9, name: 'Uji Shockbreaker Anyar', finishMeters: 1800, distanceMeters: 1800, totalMeters: 1900, timeLimit: 135, timeLimitSec: 135, biomes: [BIOMES.JALUR_PANTURA, BIOMES.DESA_SAWAH, BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.SEKOLAH] },
-  { level: 10, name: 'Petuah Sang Legenda Mang Ucup', finishMeters: 2000, distanceMeters: 2000, totalMeters: 2100, timeLimit: 140, timeLimitSec: 140, biomes: [BIOMES.PESISIR_PANTURA, BIOMES.LEMBAH_SAWAH, BIOMES.PUNCAK_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
-  { level: 11, name: 'Tanjakan Kabut Perbukitan', finishMeters: 2200, distanceMeters: 2200, totalMeters: 2300, timeLimit: 150, timeLimitSec: 150, biomes: [BIOMES.DESA_SAWAH, BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
-  { level: 12, name: 'Melayang Demi Bu Guru', finishMeters: 2400, distanceMeters: 2400, totalMeters: 2500, timeLimit: 155, timeLimitSec: 155, biomes: [BIOMES.PESISIR_PANTURA, BIOMES.JALUR_PANTURA, BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.SEKOLAH] },
-  { level: 13, name: 'Surat Rantang Rahasia', finishMeters: 2600, distanceMeters: 2600, totalMeters: 2700, timeLimit: 160, timeLimitSec: 160, biomes: [BIOMES.LEMBAH_SAWAH, BIOMES.DESA_SAWAH, BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.SEKOLAH] },
-  { level: 14, name: 'Pipi Merah di Ruang Guru', finishMeters: 2800, distanceMeters: 2800, totalMeters: 2900, timeLimit: 170, timeLimitSec: 170, biomes: [BIOMES.PESISIR_PANTURA, BIOMES.JALUR_PANTURA, BIOMES.DESA_SAWAH, BIOMES.LERENG_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
-  { level: 15, name: 'Batu Curam & Mesin Stage 15', finishMeters: 3000, distanceMeters: 3000, totalMeters: 3100, timeLimit: 175, timeLimitSec: 175, biomes: [BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.DESA_SAWAH, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
-  { level: 16, name: 'Payung Teduh di Depan Gerbang', finishMeters: 3300, distanceMeters: 3300, totalMeters: 3400, timeLimit: 180, timeLimitSec: 180, biomes: [BIOMES.PESISIR_PANTURA, BIOMES.LEMBAH_SAWAH, BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
-  { level: 17, name: 'Dukungan Penuh Zacky & Husna', finishMeters: 3600, distanceMeters: 3600, totalMeters: 3700, timeLimit: 190, timeLimitSec: 190, biomes: [BIOMES.JALUR_PANTURA, BIOMES.DESA_SAWAH, BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
-  { level: 18, name: 'Tanjakan Penentu Nyali', finishMeters: 3900, distanceMeters: 3900, totalMeters: 4000, timeLimit: 195, timeLimitSec: 195, biomes: [BIOMES.LEMBAH_SAWAH, BIOMES.DESA_SAWAH, BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
-  { level: 19, name: 'Persiapan Pesta Gizi Akbar', finishMeters: 4200, distanceMeters: 4200, totalMeters: 4300, timeLimit: 200, timeLimitSec: 200, biomes: [BIOMES.PESISIR_PANTURA, BIOMES.JALUR_PANTURA, BIOMES.LEMBAH_SAWAH, BIOMES.DESA_SAWAH, BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
-  { level: 20, name: 'Rute Pamungkas: Demi Bu Guru Tercinta', finishMeters: 4500, distanceMeters: 4500, totalMeters: 4600, timeLimit: 210, timeLimitSec: 210, biomes: [BIOMES.PESISIR_PANTURA, BIOMES.JALUR_PANTURA, BIOMES.LEMBAH_SAWAH, BIOMES.DESA_SAWAH, BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] }
+  { level: 1, name: 'Tugas Pagi Pertama', finishMeters: 3000, distanceMeters: 3000, totalMeters: 3150, timeLimit: 260, timeLimitSec: 260, checkpoints: [1500], biomes: [BIOMES.LEMBAH_SAWAH, BIOMES.DESA_SAWAH, BIOMES.SEKOLAH] },
+  { level: 2, name: 'Angin Pesisir & Senyum Pertama', finishMeters: 3800, distanceMeters: 3800, totalMeters: 3950, timeLimit: 310, timeLimitSec: 310, checkpoints: [1900], biomes: [BIOMES.PESISIR_PANTURA, BIOMES.JALUR_PANTURA, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
+  { level: 3, name: 'Cieee Mas Tion!', finishMeters: 4600, distanceMeters: 4600, totalMeters: 4750, timeLimit: 360, timeLimitSec: 360, checkpoints: [2300], biomes: [BIOMES.DESA_SAWAH, BIOMES.LERENG_GUNUNG, BIOMES.PUNCAK_GUNUNG, BIOMES.SEKOLAH] },
+  { level: 4, name: 'Setelan Bengkel Zacky', finishMeters: 5500, distanceMeters: 5500, totalMeters: 5650, timeLimit: 420, timeLimitSec: 420, checkpoints: [2700], biomes: [BIOMES.JALUR_PANTURA, BIOMES.LEMBAH_SAWAH, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
+  { level: 5, name: 'Hujan Gerimis Pantura', finishMeters: 6500, distanceMeters: 6500, totalMeters: 6650, timeLimit: 480, timeLimitSec: 480, checkpoints: [2200, 4400], biomes: [BIOMES.LERENG_GUNUNG, BIOMES.PUNCAK_GUNUNG, BIOMES.DESA_SAWAH, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
+  { level: 6, name: 'Kubangan Lumpur Terasering', finishMeters: 7500, distanceMeters: 7500, totalMeters: 7650, timeLimit: 540, timeLimitSec: 540, checkpoints: [2500, 5000], biomes: [BIOMES.LEMBAH_SAWAH, BIOMES.LERENG_GUNUNG, BIOMES.PUNCAK_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
+  { level: 7, name: 'Botol Air Minum Bu Yulie', finishMeters: 8600, distanceMeters: 8600, totalMeters: 8750, timeLimit: 600, timeLimitSec: 600, checkpoints: [2800, 5700], biomes: [BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.PESISIR_PANTURA, BIOMES.JALUR_PANTURA, BIOMES.SEKOLAH] },
+  { level: 8, name: 'Misi Mak Comblang Husna', finishMeters: 9800, distanceMeters: 9800, totalMeters: 9950, timeLimit: 670, timeLimitSec: 670, checkpoints: [3200, 6500], biomes: [BIOMES.PESISIR_PANTURA, BIOMES.DESA_SAWAH, BIOMES.LERENG_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
+  { level: 9, name: 'Uji Shockbreaker Anyar', finishMeters: 11000, distanceMeters: 11000, totalMeters: 11150, timeLimit: 740, timeLimitSec: 740, checkpoints: [3600, 7300], biomes: [BIOMES.JALUR_PANTURA, BIOMES.PUNCAK_GUNUNG, BIOMES.LEMBAH_SAWAH, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
+  { level: 10, name: 'Petuah Sang Legenda Mang Ucup', finishMeters: 12500, distanceMeters: 12500, totalMeters: 12650, timeLimit: 820, timeLimitSec: 820, checkpoints: [4000, 8300], biomes: [BIOMES.DESA_SAWAH, BIOMES.PESISIR_PANTURA, BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.SEKOLAH] },
+  { level: 11, name: 'Tanjakan Kabut Perbukitan', finishMeters: 13800, distanceMeters: 13800, totalMeters: 13950, timeLimit: 890, timeLimitSec: 890, checkpoints: [4500, 9200], biomes: [BIOMES.LERENG_GUNUNG, BIOMES.LEMBAH_SAWAH, BIOMES.DESA_SAWAH, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
+  { level: 12, name: 'Melayang Demi Bu Guru', finishMeters: 15000, distanceMeters: 15000, totalMeters: 15150, timeLimit: 960, timeLimitSec: 960, checkpoints: [5000, 10000], biomes: [BIOMES.PESISIR_PANTURA, BIOMES.JALUR_PANTURA, BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.SEKOLAH] },
+  { level: 13, name: 'Surat Rantang Rahasia', finishMeters: 16500, distanceMeters: 16500, totalMeters: 16650, timeLimit: 1040, timeLimitSec: 1040, checkpoints: [4200, 8500, 12600], biomes: [BIOMES.LEMBAH_SAWAH, BIOMES.PUNCAK_GUNUNG, BIOMES.PESISIR_PANTURA, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
+  { level: 14, name: 'Pipi Merah di Ruang Guru', finishMeters: 17800, distanceMeters: 17800, totalMeters: 17950, timeLimit: 1110, timeLimitSec: 1110, checkpoints: [4500, 9000, 13500], biomes: [BIOMES.DESA_SAWAH, BIOMES.LERENG_GUNUNG, BIOMES.JALUR_PANTURA, BIOMES.PUNCAK_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
+  { level: 15, name: 'Batu Curam & Mesin Stage 15', finishMeters: 19000, distanceMeters: 19000, totalMeters: 19150, timeLimit: 1180, timeLimitSec: 1180, checkpoints: [4800, 9600, 14400], biomes: [BIOMES.PUNCAK_GUNUNG, BIOMES.LERENG_GUNUNG, BIOMES.LEMBAH_SAWAH, BIOMES.DESA_SAWAH, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
+  { level: 16, name: 'Payung Teduh di Depan Gerbang', finishMeters: 20200, distanceMeters: 20200, totalMeters: 20350, timeLimit: 1250, timeLimitSec: 1250, checkpoints: [5000, 10100, 15200], biomes: [BIOMES.PESISIR_PANTURA, BIOMES.LEMBAH_SAWAH, BIOMES.LERENG_GUNUNG, BIOMES.PUNCAK_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
+  { level: 17, name: 'Dukungan Penuh Zacky & Husna', finishMeters: 21500, distanceMeters: 21500, totalMeters: 21650, timeLimit: 1320, timeLimitSec: 1320, checkpoints: [5300, 10700, 16100], biomes: [BIOMES.JALUR_PANTURA, BIOMES.DESA_SAWAH, BIOMES.LERENG_GUNUNG, BIOMES.PUNCAK_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
+  { level: 18, name: 'Tanjakan Penentu Nyali', finishMeters: 22800, distanceMeters: 22800, totalMeters: 22950, timeLimit: 1390, timeLimitSec: 1390, checkpoints: [5600, 11300, 17100], biomes: [BIOMES.LEMBAH_SAWAH, BIOMES.DESA_SAWAH, BIOMES.PESISIR_PANTURA, BIOMES.LERENG_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
+  { level: 19, name: 'Persiapan Pesta Gizi Akbar', finishMeters: 24000, distanceMeters: 24000, totalMeters: 24150, timeLimit: 1460, timeLimitSec: 1460, checkpoints: [5800, 11800, 17900], biomes: [BIOMES.LERENG_GUNUNG, BIOMES.PUNCAK_GUNUNG, BIOMES.JALUR_PANTURA, BIOMES.DESA_SAWAH, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] },
+  { level: 20, name: 'Rute Pamungkas: Demi Bu Guru Tercinta', finishMeters: 25000, distanceMeters: 25000, totalMeters: 25150, timeLimit: 1520, timeLimitSec: 1520, checkpoints: [5000, 10000, 15000, 20000], biomes: [BIOMES.PESISIR_PANTURA, BIOMES.JALUR_PANTURA, BIOMES.LEMBAH_SAWAH, BIOMES.DESA_SAWAH, BIOMES.LERENG_GUNUNG, BIOMES.PUNCAK_GUNUNG, BIOMES.PEMUKIMAN, BIOMES.SEKOLAH] }
 ];
 
 export const STORY_DIALOGUES = {
@@ -278,7 +278,7 @@ export function buildLevelSegments(levelConfig) {
   const biomes = levelConfig.biomes;
   const count = biomes.length;
   const total = levelConfig.totalMeters;
-  const schoolLen = Math.max(200, Math.min(400, Math.floor(total * 0.15)));
+  const schoolLen = Math.max(300, Math.min(800, Math.floor(total * 0.08)));
   const remaining = total - schoolLen;
   const otherCount = count - 1;
   const chunk = otherCount > 0 ? remaining / otherCount : remaining;
@@ -328,6 +328,7 @@ export class TerrainSystem {
     this.launchRamps = [];
     this.fuelCans = []; // [meterX, collected]
     this.coins = [];    // [meterX, collected]
+    this.checkpoints = []; // [meterX, name, collected]
 
     if (this.levelConfig) {
       this.initCustomLevelHazardsAndItems(this.levelConfig);
@@ -344,22 +345,26 @@ export class TerrainSystem {
     this.launchRamps = [];
     this.fuelCans = [];
     this.coins = [];
+    this.checkpoints = [];
 
     // Distribute hazards according to segment biomes (8 distinct biomes)
     for (const seg of this.segments) {
       const segLen = seg.end - seg.start;
-      if ((seg.id === 1 || seg.id === 2) && segLen > 150) {
-        // Biome 1 & 2: Pesisir & Jalur Pantura puddles
-        const pMid = seg.start + segLen * 0.45;
-        this.puddles.push({ start: pMid - 35, end: pMid + 35 });
-      } else if ((seg.id === 3 || seg.id === 4) && segLen > 150) {
-        // Biome 3 & 4: Lembah & Desa Sawah mud pits
-        const mMid = seg.start + segLen * 0.5;
-        this.mudPits.push({ start: mMid - 40, end: mMid + 40 });
-      } else if ((seg.id === 5 || seg.id === 6) && segLen > 150) {
-        // Biome 5 & 6: Puncak & Lereng Gunung wooden logs
-        const lMid = seg.start + segLen * 0.55;
-        this.logs.push({ x: Math.round(lMid), radius: 14 });
+      if ((seg.id === 1 || seg.id === 2) && segLen > 200) {
+        // Biome 1 & 2: Pesisir & Jalur Pantura puddles spaced along the segment
+        for (let p = seg.start + 140; p < seg.end - 80; p += 380) {
+          this.puddles.push({ start: p - 35, end: p + 35 });
+        }
+      } else if ((seg.id === 3 || seg.id === 4) && segLen > 200) {
+        // Biome 3 & 4: Lembah & Desa Sawah mud pits spaced along the segment
+        for (let m = seg.start + 160; m < seg.end - 90; m += 420) {
+          this.mudPits.push({ start: m - 40, end: m + 40 });
+        }
+      } else if ((seg.id === 5 || seg.id === 6) && segLen > 200) {
+        // Biome 5 & 6: Puncak & Lereng Gunung wooden logs spaced along the segment
+        for (let l = seg.start + 180; l < seg.end - 100; l += 460) {
+          this.logs.push({ x: Math.round(l), radius: 14 });
+        }
       }
     }
 
@@ -367,8 +372,8 @@ export class TerrainSystem {
     const fin = cfg.finishMeters;
     this.speedBumps = [Math.max(100, fin - 240), Math.max(120, fin - 140), Math.max(140, fin - 60)];
 
-    // Launch kickers spaced every ~350m
-    for (let m = 280; m < fin - 150; m += 380) {
+    // Launch kickers spaced every ~400m
+    for (let m = 280; m < fin - 150; m += 400) {
       this.launchRamps.push({ start: m, rise: 12, drop: 6, height: 65 });
     }
 
@@ -381,6 +386,17 @@ export class TerrainSystem {
     for (let m = 40; m < fin; m += 40) {
       if (Math.sin(m * 0.05) > -0.2) {
         this.coins.push({ x: m, collected: false });
+      }
+    }
+
+    // Transit Delivery Checkpoints
+    if (cfg.checkpoints && Array.isArray(cfg.checkpoints)) {
+      for (let i = 0; i < cfg.checkpoints.length; i++) {
+        this.checkpoints.push({
+          x: cfg.checkpoints[i],
+          name: `Pos Transit ${i + 1}`,
+          collected: false
+        });
       }
     }
   }
@@ -572,51 +588,52 @@ export class TerrainSystem {
 
     // Dynamic segments for custom 20-level mode (8 distinct biomes)
     const localM = Math.max(0, m - segStart);
+    const slopeScale = this.levelConfig ? (1 + (this.levelConfig.level - 1) * 0.028) : 1.0;
     switch (biomeId) {
       case 1: {
         // Biome 1: Pesisir Pantura (Pantai & Laut Lepas)
-        const h1 = Math.sin(localM * 0.08) * 35;
-        const h2 = Math.sin(localM * 0.03) * 45;
+        const h1 = Math.sin(localM * 0.08) * (35 * slopeScale);
+        const h2 = Math.sin(localM * 0.03) * (45 * slopeScale);
         return baseElevation + (h1 + h2);
       }
       case 2: {
         // Biome 2: Jalur Arteri Pantura
-        const ramp = Math.sin(localM * 0.09) * 45;
-        const waves = Math.sin(localM * 0.15) * 20;
+        const ramp = Math.sin(localM * 0.09) * (45 * slopeScale);
+        const waves = Math.sin(localM * 0.15) * (20 * slopeScale);
         return baseElevation - 15 + ramp + waves;
       }
       case 3: {
         // Biome 3: Lembah Hamparan Sawah
-        const rolling = Math.sin(localM * 0.06) * 50;
-        const baseWave = Math.sin(localM * 0.02) * 35;
+        const rolling = Math.sin(localM * 0.06) * (50 * slopeScale);
+        const baseWave = Math.sin(localM * 0.02) * (35 * slopeScale);
         return baseElevation - 30 + rolling + baseWave;
       }
       case 4: {
         // Biome 4: Pedesaan Sawah Terasering
-        const terrace = Math.sin(localM * 0.07) * 55;
-        const rolls = Math.sin(localM * 0.14) * 26;
+        const terrace = Math.sin(localM * 0.07) * (55 * slopeScale);
+        const rolls = Math.sin(localM * 0.14) * (26 * slopeScale);
         return baseElevation - 45 + terrace + rolls;
       }
       case 5: {
         // Biome 5: Puncak Siluet Gn. Ciremai
-        const climb = -Math.min(140, localM * 0.10);
-        const wave = Math.sin(localM * 0.06) * 65;
+        const climb = -Math.min(140, localM * 0.09 * slopeScale);
+        const wave = Math.sin(localM * 0.06) * (65 * slopeScale);
         return baseElevation - 60 + climb + wave;
       }
       case 6: {
         // Biome 6: Lereng Hutan Pinus Terjal
-        const bigClimb = -Math.min(160, localM * 0.12);
-        const kicker = Math.sin(localM * 0.08) * 80;
+        const bigClimb = -Math.min(160, localM * 0.10 * slopeScale);
+        const kicker = Math.sin(localM * 0.08) * (80 * slopeScale);
         return baseElevation - 75 + bigClimb + kicker;
       }
       case 7: {
         // Biome 7: Kawasan Pemukiman Suburb
-        return baseElevation - 85 + Math.sin(localM * 0.05) * 30;
+        return baseElevation - 85 + Math.sin(localM * 0.05) * (30 * slopeScale);
       }
       case 8:
       default: {
         // Biome 8: Kompleks Sekolah Puspa Bangsa
-        return baseElevation - 90 + Math.sin(localM * 0.04) * 20;
+        return baseElevation - 90 + Math.sin(localM * 0.04) * (20 * slopeScale);
       }
     }
   }
@@ -886,6 +903,10 @@ export class PhysicsVehicle {
     this.stuntMessage = '';
     this.stuntTimer = 0;
     this.soundEngine = null;
+
+    // Transit checkpoints tracking
+    this.lastCheckpoint = null;
+    this.checkpointNotice = null;
 
     // Food particles ejected during shocks
     this.foodParticles = [];
@@ -1490,6 +1511,22 @@ export class PhysicsVehicle {
     for (const coin of terrain.coins) {
       if (!coin.collected && Math.abs(truckMeterX - coin.x) < 2.0) {
         coin.collected = true;
+      }
+    }
+
+    // Transit Delivery Checkpoints (+50% Fuel & secures cargo checkpoint)
+    if (terrain.checkpoints && Array.isArray(terrain.checkpoints)) {
+      for (const cp of terrain.checkpoints) {
+        if (!cp.collected && Math.abs(truckMeterX - cp.x) < 3.5) {
+          cp.collected = true;
+          this.fuel = Math.min(100, this.fuel + 50);
+          this.lastCheckpoint = {
+            x: cp.x,
+            name: cp.name,
+            cargo: this.cargoIntegrity
+          };
+          this.checkpointNotice = `${cp.name} Terlewati! +Bensin & Kargo Diamankan`;
+        }
       }
     }
   }

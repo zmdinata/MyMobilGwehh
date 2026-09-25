@@ -1,0 +1,31 @@
+; Engine configuration file for MBG: Road To School (Godot 4 2D Physics Engine)
+config_version=5
+
+[application]
+
+config/name="MBG: Road To School"
+config/description="Game 2D Physics Hill Climb Racing - Pengantaran 500 Porsi Paket Gizi Mas Tion & Bu Yulie (8 Bioma)"
+config/version="1.0.0"
+run/main_scene="res://scenes/Main.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/mode=0
+window/size/resizable=true
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+window/handheld/orientation=4
+
+[physics]
+
+2d/default_gravity=980
+2d/default_gravity_vector=Vector2(0, 1)
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.web="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
