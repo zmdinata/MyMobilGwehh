@@ -1111,20 +1111,161 @@ export class GameRenderer {
 
       drawSchoolFinishGate(finishPx, terrain) {
         const ctx = this.ctx;
-        if (finishPx < this.camera.x - 200 || finishPx > this.camera.x + this.width + 400) return;
+        if (finishPx < this.camera.x - 200 || finishPx > this.camera.x + this.width + 500) return;
 
         const groundY = terrain ? terrain.getHeight(finishPx) : 420;
 
+        ctx.save();
+        ctx.translate(finishPx, groundY);
+
+        // --- Ground Foundation, Campus Plaza, Sidewalk & Safety Curb ---
+        // Grounds the school campus solidly onto the road surface and eliminates the floating void.
+        const x1 = -65;
+        const x2 = 485;
+
+        // 1. Back Landscaping (Lawn & Green Shrubbery behind building planter boxes)
+        ctx.fillStyle = '#15803d';
+        ctx.beginPath();
+        ctx.moveTo(x1 - 15, -48);
+        ctx.lineTo(x1, -62);
+        ctx.lineTo(x2, -62);
+        ctx.lineTo(x2 + 15, -48);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#22c55e';
+        for (let bx = x1 - 5; bx <= x2 + 10; bx += 18) {
+          ctx.beginPath();
+          ctx.ellipse(bx + 8, -58, 8, 7, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // 2. Paved School Campus Plaza (Interlocking Paver Stones / Halaman Conblock)
+        const plazaGrad = ctx.createLinearGradient(0, -50, 0, -10);
+        plazaGrad.addColorStop(0, '#f8fafc');
+        plazaGrad.addColorStop(1, '#cbd5e1');
+        ctx.fillStyle = plazaGrad;
+
+        ctx.beginPath();
+        ctx.moveTo(x1, -12);
+        ctx.lineTo(x1, -48);
+        ctx.lineTo(x2, -48);
+        ctx.lineTo(x2, -12);
+        ctx.closePath();
+        ctx.fill();
+
+        // Subtle paving block joints
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.4)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let px = x1 + 12; px < x2; px += 24) {
+          ctx.moveTo(px, -48);
+          ctx.lineTo(px, -12);
+        }
+        for (const py of [-36, -24]) {
+          ctx.moveTo(x1, py);
+          ctx.lineTo(x2, py);
+        }
+        ctx.stroke();
+
+        // 3. Ground Contact Shadows directly beneath building steps & gate posts
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.35)';
+        // Left SD steps
+        ctx.beginPath();
+        if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(-45, -47, 120, 5, 2);
+        } else {
+          ctx.rect(-45, -47, 120, 5);
+        }
+        ctx.fill();
+
+        // Center SMP/SMA steps & gate base
+        ctx.beginPath();
+        if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(100, -55, 160, 5, 2);
+        } else {
+          ctx.rect(100, -55, 160, 5);
+        }
+        ctx.fill();
+
+        // Right building steps
+        ctx.beginPath();
+        if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(290, -54, 175, 5, 2);
+        } else {
+          ctx.rect(290, -54, 175, 5);
+        }
+        ctx.fill();
+
+        // 4. Sidewalk & Beveled Safety Curb (Trotoar & Kanstin Sekolah)
+        ctx.fillStyle = '#94a3b8';
+        ctx.beginPath();
+        ctx.moveTo(x1 - 10, -7);
+        ctx.lineTo(x1, -12);
+        ctx.lineTo(x2, -12);
+        ctx.lineTo(x2 + 10, -7);
+        ctx.closePath();
+        ctx.fill();
+
+        // Safety curb alternating blocks (Kanstin hitam-putih khas zona sekolah)
+        const curbStep = 22;
+        for (let idx = 0, cx = x1 - 10; cx < x2 + 10; cx += curbStep, idx++) {
+          ctx.fillStyle = (idx % 2 === 0) ? '#1e293b' : '#f8fafc';
+          const w = Math.min(curbStep, (x2 + 10) - cx);
+          ctx.fillRect(cx, -7, w, 4);
+        }
+        // Top curb highlight
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x1 - 10, -7);
+        ctx.lineTo(x2 + 10, -7);
+        ctx.stroke();
+
+        // 5. Red ZoSS Asphalt Zone & Checkered Finish Line
+        ctx.fillStyle = 'rgba(185, 28, 28, 0.85)';
+        ctx.fillRect(x1, -7, (x2 - x1), 14);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(x1, -7); ctx.lineTo(x2, -7);
+        ctx.moveTo(x1, 7); ctx.lineTo(x2, 7);
+        ctx.stroke();
+
+        // ZoSS Road Text
+        ctx.save();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 9px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('ZONA SELAMAT SEKOLAH  •  SD - SMP - SMA PUSPA BANGSA', (x1 + x2) / 2, 0);
+        ctx.restore();
+
+        // Checkered finish line at finish point (x = 0)
+        for (let row = 0; row < 2; row++) {
+          for (let col = 0; col < 2; col++) {
+            ctx.fillStyle = ((row + col) % 2 === 0) ? '#ffffff' : '#0f172a';
+            ctx.fillRect(col * 7, -7 + row * 7, 7, 7);
+          }
+        }
+
+        // 6. Ground contact shadows under students' shoes
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.45)';
+        for (const sx of [65, 111, 281, 332]) {
+          ctx.beginPath();
+          ctx.ellipse(sx, -7, 13, 3, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // --- Render Illustrated Sprite if loaded ---
         if (this.assets && this.assets.finishGate && this.assets.finishGate.loaded) {
-          ctx.save();
-          ctx.translate(finishPx, groundY);
-          ctx.drawImage(this.assets.finishGate.img, -50, -200, 520, 200);
+          // Sprite offset calibrated to -206 so students' feet (Y: 199) plant firmly
+          // on top of the sidewalk curb at Y: -7, and building bases (Y: 152-159)
+          // sit squarely on the paved plaza and garden terrace.
+          ctx.drawImage(this.assets.finishGate.img, -50, -206, 520, 200);
           ctx.restore();
           return;
         }
-
-        ctx.save();
-        ctx.translate(finishPx, groundY);
 
         // 1. Fictional separate buildings for elementary, middle, and high school.
         ctx.fillStyle = '#f8fafc';
