@@ -35,11 +35,25 @@ export default function VictoryModal({
         <div className="flex justify-center mb-2">
           <img
             id="vicFoodParcel"
-            src="/assets/refresh/v11/sprites/food_parcel.png"
+            src="/assets/refresh/v11/ui/icon_cargo.png"
             alt="Paket Gizi Hangat"
-            className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow"
+            className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-[0_4px_16px_rgba(16,185,129,0.5)] animate-bounce"
             onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
+        </div>
+
+        {/* Dynamic Nutri-Fact MBG Victory Card */}
+        <div id="vicNutriFactCard" className="w-full bg-slate-900/90 border border-emerald-500/40 rounded-2xl p-3 mb-3 text-left font-mono text-xs">
+          <div className="flex items-center justify-between text-emerald-400 font-bold mb-1">
+            <span className="flex items-center gap-1.5">
+              <img src="/assets/refresh/v11/ui/icon_cargo.png" className="w-4 h-4 object-contain" alt="" />
+              <span>KANDUNGAN GIZI TERKIRIM</span>
+            </span>
+            <span className="text-amber-300 text-[10px]">STANDAR KEMENKES</span>
+          </div>
+          <p id="vicNutriFactText" className="text-[11px] text-slate-300 leading-relaxed">
+            500 Porsi paket gizi hangat tiba utuh: Karbohidrat kompleks, protein hewani pencegah stunting, serat sayuran, buah segar, & susu pasteurisasi.
+          </p>
         </div>
 
         {/* Star Rating */}

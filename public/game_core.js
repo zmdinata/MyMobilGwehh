@@ -69,207 +69,209 @@ export const LEVEL_CONFIGS = [
 export const STORY_DIALOGUES = {
   1: {
     intro: [
-      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Tion, hari ini tugas perdana lu bawa armada MBG. Rutenya lempang pesisir Pantura, tapi jangan lengah!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Siap Mang Ucup! 500 porsi paket gizi hangat aman terkunci di boks belakang. Gaskeun!' }
+      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Tion, tugas perdana lu bawa armada MBG 500 porsi! Rutenya lempang pesisir Pantura, tapi angin laut kencang. Gas itu keberanian, rem itu kebijaksanaan, bawa kargo aman itu kehormatan!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Siap Mang Abdul! Nasi pulen karbohidrat kompleks 150 gram per porsi (total ~650 kkal AKG Kemenkes) aman terkunci di boks pemanas. Biar adik-adik SD Puspa Bangsa bertenaga penuh!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Selamat pagi! Mas Tion ya? Terima kasih banyak ya, kiriman makanannya tiba tepat waktu.' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(A-aduh manis banget senyumnya... jantungku kok malah balapan melebihi rpm mesin!)' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Selamat pagi! Mas Tion ya? Masya Allah, harum sekali makanannya tiba masih mengepul hangat tepat waktu. Terima kasih banyak ya Mas...' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(D-duh Gusti... senyumnya Bu Yulie manis banget, pipiku langsung panas merona, rpm jantung mendadak tembus redline 9000!) S-sama-sama Bu Yulie!' }
     ]
   },
   2: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'craftsman', text: 'Gimana armada kemarin, Jon? Masih enak kan tarikannya? Rajin-rajin kumpulin koin gizi di jalan buat modal upgrade!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Aman Zack! Pagi ini hawanya sejuk, semangat antar makanan ke Bu Yulie... eh, maksudnya ke sekolah!' }
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Pagi Jon! Menu hari ini ayam serundeng lengkuas. Ayam punya 22g protein hewani berkualitas per 100g buat regenerasi jaringan sel anak-anak. Ban udah gua setel cengkeramannya biar gak selip di jalan asin pesisir!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Mantap Zack! Semangat antar nutrisi tinggi buat Bu Yulie... eh, maksudnya buat murid-murid di sekolah Puspa Bangsa!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion kelihatan keringetan? Ini ada teh manis hangat dari ruang guru, diminum dulu Mas.' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'E-eh, terima kasih banyak Bu Yulie... berkah banget rasanya pagi-pagi begini.' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion kelihatan keringetan sekali? Ini saya buatkan teh melati hangat dari ruang guru, diminum dulu Mas biar gak dehidrasi.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'E-eh Bu Yulie repot-repot... (Pas nerima cangkir teh, jari kita sempat bersentuhan... rasanya kayak kesetrum voltase aki 24 volt!)' }
     ]
   },
   3: {
     intro: [
-      { speaker: 'Husna', role: 'Siswi SMA', mood: 'flirt', text: 'Hehehe, Mas Tion! Dari kejauhan suara klakson teloletnya udah ketebak banget!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Husna! Jangan nongkrong di pinggir jalan, nanti telat masuk kelas lho!' }
+      { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'flirt', text: 'Hahaha Mas Tion! Dari kejauhan nada klakson telolet armada MBG udah ketebak banget! Buruan Mas, Bu Yulie dari tadi bolak-balik liat jam nungguin Mas Tion lho~' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Husna! Jangan godain di jalan raya dong! Hari ini ada tempe orek manis & tahu bacem, protein nabati fermentasi kaya isoflavon dan serat probiotik pencegah stunting!' }
     ],
     outro: [
-      { speaker: 'Husna', role: 'Siswi SMA', mood: 'flirt', text: 'Cieee Mas Tion! Matanya curi-curi pandang ke Bu Yulie mulu. Mau aku comblangin gak nih?' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Hush! Husna ngomongnya kenceng amat, malu didenger guru lain tau!' }
+      { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'flirt', text: 'Cieee Mas Tion! Pas serah terima ompreng matanya salting ke mana-mana sampai nabrak pintu! Mau aku comblangin resmi sama Bu Yulie gak nih?' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Hush Husna! Ssst, ngomongnya kenceng amat, malu didenger guru lain dan bapak kepala sekolah tau!' }
     ]
   },
   4: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'craftsman', text: 'Hari ini rute mulai masuk area persawahan, Jon. Tanahnya gembur dan licin, lu butuh grip ban lebih mantap!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Untung koin gizi kemarin udah kekumpul buat poles grip di bengkel lu, Zack!' }
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Rute mulai masuk persawahan gembur Jon! Sayur lodeh labu siam dan daun melinjo ini kaya serat pangan, vitamin A, dan folat. Bejek gas halus biar kuah lodeh gak tumpah di kubangan tanah!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Siap mekanik andalan! Rantang gizi bersekat ganda udah terkunci rapat. Demi gizi seimbang anak bangsa, lumpur pematang sawah kita libas!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Anak-anak suka sekali menu hari ini, Mas Tion. Sayur lodeh dan ayam serundengnya gurih hangat!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Alhamdulillah Bu! Selama Bu Yulie dan murid-murid suka, saya gas terus sekuat tenaga!' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Alhamdulillah sayur lodehnya masih segar dan hangat sempurna. Mas Tion hebat sekali bisa menyeimbangkan truk katering di jalan sawah yang bergelombang.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'B-berkat doa restu Bu Yulie... eh maksud saya berkat doa keselamatan di jalan raya Bu!' }
     ]
   },
   5: {
     intro: [
-      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Langit mendung di atas pesisir, Tion. Jalanan aspal basah gampang bikin mobil melintir. Mainkan pedal rem sehalus sutra!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Siap Mang Ucup, kestabilan mobil dan keamanan kargo gizi nomor satu!' }
+      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Tion! Rute lumpur terasering makin licin! Ingat ilmu Mang Abdul: licinnya jalanan itu kayak ujian asmara, kalau panik lu ngepot terbalik, kalau tenang lu selamat! Bawa bandeng presto tanpa durinya utuh!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Siap Mang Abdul! Bandeng presto khas Pantura kaya asam lemak omega-3 EPA & DHA 1200mg buat ketajaman daya pikir murid-murid harus tiba selamat!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'concern', text: 'Untung Mas Tion tiba sebelum hujan lebat turun. Hati-hati ya Mas kalau jalanan licin.' },
-      { speaker: 'Husna', role: 'Siswi SMA', mood: 'flirt', text: 'Tuh kan Mas Tion! Bu Yulie dari tadi nengok ke pintu gerbang terus nungguin Mas Tion!' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Murid-murid lahap sekali makan bandeng presto tanpa durinya! Bodi truk Mas Tion penuh cipratan lumpur perjuangan, tapi paket makanannya tetap bersih higienis.' },
+      { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'flirt', text: 'Keringat Mas Tion bau dedikasi pahlawan katering ya Bu Guru? Hihihi!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(Husna beneran gak ada remnya, tapi Bu Yulie malah tertawa manis... adem banget hati ini!)' }
     ]
   },
   6: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'thinking', text: 'Kubangan lumpur di persawahan depan cukup dalam, Jon! Jangan asal bejek gas biar ban gak slip di tempat!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Fokus penuh! Rantang gizi gak boleh ada yang terciprat lumpur kotor!' }
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'thinking', text: 'Jon, ada rintangan balok kayu di jalur irigasi! Menu hari ini telur rebus balado bumbu tomat segar, kaya kolin 147mg buat pembentukan sel memori otak. Jaga kompresi suspensi pas mendarat!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Per dan damper racikan lu udah gua kalibrasi Zack! Telur balado kaya albumin ini bakal mendarat bulat utuh tanpa retak sedikit pun!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Hebat sekali! Bodi truknya penuh cipratan lumpur, tapi ompreng makanannya tetap higienis dan rapi.' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Dedikasi kurir gizi sejati, Bu Yulie! Bersih di dalam, tangguh di luar.' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion, ini saya bawakan handuk kecil bersih. Keringat di dahi diseka dulu Mas, nanti masuk angin kalau kena angin persawahan.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(Aroma lavender di handuk Bu Yulie lembut sekali... rasanya mau melayang saking saltingnya!)' }
     ]
   },
   7: {
     intro: [
-      { speaker: 'Husna', role: 'Siswi SMA', mood: 'hungry', text: 'Mas Tion! Tadi Bu Yulie nitip pesan, katanya jangan ngebut-ngebut di tanjakan bukit ya!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Beneran Bu Yulie yang titip pesan, atau kamu yang iseng ngarang-ngarang, Husna?' }
+      { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'hungry', text: 'Mas Tion! Tanjakan bukit jati di depan lumayan terjal lho! Muatan pisang raja dan jeruk manis lokal jangan sampai menggelinding keluar ya!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Tenang Husna! Buah segar ini kaya kalium 350mg dan vitamin C 45mg sebagai antioksidan alami biar kalian gak gampang flu pas pergantian cuaca!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'concern', text: 'Husna benar kok Mas Tion, saya memang khawatir tanjakan bukit semakin terjal.' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(Duh Gusti... diperhatikan begini bikin mesin mobil kalah panas sama pipi!)' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Jeruknya manis dan segar sekali Mas Tion. Saya perhatikan Mas Tion selalu memastikan porsi nutrisi anak-anak tercukupi dengan penuh ketulusan hati.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'M-melihat senyuman Bu Yulie dan keceriaan murid-murid adalah vitamin terhebat bagi saya di dunia Bu...' }
     ]
   },
   8: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'craftsman', text: 'Gua denger gosip lu makin rajin narik gara-gara Bu Guru ya? Nih suspensi udah gua kencengin biar gak goyang!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Bantuin doa aja Zack, semoga tanjakan dan rintangan balok kayu hari ini lancar jaya!' }
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Bebatuan lepas di hutan jati bisa bikin mobil mental kalau redaman shockbreaker lu kaku, Jon! Sayur bening bayam jagung manis ini sumber zat besi, lutein, dan zeaxanthin buat kesehatan retina mata. Atur throttle seimbang!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Grip ban level 8 siap mencengkeram bebatuan terjal Zack! Paket sayur bayam segar bakal tiba tepat waktu!' }
     ],
     outro: [
-      { speaker: 'Husna', role: 'Siswi SMA', mood: 'flirt', text: 'Bocoran intel gratis nih Mas Tion! Bu Yulie sukanya cowok pekerja keras yang bertanggung jawab!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Makasih infonya detektif Husna! Nanti kutraktir susu murni porsi dobel!' }
+      { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Mas Tion! Tadi Bu Yulie cerita ke guru lain, katanya Mas Tion itu pria paling gigih, tepat janji, dan berhati lembut yang pernah beliau kenal!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'B-beneran Husna?! Jangan bikin aku kepikiran seharian lho, jantungku bisa copot dari dada nih!' }
     ]
   },
   9: {
     intro: [
-      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Bebatuan lepas di lereng kebun teh bisa bikin mobil mental kalau suspensinya kaku, Tion.' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Zacky udah pasang per shockbreaker empuk Mang, siap melompat dan mendarat mulus!' }
+      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Tion! Rute perkebunan kopi mulai menanjak tajam! Susu murni pasteurisasi dari peternakan sapi lokal Kuningan di boks pendingin harus aman! Kalsium 300mg dan vitamin D itu investasi tulang anak bangsa!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Siap Mang Abdul! Susu pasteurisasi dingin terjaga higienis di 4 derajat Celsius. Bodi aerodinamis siap melesat menanjak!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Tadi dari jendela kantor guru, saya lihat mobil Mas Tion melompat anggun sekali di bukit!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Hehehe, demi mendaratkan senyuman di hadapan Bu Yulie tepat waktu!' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Susunya segar dan gurih sekali, anak-anak langsung menghabiskannya sampai tetes terakhir. Mas Tion, terima kasih ya sudah selalu berjuang sejauh ini...' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Demi senyuman Bu Guru dan masa depan anak-anak, mendaki bukit terjal pun saya lakoni dengan setulus hati!' }
     ]
   },
   10: {
     intro: [
-      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Udah level 10, Tion! Ingat ilmu Mang Ucup: gas itu keberanian, rem itu kebijaksanaan. Deketin cewek juga sama!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Siap petuah emasnya Mang! Bakal saya terapkan di pedal gas dan di lubuk hati!' }
+      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Udah level 10, Tion! Separuh perjalanan! Ingat filosofi Mang Abdul: di tanjakan terjal jangan bernafsu geber gas pol, jaga momentum dan putaran mesin! Ngedeketin cewek juga sama, jangan terburu-buru tapi harus konsisten!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Petuah emas Mang Abdul selalu meresap di sanubari! Hari ini ada capcay sayur pelangi kaya beta-karoten, likopen, dan vitamin K pembekuan darah sehat!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Sudah sepuluh trayek Mas Tion mengantar tanpa pernah terlambat. Anak-anak makin sehat dan ceria.' },
-      { speaker: 'Husna', role: 'Siswi SMA', mood: 'cheer', text: 'Dan Mas Tion makin keren ya Bu kalau pakai kemeja kurir biru begini!' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Sudah sepuluh trayek Mas Tion selalu hadir tepat waktu sebelum bel istirahat berbunyi. Ini ada bekal sarapan kecil buatan saya, dinikmati ya Mas.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(M-masakan buatan tangan Bu Yulie sendiri?! Ya ampun... ini hari paling indah dalam sejarah hidupku!)' }
     ]
   },
   11: {
     intro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'concern', text: 'Mas Tion, jalur pegunungan atas berkabut pekat pagi ini. Jaga jarak pandang dan hati-hati ya.' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Tenang Bu Yulie, klakson telolet MBG siap berkumandang menembus kabut!' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'concern', text: 'Mas Tion, kabut pagi di lereng Gunung Ciremai sangat tebal dan dingin. Jangan memaksakan kecepatan ya Mas, keselamatan Mas Tion nomor satu bagi kami...' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Didengar Bu Yulie sekhawatir itu... dinginnya kabut langsung kalah sama hangatnya hati ini! Semur daging sapi kaya zat besi heme bioavailable tinggi siap meluncur aman!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Hati saya langsung tenang begitu mendengar alunan telolet Mas Tion di gerbang sekolah...' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Alunan telolet itu memang nada rindu khusus buat Bu Yulie kok...' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Melihat sorot lampu kabut truk Mas Tion menembus kabut tebal tadi, hati saya rasanya langsung tenang dan lega luar biasa...' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Sorot lampu ini selalu terarah ke gerbang sekolah tempat Bu Yulie berdiri menyambut saya...' }
     ]
   },
   12: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'thinking', text: 'Tanjakan grade 12 makin menantang, Jon! Lu butuh tenaga kuda lebih besar kalau mau nanjak tanpa tekor bensin!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Tabungan koin gizi udah siap buat upgrade mesin di bengkel lu, Zack!' }
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'thinking', text: 'Tanjakan Grade 12 ini dijuluki Tanjakan Gigi Satu Jon! Lu butuh torsi mesin besar! Menu tumis buncis tempe giling ini indeks glikemiknya rendah, bikin energi anak-anak stabil tanpa mengantuk sehabis makan siang!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Tenaga mesin upgrade bengkel lu terbukti perkasa Zack! Tanjakan ekstrem ini bakal kita taklukkan dengan sempurna!' }
     ],
     outro: [
-      { speaker: 'Husna', role: 'Siswi SMA', mood: 'cheer', text: 'Keren banget tadi standing wheelie di tikungan atas Mas! Udah kayak film action!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Yang penting paket gizinya mendarat dengan selamat tanpa tumpah setetes pun!' }
+      { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Keren banget tadi pas mobil Mas Tion mendarat mulus di tanjakan atas! Udah kayak stuntman profesional! Bu Yulie sampai tepuk tangan bangga lho!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Yang paling penting nutrisi anak-anak mendarat utuh tanpa tumpah setetes kuah pun!' }
     ]
   },
   13: {
     intro: [
-      { speaker: 'Husna', role: 'Siswi SMA', mood: 'flirt', text: 'Mas Tion, aku ada ide cemerlang! Kita selipin kartu ucapan manis di rantang makan siang Bu Yulie!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Ehhh jangan Husna! Nanti kalau ketahuan kepala sekolah gimana urusannya?!' }
+      { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'flirt', text: 'Mas Tion! Pepes ikan mas kemanginya harum banget! Husna selipin amplop pantun titipan Mas Tion di rantang makan siang Bu Yulie ya?' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Ehhh Husna jangan sembarangan! Amplop pantun yang mana?! Aduh bisa copot jantungku kalau Bu Yulie baca sekarang!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: '"Semangat mengajar bidadari Puspa Bangsa"... ini tulisan siapa ya Mas Tion?' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'A-anu Bu... itu... Husna yang nulis tapi idenya... eh bukan, maaf Bu!' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion... amplop kecil berisi pantun di samping rantang ini... "Jalan berliku di lereng Ciremai, melihat senyum Bu Guru hati pun damai"... Mas Tion yang tulis ya?' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(Gawat Husna beneran nekat! Muka merah padam kayak kepiting rebus!) E-eh... iya Bu... mohon maaf kalau lancang...' },
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Pantunnya indah dan tulus sekali kok Mas... terima kasih ya.' }
     ]
   },
   14: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'craftsman', text: 'Gimana suratnya kemarin Jon? Sukses bikin Bu Guru baper gak? Hari ini rutenya panjang 2800 meter!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Gua hampir pingsan nahan grogi Zack! Sekarang harus fokus libas 6 bioma berliku!' }
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Rute panjang 2800 meter melintasi 6 bioma Jon! Sambal goreng hati sapi dan kentang dadu ini gudangnya vitamin B12 dan asam folat pembentuk sel darah merah pencegah anemia. Jaga kestabilan di tikungan hairpin tebing!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Suspensi anti-roll dan traksi ban prima bikin mobil anteng meliuk di kelokan tebing! Gas pol!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion... kartu ucapan kemarin lucu dan manis sekali. Terima kasih sudah bikin saya tersenyum.' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(Alhamdulillah ya Allah! Ternyata Bu Yulie suka!)' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Anak-anak perempuan di kelas memuji sambal goreng hatinya sangat empuk dan bumbunya pas. Mas Tion memang kurir paling berdedikasi.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Apalagi kalau kurirnya dapat senyuman manis dari Bu Guru setiap hari, tenaganya berlipat ganda berkali-kali lipat Bu!' }
     ]
   },
   15: {
     intro: [
-      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Tanjakan ekstrem di depan dijuluki Tanjakan Gigi Satu. Mesin dan nyali lu harus siap penuh, Tion!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Zacky udah pasang komponen stage 15 Mang! Tanjakan terjal pun bakal kita taklukkan!' }
+      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Angin lembah bertiup kencang di jembatan tebing, Tion! Ingat petuah Mang Abdul: sop ayam kaldu hangat ini butuh keseimbangan bodi tingkat dewa. Miring sedikit kuah tumpah! Rilekskan tangan di kemudi!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Siap Mang Abdul! Sop ayam kampung makaroni kaya kolagen alami 1500mg dan elektrolit ini bakal sampai di mangkok murid-murid dalam suhu prima!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Luar biasa, tanjakan securam itu bisa dilewati tanpa terlambat satu detik pun.' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Karena ada senyuman Bu Guru yang selalu saya nantikan di garis finis.' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Di udara dingin pegunungan begini, kuah kaldu hangat Mas Tion menghangatkan seluruh sekolah. Sungguh berkah yang luar biasa...' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Dan kehangatan tutur kata Bu Yulie menghangatkan jiwa saya sepanjang hari...' }
     ]
   },
   16: {
     intro: [
-      { speaker: 'Husna', role: 'Siswi SMA', mood: 'cheer', text: 'Mas Tion, bocoran berharga! Hari ini Bu Yulie ulang tahun lho! Mau kasih kejutan apa?' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Wah serius?! Aku harus bawa pengantaran paling sempurna dan kado terindah!' }
+      { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Mas Tion, bocoran berharga! Hari ini Bu Yulie ulang tahun lho! Puding agar-agar melon dan chia seed kaya serat pektin pencernaan ini segar banget, ada kado spesial gak buat Bu Guru?' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'Wah serius?! Hari ini aku harus bawa pengantaran paling mulus, tanpa keterlambatan satu detik pun demi hari bahagia Bu Yulie!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion basah kuyup karena gerimis? Mari payungan berdua sampai ke beranda sekolah...' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(Payungan berdua sama Bu Yulie... rasanya dunia serasa milik berdua!)' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion sampai basah kuyup kena gerimis demi mengantar puding ulang tahun ini? Mari payungan berdua masuk ke ruang guru, saya ambilkan handuk bersih...' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(Payungan berdua langkah demi langkah... rasanya dunia serasa milik berdua!)' }
     ]
   },
   17: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'craftsman', text: 'Waktunya pembuktian Jon! 17 level udah lu taklukkan, keahlian nyetir lu udah sekelas juara reli!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Demi kesehatan anak-anak dan masa depan bersama Bu Yulie, gaskeun pol!' }
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Jalur bypass lurus panjang Jon! Waktunya buktikan top speed mesin bertenaga tinggi! Opor ayam kampung bumbu rempah kunyit ini kaya kurkumin antiinflamasi alami pemelihara imunitas tubuh dari kuman penyakit. Gaskeun!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Top speed tinggi siap kita pacu tanpa kompromi pada keselamatan 500 porsi paket gizi hangat!' }
     ],
     outro: [
-      { speaker: 'Husna', role: 'Siswi SMA', mood: 'cheer', text: 'Ayo dong Mas Tion, jangan digantung terus! Nyatakan perasaan ke Bu Yulie pas festival besok!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Husnaaa! Jangan teriak-teriak di depan umum, malu didenger orang!' }
+      { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Mas Tion, besok adalah hari terakhir semester dan festival gizi akbar! Jangan jadi kurir pengecut ya, utarakan isi hatimu ke Bu Yulie besok!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Husnaaa! Jangan teriak-teriak! Tapi... doakan ya Husna, besok aku bakal beranikan diri...' }
     ]
   },
   18: {
     intro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'concern', text: 'Angin kencang berhembus di bibir tebing Mas Tion. Jaga kestabilan bodi mobilnya ya.' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Bodi aerodinamis dan ban berpola cengkeram tinggi siap menerjang angin bukit, Bu Yulie!' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'concern', text: 'Mas Tion, cuaca pesisir hari ini sangat bersahabat dengan semburat senja keemasan. Sayur asem Sunda segar jagung manis kaya mineral magnesium dan asam organik pemulih stamina siap dinikmati anak-anak.' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Siap Bu Yulie! Bodi aerodinamis dan ban berpola cengkeram tinggi siap menerjang angin senja mengantarkan nutrisi terbaik!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Saya bangga sekali melihat kegigihan dan tanggung jawab Mas Tion setiap hari.' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Mendengar apresiasi dari Bu Yulie adalah bahan bakar terkuat di hati saya.' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Mas Tion... besok setelah pesta perayaan 500 porsi MBG selesai... ada yang ingin saya bicarakan berdua di taman sekolah...' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(Deg-degan luar biasa! Apakah impian hatiku selama ini bakal terwujud besok? Ya Allah, berkahilah perjalananku!)' }
     ]
   },
   19: {
     intro: [
-      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Besok pesta gizi akbar 500 porsi paket komplit. Ini gladi resik rute terberat, Tion!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Siap Mang Ucup! Semua komponen mobil sudah di puncak performa maksimal!' }
+      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Besok hari penentuan, Tion! Hari ini gladi resik rute terberat 24.000 meter! Ingat petuah Mang Abdul: sopir sejati gak cuma piawai tancap gas di aspal, tapi juga punya keberanian sejati memperjuangkan cinta hidupnya!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'focus', text: 'Siap Mang Abdul! Rantang komplit 4 Sehat 5 Sempurna MBG (680 kkal standar Kemenkes RI AKG makan siang) siap kita antarkan tanpa kurang sebutir nasi pun!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Semua persiapan lancar berkat Mas Tion. Besok selesai acara... ada yang ingin saya bicarakan berdua.' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: '(Deg-degan luar biasa! Apakah impian hatiku bakal terwujud besok?!)' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'warm', text: 'Semua persiapan pesta akbar besok sempurna berkat kerja keras dan ketulusan Mas Tion. Saya menunggu kehadiran Mas Tion di garis finis besok ya...' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'blush', text: 'Pasti Bu Yulie! Saya akan tiba dengan armada terbaik dan kargo cinta paling tulus!' }
     ]
   },
   20: {
     intro: [
-      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'craftsman', text: 'Ini dia Grand Finale Jon! Rute 4500 meter penuh melintasi seluruh Pantura, Sawah, Gunung, sampai Sekolah!' },
-      { speaker: 'Husna', role: 'Siswi SMA', mood: 'cheer', text: 'Semangat Mas Tion! Seluruh murid dan guru menanti di gerbang Puspa Bangsa!' },
-      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Buktikan jiwa kesatria kurir gizi sejati! Berangkatkan kargo cintamu, Tion!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'GAS POLL! DEMI GIZI ANAK BANGSA DAN CINTA BU YULIE!' }
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Ini dia Grand Finale Jon! 20 level udah lu taklukkan! Bodi truk baru berkilau, mesin bertenaga 3720 watt, ban mencengkeram tanah dengan sempurna!' },
+      { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'Seluruh murid SD, SMP, SMA Puspa Bangsa udah berkumpul bawa spanduk selamat datang Mas Tion sang pahlawan gizi!' },
+      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Buktikan jiwa kesatria kurir MBG Pantura sejati! Gas itu keberanian, rem itu kebijaksanaan, cinta Bu Yulie itu tujuan akhirmu! Berangkatkan kargo cintamu, Tion!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'normal', text: 'BISMILLAH! GAS POLLL DEMI GIZI 500 SISWA DAN CINTA SEJATI BU YULIE!' }
     ],
     outro: [
-      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Mas Tion... perjalanan panjang ini membuktikan ketulusan dan ketangguhan hatimu. Saya menerima perasaan Mas Tion.' },
-      { speaker: 'Husna', role: 'Siswi SMA', mood: 'cheer', text: 'HOREEEE! AKHIRNYA JADIAN JUGA! MAKAN-MAKAN GIZI GRATIS!' },
-      { speaker: 'Zacky', role: 'Montir Jenius', mood: 'craftsman', text: 'Selamat Jon! Lu resmi jadi Pahlawan Cinta dan Logistik Pantura!' },
-      { speaker: 'Mang Ucup', role: 'Sopir Senior', mood: 'wise', text: 'Tangis haru Mang Ucup gak terbendung lagi... selamat Tion dan Bu Yulie!' },
-      { speaker: 'Tion', role: 'Kurir MBG', mood: 'happy', text: 'Alhamdulillah... terima kasih semuanya! Misi MBG Sukses Sempurna!' }
+      { speaker: 'Bu Yulie', role: 'Guru Puspa Bangsa', mood: 'happy', text: 'Mas Tion... selama 20 perjalanan penuh tantangan ini, saya melihat ketulusan, tanggung jawab, dan kebaikan hati Mas Tion. Hari ini di depan seluruh sekolah, saya menerima perasaan Mas Tion...' },
+      { speaker: 'Husna', role: 'Siswi SMA Puspa Bangsa', mood: 'cheer', text: 'HOREEEE! AKHIRNYA MAS TION GAK JOMBLO LAGI! MAKAN GIZI GRATIS SETIAP HARI!' },
+      { speaker: 'Zacky', role: 'Montir Garasi Zacky', mood: 'craftsman', text: 'Selamat Jon! Lu resmi dinobatkan jadi Pahlawan Logistik Gizi dan Juara Cinta Pantura!' },
+      { speaker: 'Mang Ucup', role: 'Mang Abdul (Sopir Senior Pantura)', mood: 'wise', text: 'Air mata bahagia Mang Abdul tumpah ruah... ini kemenangan terindah seorang sopir sejati!' },
+      { speaker: 'Tion', role: 'Kurir MBG', mood: 'happy', text: 'Alhamdulillah ya Allah... terima kasih semuanya! Misi MBG Sukses Sempurna, dan cintaku berlabuh di hati Bu Guru tercinta!' }
     ]
   }
 };

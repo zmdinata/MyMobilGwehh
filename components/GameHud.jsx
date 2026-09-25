@@ -42,33 +42,33 @@ export default function GameHud({
       {/* Top HUD Row */}
       <div id="topHudRow" className="flex items-start justify-between gap-2 w-full">
         {/* Left: Cargo Health & Speed */}
-        <div id="cargoHud" className="flex flex-col gap-1 pointer-events-auto bg-slate-900/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-2.5 shadow-xl min-w-[150px] sm:min-w-[190px]">
+        <div id="cargoHud" className="flex flex-col gap-1 pointer-events-auto bg-slate-900/80 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-2.5 shadow-[0_8px_32px_rgba(2,132,199,0.2)] min-w-[155px] sm:min-w-[200px]">
           <div className="flex items-center justify-between text-xs sm:text-sm font-bold">
             <span className="flex items-center gap-1.5 text-emerald-400">
               <img
                 id="cargoParcelIcon"
-                src="/assets/refresh/v11/sprites/food_parcel.png"
+                src="/assets/refresh/v11/ui/icon_cargo.png"
                 alt="Parcel"
-                className="h-5 w-5 object-contain"
+                className="h-6 w-6 object-contain drop-shadow-[0_2px_8px_rgba(16,185,129,0.5)]"
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
               />
-              KARGO GIZI
+              <span className="text-white tracking-wide">500 PORSI</span>
             </span>
-            <span id="cargoVal" className="text-emerald-300 font-mono">{Math.round(cargoIntegrity)}%</span>
+            <span id="cargoVal" className="text-emerald-300 font-mono font-extrabold text-sm sm:text-base">{Math.round(cargoIntegrity)}%</span>
           </div>
 
           {/* Cargo Bar */}
-          <div className="w-full h-3 sm:h-3.5 bg-slate-800 rounded-full overflow-hidden p-0.5 border border-slate-700">
+          <div className="w-full h-3 sm:h-3.5 bg-slate-950/80 rounded-full overflow-hidden p-0.5 border border-cyan-500/20">
             <div
               id="cargoBar"
-              className="h-full bg-gradient-to-r from-blue-700 via-blue-500 to-sky-300 rounded-full transition-all duration-100"
+              className="h-full bg-gradient-to-r from-blue-700 via-sky-500 to-emerald-400 rounded-full transition-all duration-100 shadow-[0_0_12px_rgba(56,189,248,0.5)]"
               style={{ width: `${Math.max(0, Math.min(100, cargoIntegrity))}%` }}
             />
           </div>
 
           {/* Speed & Coins */}
-          <div className="flex items-center justify-between text-[11px] sm:text-xs text-slate-300 pt-0.5">
-            <span className="font-mono">KECEPATAN: <b id="speedVal" className="text-white text-xs sm:text-sm">{Math.round(speedKmh)}</b> km/h</span>
+          <div className="flex items-center justify-between text-[11px] sm:text-xs text-slate-300 pt-0.5 font-mono">
+            <span>KECEPATAN: <b id="speedVal" className="text-cyan-300 font-bold text-xs sm:text-sm">{Math.round(speedKmh)}</b> km/h</span>
             <span className="text-amber-400 font-bold flex items-center gap-1">
               <Coins className="w-3.5 h-3.5 text-amber-400" />
               <span id="coinVal" className="font-mono">{coins}</span>
@@ -77,10 +77,10 @@ export default function GameHud({
         </div>
 
         {/* Center: Track Progress Bar with Biome Badges */}
-        <div id="progressHud" className="flex-1 max-w-xs sm:max-w-md md:max-w-xl mx-2 pointer-events-auto bg-slate-900/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-2 sm:p-2.5 shadow-xl flex flex-col justify-center">
+        <div id="progressHud" className="flex-1 max-w-xs sm:max-w-md md:max-w-xl mx-2 pointer-events-auto bg-slate-900/80 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-2 sm:p-2.5 shadow-[0_8px_32px_rgba(2,132,199,0.2)] flex flex-col justify-center">
           <div className="flex justify-between items-center text-[10px] sm:text-xs font-bold text-slate-300 mb-1 px-1">
             <div className="flex items-center gap-1.5 overflow-hidden">
-              <span className="bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold">
+              <span className="bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 px-2 py-0.5 rounded-lg text-[9px] sm:text-[10px] font-bold shadow-sm">
                 LVL <span id="hudLevelVal">{level}</span>
               </span>
               <span id="biomeLabel" className="text-cyan-300 uppercase tracking-wider truncate">
@@ -93,7 +93,7 @@ export default function GameHud({
           </div>
 
           {/* Progress track container */}
-          <div className="relative w-full h-4 sm:h-5 bg-slate-950 rounded-full p-0.5 border border-slate-700 overflow-visible flex items-center">
+          <div className="relative w-full h-4 sm:h-5 bg-slate-950 rounded-full p-0.5 border border-cyan-500/30 overflow-visible flex items-center">
             {/* Dynamic progress bar fill */}
             <div
               id="progressFill"
@@ -108,9 +108,14 @@ export default function GameHud({
             >
               <Truck className="w-4 h-4" />
             </div>
-            {/* Finish Gate Flag */}
-            <div className="absolute right-1 z-10 text-emerald-400 drop-shadow">
-              <Flag className="w-3.5 h-3.5" />
+            {/* Finish Gate 3D Icon Badge */}
+            <div className="absolute -right-1 z-10 drop-shadow-[0_2px_8px_rgba(16,185,129,0.7)]">
+              <img
+                src="/assets/refresh/v11/ui/icon_finish.png"
+                alt="Finis"
+                className="w-6 h-6 sm:w-7 sm:h-7 object-contain transform hover:scale-110 transition-transform"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              />
             </div>
           </div>
 
@@ -125,44 +130,58 @@ export default function GameHud({
         {/* Right: Fuel Status & Action Controls */}
         <div id="rightHud" className="flex items-start gap-2">
           {/* Fuel Widget */}
-          <div id="fuelWidget" className="flex flex-col gap-1 pointer-events-auto bg-slate-900/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-2.5 shadow-xl min-w-[130px] sm:min-w-[160px]">
+          <div id="fuelWidget" className="flex flex-col gap-1 pointer-events-auto bg-slate-900/80 backdrop-blur-xl border border-amber-500/30 rounded-2xl p-2.5 shadow-[0_8px_32px_rgba(245,158,11,0.15)] min-w-[135px] sm:min-w-[175px]">
             <div className="flex items-center justify-between text-xs sm:text-sm font-bold">
               <span className="flex items-center gap-1.5 text-amber-400">
-                <Fuel className="w-3.5 h-3.5 text-amber-400" /> BENSIN
+                <img
+                  src="/assets/refresh/v11/ui/icon_fuel.png"
+                  alt="Fuel"
+                  className="w-5 h-5 sm:w-6 sm:h-6 object-contain drop-shadow"
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                />
+                <span>BENSIN</span>
               </span>
-              <span id="fuelVal" className="text-amber-300 font-mono">{Math.round(fuelPercent)}%</span>
+              <span id="fuelVal" className="text-amber-300 font-mono font-extrabold text-sm sm:text-base">{Math.round(fuelPercent)}%</span>
             </div>
-            <div className="w-full h-3 sm:h-3.5 bg-slate-800 rounded-full overflow-hidden p-0.5 border border-slate-700">
+            <div className="w-full h-3 sm:h-3.5 bg-slate-950/80 rounded-full overflow-hidden p-0.5 border border-amber-500/20">
               <div
                 id="fuelBar"
-                className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full transition-all duration-100"
+                className="h-full bg-gradient-to-r from-red-600 via-amber-500 to-yellow-300 rounded-full transition-all duration-100 shadow-[0_0_12px_rgba(245,158,11,0.5)]"
                 style={{ width: `${Math.max(0, Math.min(100, fuelPercent))}%` }}
               />
             </div>
             {/* Countdown Clock */}
-            <div className="flex items-center justify-between text-[11px] sm:text-xs pt-0.5">
-              <span className="text-slate-400">TARGET: <b className="text-white font-mono">09:45</b></span>
+            <div className="flex items-center justify-between text-[11px] sm:text-xs pt-0.5 font-mono">
+              <span className="text-slate-400">TARGET: <b className="text-white font-mono">09:45 WIB</b></span>
               <span id="clockVal" className="font-mono font-bold text-red-400 text-xs sm:text-sm">{formatClock(timeRemaining)}</span>
             </div>
           </div>
 
-          {/* Audio & Pause Buttons */}
+          {/* Audio & Pause Buttons with 3D Icons */}
           <div id="hudActions" className="flex flex-col gap-1.5 pointer-events-auto">
             <button
               id="audioBtn"
               onClick={onToggleAudio}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-800/90 border border-slate-700 hover:bg-slate-700 active:scale-95 flex items-center justify-center text-sm shadow-lg text-slate-200"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-800/80 backdrop-blur-md border border-cyan-400/40 hover:bg-slate-700/80 active:scale-95 flex items-center justify-center p-1 text-cyan-400 shadow-[0_4px_16px_rgba(2,132,199,0.3)] transition-all"
               title="Toggle Audio"
             >
-              {isAudioMuted ? <VolumeX className="w-4 h-4 text-red-400" /> : <Volume2 className="w-4 h-4 text-cyan-400" />}
+              <img
+                src="/assets/refresh/v11/ui/icon_audio.png"
+                alt="Audio"
+                className={`w-full h-full object-contain pointer-events-none drop-shadow ${isAudioMuted ? 'opacity-40 grayscale' : ''}`}
+              />
             </button>
             <button
               id="pauseBtn"
               onClick={onPause}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-800/90 border border-slate-700 hover:bg-slate-700 active:scale-95 flex items-center justify-center text-sm shadow-lg text-slate-200"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-800/80 backdrop-blur-md border border-amber-400/40 hover:bg-slate-700/80 active:scale-95 flex items-center justify-center p-1 text-slate-200 shadow-[0_4px_16px_rgba(245,158,11,0.3)] transition-all"
               title="Jeda Permainan"
             >
-              <Pause className="w-4 h-4" />
+              <img
+                src="/assets/refresh/v11/ui/icon_pause.png"
+                alt="Pause"
+                className="w-full h-full object-contain pointer-events-none drop-shadow"
+              />
             </button>
           </div>
         </div>

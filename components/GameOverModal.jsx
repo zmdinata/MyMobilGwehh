@@ -77,10 +77,10 @@ export default function GameOverModal({
           <button
             id="goRestartBtn"
             onClick={onRestart}
-            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white font-fredoka text-base sm:text-lg font-bold shadow-lg shadow-red-500/30 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
+            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-red-600 via-amber-600 to-yellow-500 hover:from-red-500 hover:to-yellow-400 text-slate-950 font-fredoka text-base sm:text-lg font-bold shadow-lg shadow-red-500/30 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
           >
+            <img src="/assets/refresh/v11/ui/icon_restart.png" className="w-5 h-5 object-contain" alt="" />
             <span>GAS LAGI DARI AWAL!</span>
-            <RotateCcw className="w-4 h-4" />
           </button>
           <button
             id="goMenuBtn"

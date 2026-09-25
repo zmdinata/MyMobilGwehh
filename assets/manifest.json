@@ -72,6 +72,60 @@
         "y": 175
       }
     },
+    "uiCargo": {
+      "src": "assets/refresh/v11/ui/icon_cargo.png",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      }
+    },
+    "uiFuel": {
+      "src": "assets/refresh/v11/ui/icon_fuel.png",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      }
+    },
+    "uiPause": {
+      "src": "assets/refresh/v11/ui/icon_pause.png",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      }
+    },
+    "uiRestart": {
+      "src": "assets/refresh/v11/ui/icon_restart.png",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      }
+    },
+    "uiAudio": {
+      "src": "assets/refresh/v11/ui/icon_audio.png",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      }
+    },
+    "uiFinish": {
+      "src": "assets/refresh/v11/ui/icon_finish.png",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      }
+    },
     "biome1Distant": {
       "src": "assets/refresh/v11/backgrounds/biome1Distant.webp",
       "fallback": null,
