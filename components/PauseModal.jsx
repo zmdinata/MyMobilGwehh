@@ -30,14 +30,14 @@ export default function PauseModal({
           Mas Tion sedang mengatur napas dan memeriksa suhu boks 500 porsi paket gizi...
         </p>
 
-        {/* Dynamic Nutri-Fact MBG Card */}
+        {/* Dynamic Nutri-Fact MMG Card */}
         <div id="pauseNutriFactCard" className="bg-slate-800/80 border border-emerald-500/30 rounded-2xl p-3 mb-4 text-left font-mono text-xs">
           <div className="flex items-center gap-2 text-emerald-400 font-bold mb-1">
             <img src="/assets/refresh/v11/ui/icon_cargo.png" className="w-4 h-4 object-contain" alt="" />
-            <span>INFO GIZI MBG KEMENKES RI</span>
+            <span>INFO GIZI MMG KEMENKES RI</span>
           </div>
           <p className="text-[11px] text-slate-300 leading-relaxed">
-            Makan Bergizi Gratis dirancang memenuhi 30–35% AKG (Angka Kecukupan Gizi) harian anak sekolah: ~650 kkal karbohidrat kompleks, protein hewani pencegah stunting, serat sayur, buah lokal, & susu murni.
+            Makanan Mantap Gurih (MMG) dirancang memenuhi 30–35% AKG (Angka Kecukupan Gizi) harian anak sekolah: ~650 kkal karbohidrat kompleks, protein hewani pencegah stunting, serat sayur, buah lokal, & susu murni.
           </p>
         </div>
 

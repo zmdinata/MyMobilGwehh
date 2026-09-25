@@ -36,18 +36,18 @@ export default function WelcomeModal({ onStart = () => {} }) {
             <img
               id="gameLogo"
               src="/assets/refresh/v11/sprites/logo.png"
-              alt="MBG: Road To School"
+              alt="MMG: Road To School"
               className="w-40 sm:w-48 md:w-56 h-auto max-h-24 sm:max-h-28 object-contain drop-shadow-[0_10px_25px_rgba(13,43,82,0.8)] mb-1"
             />
-            <h1 id="gameLogoFallback" className="sr-only">MBG: Road To School</h1>
+            <h1 id="gameLogoFallback" className="sr-only">MMG: Road To School</h1>
             <p className="text-xs sm:text-sm text-cyan-200 font-mono tracking-wide mb-3">
-              MBG (My Mobil Gweh) - Misi Antar 500 Porsi Gizi Hangat
+              MMG (My Mobil Gweh) - Misi Antar 500 Porsi Gizi Hangat
             </p>
 
             {/* Story Narrative Box */}
             <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3.5 sm:p-4 text-xs sm:text-sm text-slate-300 leading-relaxed text-left space-y-2.5 w-full">
               <p>
-                <b className="text-cyan-300">Kisah Mas Tion:</b> Driver muda tangguh armada MBG yang berjuang mengantar <b>500 porsi</b> paket gizi hangat demi Bu Yulie dan siswa-siswi <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b>, didampingi petuah bijak sang legenda supir elf Pantura, <b>Mang Abdul</b>!
+                <b className="text-cyan-300">Kisah Mas Tion:</b> Driver muda tangguh armada MMG yang berjuang mengantar <b>500 porsi</b> paket gizi hangat demi Bu Yulie dan siswa-siswi <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b>, didampingi petuah bijak sang legenda supir elf Pantura, <b>Mang Abdul</b>!
               </p>
               <div className="bg-emerald-950/60 border border-emerald-500/40 rounded-xl p-2.5 text-left text-xs text-emerald-200 flex items-start gap-2 shadow-inner">
                 <img

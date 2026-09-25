@@ -36,7 +36,7 @@ export default function GarageModal({
   };
 
   const skins = [
-    { id: 'standard', name: 'Standard MBG Box', unlockLevel: 1, price: 0, color: '#0d9488', bonus: 'Standard' },
+    { id: 'standard', name: 'Standard MMG Box', unlockLevel: 1, price: 0, color: '#0d9488', bonus: 'Standard' },
     { id: 'speedy', name: 'Speedy Courier', unlockLevel: 4, price: 580, color: '#0284c7', bonus: '+5% Speed' },
     { id: 'mountain', name: 'Mountain 4x4', unlockLevel: 8, price: 1430, color: '#b45309', bonus: '+5% Grip' },
     { id: 'retro', name: 'Retro Classic', unlockLevel: 12, price: 3500, color: '#be123c', bonus: '+5% Shock' },

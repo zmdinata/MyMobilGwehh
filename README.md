@@ -1,4 +1,4 @@
-# MBG: Road To School (My Mobil Gwehh)
+# MMG: Road To School (My Mobil Gwehh)
 
 Game side-scrolling 2D physics platformer tentang perjuangan **Mas Tion** mengantarkan 500 porsi paket gizi hangat menuju kawasan sekolah fiktif **SD, SMP, dan SMA Puspa Bangsa Cirebon** demi Bu Yulie dan siswa-siswi, didampingi petuah bijak supir veteran **Mang Abdul**.
 

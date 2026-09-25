@@ -31,7 +31,7 @@ export async function GET() {
   };
 
   const skins = [
-    { id: 'standard', name: 'Standard Tosca MBG', unlockLevel: 1, cost: 0, color: '#0d9488' },
+    { id: 'standard', name: 'Standard Tosca MMG', unlockLevel: 1, cost: 0, color: '#0d9488' },
     { id: 'speedy', name: 'Speedy Pantura Blue', unlockLevel: 3, cost: 100, color: '#0284c7' },
     { id: 'mountain', name: 'Mountain Hunter Red', unlockLevel: 7, cost: 250, color: '#dc2626' },
     { id: 'retro', name: 'Retro Cirebon Brown', unlockLevel: 12, cost: 450, color: '#78350f' },

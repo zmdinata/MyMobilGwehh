@@ -27,7 +27,7 @@ export default function MainMenuModal({
         {/* Badge row */}
         <div className="flex items-center gap-2 mb-2">
           <span className="bg-blue-500/20 border border-blue-400/60 text-sky-300 px-3 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider">
-            MBG Story Mode: 20 Level
+            MMG Story Mode: 20 Level
           </span>
         </div>
 
@@ -35,11 +35,11 @@ export default function MainMenuModal({
         <img
           id="mainMenuLogo"
           src="/assets/refresh/v11/sprites/logo.png"
-          alt="MBG: Road To School"
+          alt="MMG: Road To School"
           className="w-48 sm:w-56 h-auto max-h-32 object-contain drop-shadow-[0_8px_20px_rgba(13,43,82,0.7)] mb-2"
         />
         <h1 className="font-fredoka text-2xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-amber-300 drop-shadow mb-1">
-          MBG: Road To School
+          MMG: Road To School
         </h1>
         <p className="text-xs text-slate-300 font-mono mb-4">
           Kisah Cinta & Misi Antar 500 Porsi Gizi Mas Tion Menuju Bu Yulie

@@ -48,16 +48,27 @@ test('STORY_DIALOGUES - All 20 levels have rich Intro & Outro dialogues with all
   for (let lvl = 1; lvl <= 20; lvl++) {
     const story = STORY_DIALOGUES[lvl];
     assert.ok(story, `Story exists for Level ${lvl}`);
-    assert.ok(Array.isArray(story.intro) && story.intro.length >= 2, `Level ${lvl} has at least 2 intro dialogue lines`);
-    assert.ok(Array.isArray(story.outro) && story.outro.length >= 2, `Level ${lvl} has at least 2 outro dialogue lines`);
+    assert.ok(Array.isArray(story.intro) && story.intro.length >= 2 && story.intro.length <= 5, `Level ${lvl} has 2-5 intro dialogue lines (actual: ${story.intro?.length})`);
+    assert.ok(Array.isArray(story.outro) && story.outro.length >= 2 && story.outro.length <= 5, `Level ${lvl} has 2-5 outro dialogue lines (actual: ${story.outro?.length})`);
 
     for (const line of [...story.intro, ...story.outro]) {
       assert.ok(line.speaker, `Dialogue line has speaker`);
       assert.ok(line.text && line.text.length > 5, `Dialogue line has substantial text`);
       assert.ok(line.mood, `Dialogue line has mood`);
+      assert.equal(/\bMBG\b/.test(line.text), false, `Dialogue line in Level ${lvl} must not contain deprecated 'MBG': "${line.text}"`);
+      assert.equal(/\bMBG\b/.test(line.role || ''), false, `Role in Level ${lvl} must not contain deprecated 'MBG'`);
       charactersFound.add(line.speaker);
     }
   }
+
+  // Level 1 specific validation: Dialogue and tips must not mention Pantura or ocean winds
+  const lvl1 = STORY_DIALOGUES[1];
+  const lvl1Cfg = LEVEL_CONFIGS[0];
+  const lvl1AllText = [...lvl1.intro, ...lvl1.outro].map(l => l.text).join(' ') + ' ' + lvl1Cfg.tips;
+  assert.equal(/pesisir/i.test(lvl1AllText), false, 'Level 1 does not mention pesisir (Hamparan Lembah Sawah)');
+  assert.equal(/angin laut/i.test(lvl1AllText), false, 'Level 1 does not mention angin laut (Hamparan Lembah Sawah)');
+  assert.equal(/pantura/i.test(lvl1AllText), false, 'Level 1 does not mention pantura (Hamparan Lembah Sawah)');
+  assert.ok(/sawah|pematang|irigasi/i.test(lvl1AllText), 'Level 1 mentions sawah/pematang/irigasi');
 
   assert.ok(charactersFound.has('Tion'), 'Protagonist Tion is featured');
   assert.ok(charactersFound.has('Bu Yulie'), 'Love interest Bu Yulie is featured');

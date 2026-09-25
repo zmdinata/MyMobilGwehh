@@ -42,7 +42,7 @@ export default function VictoryModal({
           />
         </div>
 
-        {/* Dynamic Nutri-Fact MBG Victory Card */}
+        {/* Dynamic Nutri-Fact MMG Victory Card */}
         <div id="vicNutriFactCard" className="w-full bg-slate-900/90 border border-emerald-500/40 rounded-2xl p-3 mb-3 text-left font-mono text-xs">
           <div className="flex items-center justify-between text-emerald-400 font-bold mb-1">
             <span className="flex items-center gap-1.5">
@@ -64,7 +64,7 @@ export default function VictoryModal({
         </div>
 
         <p className="text-xs text-slate-300 mb-4 italic">
-          "Siswa-siswi bersorak gembira mengacungkan sendok gizi! Bu Yulie tersenyum bangga menyambut Mas Tion sang pahlawan katering MBG binaan Mang Abdul!"
+          "Siswa-siswi bersorak gembira mengacungkan sendok gizi! Bu Yulie tersenyum bangga menyambut Mas Tion sang pahlawan katering MMG binaan Mang Abdul!"
         </p>
 
         {/* Victory Score Card */}

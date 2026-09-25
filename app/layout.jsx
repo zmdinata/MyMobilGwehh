@@ -2,7 +2,7 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'MBG: Road To School - Misi Antar 500 Porsi Gizi Mas Tion',
+  title: 'MMG (My Mobil Gwehh): Road To School - Misi Antar 500 Porsi Gizi Mas Tion',
   description: 'Game side-scrolling 2D fisika tentang Mas Tion mengantar 500 porsi gizi hangat menuju SD, SMP, SMA Puspa Bangsa Cirebon didampingi Mang Abdul.',
   icons: {
     icon: '/assets/refresh/v11/sprites/logo.png',

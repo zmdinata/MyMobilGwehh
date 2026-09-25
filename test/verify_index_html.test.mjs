@@ -22,7 +22,7 @@ test('index.html contains required Tailwind and Google Fonts', () => {
 });
 
 test('index.html contains all required narrative & lore elements', () => {
-  assert.ok(htmlContent.includes('MBG (My Mobil Gweh)'), 'Title included');
+  assert.ok(htmlContent.includes('MMG (My Mobil Gweh)'), 'Title included');
   assert.ok(htmlContent.includes('Mang Abdul'), 'Mang Abdul lore included');
   assert.ok(htmlContent.includes('SD, SMP, dan SMA Puspa Bangsa Cirebon'), 'Fictional school district destination included');
   assert.ok(htmlContent.includes('Unit Antar Pangan & Gizi'), 'Fictional delivery unit included');
