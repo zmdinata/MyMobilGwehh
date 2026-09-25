@@ -87,13 +87,40 @@ export default function GamePage() {
       const saved = localStorage.getItem('mbg_savedata_react');
       if (saved) {
         const parsed = JSON.parse(saved);
+        const ul = typeof parsed.unlockedLevel === 'number' ? Math.max(1, Math.min(20, parsed.unlockedLevel)) : 1;
         if (typeof parsed.coins === 'number') setCoins(parsed.coins);
-        if (typeof parsed.unlockedLevel === 'number') setUnlockedLevel(parsed.unlockedLevel);
+        setUnlockedLevel(ul);
         if (parsed.upgrades) setUpgrades(parsed.upgrades);
-        if (parsed.selectedSkin) setSelectedSkin(parsed.selectedSkin);
-        if (parsed.selectedRim) setSelectedRim(parsed.selectedRim);
-        if (Array.isArray(parsed.purchasedSkins)) setPurchasedSkins(parsed.purchasedSkins);
-        if (Array.isArray(parsed.purchasedRims)) setPurchasedRims(parsed.purchasedRims);
+
+        const selSkin = parsed.selectedSkin || 'standard';
+        const selRim = parsed.selectedRim || 'stock';
+        setSelectedSkin(selSkin);
+        setSelectedRim(selRim);
+
+        const skinReqs = { standard: 1, speedy: 4, mountain: 8, retro: 12, sport: 16 };
+        const rimReqs = { stock: 1, standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
+
+        let pSkins = Array.isArray(parsed.purchasedSkins) && parsed.purchasedSkins.length ? [...parsed.purchasedSkins] : ['standard'];
+        if (!pSkins.includes('standard')) pSkins.push('standard');
+        if (selSkin && !pSkins.includes(selSkin)) pSkins.push(selSkin);
+        if (!parsed.purchasedSkins || parsed.purchasedSkins.length <= 1) {
+          Object.entries(skinReqs).forEach(([k, req]) => {
+            if (ul >= req && !pSkins.includes(k)) pSkins.push(k);
+          });
+        }
+        setPurchasedSkins(Array.from(new Set(pSkins)));
+
+        let pRims = Array.isArray(parsed.purchasedRims) && parsed.purchasedRims.length ? [...parsed.purchasedRims] : ['stock', 'standard'];
+        if (!pRims.includes('stock')) pRims.push('stock');
+        if (!pRims.includes('standard')) pRims.push('standard');
+        if (selRim && !pRims.includes(selRim)) pRims.push(selRim);
+        if (!parsed.purchasedRims || parsed.purchasedRims.length <= 1) {
+          Object.entries(rimReqs).forEach(([k, req]) => {
+            if (ul >= req && !pRims.includes(k)) pRims.push(k);
+          });
+        }
+        setPurchasedRims(Array.from(new Set(pRims)));
+
         if (parsed.levelStars) setLevelStars(parsed.levelStars);
       }
     } catch (_) {}
@@ -143,7 +170,7 @@ export default function GamePage() {
   const handleBuySkin = (skin) => {
     if (coins >= skin.price && !purchasedSkins.includes(skin.id)) {
       setCoins(prev => prev - skin.price);
-      setPurchasedSkins(prev => [...prev, skin.id]);
+      setPurchasedSkins(prev => Array.from(new Set([...prev, skin.id])));
       setSelectedSkin(skin.id);
     }
   };
@@ -151,7 +178,7 @@ export default function GamePage() {
   const handleBuyRim = (rim) => {
     if (coins >= rim.price && !purchasedRims.includes(rim.id)) {
       setCoins(prev => prev - rim.price);
-      setPurchasedRims(prev => [...prev, rim.id]);
+      setPurchasedRims(prev => Array.from(new Set([...prev, rim.id])));
       setSelectedRim(rim.id);
     }
   };

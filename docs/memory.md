@@ -1,4 +1,4 @@
-﻿# Catatan Maintainer (Memory)
+# Catatan Maintainer (Memory)
 
 Snapshot teknis dan panduan operasional proyek. Jika terdapat diskrepansi antara dokumentasi dan kode implementasi, utamakan kode aktif (`game_core.js`, `components/`, `app/`, dan test suite) lalu sinkronkan dokumentasi.
 
@@ -94,8 +94,11 @@ Pada setiap level panjang (3.000m - 25.000m), ditempatkan 1 hingga 4 titik Pos T
   - Gold Racing Alloy (Lv 5)
   - Mud Offroad Beadlock (Lv 10)
   - White-Wall Classic Cruiser (Lv 15)
-- **Ekonomi & Wallet**:
+- **Ekonomi, Wallet, & Kepemilikan Kustomisasi**:
   - Koin gizi disimpan ke `localStorage`. Pemain yang gagal atau mobilnya terguling tetap membawa pulang seluruh koin yang dikumpulkan sepanjang perjalanan.
+  - **Sistem Pembelian & Kepemilikan Skin/Velg**: Item kustomisasi yang telah dibeli atau terbuka sesuai level tersimpan permanen di `purchasedSkins` dan `purchasedRims`. Pergantian armada/skin (gonta-ganti mobil) tidak meminta beli ulang, pemain bebas memasang ulang item yang dimiliki secara gratis (`Pasang` / 0 koin). Save data lama secara otomatis dimigrasikan (*grandfathered*).
+- **Logika Pedal Rem & Gigi Mundur (Reverse Drive)**:
+  - Pedal kiri berfungsi ganda secara cerdas: ketika melaju maju ($v > 12\text{ px/s}$), pedal bertindak sebagai rem mekanis. Ketika berhenti atau mulai mundur ($v \le 12\text{ px/s}$), pedal mengaktifkan torsi mesin gigi mundur (*reverse engine torque*) secara berkesinambungan hingga batas kecepatan mundur aman ($v_{\max} = 40\text{ km/h}$). Empty fuel mematikan propulsi mundur sebagaimana propulsi maju.
 
 ---
 

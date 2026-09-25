@@ -804,8 +804,8 @@
 
   <!-- Browser controller and renderer; shared physics/state are imported from game_core.js. -->
   <script type="module">
-    import { BIOMES, PHYSICS_CONSTANTS, TerrainSystem as WorldTerrain, PhysicsVehicle, GameStateManager } from './game_core.js?v=20260925-gameplay11';
-    import { LEVEL_CONFIGS, STORY_DIALOGUES } from './game_core.js?v=20260925-story1';
+    import { BIOMES, PHYSICS_CONSTANTS, TerrainSystem as WorldTerrain, PhysicsVehicle, GameStateManager } from './game_core.js?v=20260926-revfix1';
+    import { LEVEL_CONFIGS, STORY_DIALOGUES } from './game_core.js?v=20260926-revfix1';
 
     // =========================================================================
     // CHARACTER BUST AVATAR GENERATOR (SVG Vector Art)
@@ -3519,18 +3519,43 @@
           const raw = localStorage.getItem('mbg_savedata');
           if (!raw) return defaultData;
           const parsed = JSON.parse(raw);
+          const unlockedLvl = Math.max(1, Math.min(20, parseInt(parsed.unlockedLevel) || 1));
+          const selSkin = parsed.selectedSkin || 'standard';
+          const selRim = parsed.selectedRim || 'standard';
+
+          const skinReqs = { standard: 1, speedy: 4, mountain: 8, retro: 12, sport: 16 };
+          const rimReqs = { standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
+
+          let skins = Array.isArray(parsed.purchasedSkins) && parsed.purchasedSkins.length ? [...parsed.purchasedSkins] : ['standard'];
+          if (!skins.includes('standard')) skins.push('standard');
+          if (selSkin && !skins.includes(selSkin)) skins.push(selSkin);
+          if (!parsed.purchasedSkins || parsed.purchasedSkins.length <= 1) {
+            Object.entries(skinReqs).forEach(([k, req]) => {
+              if (unlockedLvl >= req && !skins.includes(k)) skins.push(k);
+            });
+          }
+
+          let rims = Array.isArray(parsed.purchasedRims) && parsed.purchasedRims.length ? [...parsed.purchasedRims] : ['standard'];
+          if (!rims.includes('standard')) rims.push('standard');
+          if (selRim && !rims.includes(selRim)) rims.push(selRim);
+          if (!parsed.purchasedRims || parsed.purchasedRims.length <= 1) {
+            Object.entries(rimReqs).forEach(([k, req]) => {
+              if (unlockedLvl >= req && !rims.includes(k)) rims.push(k);
+            });
+          }
+
           return {
             coins: Math.max(0, parseInt(parsed.coins) || 0),
-            unlockedLevel: Math.max(1, Math.min(20, parseInt(parsed.unlockedLevel) || 1)),
+            unlockedLevel: unlockedLvl,
             upgrades: {
               engine: Math.max(1, Math.min(20, parseInt(parsed.upgrades && parsed.upgrades.engine) || 1)),
               grip: Math.max(1, Math.min(20, parseInt(parsed.upgrades && parsed.upgrades.grip) || 1)),
               suspension: Math.max(1, Math.min(20, parseInt(parsed.upgrades && parsed.upgrades.suspension) || 1))
             },
-            selectedSkin: parsed.selectedSkin || 'standard',
-            selectedRim: parsed.selectedRim || 'standard',
-            purchasedSkins: Array.isArray(parsed.purchasedSkins) && parsed.purchasedSkins.length ? parsed.purchasedSkins : ['standard'],
-            purchasedRims: Array.isArray(parsed.purchasedRims) && parsed.purchasedRims.length ? parsed.purchasedRims : ['standard'],
+            selectedSkin: selSkin,
+            selectedRim: selRim,
+            purchasedSkins: Array.from(new Set(skins)),
+            purchasedRims: Array.from(new Set(rims)),
             levelStars: parsed.levelStars || {}
           };
         } catch (_) {
@@ -3760,11 +3785,12 @@
                 }
                 this.saveData.coins -= price;
                 if (!this.saveData.purchasedSkins) this.saveData.purchasedSkins = ['standard'];
-                this.saveData.purchasedSkins.push(key);
+                if (!this.saveData.purchasedSkins.includes(key)) this.saveData.purchasedSkins.push(key);
                 this.saveData.selectedSkin = key;
                 if (window.showMbgToast) window.showMbgToast(`Skin ${skinNames[key]} berhasil dibeli & dipasang!`, 'check');
               } else {
                 this.saveData.selectedSkin = key;
+                if (window.showMbgToast) window.showMbgToast(`Skin ${skinNames[key]} berhasil dipasang!`, 'check');
               }
               this.saveProgress();
               this.updateSaveUI();
@@ -3797,11 +3823,12 @@
                 }
                 this.saveData.coins -= price;
                 if (!this.saveData.purchasedRims) this.saveData.purchasedRims = ['standard'];
-                this.saveData.purchasedRims.push(key);
+                if (!this.saveData.purchasedRims.includes(key)) this.saveData.purchasedRims.push(key);
                 this.saveData.selectedRim = key;
                 if (window.showMbgToast) window.showMbgToast(`Velg ${rimNames[key]} berhasil dibeli & dipasang!`, 'check');
               } else {
                 this.saveData.selectedRim = key;
+                if (window.showMbgToast) window.showMbgToast(`Velg ${rimNames[key]} berhasil dipasang!`, 'check');
               }
               this.saveProgress();
               this.updateSaveUI();

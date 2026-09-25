@@ -1057,7 +1057,7 @@ export class PhysicsVehicle {
     this.engineThrottle += Math.sign(throttleTarget - this.engineThrottle)
       * Math.min(Math.abs(throttleTarget - this.engineThrottle), throttleRate * dt);
 
-    const reverseTarget = inputs.brake && this.fuel > 0 && Math.abs(chassisTrackSpeed) <= 12 ? 1 : 0;
+    const reverseTarget = inputs.brake && this.fuel > 0 && chassisTrackSpeed <= 12 ? 1 : 0;
     const reverseRate = reverseTarget > this.reverseThrottle
       ? PHYSICS_CONSTANTS.REVERSE_RAMP_UP
       : PHYSICS_CONSTANTS.THROTTLE_RAMP_DOWN;
@@ -1343,19 +1343,15 @@ export class PhysicsVehicle {
           this.fuel = Math.max(0, this.fuel - 2.2 * this.engineThrottle * dt);
         }
       } else if (inputs.brake) {
-        // Brake against current travel first; only select reverse near a stop.
-        // This keeps the same pedal useful for both HCR-style braking and the
-        // game's advertised reverse control without instantly throwing the truck backward.
+        // Brake against forward travel first; once stopped or travelling backward,
+        // engage reverse engine drive torque smoothly up to MAX_REVERSE_SPEED.
         const speedAlongTrack = this.vx * tangent.x + this.vy * tangent.y;
         if (speedAlongTrack > 12) {
           driveForce = -this.brakePower * tractionFactor;
-        } else if (speedAlongTrack < -12) {
-          driveForce = this.brakePower * tractionFactor;
         } else {
-          // Reverse is engine torque, not a mechanical braking force. Empty
-          // fuel must therefore disable it just as it disables forward drive.
+          // Reverse is engine torque on driven axle, disabled when fuel is empty
           driveForce = isDriveWheel && this.fuel > 0
-            ? -this.enginePower * 0.45 * this.reverseThrottle * tractionFactor
+            ? -this.enginePower * 0.50 * this.reverseThrottle * tractionFactor
             : 0;
           if (isDriveWheel && this.fuel > 0) {
             this.fuel = Math.max(0, this.fuel - 2.2 * this.reverseThrottle * dt);
