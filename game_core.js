@@ -327,6 +327,7 @@ export class TerrainSystem {
     this.speedBumps = []; // Suburb speed bumps [meterX]
     this.launchRamps = [];
     this.fuelCans = []; // [meterX, collected]
+    this.foodParcels = []; // [meterX, collected]
     this.coins = [];    // [meterX, collected]
     this.checkpoints = []; // [meterX, name, collected]
 
@@ -344,52 +345,70 @@ export class TerrainSystem {
     this.speedBumps = [];
     this.launchRamps = [];
     this.fuelCans = [];
+    this.foodParcels = [];
     this.coins = [];
     this.checkpoints = [];
 
-    // Distribute hazards according to segment biomes (8 distinct biomes)
-    for (const seg of this.segments) {
-      const segLen = seg.end - seg.start;
-      if ((seg.id === 1 || seg.id === 2) && segLen > 200) {
-        // Biome 1 & 2: Pesisir & Jalur Pantura puddles spaced along the segment
-        for (let p = seg.start + 140; p < seg.end - 80; p += 380) {
-          this.puddles.push({ start: p - 35, end: p + 35 });
-        }
-      } else if ((seg.id === 3 || seg.id === 4) && segLen > 200) {
-        // Biome 3 & 4: Lembah & Desa Sawah mud pits spaced along the segment
-        for (let m = seg.start + 160; m < seg.end - 90; m += 420) {
-          this.mudPits.push({ start: m - 40, end: m + 40 });
-        }
-      } else if ((seg.id === 5 || seg.id === 6) && segLen > 200) {
-        // Biome 5 & 6: Puncak & Lereng Gunung wooden logs spaced along the segment
-        for (let l = seg.start + 180; l < seg.end - 100; l += 460) {
-          this.logs.push({ x: Math.round(l), radius: 14 });
+    const fin = cfg.finishMeters;
+    const lvl = cfg.level || 1;
+
+    // 1. Water Puddles (Rob Pantura & Rain Dips) - slip traction = 0.85
+    // Distributed dynamically across the entire route to test wet braking & traction
+    for (let p = 160; p < fin - 120; p += 340 + ((p * 13) % 110)) {
+      this.puddles.push({ start: p - 32, end: p + 32 });
+    }
+
+    // 2. Mud Pits (Sawah Mud & Dirt Paths) - chassis drag & reduced grip
+    // Distributed in depressions across the route
+    for (let m = 260; m < fin - 140; m += 390 + ((m * 17) % 130)) {
+      this.mudPits.push({ start: m - 36, end: m + 36 });
+    }
+
+    // 3. Wooden Log Clusters (1 to 8 logs in series / washboard corduroy road)
+    // Level 1-4: 1-3 logs, Level 5-10: 2-5 logs, Level 11-20: 3-8 logs
+    const maxCluster = lvl <= 4 ? 3 : lvl <= 10 ? 5 : 8;
+    for (let l = 210; l < fin - 160; l += 380 + ((l * 23) % 120)) {
+      const clusterSize = 1 + (Math.floor(l * 1.7) % maxCluster);
+      for (let j = 0; j < clusterSize; j++) {
+        const logX = l + j * 1.35;
+        if (logX < fin - 80) {
+          this.logs.push({
+            x: Number(logX.toFixed(2)),
+            radius: 13 + ((j % 2) * 2),
+            clusterIndex: j,
+            clusterTotal: clusterSize
+          });
         }
       }
     }
 
-    // Speed bumps in the school district approach
-    const fin = cfg.finishMeters;
+    // 4. Speed bumps in the school district approach
     this.speedBumps = [Math.max(100, fin - 240), Math.max(120, fin - 140), Math.max(140, fin - 60)];
 
-    // Launch kickers spaced every ~400m
-    for (let m = 280; m < fin - 150; m += 400) {
+    // 5. Launch kickers spaced every ~380m
+    for (let m = 280; m < fin - 150; m += 380) {
       this.launchRamps.push({ start: m, rise: 12, drop: 6, height: 65 });
     }
 
-    // Fuel canisters every ~380m
+    // 6. Food Parcels / Ompreng Refill (+20% Cargo Integrity)
+    // Distributed every ~320-400m along the track to refill damaged cargo
+    for (let m = 300; m < fin - 100; m += 340 + ((m * 19) % 90)) {
+      this.foodParcels.push({ x: Math.round(m), collected: false });
+    }
+
+    // 7. Fuel canisters every ~380m
     for (let m = 220; m < fin - 100; m += 380) {
       this.fuelCans.push({ x: m, collected: false, dynamic: false });
     }
 
-    // Coins scattered along hills
+    // 8. Coins scattered along hills
     for (let m = 40; m < fin; m += 40) {
       if (Math.sin(m * 0.05) > -0.2) {
         this.coins.push({ x: m, collected: false });
       }
     }
 
-    // Transit Delivery Checkpoints
+    // 9. Transit Delivery Checkpoints
     if (cfg.checkpoints && Array.isArray(cfg.checkpoints)) {
       for (let i = 0; i < cfg.checkpoints.length; i++) {
         this.checkpoints.push({
@@ -440,6 +459,10 @@ export class TerrainSystem {
       { start: 3550, rise: 12, drop: 6, height: 65 },
       { start: 3950, rise: 12, drop: 6, height: 65 }
     ];
+
+    // Static Food Parcels (Ompreng Kargo Refill +20%)
+    const parcelSpots = [350, 750, 1200, 1650, 2100, 2600, 3050, 3500, 3900, 4250];
+    this.foodParcels = parcelSpots.map(x => ({ x, collected: false }));
 
     // Static Fuel Canisters spaced along track (~every 450-600m)
     const fuelSpots = [180, 500, 850, 1300, 1750, 2200, 2700, 3150, 3600, 4000, 4300];
@@ -908,6 +931,11 @@ export class PhysicsVehicle {
     this.lastCheckpoint = null;
     this.checkpointNotice = null;
 
+    // Ompreng / Food Parcel Refill tracking
+    this.omprengNotice = null;
+    this.omprengNoticeTimer = 0;
+    this.foodParcelsCollected = 0;
+
     // Food particles ejected during shocks
     this.foodParticles = [];
     // Fixed-step accumulator keeps suspension and collision results stable when
@@ -954,6 +982,9 @@ export class PhysicsVehicle {
     }
     if (this.stuntTimer > 0) {
       this.stuntTimer = Math.max(0, this.stuntTimer - clampedDt);
+    }
+    if (this.omprengNoticeTimer > 0) {
+      this.omprengNoticeTimer = Math.max(0, this.omprengNoticeTimer - clampedDt);
     }
 
     // Dynamic Jerrycan Check
@@ -1327,7 +1358,13 @@ export class PhysicsVehicle {
           wheel.hitLogId = logCol.log.x;
           // Vertical impulse Delta v_y = -140 px/s
           wheel.vy = PHYSICS_CONSTANTS.LOG_IMPULSE_VY;
-          this.applyImpactShock(Math.abs(PHYSICS_CONSTANTS.LOG_IMPULSE_VY) + 15);
+          const currentSpeed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+          // Slow crawling over washboard logs (<60 px/s) allows suspension to absorb with 0 damage.
+          // Reckless speeding triggers realistic cargo shock proportional to speed.
+          if (currentSpeed > 60) {
+            const logShockIntensity = Math.min(200, 80 + currentSpeed * 0.22);
+            this.applyImpactShock(logShockIntensity);
+          }
         }
       } else if (wheel.hitLogId !== null) {
         const logPx = wheel.hitLogId * PHYSICS_CONSTANTS.METER_SCALE;
@@ -1504,6 +1541,22 @@ export class PhysicsVehicle {
       if (!can.collected && Math.abs(truckMeterX - can.x) < 2.5) {
         can.collected = true;
         this.fuel = Math.min(100, this.fuel + 30);
+      }
+    }
+
+    // Food Parcels / Ompreng Refill (+20% Cargo Integrity)
+    if (terrain.foodParcels && Array.isArray(terrain.foodParcels)) {
+      for (const parcel of terrain.foodParcels) {
+        if (!parcel.collected && Math.abs(truckMeterX - parcel.x) < 2.5) {
+          parcel.collected = true;
+          this.cargoIntegrity = Math.min(100, this.cargoIntegrity + 20);
+          this.foodParcelsCollected = (this.foodParcelsCollected || 0) + 1;
+          this.omprengNotice = '+20% PAKET GIZI REFILL!';
+          this.omprengNoticeTimer = 1.5;
+          if (this.soundEngine && typeof this.soundEngine.playCoinPickupSound === 'function') {
+            this.soundEngine.playCoinPickupSound();
+          }
+        }
       }
     }
 

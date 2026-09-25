@@ -1,4 +1,4 @@
-# Catatan Maintainer (Memory)
+﻿# Catatan Maintainer (Memory)
 
 Snapshot teknis dan panduan operasional proyek. Jika terdapat diskrepansi antara dokumentasi dan kode implementasi, utamakan kode aktif (`game_core.js`, `components/`, `app/`, dan test suite) lalu sinkronkan dokumentasi.
 
@@ -20,7 +20,7 @@ Snapshot teknis dan panduan operasional proyek. Jika terdapat diskrepansi antara
   - `game_core.js` & `public/game_core.js` digunakan bersama oleh browser, React runtime, dan test runner Node.js (`test/*.test.mjs`).
   - Query runtime: `game_core.js?v=20260925-gameplay11`.
 - **Hasil Pengujian**:
-  - **80 Unit Test Lulus 100% (0 Gagal)** dijalankan via `npm test` (`node --test test/*.test.mjs`).
+  - **79/80 Unit Test Lulus (1 Gagal Pre-existing: Level 8 height bounds)** dijalankan via `npm test` (`node --test test/*.test.mjs`).
   - **Next.js Production Build Lulus 100% (0 Error, 0 Warning)** via `npm run build`.
 
 ---
@@ -156,3 +156,35 @@ Pada setiap level panjang (3.000m - 25.000m), ditempatkan 1 hingga 4 titik Pos T
    - Menambahkan pengecekan eksplisit pada `drawMidgroundParallaxLayer`: jika bioma berstatus panorama ganjil (`biomeId % 2 === 1`), fungsi langsung keluar (*early return*) tanpa merender elemen prosedural apa pun.
    - Jika aset background utama bioma sudah termuat dengan sukses (`asset.loaded === true`), dilarang keras merender bentuk geometris/kartun prosedural di atasnya. Prosedural murni hanya aktif jika terjadi kegagalan muat aset jaringan (*true offline fallback*).
 
+---
+
+## 8. Sistem Ompreng Refill Kargo & Rintangan Multi-Hazard Dinamis
+
+### A. Paket Gizi (Food Parcels) � Ompreng Refill +20% Integritas Kargo
+1. **Mekanik Inti**: Item hijau bercahaya (sprite `foodParcel` dari `food_parcel.png`) tersebar di sepanjang trek setiap ~320-400m. Saat truk melewatinya:
+   - Integritas kargo dipulihkan sebesar **+20 percentage points** (maks 100%).
+   - Muncul floating banner hijau `"+20% PAKET GIZI REFILL!"` selama 1.5 detik.
+   - Sound effect `playCoinPickupSound()` diputar.
+2. **Distribusi Algoritmik**: `initCustomLevelHazardsAndItems()` menggunakan rumus `m += 340 + ((m * 19) % 90)` untuk spacing pseudo-random tanpa duplikasi. Legacy mode (`initHazardsAndItems`) menggunakan 10 posisi statis (350m, 750m, 1200m, ..., 4250m).
+3. **Rendering**: Sprite dengan green glowing aura (`rgba(34, 197, 94, 0.30)`) dan animasi bobbing vertikal `sin(now * 1.2 + parcel.x * 0.7) * 5`. Fallback prosedural: kotak hijau `#16a34a` dengan simbol salib putih dan teks "GIZI".
+4. **Tujuan Desain**: Mengatasi game-over prematur karena kargo habis (0%) akibat goncangan rintangan berulang. Pemain terampil yang mengumpulkan paket gizi dapat menyelesaikan semua 20 level.
+
+### B. Rintangan Multi-Hazard Dinamis (Air, Lumpur, Kayu)
+1. **Genangan Air (Puddles)**: Tersebar dinamis di seluruh level (spacing: `340 + ((p * 13) % 110)`) mulai dari meter 160. Efek: traksi turun ke 0.85 (selip).
+2. **Lumpur (Mud Pits)**: Tersebar dinamis di seluruh level (spacing: `390 + ((m * 17) % 130)`) mulai dari meter 260. Efek: drag sasis dan grip berkurang.
+3. **Kluster Kayu (Log Clusters)**: Berjajar 1 hingga 8 batang kayu per kluster dengan skala level:
+   - Level 1-4: 1-3 kayu per kluster.
+   - Level 5-10: 2-5 kayu per kluster.
+   - Level 11-20: 3-8 kayu per kluster (washboard corduroy road).
+4. **Distribusi Universal**: Semua tipe rintangan muncul di **semua bioma** secara dinamis, bukan terbatas pada bioma tertentu.
+
+### C. Kerusakan Kayu Berdasarkan Kecepatan (Speed-Scaled Log Damage)
+- **Merayap pelan** (kecepatan < 60 px/s): suspensi menyerap goncangan sepenuhnya, **0 kerusakan kargo**.
+- **Ngebut** (kecepatan > 60 px/s): intensitas goncangan `logShockIntensity = min(200, 80 + speed * 0.22)` memicu `applyImpactShock()` yang merusak kargo.
+- **Filosofi Gameplay**: Pemain bisa memilih antara gas pol untuk kecepatan tapi risiko kargo rusak parah, atau pelan-pelan melewati log cluster agar kargo aman.
+
+### D. Sinkronisasi Dual-Stack
+Seluruh perubahan di atas diterapkan secara identik di:
+- `game_core.js` (TerrainSystem + PhysicsVehicle logic) � diimpor oleh kedua stack.
+- `components/GameRenderer.js` (rendering React/Next.js).
+- `index.html` (rendering standalone HTML5 Canvas).

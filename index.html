@@ -1388,10 +1388,15 @@
       checkPickups(terrain) {
         const fuelBefore = terrain.fuelCans.filter((item) => !item.collected).length;
         const coinsBefore = terrain.coins.filter((item) => !item.collected).length;
+        const parcelsBefore = (terrain.foodParcels || []).filter((item) => !item.collected).length;
         super.checkPickups(terrain);
         if (!this.soundEngine) return;
         if (terrain.fuelCans.filter((item) => !item.collected).length < fuelBefore) this.soundEngine.playFuelSound();
         if (terrain.coins.filter((item) => !item.collected).length < coinsBefore) this.soundEngine.playCoinSound();
+        if ((terrain.foodParcels || []).filter((item) => !item.collected).length < parcelsBefore) {
+          if (typeof this.soundEngine.playCoinPickupSound === 'function') this.soundEngine.playCoinPickupSound();
+          else if (typeof this.soundEngine.playCoinSound === 'function') this.soundEngine.playCoinSound();
+        }
       }
     }
 
@@ -1418,6 +1423,7 @@
           truckBody: { img: null, loaded: false, failed: false },
           truckWheel: { img: null, loaded: false, failed: false },
           fuelCan: { img: null, loaded: false, failed: false },
+          foodParcel: { img: null, loaded: false, failed: false },
           coinGizi: { img: null, loaded: false, failed: false },
           obstacleLog: { img: null, loaded: false, failed: false },
           finishGate: { img: null, loaded: false, failed: false }
@@ -1443,6 +1449,9 @@
             }
 
             const parcelEntry = manifest.assets && manifest.assets.foodParcel;
+            if (parcelEntry && parcelEntry.src) {
+              this.loadAsset(this.assets.foodParcel, parcelEntry.src, parcelEntry.fallback);
+            }
             const parcelElement = document.getElementById('vicFoodParcel');
             const parcelFallback = document.getElementById('vicFoodParcelFallback');
             const cargoParcelIcon = document.getElementById('cargoParcelIcon');
@@ -1673,6 +1682,21 @@
           ctx.strokeText(vehicle.stuntMessage, vehicle.x, vehicle.y - 95);
           ctx.fillStyle = '#fbbf24';
           ctx.fillText(vehicle.stuntMessage, vehicle.x, vehicle.y - 95);
+          ctx.restore();
+        }
+
+        // Draw Ompreng Refill Notice Banner
+        if (vehicle.omprengNoticeTimer > 0 && vehicle.omprengNotice) {
+          ctx.save();
+          const noticeAlpha = Math.min(1.0, vehicle.omprengNoticeTimer / 0.3);
+          ctx.globalAlpha = noticeAlpha;
+          ctx.textAlign = 'center';
+          ctx.font = 'bold 16px Fredoka One, sans-serif';
+          ctx.strokeStyle = '#14532d';
+          ctx.lineWidth = 4;
+          ctx.strokeText(vehicle.omprengNotice, vehicle.x, vehicle.y - 120);
+          ctx.fillStyle = '#22c55e';
+          ctx.fillText(vehicle.omprengNotice, vehicle.x, vehicle.y - 120);
           ctx.restore();
         }
 
@@ -2336,6 +2360,50 @@
             ctx.fillText('BENSIN', 0, 4);
           }
           ctx.restore();
+        }
+
+        // Food Parcels (Ompreng Refill +20% Cargo Integrity)
+        if (terrain.foodParcels && Array.isArray(terrain.foodParcels)) {
+          for (const parcel of terrain.foodParcels) {
+            if (parcel.collected) continue;
+            const parcelPxX = parcel.x * PHYSICS_CONSTANTS.METER_SCALE;
+            if (parcelPxX < this.camera.x - 60 || parcelPxX > this.camera.x + this.width + 60) continue;
+            const parcelPxY = terrain.getHeight(parcelPxX) - 32 + Math.sin(now * 1.2 + parcel.x * 0.7) * 5;
+
+            ctx.save();
+            ctx.translate(parcelPxX, parcelPxY);
+
+            // Green glowing aura
+            ctx.fillStyle = 'rgba(34, 197, 94, 0.30)';
+            ctx.beginPath();
+            ctx.arc(0, 0, 22, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (this.assets && this.assets.foodParcel && this.assets.foodParcel.loaded) {
+              ctx.drawImage(this.assets.foodParcel.img, -14, -14, 28, 28);
+            } else {
+              // Procedural fallback: green box with GIZI text
+              ctx.fillStyle = '#16a34a';
+              ctx.strokeStyle = '#15803d';
+              ctx.lineWidth = 2;
+              ctx.beginPath();
+              ctx.roundRect(-12, -12, 24, 24, 4);
+              ctx.fill();
+              ctx.stroke();
+
+              // Cross symbol
+              ctx.fillStyle = '#ffffff';
+              ctx.fillRect(-2, -8, 4, 16);
+              ctx.fillRect(-8, -2, 16, 4);
+
+              // Text
+              ctx.fillStyle = '#dcfce7';
+              ctx.font = 'bold 5px sans-serif';
+              ctx.textAlign = 'center';
+              ctx.fillText('GIZI', 0, 10);
+            }
+            ctx.restore();
+          }
         }
 
         // Coins
