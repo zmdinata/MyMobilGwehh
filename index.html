@@ -283,67 +283,39 @@
   </div>
 
   <!-- START / LORE MODAL -->
-  <div id="startModal" class="absolute inset-0 z-40 bg-slate-950 bg-cover bg-center flex items-center justify-center p-3 sm:p-6 overflow-y-auto" style="background-image: url('assets/refresh/v11/backgrounds/bg_main_menu.webp');">
-    <!-- Subtle dark gradient overlay to give optimal center contrast while keeping characters crisp -->
-    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/40 to-slate-950/60 pointer-events-none"></div>
+  <div id="startModal" class="absolute inset-0 z-40 bg-slate-950 bg-cover bg-center flex flex-col justify-end items-center px-4 pb-8 sm:pb-12 overflow-y-auto" style="background-image: url('assets/refresh/v11/backgrounds/bg_main_menu.webp');">
+    <!-- Hidden logo elements for tests and screen readers -->
+    <img id="gameLogo" src="assets/refresh/v11/sprites/logo.png" alt="" class="hidden" />
+    <h1 id="gameLogoFallback" class="sr-only">MMG (My Mobil Gweh): Road To School</h1>
 
-    <div class="my-auto max-w-md w-full bg-slate-950/80 backdrop-blur-md border border-cyan-400/50 rounded-3xl p-5 sm:p-6 shadow-2xl relative z-10 flex flex-col items-center text-center">
-      <!-- Hidden logo for tests and screen readers -->
-      <img id="gameLogo" src="assets/refresh/v11/sprites/logo.png" alt="" class="hidden" />
-      <h1 id="gameLogoFallback" class="sr-only">MMG: Road To School</h1>
-
-      <!-- Top Badges -->
-      <div class="flex flex-wrap items-center justify-center gap-2 mb-2">
-        <span class="bg-blue-500/20 border border-blue-400 text-sky-300 px-3 py-0.5 rounded-full text-xs font-bold tracking-wider uppercase">
-          Unit Antar Pangan & Gizi
-        </span>
-        <span class="bg-amber-500/20 border border-amber-400 text-amber-300 px-3 py-0.5 rounded-full text-xs font-bold">
-          Cirebon - Kuningan
-        </span>
-      </div>
-
-      <p class="text-xs sm:text-sm text-cyan-200 font-mono tracking-wide mb-2.5">
-        MMG (My Mobil Gweh) - Misi Antar 500 Porsi Gizi Hangat
-      </p>
-
-      <!-- Story Narrative & Mission Briefing -->
-      <div class="bg-slate-900/80 border border-slate-700/80 rounded-2xl p-3.5 text-xs text-slate-300 leading-relaxed text-left space-y-2 mb-3 w-full">
-        <p>
+    <!-- Pure Floating Glass UI in safe asphalt area below MMG logo -->
+    <div class="relative z-10 w-full max-w-sm flex flex-col items-center text-center my-auto sm:my-0 sm:mb-2">
+      <!-- Floating Glass Lore Capsule -->
+      <div class="w-full bg-slate-950/50 backdrop-blur-md border border-white/20 rounded-2xl p-3.5 text-xs text-slate-100 leading-relaxed text-left space-y-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.65)] mb-3">
+        <div class="flex items-center justify-between pb-1.5 border-b border-white/15">
+          <span class="text-sky-300 font-bold uppercase tracking-wider text-[11px] flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 inline text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+            Unit Antar Pangan & Gizi
+          </span>
+          <span class="text-amber-300 font-semibold text-[10px]">Cirebon - Kuningan</span>
+        </div>
+        <p class="text-[11px] leading-snug">
           <b class="text-cyan-300">Kisah Mas Tion:</b> Driver muda tangguh armada MMG yang berjuang mengantar <b>500 porsi</b> paket gizi hangat demi Bu Yulie dan siswa-siswi <b>SD, SMP, dan SMA Puspa Bangsa Cirebon</b>, didampingi petuah bijak sang legenda supir elf Pantura, <b>Mang Abdul</b>!
         </p>
-        <p class="text-emerald-300 text-[11px] pt-1.5 border-t border-slate-700/60 flex items-start gap-1.5">
-          <svg class="w-3.5 h-3.5 text-rose-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-          <span>Tiba di <b>Sekolah Puspa Bangsa</b> tepat waktu sebelum bel masuk pukul <b>09:45 WIB!</b></span>
-        </p>
-      </div>
-
-      <!-- Controls Summary -->
-      <div class="grid grid-cols-2 gap-2 w-full text-[10px] sm:text-[11px] mb-3">
-        <div class="bg-slate-900/70 border border-slate-700/70 rounded-xl p-2 text-left">
-          <span class="font-bold text-cyan-300 block mb-0.5">Desktop Web</span>
-          <span class="text-slate-300 block">Gas / Pitch: <b>[D] / [→]</b></span>
-          <span class="text-slate-300 block">Rem / Pitch: <b>[A] / [←]</b></span>
-          <span class="text-slate-300 block">Telolet: <b>[H] / [Spasi]</b> | Reset: <b>[R]</b></span>
-        </div>
-        <div class="bg-slate-900/70 border border-slate-700/70 rounded-xl p-2 text-left">
-          <span class="font-bold text-amber-300 block mb-0.5">Mobile Touch</span>
-          <span class="text-slate-300 block">Pedal Kanan: <b>Gas</b></span>
-          <span class="text-slate-300 block">Pedal Kiri: <b>Rem</b></span>
-          <span class="text-slate-300 block">Tengah: <b>Klakson Telolet</b></span>
+        <div class="flex items-center justify-between pt-1.5 border-t border-white/15 text-[10px]">
+          <span class="text-emerald-300 font-semibold">Tiba di <b>Sekolah Puspa Bangsa</b>: <b>09:45 WIB!</b></span>
+          <span class="text-slate-300">Gas: <b>[D] / [→]</b> • Rem: <b>[A] / [←]</b></span>
         </div>
       </div>
 
-      <!-- Legal Disclaimer -->
-      <p class="text-[10px] text-slate-400 mb-3 text-center">
-        *Disclaimer: Game dan sekolah Puspa Bangsa (SD, SMP, SMA) adalah fiktif untuk hiburan dan edukasi gizi; tidak berafiliasi dengan institusi nyata.
-      </p>
+      <p class="text-[9px] text-slate-300/80 mb-3 text-center max-w-xs drop-shadow">*Disclaimer: Game dan sekolah Puspa Bangsa (SD, SMP, SMA) adalah fiktif untuk hiburan dan edukasi gizi; tidak berafiliasi dengan institusi nyata.</p>
 
-      <!-- Start Button -->
-      <button id="startGameBtn" class="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 hover:from-blue-600 hover:to-sky-400 text-white font-fredoka text-lg sm:text-xl shadow-lg shadow-blue-500/30 transform active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer">
+      <!-- Pure Floating Glass Tap Button with drop shadow -->
+      <button id="startGameBtn" class="w-full py-3.5 px-6 rounded-2xl bg-blue-600/40 hover:bg-blue-500/55 backdrop-blur-md border border-sky-400/60 text-white font-fredoka text-lg sm:text-xl shadow-[0_8px_30px_rgba(2,132,199,0.55)] transform active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer">
         <span>MASUK KE MENU UTAMA (TAP TO START)</span>
-        <svg class="w-5 h-5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+        <svg class="w-5 h-5 inline drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
       </button>
-      <p id="startTapNotice" class="text-[11px] text-cyan-300 font-mono mt-2 animate-pulse text-center w-full">[ Sentuh layar atau klik tombol untuk mengaktifkan audio & masuk Menu Utama ]</p>
+      <p id="startTapNotice" class="text-[10px] text-cyan-200 font-mono mt-2 animate-pulse text-center drop-shadow">[ Sentuh layar atau klik tombol untuk mengaktifkan audio & masuk Menu Utama ]</p>
     </div>
   </div>
 
@@ -544,57 +516,42 @@
   </div>
 
   <!-- MAIN MENU MODAL -->
-  <div id="mainMenuModal" class="hidden absolute inset-0 z-40 bg-slate-950 bg-cover bg-center flex items-center justify-center p-3 sm:p-6 overflow-y-auto" style="background-image: url('assets/refresh/v11/backgrounds/bg_main_menu.webp');">
-    <!-- Subtle gradient overlay -->
-    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/40 to-slate-950/60 pointer-events-none"></div>
+  <div id="mainMenuModal" class="hidden absolute inset-0 z-40 bg-slate-950 bg-cover bg-center flex flex-col justify-end items-center px-4 pb-8 sm:pb-12 overflow-y-auto" style="background-image: url('assets/refresh/v11/backgrounds/bg_main_menu.webp');">
+    <img id="mainMenuLogo" src="assets/refresh/v11/sprites/logo.png" alt="MMG" class="hidden" />
 
-    <div class="max-w-md w-full bg-slate-950/80 backdrop-blur-md border border-cyan-400/50 rounded-3xl p-5 sm:p-6 shadow-2xl relative z-10 flex flex-col items-center text-center my-auto">
-      <img id="mainMenuLogo" src="assets/refresh/v11/sprites/logo.png" alt="MMG" class="hidden" />
-
-      <!-- Badge row -->
-      <div class="flex items-center gap-2 mb-1.5">
-        <span class="bg-blue-500/20 border border-blue-400/60 text-sky-300 px-3 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider">
-          MMG Story Mode: 20 Level
-        </span>
-      </div>
-
-      <h1 class="font-fredoka text-2xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-amber-300 drop-shadow mb-1">
-        MMG: Road To School
-      </h1>
-      <p class="text-xs text-slate-300 font-mono mb-3.5">
-        Kisah Cinta & Misi Antar 500 Porsi Gizi Mas Tion Menuju Bu Yulie
-      </p>
-
-      <!-- Player Save Status Bar -->
-      <div class="w-full bg-slate-900/80 border border-slate-700/80 rounded-2xl p-3 mb-4 flex items-center justify-between text-xs sm:text-sm font-mono">
-        <div class="flex items-center gap-2">
-          <span class="text-slate-400">Progres:</span>
-          <span class="text-cyan-300 font-bold">Level <span id="menuCurrentLevel">1</span> / 20</span>
+    <!-- Pure Floating Glass UI in safe asphalt area below MMG logo -->
+    <div class="relative z-10 w-full max-w-sm flex flex-col items-center text-center my-auto sm:my-0 sm:mb-2">
+      <!-- Floating Glass Progress Pill (Level & Koin) -->
+      <div class="mb-3 px-4 py-2 rounded-2xl bg-slate-950/50 backdrop-blur-md border border-white/20 text-xs sm:text-sm font-mono shadow-[0_8px_25px_rgba(0,0,0,0.65)] flex items-center justify-between gap-4 w-full">
+        <div class="flex items-center gap-1.5">
+          <span class="text-sky-300 font-semibold">Progres:</span>
+          <span class="text-cyan-200 font-bold">Level <span id="menuCurrentLevel">1</span> / 20</span>
         </div>
-        <div class="flex items-center gap-1.5 text-amber-400 font-bold">
-          <svg class="w-4 h-4 text-amber-400 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="m7 6 1 4"/></svg>
+        <div class="h-3.5 w-px bg-white/25"></div>
+        <div class="flex items-center gap-1.5 text-amber-300 font-bold">
+          <svg class="w-4 h-4 text-amber-300 inline drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="m7 6 1 4"/></svg>
           <span id="menuCoinCount">0</span> Koin Gizi
         </div>
       </div>
 
-      <!-- Menu Navigation Buttons -->
+      <!-- Pure Floating Glass Buttons Stack -->
       <div class="flex flex-col gap-2.5 w-full">
-        <button id="btnStoryContinue" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 hover:from-blue-500 hover:to-cyan-300 text-white font-fredoka text-lg sm:text-xl shadow-lg shadow-blue-500/30 transform active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer">
+        <button id="btnStoryContinue" class="w-full py-3.5 px-5 rounded-2xl bg-blue-600/40 hover:bg-blue-500/55 backdrop-blur-md border border-sky-400/60 text-white font-fredoka text-lg sm:text-xl shadow-[0_8px_30px_rgba(2,132,199,0.55)] transform active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer">
           <span>MULAI CERITA</span>
-          <svg class="w-5 h-5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+          <svg class="w-5 h-5 inline drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
         </button>
 
-        <button id="btnLevelSelect" class="w-full py-3 rounded-2xl bg-slate-900/80 hover:bg-slate-800 text-cyan-300 font-fredoka text-base sm:text-lg border border-cyan-500/40 shadow-md transform active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
+        <button id="btnLevelSelect" class="w-full py-3 px-5 rounded-2xl bg-sky-900/40 hover:bg-sky-800/55 backdrop-blur-md border border-cyan-400/50 text-cyan-200 font-fredoka text-base sm:text-lg shadow-[0_8px_25px_rgba(6,182,212,0.4)] transform active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
           <span>PILIH LEVEL (1 - 20)</span>
-          <svg class="w-5 h-5 inline text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
+          <svg class="w-5 h-5 inline text-cyan-300 drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
         </button>
 
-        <button id="btnGarage" class="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 text-slate-950 font-fredoka text-base sm:text-lg shadow-lg shadow-amber-500/30 transform active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
+        <button id="btnGarage" class="w-full py-3 px-5 rounded-2xl bg-amber-600/40 hover:bg-amber-500/55 backdrop-blur-md border border-amber-400/60 text-amber-200 font-fredoka text-base sm:text-lg shadow-[0_8px_25px_rgba(217,119,6,0.45)] transform active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
           <span>GARASI ZACKY (UPGRADE & SKIN)</span>
-          <svg class="w-5 h-5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          <svg class="w-5 h-5 inline drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
         </button>
 
-        <button id="btnHowToPlay" class="w-full py-2.5 rounded-xl bg-slate-900/60 hover:bg-slate-800 text-slate-400 font-fredoka text-xs sm:text-sm border border-slate-700/80 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
+        <button id="btnHowToPlay" class="w-full py-2.5 px-4 rounded-xl bg-slate-950/40 hover:bg-slate-900/60 backdrop-blur-sm border border-white/20 text-slate-200 font-fredoka text-xs sm:text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
           <svg class="w-4 h-4 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
           <span>PANDUAN KONTROL & KISAH MAS TION</span>
         </button>
@@ -698,7 +655,7 @@
 
       <!-- CENTER STAGE: TRUK & CONTACT SHADOW ON WORKSHOP FLOOR -->
       <div class="flex-1 flex flex-col items-center justify-center relative w-full order-1 md:order-2 my-auto">
-        <canvas id="garagePreviewCanvas" width="460" height="190" class="mx-auto block drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)]"></canvas>
+        <canvas id="garagePreviewCanvas" width="640" height="300" class="max-w-full h-auto mx-auto block drop-shadow-[0_15px_30px_rgba(0,0,0,0.7)]"></canvas>
       </div>
 
       <!-- RIGHT PANEL: SKIN BODI TRUK (Skins) -->
@@ -4313,44 +4270,45 @@
         ctx.clearRect(0, 0, w, h);
 
         const cx = w / 2;
-        const floorY = h - 32;
+        const floorY = h - 35;
+        const S = 2.9; // Super Maximal 2.9x Scale to fill space between hydraulic lift arms
 
-        // Realistic soft contact shadow on workshop floor underneath the truck matching ceiling downlight
+        // 1. Realistic super-wide soft contact shadow on workshop floor underneath the truck
         ctx.save();
-        // 1. Broad soft ambient shadow
-        const ambGrad = ctx.createRadialGradient(cx, floorY, 15, cx, floorY, 110);
-        ambGrad.addColorStop(0, 'rgba(0, 0, 0, 0.65)');
-        ambGrad.addColorStop(0.5, 'rgba(0, 0, 0, 0.28)');
+        const ambGrad = ctx.createRadialGradient(cx, floorY, 20 * S, cx, floorY, 72 * S);
+        ambGrad.addColorStop(0, 'rgba(0, 0, 0, 0.70)');
+        ambGrad.addColorStop(0.5, 'rgba(0, 0, 0, 0.30)');
         ambGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = ambGrad;
         ctx.beginPath();
-        ctx.ellipse(cx, floorY, 110, 14, 0, 0, Math.PI * 2);
+        ctx.ellipse(cx, floorY, 70 * S, 9 * S, 0, 0, Math.PI * 2);
         ctx.fill();
 
         // 2. Focused dark contact shadow under rear and front tires
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
         ctx.beginPath();
-        ctx.ellipse(cx - 30, floorY + 1, 22, 5, 0, 0, Math.PI * 2);
+        ctx.ellipse(cx - 30 * S, floorY + 1, 14 * S, 3.5 * S, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.beginPath();
-        ctx.ellipse(cx + 30, floorY + 1, 22, 5, 0, 0, Math.PI * 2);
+        ctx.ellipse(cx + 30 * S, floorY + 1, 14 * S, 3.5 * S, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
 
-        const r = this.getVisualWheelRadius(skin);
-        const wheelY = floorY - r;
-        const cy = wheelY - 16;
+        const baseR = this.getVisualWheelRadius(skin);
+        const cy = floorY - (16 + baseR) * S;
 
-        this.drawSuspensionStrut(cx - 30, cy, cx - 30, wheelY, ctx);
-        this.drawSuspensionStrut(cx + 30, cy, cx + 30, wheelY, ctx);
-
+        // Draw scaled vehicle elements centered around (cx, cy)
         ctx.save();
         ctx.translate(cx, cy);
-        this.drawTruckBody(ctx, skin);
-        ctx.restore();
+        ctx.scale(S, S);
 
-        const dummyRear = { x: cx - 30, y: wheelY, rotation: 0 };
-        const dummyFront = { x: cx + 30, y: wheelY, rotation: 0 };
+        this.drawSuspensionStrut(-30, 0, -30, 16, ctx);
+        this.drawSuspensionStrut(30, 0, 30, 16, ctx);
+
+        this.drawTruckBody(ctx, skin);
+
+        const dummyRear = { x: -30, y: 16, rotation: 0 };
+        const dummyFront = { x: 30, y: 16, rotation: 0 };
         const oldRim = this.selectedRim;
         const oldSkin = this.selectedSkin;
         this.selectedRim = rim;
@@ -4359,6 +4317,8 @@
         this.drawWheel(dummyFront, ctx);
         this.selectedRim = oldRim;
         this.selectedSkin = oldSkin;
+
+        ctx.restore();
 
         ctx.restore();
       }
