@@ -1862,11 +1862,11 @@
     // 4. CANVAS RENDERING ENGINE (Procedural Vector 2D Artwork)
     // =========================================================================
     const SKIN_RENDER_CONFIG = {
-      standard: { x: -50, y: -45, w: 100, h: 50, wheelRadius: 18 },
-      speedy:   { x: -50, y: -27, w: 98,  h: 49, wheelRadius: 14.5 },
-      mountain: { x: -50, y: -30, w: 100, h: 50, wheelRadius: 15 },
-      retro:    { x: -51, y: -30, w: 102, h: 51, wheelRadius: 14.5 },
-      sport:    { x: -57, y: -32, w: 114, h: 57, wheelRadius: 14 }
+      standard: { x: -50, y: -45, w: 100, h: 50, wheelRadius: 17.5 },
+      speedy:   { x: -50, y: -33, w: 100, h: 50, wheelRadius: 16.0 },
+      mountain: { x: -50, y: -36, w: 102, h: 51, wheelRadius: 17.0 },
+      retro:    { x: -51, y: -35, w: 102, h: 51, wheelRadius: 16.0 },
+      sport:    { x: -57, y: -37, w: 114, h: 57, wheelRadius: 15.5 }
     };
 
     class GameRenderer {
@@ -4538,38 +4538,32 @@
           selectedSkin: 'standard',
           selectedRim: 'default',
           purchasedSkins: ['standard'],
-          purchasedRims: ['default', 'standard'],
-          levelStars: {}
+          purchasedRims: ['default'],
+          levelStars: {},
+          garageEconomyVersion: 2
         };
         try {
           const raw = localStorage.getItem('mmg_savedata') || localStorage.getItem('mbg_savedata');
           if (!raw) return defaultData;
           const parsed = JSON.parse(raw);
           const unlockedLvl = Math.max(1, Math.min(20, parseInt(parsed.unlockedLevel) || 1));
-          const selSkin = parsed.selectedSkin || 'standard';
-          const selRim = parsed.selectedRim || 'default';
 
-          const skinReqs = { standard: 1, speedy: 4, mountain: 8, retro: 12, sport: 16 };
-          const rimReqs = { default: 1, standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
-
-          let skins = Array.isArray(parsed.purchasedSkins) && parsed.purchasedSkins.length ? [...parsed.purchasedSkins] : ['standard'];
-          if (!skins.includes('standard')) skins.push('standard');
-          if (selSkin && !skins.includes(selSkin)) skins.push(selSkin);
-          if (!parsed.purchasedSkins || parsed.purchasedSkins.length <= 1) {
-            Object.entries(skinReqs).forEach(([k, req]) => {
-              if (unlockedLvl >= req && !skins.includes(k)) skins.push(k);
-            });
+          // Strict two-stage garage economy (v2): only genuinely purchased or default items are kept
+          const isV2 = parsed.garageEconomyVersion >= 2;
+          let skins = ['standard'];
+          if (isV2 && Array.isArray(parsed.purchasedSkins)) {
+            skins = parsed.purchasedSkins.filter(s => ['standard', 'speedy', 'mountain', 'retro', 'sport'].includes(s));
+            if (!skins.includes('standard')) skins.unshift('standard');
           }
 
-          let rims = Array.isArray(parsed.purchasedRims) && parsed.purchasedRims.length ? [...parsed.purchasedRims] : ['default', 'standard'];
-          if (!rims.includes('default')) rims.unshift('default');
-          if (!rims.includes('standard')) rims.push('standard');
-          if (selRim && !rims.includes(selRim)) rims.push(selRim);
-          if (!parsed.purchasedRims || parsed.purchasedRims.length <= 1) {
-            Object.entries(rimReqs).forEach(([k, req]) => {
-              if (unlockedLvl >= req && !rims.includes(k)) rims.push(k);
-            });
+          let rims = ['default'];
+          if (isV2 && Array.isArray(parsed.purchasedRims)) {
+            rims = parsed.purchasedRims.filter(r => ['default', 'standard', 'gold', 'beadlock', 'whitewall'].includes(r));
+            if (!rims.includes('default')) rims.unshift('default');
           }
+
+          const selSkin = skins.includes(parsed.selectedSkin) ? parsed.selectedSkin : 'standard';
+          const selRim = rims.includes(parsed.selectedRim) ? parsed.selectedRim : 'default';
 
           return {
             coins: Math.max(0, parseInt(parsed.coins) || 0),
@@ -4583,7 +4577,8 @@
             selectedRim: selRim,
             purchasedSkins: Array.from(new Set(skins)),
             purchasedRims: Array.from(new Set(rims)),
-            levelStars: parsed.levelStars || {}
+            levelStars: parsed.levelStars || {},
+            garageEconomyVersion: 2
           };
         } catch (_) {
           return defaultData;
@@ -4592,6 +4587,9 @@
 
       saveProgress() {
         try {
+          if (this.saveData) {
+            this.saveData.garageEconomyVersion = 2;
+          }
           localStorage.setItem('mmg_savedata', JSON.stringify(this.saveData));
           localStorage.setItem('mbg_savedata', JSON.stringify(this.saveData));
         } catch (_) {}
@@ -4845,7 +4843,7 @@
                 if (window.showMbgToast) window.showMbgToast(`Velg ini terbuka mulai Level ${reqLvl}!`, 'lock');
                 return;
               }
-              const purchased = this.saveData.purchasedRims || ['default', 'standard'];
+              const purchased = this.saveData.purchasedRims || ['default'];
               const isOwned = purchased.includes(key);
               const price = rimPrices[key] || 0;
               if (!isOwned) {
@@ -4854,7 +4852,7 @@
                   return;
                 }
                 this.saveData.coins -= price;
-                if (!this.saveData.purchasedRims) this.saveData.purchasedRims = ['default', 'standard'];
+                if (!this.saveData.purchasedRims) this.saveData.purchasedRims = ['default'];
                 if (!this.saveData.purchasedRims.includes(key)) this.saveData.purchasedRims.push(key);
                 this.saveData.selectedRim = key;
                 if (window.showMbgToast) window.showMbgToast(`Velg ${rimNames[key]} berhasil dibeli & dipasang!`, 'check');
@@ -5224,7 +5222,7 @@
         const rimNames = { default: 'Pabrik Canter', standard: 'Standard Utility', gold: 'Gold Alloy', beadlock: 'Mud Beadlock', whitewall: 'White-Wall Retro' };
         const rimPrices = { default: 0, standard: 350, gold: 730, beadlock: 2200, whitewall: 6800 };
         const rimBonuses = { default: 'Balanced', standard: '+8% Irit', gold: '+8% Grip Aspal', beadlock: '+35% Anti-Lumpur', whitewall: '+15% Tahan Guncang' };
-        const purchasedRims = this.saveData.purchasedRims || ['default', 'standard'];
+        const purchasedRims = this.saveData.purchasedRims || ['default'];
 
         for (const [key, btn] of Object.entries(this.rimButtons)) {
           if (!btn) continue;

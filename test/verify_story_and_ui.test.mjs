@@ -297,3 +297,22 @@ test('GameRenderer - Dynamic per-skin render calibration & visual wheel groundin
   assert.match(html, /dropY\s*=\s*cosA\s*\*\s*drop/, 'Drop offset tilts along vehicle down-axis in Y');
 });
 
+test('Garage - Strict two-stage economy (Level Unlock -> Coin Purchase -> Equip)', () => {
+  const html = fs.readFileSync(path.resolve('index.html'), 'utf8');
+
+  // Verify only standard skin and default rim are owned by default
+  assert.match(html, /purchasedSkins:\s*\['standard'\]/, 'Only standard skin owned by default');
+  assert.match(html, /purchasedRims:\s*\['default'\]/, 'Only default rim owned by default');
+  assert.ok(html.includes('garageEconomyVersion: 2'), 'v2 strict garage economy version enabled');
+
+  // Ensure no legacy auto-grant loop exists
+  assert.equal(html.includes('unlockedLvl >= req && !skins.includes(k)'), false, 'Legacy auto-grant skin loop is removed');
+  assert.equal(html.includes('unlockedLvl >= req && !rims.includes(k)'), false, 'Legacy auto-grant rim loop is removed');
+
+  // Verify prices and level requirements
+  assert.ok(html.includes('speedy: 580'), 'Speedy Courier costs 580 coins');
+  assert.ok(html.includes('mountain: 1430'), 'Mountain Explorer costs 1430 coins');
+  assert.ok(html.includes('standard: 350'), 'Standard Utility rim costs 350 coins');
+  assert.ok(html.includes('gold: 730'), 'Gold Alloy rim costs 730 coins');
+});
+
