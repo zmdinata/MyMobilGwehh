@@ -205,3 +205,77 @@ test('Character Avatars - All dialogue speakers and moods map to valid WebP and 
   }
 });
 
+test('Skins and Rims Assets - 5 skins and 5 rims exist in WebP and PNG formats', () => {
+  const skinsDir = path.resolve('assets/refresh/v11/skins');
+  const rimsDir = path.resolve('assets/refresh/v11/rims');
+  assert.ok(fs.existsSync(skinsDir), 'assets/refresh/v11/skins exists');
+  assert.ok(fs.existsSync(rimsDir), 'assets/refresh/v11/rims exists');
+
+  const skins = ['standard', 'speedy', 'mountain', 'retro', 'sport'];
+  for (const s of skins) {
+    assert.ok(fs.existsSync(path.join(skinsDir, `skin_${s}.webp`)), `skin_${s}.webp exists`);
+    assert.ok(fs.existsSync(path.join(skinsDir, `skin_${s}.png`)), `skin_${s}.png exists`);
+  }
+
+  const rims = ['default', 'standard', 'gold', 'beadlock', 'whitewall'];
+  for (const r of rims) {
+    assert.ok(fs.existsSync(path.join(rimsDir, `rim_${r}.webp`)), `rim_${r}.webp exists`);
+    assert.ok(fs.existsSync(path.join(rimsDir, `rim_${r}.png`)), `rim_${r}.png exists`);
+  }
+});
+
+test('PhysicsVehicle - Tactical buffs for all 5 skins and 5 rims', () => {
+  const v = new PhysicsVehicle(100, 300);
+
+  // Baseline standard + default
+  v.applyUpgrades({ engine: 1, grip: 1, suspension: 1 }, 'standard', 'default');
+  const baseSpeed = v.maxForwardSpeed;
+  const basePower = v.enginePower;
+  const basePitch = v.airPitchTorque;
+  const baseDamper = v.kDamper;
+  const baseSpring = v.kSpring;
+  const baseRamp = v.throttleRampUp;
+
+  assert.equal(v.fuelRateMultiplier, 1.0);
+  assert.equal(v.landingShockMultiplier, 1.0);
+  assert.equal(v.mudGripBonus, 1.0);
+  assert.equal(v.asphaltGripBonus, 1.0);
+
+  // Speedy skin (+6% Speed, +10% Air Pitch)
+  v.applyUpgrades({ engine: 1, grip: 1, suspension: 1 }, 'speedy', 'default');
+  assert.ok(Math.abs(v.maxForwardSpeed - baseSpeed * 1.06) < 1e-4);
+  assert.ok(Math.abs(v.airPitchTorque - basePitch * 1.10) < 1e-4);
+
+  // Sport skin (+12% Speed, +15% Throttle Ramp)
+  v.applyUpgrades({ engine: 1, grip: 1, suspension: 1 }, 'sport', 'default');
+  assert.ok(Math.abs(v.maxForwardSpeed - baseSpeed * 1.12) < 1e-4);
+  assert.ok(Math.abs(v.throttleRampUp - baseRamp * 1.15) < 1e-4);
+
+  // Mountain skin (+5% Engine Power, +7% Damper)
+  v.applyUpgrades({ engine: 1, grip: 1, suspension: 1 }, 'mountain', 'default');
+  assert.ok(Math.abs(v.enginePower - basePower * 1.05) < 1e-4);
+  assert.ok(Math.abs(v.kDamper - baseDamper * 1.07) < 1e-4);
+
+  // Retro skin (+10% Shock Absorption, +5% Spring & Damper)
+  v.applyUpgrades({ engine: 1, grip: 1, suspension: 1 }, 'retro', 'default');
+  assert.ok(Math.abs(v.kSpring - baseSpring * 1.05) < 1e-4);
+  assert.ok(Math.abs(v.kDamper - baseDamper * 1.05) < 1e-4);
+  assert.ok(Math.abs(v.landingShockMultiplier - 0.90) < 1e-4);
+
+  // Standard rim (+8% Fuel Efficiency)
+  v.applyUpgrades({ engine: 1, grip: 1, suspension: 1 }, 'standard', 'standard');
+  assert.ok(Math.abs(v.fuelRateMultiplier - 0.92) < 1e-4);
+
+  // Gold rim (+8% Asphalt/Highway Traction)
+  v.applyUpgrades({ engine: 1, grip: 1, suspension: 1 }, 'standard', 'gold');
+  assert.ok(Math.abs(v.asphaltGripBonus - 1.08) < 1e-4);
+
+  // Beadlock rim (+35% Mud Traction)
+  v.applyUpgrades({ engine: 1, grip: 1, suspension: 1 }, 'standard', 'beadlock');
+  assert.ok(Math.abs(v.mudGripBonus - 1.35) < 1e-4);
+
+  // Whitewall rim (+15% Cargo Landing Protection)
+  v.applyUpgrades({ engine: 1, grip: 1, suspension: 1 }, 'standard', 'whitewall');
+  assert.ok(Math.abs(v.landingShockMultiplier - 0.85) < 1e-4);
+});
+

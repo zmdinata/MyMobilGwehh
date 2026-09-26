@@ -1024,6 +1024,14 @@ export class PhysicsVehicle {
     this.gripLvl = 1;
     this.suspLvl = 1;
 
+    // Tactical Buff Multipliers (Skins & Rims)
+    this.activeSkin = 'standard';
+    this.activeRim = 'default';
+    this.fuelRateMultiplier = 1.0;
+    this.landingShockMultiplier = 1.0;
+    this.mudGripBonus = 1.0;
+    this.asphaltGripBonus = 1.0;
+
     // Food particles ejected during shocks
     this.foodParticles = [];
     // Fixed-step accumulator keeps suspension and collision results stable when
@@ -1036,7 +1044,7 @@ export class PhysicsVehicle {
     this.soundEngine = sound;
   }
 
-  applyUpgrades(upgrades = {}, activeSkin = 'standard') {
+  applyUpgrades(upgrades = {}, activeSkin = 'standard', activeRim = 'default') {
     const engineLvl = Math.max(1, Math.min(20, upgrades.engine || 1));
     const gripLvl = Math.max(1, Math.min(20, upgrades.grip || 1));
     const suspLvl = Math.max(1, Math.min(20, upgrades.suspension || 1));
@@ -1059,16 +1067,39 @@ export class PhysicsVehicle {
     // Throttle response: punchier ramp-up on higher engine levels
     this.throttleRampUp = PHYSICS_CONSTANTS.THROTTLE_RAMP_UP + (engineLvl - 1) * 0.25;
 
+    // Reset tactical buff multipliers
+    this.activeSkin = activeSkin;
+    this.activeRim = activeRim;
+    this.fuelRateMultiplier = 1.0;
+    this.landingShockMultiplier = 1.0;
+    this.mudGripBonus = 1.0;
+    this.asphaltGripBonus = 1.0;
+
     // Skin bonuses (selected skin grants tactical gameplay buffs)
     if (activeSkin === 'speedy') {
-      topSpeed *= 1.05; // +5% Top Speed
+      topSpeed *= 1.06; // +6% Top Speed
+      this.airPitchTorque *= 1.10; // +10% Air Pitch Control
     } else if (activeSkin === 'sport') {
-      topSpeed *= 1.10; // +10% Top Speed
+      topSpeed *= 1.12; // +12% Top Speed
+      this.throttleRampUp *= 1.15; // +15% Throttle Ramp
     } else if (activeSkin === 'mountain') {
-      this.tireGrip *= 1.05; // +5% Tire Grip
+      this.enginePower *= 1.05; // +5% Engine Power
+      this.kDamper *= 1.07; // +7% Damper
     } else if (activeSkin === 'retro') {
       this.kSpring *= 1.05;
       this.kDamper *= 1.05;
+      this.landingShockMultiplier *= 0.90; // +10% Shock Absorption
+    }
+
+    // Rim bonuses (selected rim grants tactical terrain/fuel buffs)
+    if (activeRim === 'standard') {
+      this.fuelRateMultiplier *= 0.92; // +8% Fuel Efficiency (Standard Utility Rim)
+    } else if (activeRim === 'gold') {
+      this.asphaltGripBonus = 1.08; // +8% Asphalt/Highway Traction (Gold Racing Alloy)
+    } else if (activeRim === 'beadlock') {
+      this.mudGripBonus = 1.35; // +35% Anti-Mud / Sawah Traction (Mud-Terrain Beadlock)
+    } else if (activeRim === 'whitewall') {
+      this.landingShockMultiplier *= 0.85; // +15% Cargo Landing Protection (White-Wall Retro)
     }
 
     this.maxForwardSpeed = topSpeed;
@@ -1477,7 +1508,9 @@ export class PhysicsVehicle {
       if (terrain.isInWaterPuddle(meterX)) {
         tractionFactor = PHYSICS_CONSTANTS.WATER_SLIP_TRACTION; // 0.85
       } else if (terrain.isInMudPit(meterX)) {
-        tractionFactor = PHYSICS_CONSTANTS.MUD_SLIP_TRACTION;
+        tractionFactor = PHYSICS_CONSTANTS.MUD_SLIP_TRACTION * (this.mudGripBonus || 1.0);
+      } else {
+        tractionFactor *= (this.asphaltGripBonus || 1.0);
       }
       tractionFactor *= (this.tireGrip || 1.0);
 
@@ -1485,12 +1518,13 @@ export class PhysicsVehicle {
 
       // Drive traction
       let driveForce = 0;
+      const fuelMult = this.fuelRateMultiplier || 1.0;
       if (inputs.gas && this.engineThrottle > 0 && this.fuel > 0) {
         // Rear-wheel drive: do not apply a second, free engine force to the
         // front wheel. Fuel is consumed by this same driven axle below.
         driveForce = isDriveWheel ? this.enginePower * this.engineThrottle * tractionFactor : 0;
         if (isDriveWheel) {
-          this.fuel = Math.max(0, this.fuel - 2.2 * this.engineThrottle * dt);
+          this.fuel = Math.max(0, this.fuel - 2.2 * this.engineThrottle * dt * fuelMult);
         }
       } else if (inputs.brake) {
         // Brake against forward travel first; once stopped or travelling backward,
@@ -1504,7 +1538,7 @@ export class PhysicsVehicle {
             ? -this.enginePower * 0.50 * this.reverseThrottle * tractionFactor
             : 0;
           if (isDriveWheel && this.fuel > 0) {
-            this.fuel = Math.max(0, this.fuel - 2.2 * this.reverseThrottle * dt);
+            this.fuel = Math.max(0, this.fuel - 2.2 * this.reverseThrottle * dt * fuelMult);
           }
         }
       }
@@ -1520,8 +1554,9 @@ export class PhysicsVehicle {
 
       // Mud drag must reach the chassis. Damping only the free wheel velocity
       // before engine force was ineffective and could make mud retain more speed.
+      const mudDragReduction = (this.mudGripBonus && this.mudGripBonus > 1.0) ? 0.65 : 1.0;
       const mudDragMag = terrain.isInMudPit(meterX)
-        ? -vDotT * (PHYSICS_CONSTANTS.MUD_DRAG_RATE / Math.max(0.6, this.tireGrip || 1.0)) * 0.5
+        ? -vDotT * (PHYSICS_CONSTANTS.MUD_DRAG_RATE / Math.max(0.6, this.tireGrip || 1.0)) * 0.5 * mudDragReduction
         : 0;
       groundFx += tangent.x * mudDragMag;
       groundFy += tangent.y * mudDragMag;
@@ -1687,7 +1722,8 @@ export class PhysicsVehicle {
   triggerImpactShock(intensity) {
     if (intensity < 120) return;
     const suspFactor = Math.max(0.65, 1 - ((this.suspLvl || 1) - 1) * (0.35 / 19));
-    const damage = Math.min(25, (intensity - 100) * 0.06 * suspFactor);
+    const shockMult = this.landingShockMultiplier || 1.0;
+    const damage = Math.min(25, (intensity - 100) * 0.06 * suspFactor * shockMult);
     this.cargoIntegrity = Math.max(0, this.cargoIntegrity - damage);
 
     // Eject comical food particles

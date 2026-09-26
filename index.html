@@ -803,9 +803,12 @@
         <!-- Rim Selector -->
         <div>
           <span class="text-xs font-bold text-amber-300 block mb-1">PILIHAN VELG RODA:</span>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            <button id="rimBtn_standard" class="p-2 rounded-xl bg-slate-800 border border-amber-400 text-xs font-fredoka text-white text-center hover:bg-slate-700">
-              Standard Steel
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+            <button id="rimBtn_default" class="p-2 rounded-xl bg-slate-800 border border-amber-400 text-xs font-fredoka text-white text-center hover:bg-slate-700">
+              Pabrik Default
+            </button>
+            <button id="rimBtn_standard" class="p-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-fredoka text-slate-300 text-center hover:bg-slate-700">
+              Standard Utility
             </button>
             <button id="rimBtn_gold" class="p-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-fredoka text-slate-300 text-center hover:bg-slate-700">
               Gold Alloy
@@ -1867,7 +1870,7 @@
         this.confetti = [];
         this.splatters = [];
         this.selectedSkin = 'standard';
-        this.selectedRim = 'standard';
+        this.selectedRim = 'default';
         this.initAssets();
         this.resize();
         window.addEventListener('resize', () => this.resize());
@@ -1884,7 +1887,39 @@
           finishGate: { img: null, loaded: false, failed: false }
         };
         this.backgroundAssets = {};
+        this.skinAssets = {
+          standard: { img: null, loaded: false, failed: false },
+          speedy: { img: null, loaded: false, failed: false },
+          mountain: { img: null, loaded: false, failed: false },
+          retro: { img: null, loaded: false, failed: false },
+          sport: { img: null, loaded: false, failed: false }
+        };
+        this.rimAssets = {
+          default: { img: null, loaded: false, failed: false },
+          standard: { img: null, loaded: false, failed: false },
+          gold: { img: null, loaded: false, failed: false },
+          beadlock: { img: null, loaded: false, failed: false },
+          whitewall: { img: null, loaded: false, failed: false }
+        };
         if (typeof Image === 'undefined' || typeof fetch === 'undefined') return;
+
+        const skinKeys = ['standard', 'speedy', 'mountain', 'retro', 'sport'];
+        for (const k of skinKeys) {
+          this.loadAsset(
+            this.skinAssets[k],
+            `assets/refresh/v11/skins/skin_${k}.webp`,
+            `assets/refresh/v11/skins/skin_${k}.png`
+          );
+        }
+
+        const rimKeys = ['default', 'standard', 'gold', 'beadlock', 'whitewall'];
+        for (const k of rimKeys) {
+          this.loadAsset(
+            this.rimAssets[k],
+            `assets/refresh/v11/rims/rim_${k}.webp`,
+            `assets/refresh/v11/rims/rim_${k}.png`
+          );
+        }
 
         fetch('assets/manifest.json', { cache: 'no-cache' })
           .then(response => {
@@ -3508,22 +3543,7 @@
         ctx.translate(vehicle.x, vehicle.y);
         ctx.rotate(vehicle.angle);
 
-        const skin = this.selectedSkin || 'standard';
-        if (skin === 'speedy') {
-          this.drawSpeedyCourierSkin(ctx);
-        } else if (skin === 'mountain') {
-          this.drawMountainExplorerSkin(ctx);
-        } else if (skin === 'retro') {
-          this.drawRetroOpletSkin(ctx);
-        } else if (skin === 'sport') {
-          this.drawSportDeliverySkin(ctx);
-        } else {
-          if (this.assets && this.assets.truckBody.loaded) {
-            ctx.drawImage(this.assets.truckBody.img, -50, -45, 100, 50);
-          } else {
-            this.drawStandardTruckBody(ctx);
-          }
-        }
+        this.drawTruckBody(ctx, this.selectedSkin);
 
         ctx.restore();
 
@@ -3662,19 +3682,26 @@
         ctx.rotate(wheel.rotation);
 
         const r = 18;
-        const rim = this.selectedRim || 'standard';
+        const rim = this.selectedRim || 'default';
+        const rimAsset = this.rimAssets && this.rimAssets[rim];
 
-        if (rim === 'gold') {
-          this.drawGoldRacingRim(ctx, r);
-        } else if (rim === 'beadlock') {
-          this.drawBeadlockRim(ctx, r);
-        } else if (rim === 'whitewall') {
-          this.drawWhiteWallRim(ctx, r);
+        if (rimAsset && rimAsset.loaded) {
+          ctx.drawImage(rimAsset.img, -r, -r, r * 2, r * 2);
         } else {
-          if (this.assets && this.assets.truckWheel.loaded) {
-            ctx.drawImage(this.assets.truckWheel.img, -r, -r, r * 2, r * 2);
-          } else {
+          if (rim === 'gold') {
+            this.drawGoldRacingRim(ctx, r);
+          } else if (rim === 'beadlock') {
+            this.drawBeadlockRim(ctx, r);
+          } else if (rim === 'whitewall') {
+            this.drawWhiteWallRim(ctx, r);
+          } else if (rim === 'standard') {
             this.drawStandardRim(ctx, r);
+          } else {
+            if (this.assets && this.assets.truckWheel && this.assets.truckWheel.loaded) {
+              ctx.drawImage(this.assets.truckWheel.img, -r, -r, r * 2, r * 2);
+            } else {
+              this.drawStandardRim(ctx, r);
+            }
           }
         }
 
@@ -3806,6 +3833,30 @@
         ctx.beginPath();
         ctx.arc(0, 0, 3, 0, Math.PI * 2);
         ctx.fill();
+      }
+
+      drawTruckBody(ctx, skin = this.selectedSkin) {
+        const activeSkin = skin || 'standard';
+        const skinAsset = this.skinAssets && this.skinAssets[activeSkin];
+        if (skinAsset && skinAsset.loaded) {
+          ctx.drawImage(skinAsset.img, -50, -45, 100, 50);
+          return;
+        }
+        if (activeSkin === 'speedy') {
+          this.drawSpeedyCourierSkin(ctx);
+        } else if (activeSkin === 'mountain') {
+          this.drawMountainExplorerSkin(ctx);
+        } else if (activeSkin === 'retro') {
+          this.drawRetroOpletSkin(ctx);
+        } else if (activeSkin === 'sport') {
+          this.drawSportDeliverySkin(ctx);
+        } else {
+          if (this.assets && this.assets.truckBody && this.assets.truckBody.loaded) {
+            ctx.drawImage(this.assets.truckBody.img, -50, -45, 100, 50);
+          } else {
+            this.drawStandardTruckBody(ctx);
+          }
+        }
       }
 
       drawStandardTruckBody(ctx) {
@@ -4284,21 +4335,7 @@
 
         ctx.save();
         ctx.translate(cx, cy);
-        if (skin === 'speedy') {
-          this.drawSpeedyCourierSkin(ctx);
-        } else if (skin === 'mountain') {
-          this.drawMountainExplorerSkin(ctx);
-        } else if (skin === 'retro') {
-          this.drawRetroOpletSkin(ctx);
-        } else if (skin === 'sport') {
-          this.drawSportDeliverySkin(ctx);
-        } else {
-          if (this.assets && this.assets.truckBody.loaded) {
-            ctx.drawImage(this.assets.truckBody.img, -50, -45, 100, 50);
-          } else {
-            this.drawStandardTruckBody(ctx);
-          }
-        }
+        this.drawTruckBody(ctx, skin);
         ctx.restore();
 
         const dummyRear = { x: cx - 30, y: floorY - 10, rotation: 0 };
@@ -4458,9 +4495,9 @@
           unlockedLevel: 1,
           upgrades: { engine: 1, grip: 1, suspension: 1 },
           selectedSkin: 'standard',
-          selectedRim: 'standard',
+          selectedRim: 'default',
           purchasedSkins: ['standard'],
-          purchasedRims: ['standard'],
+          purchasedRims: ['default', 'standard'],
           levelStars: {}
         };
         try {
@@ -4469,10 +4506,10 @@
           const parsed = JSON.parse(raw);
           const unlockedLvl = Math.max(1, Math.min(20, parseInt(parsed.unlockedLevel) || 1));
           const selSkin = parsed.selectedSkin || 'standard';
-          const selRim = parsed.selectedRim || 'standard';
+          const selRim = parsed.selectedRim || 'default';
 
           const skinReqs = { standard: 1, speedy: 4, mountain: 8, retro: 12, sport: 16 };
-          const rimReqs = { standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
+          const rimReqs = { default: 1, standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
 
           let skins = Array.isArray(parsed.purchasedSkins) && parsed.purchasedSkins.length ? [...parsed.purchasedSkins] : ['standard'];
           if (!skins.includes('standard')) skins.push('standard');
@@ -4483,7 +4520,8 @@
             });
           }
 
-          let rims = Array.isArray(parsed.purchasedRims) && parsed.purchasedRims.length ? [...parsed.purchasedRims] : ['standard'];
+          let rims = Array.isArray(parsed.purchasedRims) && parsed.purchasedRims.length ? [...parsed.purchasedRims] : ['default', 'standard'];
+          if (!rims.includes('default')) rims.unshift('default');
           if (!rims.includes('standard')) rims.push('standard');
           if (selRim && !rims.includes(selRim)) rims.push(selRim);
           if (!parsed.purchasedRims || parsed.purchasedRims.length <= 1) {
@@ -4525,13 +4563,13 @@
       }
 
       applyUpgrades() {
-        this.vehicle.applyUpgrades(this.saveData.upgrades, this.saveData.selectedSkin);
+        this.vehicle.applyUpgrades(this.saveData.upgrades, this.saveData.selectedSkin, this.saveData.selectedRim);
         if (this.sound) {
           this.sound.setSkin(this.saveData.selectedSkin || 'standard');
         }
         if (this.renderer) {
           this.renderer.selectedSkin = this.saveData.selectedSkin || 'standard';
-          this.renderer.selectedRim = this.saveData.selectedRim || 'standard';
+          this.renderer.selectedRim = this.saveData.selectedRim || 'default';
         }
       }
 
@@ -4618,6 +4656,7 @@
           sport: document.getElementById('skinBtn_sport')
         };
         this.rimButtons = {
+          default: document.getElementById('rimBtn_default'),
           standard: document.getElementById('rimBtn_standard'),
           gold: document.getElementById('rimBtn_gold'),
           beadlock: document.getElementById('rimBtn_beadlock'),
@@ -4753,10 +4792,10 @@
         });
 
         // Rim Selector Buttons with Level Unlock Validation & Coin Purchase
-        const rimLevelRequirements = { standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
-        const rimPrices = { standard: 0, gold: 730, beadlock: 2200, whitewall: 6800 };
-        const rimNames = { standard: 'Standard Steel', gold: 'Gold Alloy', beadlock: 'Mud Beadlock', whitewall: 'White-Wall Retro' };
-        ['standard', 'gold', 'beadlock', 'whitewall'].forEach((key) => {
+        const rimLevelRequirements = { default: 1, standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
+        const rimPrices = { default: 0, standard: 350, gold: 730, beadlock: 2200, whitewall: 6800 };
+        const rimNames = { default: 'Pabrik Canter', standard: 'Standard Utility', gold: 'Gold Alloy', beadlock: 'Mud Beadlock', whitewall: 'White-Wall Retro' };
+        ['default', 'standard', 'gold', 'beadlock', 'whitewall'].forEach((key) => {
           const btn = this.rimButtons[key];
           if (btn) {
             btn.addEventListener('click', () => {
@@ -4765,7 +4804,7 @@
                 if (window.showMbgToast) window.showMbgToast(`Velg ini terbuka mulai Level ${reqLvl}!`, 'lock');
                 return;
               }
-              const purchased = this.saveData.purchasedRims || ['standard'];
+              const purchased = this.saveData.purchasedRims || ['default', 'standard'];
               const isOwned = purchased.includes(key);
               const price = rimPrices[key] || 0;
               if (!isOwned) {
@@ -4774,7 +4813,7 @@
                   return;
                 }
                 this.saveData.coins -= price;
-                if (!this.saveData.purchasedRims) this.saveData.purchasedRims = ['standard'];
+                if (!this.saveData.purchasedRims) this.saveData.purchasedRims = ['default', 'standard'];
                 if (!this.saveData.purchasedRims.includes(key)) this.saveData.purchasedRims.push(key);
                 this.saveData.selectedRim = key;
                 if (window.showMbgToast) window.showMbgToast(`Velg ${rimNames[key]} berhasil dibeli & dipasang!`, 'check');
@@ -5112,7 +5151,7 @@
         const skinReqs = { standard: 1, speedy: 4, mountain: 8, retro: 12, sport: 16 };
         const skinNames = { standard: 'Standard MMG', speedy: 'Speedy Courier', mountain: 'Mountain Explorer', retro: 'Retro Food Truck', sport: 'Sport Racing' };
         const skinPrices = { standard: 0, speedy: 580, mountain: 1430, retro: 3500, sport: 9500 };
-        const skinBonuses = { standard: 'Standard', speedy: '+5% Speed', mountain: '+5% Grip', retro: '+5% Shock', sport: '+10% Speed' };
+        const skinBonuses = { standard: 'Balanced', speedy: '+6% Speed & Pitch', mountain: '+5% Torsi & Damper', retro: '+10% Redam Shock', sport: '+12% Speed & Ramp' };
         const purchasedSkins = this.saveData.purchasedSkins || ['standard'];
 
         for (const [key, btn] of Object.entries(this.skinButtons)) {
@@ -5140,10 +5179,11 @@
         }
 
         // Highlight selected rim & show unlock level badges and purchase prices
-        const rimReqs = { standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
-        const rimNames = { standard: 'Standard Steel', gold: 'Gold Alloy', beadlock: 'Mud Beadlock', whitewall: 'White-Wall Retro' };
-        const rimPrices = { standard: 0, gold: 730, beadlock: 2200, whitewall: 6800 };
-        const purchasedRims = this.saveData.purchasedRims || ['standard'];
+        const rimReqs = { default: 1, standard: 1, gold: 5, beadlock: 10, whitewall: 15 };
+        const rimNames = { default: 'Pabrik Canter', standard: 'Standard Utility', gold: 'Gold Alloy', beadlock: 'Mud Beadlock', whitewall: 'White-Wall Retro' };
+        const rimPrices = { default: 0, standard: 350, gold: 730, beadlock: 2200, whitewall: 6800 };
+        const rimBonuses = { default: 'Balanced', standard: '+8% Irit', gold: '+8% Grip Aspal', beadlock: '+35% Anti-Lumpur', whitewall: '+15% Tahan Guncang' };
+        const purchasedRims = this.saveData.purchasedRims || ['default', 'standard'];
 
         for (const [key, btn] of Object.entries(this.rimButtons)) {
           if (!btn) continue;
@@ -5151,19 +5191,20 @@
           const isUnlocked = (this.saveData.unlockedLevel || 1) >= reqLvl;
           const isOwned = purchasedRims.includes(key);
           const price = rimPrices[key] || 0;
+          const bonus = rimBonuses[key] || '';
 
           if (!isUnlocked) {
             btn.innerHTML = `<span class="opacity-70">${rimNames[key]}</span><span class="block text-[9px] text-amber-400 font-mono mt-0.5 flex items-center justify-center gap-1"><svg class="w-2.5 h-2.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Lvl ${reqLvl}</span></span>`;
             btn.className = 'p-2 rounded-xl bg-slate-900/60 border border-slate-800 text-xs font-fredoka text-slate-500 text-center opacity-70 cursor-not-allowed';
           } else if (key === this.saveData.selectedRim) {
-            btn.innerHTML = `<span>${rimNames[key]}</span><span class="block text-[9px] text-amber-300 font-mono mt-0.5 flex items-center justify-center gap-1"><svg class="w-2.5 h-2.5 inline text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Terpasang</span></span>`;
+            btn.innerHTML = `<span>${rimNames[key]}</span><span class="block text-[9px] text-amber-300 font-mono mt-0.5 flex items-center justify-center gap-1"><svg class="w-2.5 h-2.5 inline text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Terpasang (${bonus})</span></span>`;
             btn.className = 'p-2 rounded-xl bg-slate-700 border-2 border-amber-400 text-xs font-fredoka text-white text-center shadow-md';
           } else if (!isOwned) {
             const canAfford = (this.saveData.coins || 0) >= price;
-            btn.innerHTML = `<span>${rimNames[key]}</span><span class="block text-[9px] ${canAfford ? 'text-amber-300 font-bold' : 'text-slate-500'} font-mono mt-0.5">Beli: ${price} Koin</span>`;
+            btn.innerHTML = `<span>${rimNames[key]}</span><span class="block text-[9px] ${canAfford ? 'text-amber-300 font-bold' : 'text-slate-500'} font-mono mt-0.5">Beli: ${price} Koin (${bonus})</span>`;
             btn.className = `p-2 rounded-xl text-xs font-fredoka text-center ${canAfford ? 'bg-emerald-950/60 border border-emerald-500/60 text-emerald-300 hover:bg-emerald-900/70 cursor-pointer' : 'bg-slate-900 border border-slate-800 text-slate-500 cursor-not-allowed opacity-75'}`;
           } else {
-            btn.innerHTML = `<span>${rimNames[key]}</span><span class="block text-[9px] text-slate-400 font-mono mt-0.5">Pasang</span>`;
+            btn.innerHTML = `<span>${rimNames[key]}</span><span class="block text-[9px] text-slate-400 font-mono mt-0.5">Pasang (${bonus})</span>`;
             btn.className = 'p-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-fredoka text-slate-300 text-center hover:bg-slate-700 cursor-pointer';
           }
         }
