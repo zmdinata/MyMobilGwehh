@@ -279,3 +279,21 @@ test('PhysicsVehicle - Tactical buffs for all 5 skins and 5 rims', () => {
   assert.ok(Math.abs(v.landingShockMultiplier - 0.85) < 1e-4);
 });
 
+test('GameRenderer - Dynamic per-skin render calibration & visual wheel grounding', () => {
+  const html = fs.readFileSync(path.resolve('index.html'), 'utf8');
+
+  // Verify SKIN_RENDER_CONFIG contains calibrated offsets and dimensions for all 5 skins
+  assert.ok(html.includes('SKIN_RENDER_CONFIG'), 'SKIN_RENDER_CONFIG is defined');
+  for (const s of ['standard', 'speedy', 'mountain', 'retro', 'sport']) {
+    assert.match(html, new RegExp(`${s}:\\s*\\{[^}]*wheelRadius`), `SKIN_RENDER_CONFIG defines wheelRadius for ${s}`);
+  }
+
+  // Verify getVisualWheelRadius method
+  assert.ok(html.includes('getVisualWheelRadius('), 'GameRenderer defines getVisualWheelRadius');
+
+  // Verify visual grounding logic in drawVehicle
+  assert.match(html, /const\s+drop\s*=\s*Math\.max\(0,\s*18\s*-\s*rVis\)/, 'Visual wheel grounding derives drop offset from physics wheelRadius 18');
+  assert.match(html, /dropX\s*=\s*-sinA\s*\*\s*drop/, 'Drop offset tilts along vehicle down-axis in X');
+  assert.match(html, /dropY\s*=\s*cosA\s*\*\s*drop/, 'Drop offset tilts along vehicle down-axis in Y');
+});
+

@@ -1861,6 +1861,14 @@
     // =========================================================================
     // 4. CANVAS RENDERING ENGINE (Procedural Vector 2D Artwork)
     // =========================================================================
+    const SKIN_RENDER_CONFIG = {
+      standard: { x: -50, y: -45, w: 100, h: 50, wheelRadius: 18 },
+      speedy:   { x: -50, y: -27, w: 98,  h: 49, wheelRadius: 14.5 },
+      mountain: { x: -50, y: -30, w: 100, h: 50, wheelRadius: 15 },
+      retro:    { x: -51, y: -30, w: 102, h: 51, wheelRadius: 14.5 },
+      sport:    { x: -57, y: -32, w: 114, h: 57, wheelRadius: 14 }
+    };
+
     class GameRenderer {
       constructor(canvas) {
         this.canvas = canvas;
@@ -3523,10 +3531,33 @@
         ctx.restore();
       }
 
+      getVisualWheelRadius(skin = this.selectedSkin) {
+        const activeSkin = skin || 'standard';
+        const cfg = SKIN_RENDER_CONFIG[activeSkin];
+        return (cfg && cfg.wheelRadius) ? cfg.wheelRadius : 18;
+      }
+
       drawVehicle(vehicle, inputs) {
         const ctx = this.ctx;
         const cosA = Math.cos(vehicle.angle);
         const sinA = Math.sin(vehicle.angle);
+
+        // Visual wheel grounding adjustment
+        const rVis = this.getVisualWheelRadius();
+        const drop = Math.max(0, 18 - rVis);
+        const dropX = -sinA * drop;
+        const dropY = cosA * drop;
+
+        const rearWheelVis = {
+          x: vehicle.rearWheel.x + dropX,
+          y: vehicle.rearWheel.y + dropY,
+          rotation: vehicle.rearWheel.rotation
+        };
+        const frontWheelVis = {
+          x: vehicle.frontWheel.x + dropX,
+          y: vehicle.frontWheel.y + dropY,
+          rotation: vehicle.frontWheel.rotation
+        };
 
         // 1. Calculate world positions of chassis suspension mounting points
         const rmx = vehicle.x + (vehicle.rearMountOffset.x * cosA - vehicle.rearMountOffset.y * sinA);
@@ -3535,8 +3566,8 @@
         const fmy = vehicle.y + (vehicle.frontMountOffset.x * sinA + vehicle.frontMountOffset.y * cosA);
 
         // 2. Draw Visible Mechanical Suspension Struts, Springs & Axle Linkages (WORLD SPACE)
-        this.drawSuspensionStrut(rmx, rmy, vehicle.rearWheel.x, vehicle.rearWheel.y);
-        this.drawSuspensionStrut(fmx, fmy, vehicle.frontWheel.x, vehicle.frontWheel.y);
+        this.drawSuspensionStrut(rmx, rmy, rearWheelVis.x, rearWheelVis.y);
+        this.drawSuspensionStrut(fmx, fmy, frontWheelVis.x, frontWheelVis.y);
 
         // 3. Draw Chassis & Cargo Box (LOCAL CHASSIS SPACE)
         ctx.save();
@@ -3548,8 +3579,8 @@
         ctx.restore();
 
         // 4. Draw Wheel Rims & Knobby Tires (WORLD SPACE)
-        this.drawWheel(vehicle.rearWheel);
-        this.drawWheel(vehicle.frontWheel);
+        this.drawWheel(rearWheelVis);
+        this.drawWheel(frontWheelVis);
       }
 
       drawSuspensionStrut(mx, my, wx, wy, targetCtx = null) {
@@ -3681,7 +3712,7 @@
         ctx.translate(wheel.x, wheel.y);
         ctx.rotate(wheel.rotation);
 
-        const r = 18;
+        const r = this.getVisualWheelRadius();
         const rim = this.selectedRim || 'default';
         const rimAsset = this.rimAssets && this.rimAssets[rim];
 
@@ -3837,9 +3868,14 @@
 
       drawTruckBody(ctx, skin = this.selectedSkin) {
         const activeSkin = skin || 'standard';
+        const cfg = SKIN_RENDER_CONFIG[activeSkin] || SKIN_RENDER_CONFIG.standard;
         const skinAsset = this.skinAssets && this.skinAssets[activeSkin];
         if (skinAsset && skinAsset.loaded) {
-          ctx.drawImage(skinAsset.img, -50, -45, 100, 50);
+          if (activeSkin === 'standard') {
+            ctx.drawImage(skinAsset.img, -50, -45, 100, 50);
+          } else {
+            ctx.drawImage(skinAsset.img, cfg.x, cfg.y, cfg.w, cfg.h);
+          }
           return;
         }
         if (activeSkin === 'speedy') {
@@ -4328,23 +4364,28 @@
         ctx.fill();
 
         const cx = w / 2;
-        const cy = 48;
+        const r = this.getVisualWheelRadius(skin);
+        const wheelY = floorY - r;
+        const cy = wheelY - 16;
 
-        this.drawSuspensionStrut(cx - 30, cy, cx - 30, floorY - 10, ctx);
-        this.drawSuspensionStrut(cx + 30, cy, cx + 30, floorY - 10, ctx);
+        this.drawSuspensionStrut(cx - 30, cy, cx - 30, wheelY, ctx);
+        this.drawSuspensionStrut(cx + 30, cy, cx + 30, wheelY, ctx);
 
         ctx.save();
         ctx.translate(cx, cy);
         this.drawTruckBody(ctx, skin);
         ctx.restore();
 
-        const dummyRear = { x: cx - 30, y: floorY - 10, rotation: 0 };
-        const dummyFront = { x: cx + 30, y: floorY - 10, rotation: 0 };
+        const dummyRear = { x: cx - 30, y: wheelY, rotation: 0 };
+        const dummyFront = { x: cx + 30, y: wheelY, rotation: 0 };
         const oldRim = this.selectedRim;
+        const oldSkin = this.selectedSkin;
         this.selectedRim = rim;
+        this.selectedSkin = skin;
         this.drawWheel(dummyRear, ctx);
         this.drawWheel(dummyFront, ctx);
         this.selectedRim = oldRim;
+        this.selectedSkin = oldSkin;
 
         ctx.restore();
       }
