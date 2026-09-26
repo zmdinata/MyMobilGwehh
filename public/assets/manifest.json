@@ -279,6 +279,27 @@
       "height": 437,
       "pivot": { "x": 0, "y": 0 },
       "tileAspect": 3.0
+    },
+    "bgMainMenu": {
+      "src": "assets/refresh/v11/backgrounds/bg_main_menu.webp",
+      "fallback": "assets/refresh/v11/backgrounds/bg_main_menu.png",
+      "width": 1672,
+      "height": 940,
+      "pivot": { "x": 0, "y": 0 }
+    },
+    "bgGarage": {
+      "src": "assets/refresh/v11/backgrounds/bg_garage.webp",
+      "fallback": "assets/refresh/v11/backgrounds/bg_garage.png",
+      "width": 1672,
+      "height": 940,
+      "pivot": { "x": 0, "y": 0 }
+    },
+    "bgSchoolFinish": {
+      "src": "assets/refresh/v11/backgrounds/bg_school_finish.webp",
+      "fallback": "assets/refresh/v11/backgrounds/bg_school_finish.png",
+      "width": 1672,
+      "height": 940,
+      "pivot": { "x": 0, "y": 0 }
     }
   }
 }
