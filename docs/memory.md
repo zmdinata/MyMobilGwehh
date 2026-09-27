@@ -380,7 +380,17 @@ Diterapkan aturan styling komprehensif pada `@media screen and (orientation: lan
    - Avatar karakter dibatasi secara proporsional ke `max-h-[42vh]` (~140px) dengan `object-contain`.
    - Balon dialog *frosted glass* diletakkan ramping di bawah dengan teks 11px dan tombol navigasi 10px.
    - **Hasil**: Latar belakang gerbang Sekolah Puspa Bangsa tetap tampak megah dan luas.
-5. **Garasi Modifikasi Zacky**:
-   - Panel velg kiri (160px), canvas preview tengah (26vh), panel skin kanan (160px), serta kartu upgrade bawah diselaraskan proporsional, sehingga seluruh fitur modifikasi pas dalam 1 layar tanpa terpotong.
-6. **Perlindungan Desktop 100%**:
+5. **Garasi Modifikasi Zacky (Heroic 52vh Stage & Tab Switcher)**:
+   - **Akar Masalah**: Sebelumnya `#garagePreviewCanvas` diberi `max-height: 26vh` (hanya 93px pada layar 360px) sehingga mobil tampak kerdil seperti semut. Selain itu, lebar smartphone landscape (>768px) memicu breakpoint Tailwind `md:`, menyembunyikan tombol tab dan memaksa tampilan modifikasi velg/skin dan upgrade mesin muncul bertumpuk bersamaan.
+   - **Heroic 52vh Center Stage**: Kanvas truk diperbesar menjadi `height: 52vh !important;` (~190px–205px) dengan aspect-ratio 640/300 dan drop-shadow tebal, mendarat kokoh dan proporsional di atas tiang lift kuning hidrolik bengkel Zacky.
+   - **Dual Floating Side Wings**: Panel Velg di kiri (140px) dan Panel Skin di kanan (140px) berlatar *frosted glass* ramping dengan scroll mandiri, menjaga 100% ruang pandang truk di tengah tetap leluasa.
+   - **Tab Switcher Bersih**: Tab `MODIFIKASI BODI & VELG` dan `UPGRADE MESIN` dipaksakan tampil di landscape mobile via `#garageMobileTabs` (`display: flex !important;`), menyembunyikan kontainer yang tidak aktif agar layar tidak sesak.
+6. **Modal Kemenangan, Jeda, dan Game Over (2-Kolom Kompak & Touch-Scrollable)**:
+   - **Akar Masalah Modal Stuck**: Pada layout vertikal desktop, Victory Card memiliki tinggi >650px. Di layar HP landscape 360px dengan `overflow: hidden`, kartu terpotong di bagian bawah dan sentuhan jari tidak bisa men-scroll konten, membuat tombol penting ("LEVEL SELANJUTNYA", "RESTART", "MENU UTAMA") hilang dan permainan *soft-locked*.
+   - **Layout 2-Kolom Auto-Fit**:
+     - Kolom Kiri: Ikon MMG bouncing, Misi Selesai, 3 Bintang, Kartu Rincian Skor, Tabungan Koin.
+     - Kolom Kanan: Kartu Info Gizi Kemenkes, Kutipan Asmara, dan Tombol Aksi (Tombol Utama Next Level di atas, Grid 2-kolom untuk Garasi & Menu, serta Gas Lagi Trayek Ini di bawah).
+     - Tinggi total kartu hanya ~280px–310px, langsung pas dalam 1 layar tanpa perlu scroll.
+   - **Touch-Scroll Fallback**: Kontainer modal (`#victoryModal`, `#pauseModal`, `#gameOverModal`) dan kartu di dalamnya dijamin dengan `overflow-y: auto !important; -webkit-overflow-scrolling: touch !important; overscroll-behavior: contain;` sehingga pada layar sangat mini (<340px) kartu dapat digulir sentuh dengan sangat mulus.
+7. **Perlindungan Desktop 100%**:
    - Karena media query mensyaratkan `orientation: landscape` AND `max-height: 520px`, seluruh layar monitor PC, laptop, atau tablet (tinggi >= 600px) **tidak terpengaruh sama sekali** dan tetap menggunakan layout desktop yang luas.
