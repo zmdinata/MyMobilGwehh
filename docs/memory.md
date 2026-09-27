@@ -348,3 +348,39 @@ Seluruh 9 modal, panel, dan komponen antarmuka pengguna diharmonisasi secara ket
      - Menghilangkan *rewrite* loop yang bermasalah dan menambahkan aturan pemetaan `/index.html` $\to$ `/`.
   4. **Verifikasi Produksi**:
      - Diuji secara lokal menggunakan `npx next start -p 3004` $\to$ `HTTP Status: 200`, `Length: 303346 bytes`, memuat `gameCanvas`, ilustrasi karakter lengkap, dan seluruh 9 modal *floating translucent aero-glass*. Lulus 96/96 unit test (`npm test`).
+
+---
+
+## 14. Overhaul Responsif Antarmuka Mobile Landscape (Smartphone Horizontal Mode)
+
+### A. Akar Masalah UI Terlalu Besar & Berantakan di HP
+- **False-Desktop Breakpoint**: Smartphone dalam posisi mendatar (*landscape*) memiliki lebar layar 640px hingga 932px, yang secara tidak sengaja memicu breakpoint Tailwind `md:` (>=768px). Akibatnya, browser memperlakukan HP layaknya komputer desktop/laptop.
+- **Batasan Tinggi Layar Kritis**: Tinggi layar HP di mode landscape sangat sempit (hanya 320px – 420px).
+- **Akibat Visual Sebelum Perbaikan**:
+  - Pedal gas dan rem setinggi 144px (`h-36`) memakan 40% tinggi layar.
+  - Top HUD bar memakan 25% tinggi layar. Area menyetir hanya tersisa 35% (sempit dan sesak).
+  - Tumpukan tombol Welcome & Main Menu (tinggi 280px) menabrak logo MMG dan menutupi wajah karakter.
+  - Avatar karakter pada dialog cerita memicu class `md:h-[420px]`, melebihi tinggi layar HP itu sendiri (360px) sehingga menutupi seluruh pemandangan gerbang sekolah.
+  - Garasi Zacky mengalami tumpang tindih antara panel velg, canvas mobil, skin, dan 3 kartu upgrade.
+
+### B. Arsitektur Solusi: Sistem Media Query Khusus Landscape HP
+Diterapkan aturan styling komprehensif pada `@media screen and (orientation: landscape) and (max-height: 520px)` di dalam `<style>` `index.html`:
+1. **In-Game HUD Ramping**:
+   - Padding container 4px 10px, min-width widget kargo dan bensin 110px.
+   - Ketebalan progress bar kargo, bahan bakar, dan bioma dikurangi menjadi 5–8px.
+   - Font ukuran 9–10px dengan ikon kargo & bensin 14x14px.
+   - **Hasil**: Lebih dari **70% area layar kini bersih dan leluasa** untuk memantau rute dan rintangan balok kayu/lumpur.
+2. **Pedal Ergonomis Jempol & Klakson Telolet**:
+   - Dimensi pedal gas (kanan) dan rem (kiri) diselaraskan ke **lebar 76px x tinggi 80px** dengan *tactile grip dots* dan sudut membulat 18px.
+   - Tombol Telolet diperkecil ke diameter 42px di tengah bawah, tidak lagi menutupi bodi truk.
+3. **Welcome Page & Main Menu**:
+   - Kontainer menu dan kapsul cerita dipadatkan ke area aspal bawah (tinggi total ~120px).
+   - Menyisakan ruang lapang **240px di bagian atas**, sehingga **Logo MMG** serta ilustrasi karakter (Bu Yulie, Husna, Zacky, Tion, Mang Abdul) tampak 100% jernih tanpa tertutup sama sekali.
+4. **Mode Visual Novel Kompak (Dialog Cerita)**:
+   - Avatar karakter dibatasi secara proporsional ke `max-h-[42vh]` (~140px) dengan `object-contain`.
+   - Balon dialog *frosted glass* diletakkan ramping di bawah dengan teks 11px dan tombol navigasi 10px.
+   - **Hasil**: Latar belakang gerbang Sekolah Puspa Bangsa tetap tampak megah dan luas.
+5. **Garasi Modifikasi Zacky**:
+   - Panel velg kiri (160px), canvas preview tengah (26vh), panel skin kanan (160px), serta kartu upgrade bawah diselaraskan proporsional, sehingga seluruh fitur modifikasi pas dalam 1 layar tanpa terpotong.
+6. **Perlindungan Desktop 100%**:
+   - Karena media query mensyaratkan `orientation: landscape` AND `max-height: 520px`, seluruh layar monitor PC, laptop, atau tablet (tinggi >= 600px) **tidak terpengaruh sama sekali** dan tetap menggunakan layout desktop yang luas.
