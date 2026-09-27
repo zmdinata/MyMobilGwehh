@@ -332,3 +332,14 @@ Seluruh 9 modal, panel, dan komponen antarmuka pengguna diharmonisasi secara ket
   - Next.js Metadata: `app/icon.png` (otomatis di-render oleh Turbopack Next.js 16) serta konfigurasi `icons` lengkap di `app/layout.jsx`.
   - PWA Webmanifest: `public/app.webmanifest` mendefinisikan icon 192x192, 350x350, 512x512, serta favicon PNG dan ICO.
 - **Otomatisasi Sinkronisasi**: Skrip `scripts/sync_html.js` otomatis menjaga kelengkapan dan keselarasan seluruh berkas favicon saat proses `npm run build` dijalankan di Vercel.
+
+### D. Resolusi Routing Vercel: Eliminasi `app/page.jsx` Usang & Aktivasi `beforeFiles` Rewrites
+- **Akar Masalah Ketidaksesuaian Vercel vs Localhost:8000**:
+  - `localhost:8000` (Python HTTP server) menyajikan langsung berkas `index.html` kanonikal yang memuat seluruh aset visual terbaru (latar karakter Bu Yulie, Mas Tion, Husna, Zacky, Mang Abdul, dan 9 modal floating aero-glass).
+  - Vercel (Next.js 16) sebelumnya memprioritaskan filesystem route `app/page.jsx` yang memuat wrapper komponen React lama (`components/WelcomeModal.jsx`, dsb.) dengan kontainer gelap kaku dan border tebal tanpa ilustrasi karakter.
+  - Aturan `rewrites` di Next.js secara default dievaluasi sebagai `afterFiles` (setelah file page). Karena `app/page.jsx` ada, router Next.js langsung menyajikan `app/page.jsx` dan mengabaikan pengalihan ke `index.html`.
+- **Langkah Perbaikan Permanen**:
+  1. Menghapus berkas usang `app/page.jsx` dari repositori agar Next.js tidak lagi menyajikan komponen React lama.
+  2. Memperbarui `next.config.js` dengan konfigurasi `rewrites().beforeFiles` yang menjamin permintaan root `/` dialihkan langsung ke `/index.html` (`public/index.html`).
+  3. Menjaga API backend (`/api/levels`, `/api/story`, `/api/upgrades`) dan `components/GameRenderer.js` tetap aktif.
+  4. Terverifikasi 100% pada `next start` (port 3003) dan `next build` bahwa Vercel kini menyajikan berkas `index.html` (303KB) yang identik 100% dengan `localhost:8000`.

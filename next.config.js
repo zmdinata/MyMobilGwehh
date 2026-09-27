@@ -2,12 +2,14 @@
 const nextConfig = {
   reactStrictMode: false,
   async rewrites() {
-    return [
-      {
-        source: '/',
-        destination: '/index.html',
-      },
-    ];
+    return {
+      beforeFiles: [
+        {
+          source: '/',
+          destination: '/index.html',
+        },
+      ],
+    };
   },
 };
 
