@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "node --test test/*.test.mjs",
+    "prebuild": "node scripts/sync_html.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"

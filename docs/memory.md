@@ -299,3 +299,26 @@ Seluruh 9 modal, panel, dan komponen antarmuka pengguna diharmonisasi secara ket
 - **Resonansi Sustain Pedal**: Durasi nada diperpanjang hingga `1.1s – 2.0s` dengan kurva peluruhan eksponensial alami, menciptakan alunan yang menyatu mulus antar birama.
 - **Sekuensing Bersih**: Garis finish terlewati $\to$ mesin hening total $\to$ Fanfare Kemenangan (1.0s) berbunyi $\to$ Backsound Romantis mulai mengalun lembut tepat saat fanfare mereda (jeda 850ms) $\to$ mengalun berkesinambungan (*seamless loop*) dari dialog outro hingga ke Kartu Kemenangan.
 - **Smooth Fade-Out (0.3s)**: `stopRomanticTheme()` menerapkan *smooth linear ramp down* 0.3 detik sebelum osilator dimatikan, menghilangkan suara letupan mendadak (*clipping pop*) saat berpindah level atau kembali ke menu utama.
+
+---
+
+## 13. Konfigurasi Deployment Native Vercel & Mobile Landscape Enforcer
+
+### A. Arsitektur Deployment Native Vercel (Next.js 16 + Pure Canvas Hub)
+- **Vercel Build Alignment**: Vercel mendeteksi Next.js dari `package.json` dan mengeksekusi `npm run build`.
+- **Automated Prebuild Sync**: Skrip `scripts/sync_html.js` dijalankan secara otomatis pada hook `prebuild` (`package.json`) untuk menyalin `index.html` terbaru langsung ke `public/index.html`.
+- **Zero-Friction Route Rewrite**: Di `next.config.js`, aturan `rewrites()` mengarahkan *root request* `/` ke `/index.html`, sehingga antarmuka aero-glass 9 modal, sistem canvas, dan audio WebAudio API disajikan tanpa overhead SSR/re-render, sementara API route Next.js (`/api/levels`, `/api/story`, `/api/upgrades`) tetap aktif dan berfungsi normal.
+- **PWA Webmanifest**: Berkas `public/app.webmanifest` didaftarkan di `<head>` dengan konfigurasi `"display": "fullscreen"` dan `"orientation": "landscape"`.
+
+### B. Mobile Landscape Enforcer (Proteksi Orientasi Vertikal)
+- **Overlay Edukatif Responsif (`#rotateDeviceOverlay`)**:
+  - Diberikan gaya aero-glass gelap (`bg-slate-950/95 backdrop-blur-2xl`) dengan z-index tertinggi (`z-[9999]`).
+  - Menampilkan animasi interaktif rotasi ponsel SVG 360°, instruksi ramah berbahasa Indonesia (*"PUTAR HP KE LANDSCAPE 🔄"*), dan tombol *Full Screen*.
+- **Deteksi CSS Media Query & JavaScript**:
+  - Aktif otomatis pada perangkat mobile berlayar potret melalui `@media screen and (orientation: portrait) and (max-width: 1024px)`.
+  - Fungsi `initOrientationEnforcer()` mendengarkan *event* `resize` dan `orientationchange`.
+- **Proteksi Gameplay Auto-Pause**:
+  - Jika pemain memutar ponselnya ke posisi potret saat berkendara di tengah level (`PLAYING`), game otomatis memanggil `game.openPause()` sehingga bensin, waktu, dan integritas kargo tidak berkurang.
+- **Dukungan Fullscreen & Orientation API**:
+  - Tombol *"MASUK LAYAR PENUH (FULLSCREEN)"* memicu `document.documentElement.requestFullscreen()` dan `screen.orientation.lock('landscape')` untuk pengalaman web app native yang imersif di smartphone Android & iOS.
+- **100% Bebas Gangguan di Desktop**: Pada layar monitor, laptop, atau tablet dengan rasio landscape / lebar > 1024px, overlay enforcer tidak akan pernah muncul.

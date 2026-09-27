@@ -1,0 +1,17 @@
+{
+  "name": "MMG: Road To School (My Mobil Gwehh)",
+  "short_name": "MMG Canter",
+  "description": "Game Balap Truk MBG Mas Tion Antar 500 Porsi Paket Gizi Hangat ke Sekolah Puspa Bangsa",
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "icons": [
+    {
+      "src": "/assets/refresh/v11/sprites/logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png"
+    }
+  ]
+}
