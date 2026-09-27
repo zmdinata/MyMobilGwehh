@@ -333,13 +333,18 @@ Seluruh 9 modal, panel, dan komponen antarmuka pengguna diharmonisasi secara ket
   - PWA Webmanifest: `public/app.webmanifest` mendefinisikan icon 192x192, 350x350, 512x512, serta favicon PNG dan ICO.
 - **Otomatisasi Sinkronisasi**: Skrip `scripts/sync_html.js` otomatis menjaga kelengkapan dan keselarasan seluruh berkas favicon saat proses `npm run build` dijalankan di Vercel.
 
-### D. Resolusi Routing Vercel: Eliminasi `app/page.jsx` Usang & Aktivasi `beforeFiles` Rewrites
-- **Akar Masalah Ketidaksesuaian Vercel vs Localhost:8000**:
-  - `localhost:8000` (Python HTTP server) menyajikan langsung berkas `index.html` kanonikal yang memuat seluruh aset visual terbaru (latar karakter Bu Yulie, Mas Tion, Husna, Zacky, Mang Abdul, dan 9 modal floating aero-glass).
-  - Vercel (Next.js 16) sebelumnya memprioritaskan filesystem route `app/page.jsx` yang memuat wrapper komponen React lama (`components/WelcomeModal.jsx`, dsb.) dengan kontainer gelap kaku dan border tebal tanpa ilustrasi karakter.
-  - Aturan `rewrites` di Next.js secara default dievaluasi sebagai `afterFiles` (setelah file page). Karena `app/page.jsx` ada, router Next.js langsung menyajikan `app/page.jsx` dan mengabaikan pengalihan ke `index.html`.
-- **Langkah Perbaikan Permanen**:
-  1. Menghapus berkas usang `app/page.jsx` dari repositori agar Next.js tidak lagi menyajikan komponen React lama.
-  2. Memperbarui `next.config.js` dengan konfigurasi `rewrites().beforeFiles` yang menjamin permintaan root `/` dialihkan langsung ke `/index.html` (`public/index.html`).
-  3. Menjaga API backend (`/api/levels`, `/api/story`, `/api/upgrades`) dan `components/GameRenderer.js` tetap aktif.
-  4. Terverifikasi 100% pada `next start` (port 3003) dan `next build` bahwa Vercel kini menyajikan berkas `index.html` (303KB) yang identik 100% dengan `localhost:8000`.
+### D. Resolusi Routing Vercel: Mengatasi Error 404 & Prerender Static Route Handler (`app/route.js`)
+- **Akar Masalah Error 404 pada Vercel**:
+  - Setelah `app/page.jsx` lama dihapus, Vercel menampilkan pesan error *404 This page could not be found*.
+  - Penyebab teknis: Dokumentasi resmi Next.js menyatakan bahwa berkas bernama `public/index.html` **secara eksplisit tidak didukung** dalam direktori `public` Next.js karena berkonflik dengan *internal page generator*. Next.js mengabaikan/menghapus `public/index.html` dari output build static Vercel, sehingga aturan *rewrite* internal menuju `/index.html` berujung pada status 404.
+- **Solusi Tuntas & Mitigasi Resiko**:
+  1. **Prerender Static Route Handler (`app/route.js`)**:
+     - Mengimplementasikan App Router Route Handler di level root `app/route.js` dengan `export const dynamic = 'force-static'`.
+     - Fungsi `GET()` membaca berkas `index.html` master dan mengembalikannya dengan *header* `Content-Type: text/html; charset=utf-8`.
+     - Saat proses `next build`, Next.js 16 (Turbopack) langsung mengompilasi rute root sebagai `Route (app) ┌ ○ / (Static prerendered)`. Ini menjamin Vercel menyajikan halaman root secara statis dari cache global Edge CDN dengan status 200 OK tanpa jeda serverless function.
+  2. **Sinkronisasi Multi-Target (`scripts/sync_html.js`)**:
+     - Menyalin `index.html` ke `public/index.html` dan `public/game.html` sebagai *fallback* statis.
+  3. **Konfigurasi `next.config.js`**:
+     - Menghilangkan *rewrite* loop yang bermasalah dan menambahkan aturan pemetaan `/index.html` $\to$ `/`.
+  4. **Verifikasi Produksi**:
+     - Diuji secara lokal menggunakan `npx next start -p 3004` $\to$ `HTTP Status: 200`, `Length: 303346 bytes`, memuat `gameCanvas`, ilustrasi karakter lengkap, dan seluruh 9 modal *floating translucent aero-glass*. Lulus 96/96 unit test (`npm test`).

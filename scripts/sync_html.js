@@ -15,6 +15,7 @@ if (!fs.existsSync(destDir)) {
 }
 
 fs.copyFileSync(src, dest);
+fs.copyFileSync(src, path.join(destDir, 'game.html'));
 
 // Sync MMG logo favicons
 const logoSrc = path.join(rootDir, 'assets', 'refresh', 'v11', 'sprites', 'logo.png');
