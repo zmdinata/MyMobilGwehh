@@ -233,11 +233,11 @@
 
         <!-- Audio & Pause Buttons with 3D PNG Icons -->
         <div id="hudActions" class="flex flex-col gap-1.5">
-          <button id="audioBtn" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-900/80 backdrop-blur-md border border-cyan-400/40 hover:bg-slate-800/80 active:scale-95 flex items-center justify-center p-1 text-cyan-400 shadow-[0_4px_16px_rgba(2,132,199,0.3)] transition-all cursor-pointer" title="Toggle Suara">
+          <button id="audioBtn" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-950/50 backdrop-blur-md border border-white/20 hover:bg-cyan-950/60 hover:border-cyan-400/50 active:scale-95 flex items-center justify-center p-1 text-cyan-400 shadow-[0_4px_16px_rgba(2,132,199,0.3)] transition-all cursor-pointer" title="Toggle Suara">
             <img id="audioIconImg" src="assets/refresh/v11/ui/icon_audio.png" class="w-full h-full object-contain pointer-events-none drop-shadow" alt="" />
             <svg id="audioIcon" class="hidden w-4 h-4 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
           </button>
-          <button id="pauseBtn" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-900/80 backdrop-blur-md border border-amber-400/40 hover:bg-slate-800/80 active:scale-95 flex items-center justify-center p-1 text-slate-200 shadow-[0_4px_16px_rgba(245,158,11,0.3)] transition-all cursor-pointer" title="Jeda">
+          <button id="pauseBtn" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-950/50 backdrop-blur-md border border-white/20 hover:bg-amber-950/60 hover:border-amber-400/50 active:scale-95 flex items-center justify-center p-1 text-slate-200 shadow-[0_4px_16px_rgba(245,158,11,0.3)] transition-all cursor-pointer" title="Jeda">
             <img src="assets/refresh/v11/ui/icon_pause.png" class="w-full h-full object-contain pointer-events-none drop-shadow" alt="" />
           </button>
         </div>
@@ -254,7 +254,7 @@
     <div class="flex items-end justify-between w-full pointer-events-none px-3 sm:px-8 pb-3">
       <!-- Left Pedal: BRAKE / REVERSE -->
       <div class="pointer-events-auto flex flex-col items-center">
-        <button id="pedalBrake" class="pedal-btn group relative w-24 h-32 sm:w-28 sm:h-36 rounded-3xl bg-gradient-to-b from-red-600/35 via-red-800/45 to-slate-950/85 backdrop-blur-xl border-2 border-red-400/80 shadow-[0_8px_25px_rgba(220,38,38,0.5)] flex flex-col items-center justify-between p-3 select-none active:scale-95 active:shadow-[0_0_35px_rgba(220,38,38,0.85)] transition-all cursor-pointer">
+        <button id="pedalBrake" class="pedal-btn group relative w-24 h-32 sm:w-28 sm:h-36 rounded-3xl bg-gradient-to-b from-red-600/35 via-red-800/45 to-slate-950/50 backdrop-blur-xl border-2 border-red-400/80 shadow-[0_8px_25px_rgba(220,38,38,0.5)] flex flex-col items-center justify-between p-3 select-none active:scale-95 active:shadow-[0_0_35px_rgba(220,38,38,0.85)] transition-all cursor-pointer">
           <!-- Tactile Metallic Grip Ribs -->
           <div class="w-full flex flex-col items-center gap-1.5 opacity-80 mt-1">
             <span class="w-12 h-1 rounded-full bg-red-300/70 shadow-sm"></span>
@@ -283,7 +283,7 @@
 
       <!-- Right Pedal: GAS / ACCELERATE -->
       <div class="pointer-events-auto flex flex-col items-center">
-        <button id="pedalGas" class="pedal-btn group relative w-24 h-36 sm:w-28 sm:h-40 rounded-3xl bg-gradient-to-b from-cyan-500/35 via-blue-600/45 to-slate-950/85 backdrop-blur-xl border-2 border-cyan-300/80 shadow-[0_8px_25px_rgba(6,182,212,0.5)] flex flex-col items-center justify-between p-3 select-none active:scale-95 active:shadow-[0_0_35px_rgba(6,182,212,0.85)] transition-all cursor-pointer">
+        <button id="pedalGas" class="pedal-btn group relative w-24 h-36 sm:w-28 sm:h-40 rounded-3xl bg-gradient-to-b from-cyan-500/35 via-blue-600/45 to-slate-950/50 backdrop-blur-xl border-2 border-cyan-300/80 shadow-[0_8px_25px_rgba(6,182,212,0.5)] flex flex-col items-center justify-between p-3 select-none active:scale-95 active:shadow-[0_0_35px_rgba(6,182,212,0.85)] transition-all cursor-pointer">
           <!-- Tactile Metallic Grip Ribs -->
           <div class="w-full flex flex-col items-center gap-1.5 opacity-80 mt-1">
             <span class="w-12 h-1 rounded-full bg-cyan-300/70 shadow-sm"></span>
@@ -353,8 +353,8 @@
   </div>
 
   <!-- GAME OVER MODAL -->
-  <div id="gameOverModal" class="hidden absolute inset-0 z-40 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-    <div class="my-auto max-w-md w-full bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-red-500/70 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden flex flex-col items-center text-center">
+  <div id="gameOverModal" class="hidden fixed inset-0 z-40 bg-slate-950/35 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="my-auto max-w-md w-full bg-slate-950/50 backdrop-blur-2xl border border-red-400/40 rounded-3xl p-6 sm:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.5)] relative overflow-hidden flex flex-col items-center text-center">
       <div class="mb-2" id="goIcon">
         <svg class="w-14 h-14 text-rose-500 mx-auto drop-shadow-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
       </div>
@@ -369,7 +369,7 @@
       </p>
 
       <!-- Stats Box -->
-      <div class="w-full bg-slate-800/80 border border-slate-700 rounded-2xl p-3.5 mb-5 text-xs sm:text-sm space-y-1.5 text-left font-mono">
+      <div class="w-full bg-slate-950/50 backdrop-blur-md border border-white/15 rounded-2xl p-3.5 mb-5 text-xs sm:text-sm space-y-1.5 text-left font-mono shadow-md">
         <div class="flex justify-between">
           <span class="text-slate-400">Jarak Ditempuh:</span>
           <span id="goDist" class="text-cyan-300 font-bold">1,240m</span>
@@ -390,16 +390,16 @@
 
       <!-- Action Buttons -->
       <div class="flex flex-col gap-2 w-full">
-        <button id="goRestartBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-red-600 via-amber-600 to-yellow-500 hover:from-red-500 hover:to-yellow-400 text-slate-950 font-fredoka text-base sm:text-lg shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
+        <button id="goRestartBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-red-600/80 via-amber-600/80 to-yellow-500/80 hover:from-red-500 hover:to-yellow-400 text-slate-950 font-fredoka text-base sm:text-lg shadow-[0_8px_25px_rgba(220,38,38,0.4)] backdrop-blur-md border border-amber-300/50 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
           <img src="assets/refresh/v11/ui/icon_restart.png" class="w-5 h-5 object-contain" alt="" />
           <span>COBA LAGI [R]</span>
         </button>
         <div class="flex gap-2 w-full">
-          <button id="goGarageBtn" class="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-fredoka text-xs sm:text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5">
+          <button id="goGarageBtn" class="flex-1 py-2.5 rounded-xl bg-blue-600/50 hover:bg-blue-500/70 text-white font-fredoka text-xs sm:text-sm shadow-md backdrop-blur-md border border-sky-400/50 active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
             <span>KE GARASI ZACKY</span>
             <svg class="w-3.5 h-3.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
           </button>
-          <button id="goMenuBtn" class="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fredoka text-xs sm:text-sm border border-slate-600 shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5">
+          <button id="goMenuBtn" class="flex-1 py-2.5 rounded-xl bg-slate-900/60 hover:bg-rose-950/50 text-slate-200 hover:text-rose-200 font-fredoka text-xs sm:text-sm backdrop-blur-md border border-white/20 hover:border-rose-400/60 shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
             <span>MENU UTAMA</span>
             <svg class="w-3.5 h-3.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </button>
@@ -414,7 +414,7 @@
     <div class="absolute inset-0 bg-slate-950/30 backdrop-blur-[2px] pointer-events-none"></div>
 
     <!-- Floating Translucent Glass Victory Card -->
-    <div class="my-auto max-w-md w-full bg-slate-950/65 backdrop-blur-2xl border border-sky-400/40 rounded-3xl p-5 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.75)] relative z-10 overflow-hidden flex flex-col items-center text-center">
+    <div class="my-auto max-w-md w-full bg-slate-950/50 backdrop-blur-2xl border border-white/20 rounded-3xl p-5 sm:p-7 shadow-[0_16px_48px_rgba(0,0,0,0.65)] relative z-10 overflow-hidden flex flex-col items-center text-center">
       <!-- Glow -->
       <div class="absolute -top-20 -right-20 w-44 h-44 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-20 -left-20 w-44 h-44 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
@@ -433,7 +433,7 @@
       </p>
 
       <!-- Dynamic Nutri-Fact MMG Floating Glass Card -->
-      <div id="vicNutriFactCard" class="w-full bg-slate-900/60 backdrop-blur-xl border border-emerald-400/40 rounded-2xl p-3 mb-3 text-left font-mono text-xs shadow-md">
+      <div id="vicNutriFactCard" class="w-full bg-slate-950/50 backdrop-blur-xl border border-emerald-400/35 rounded-2xl p-3 mb-3 text-left font-mono text-xs shadow-md">
         <div class="flex items-center justify-between text-emerald-400 font-bold mb-1">
           <span class="flex items-center gap-1.5">
             <img src="assets/refresh/v11/ui/icon_cargo.png" class="w-4 h-4 object-contain" alt="" />
@@ -458,7 +458,7 @@
       </p>
 
       <!-- Victory Score Floating Glass Card -->
-      <div class="w-full bg-slate-900/60 backdrop-blur-xl border border-sky-400/30 rounded-2xl p-4 mb-3 text-xs sm:text-sm space-y-2 text-left font-mono shadow-md">
+      <div class="w-full bg-slate-950/50 backdrop-blur-xl border border-white/15 rounded-2xl p-4 mb-3 text-xs sm:text-sm space-y-2 text-left font-mono shadow-md">
         <div class="flex justify-between">
           <span class="text-slate-300">Keutuhan Kargo:</span>
           <span id="vicCargo" class="text-emerald-400 font-bold drop-shadow">88%</span>
@@ -478,7 +478,7 @@
       </div>
 
       <!-- Total Permanent Coins Display -->
-      <div class="w-full bg-slate-900/60 backdrop-blur-xl border border-amber-400/40 rounded-xl py-1.5 px-3 mb-4 text-xs font-mono text-amber-300 flex items-center justify-between shadow-md">
+      <div class="w-full bg-slate-950/50 backdrop-blur-xl border border-amber-400/35 rounded-xl py-1.5 px-3 mb-4 text-xs font-mono text-amber-300 flex items-center justify-between shadow-md">
         <span class="text-slate-200">Tabungan Koin Gizi:</span>
         <span class="font-bold text-amber-400 flex items-center gap-1 drop-shadow">
           <svg class="w-3.5 h-3.5 inline text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="m7 6 1 4"/></svg>
@@ -497,12 +497,12 @@
             <span>KE GARASI ZACKY</span>
             <svg class="w-3.5 h-3.5 inline drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
           </button>
-          <button id="vicMenuBtn" class="flex-1 py-2.5 rounded-xl bg-slate-800/60 hover:bg-slate-700/80 text-slate-200 font-fredoka text-xs sm:text-sm backdrop-blur-md border border-slate-600/50 shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+          <button id="vicMenuBtn" class="flex-1 py-2.5 rounded-xl bg-slate-900/50 hover:bg-rose-950/50 text-slate-200 hover:text-rose-200 font-fredoka text-xs sm:text-sm backdrop-blur-md border border-white/20 hover:border-rose-400/60 shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
             <span>MENU UTAMA</span>
             <svg class="w-3.5 h-3.5 inline drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </button>
         </div>
-        <button id="vicRestartBtn" class="w-full py-2 rounded-xl bg-slate-900/50 hover:bg-slate-800/70 text-slate-300 font-fredoka text-xs backdrop-blur-md border border-slate-700/50 flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer">
+        <button id="vicRestartBtn" class="w-full py-2 rounded-xl bg-slate-950/40 hover:bg-slate-900/60 text-slate-200 font-fredoka text-xs backdrop-blur-md border border-white/15 flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer shadow-sm">
           <span>GAS LAGI TRAYEK INI!</span>
           <svg class="w-3.5 h-3.5 inline drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
         </button>
@@ -511,9 +511,9 @@
   </div>
 
   <!-- PAUSE MODAL -->
-  <div id="pauseModal" class="hidden absolute inset-0 z-40 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+  <div id="pauseModal" class="hidden fixed inset-0 z-40 bg-slate-950/35 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
     <!-- Floating Translucent Glass Container -->
-    <div class="my-auto bg-slate-950/75 backdrop-blur-2xl border border-cyan-400/40 rounded-3xl p-6 text-center max-w-sm w-full shadow-[0_20px_50px_rgba(0,0,0,0.7)] relative overflow-hidden">
+    <div class="my-auto bg-slate-950/50 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 text-center max-w-sm w-full shadow-[0_16px_48px_rgba(0,0,0,0.65)] relative overflow-hidden">
       <!-- Glow effect -->
       <div class="absolute -top-16 -right-16 w-32 h-32 bg-cyan-500/20 rounded-full blur-2xl pointer-events-none"></div>
       <div class="absolute -bottom-16 -left-16 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl pointer-events-none"></div>
@@ -528,7 +528,7 @@
       <p class="text-xs text-slate-300 mb-4 font-mono">Mas Tion sedang mengatur napas dan memeriksa suhu boks 500 porsi paket gizi...</p>
 
       <!-- Dynamic Nutri-Fact MMG Floating Card -->
-      <div id="pauseNutriFactCard" class="bg-slate-900/60 backdrop-blur-xl border border-emerald-400/30 rounded-2xl p-3 mb-4 text-left font-mono text-xs shadow-md">
+      <div id="pauseNutriFactCard" class="bg-slate-950/50 backdrop-blur-xl border border-emerald-400/30 rounded-2xl p-3 mb-4 text-left font-mono text-xs shadow-md">
         <div class="flex items-center gap-2 text-emerald-400 font-bold mb-1">
           <img src="assets/refresh/v11/ui/icon_cargo.png" class="w-4 h-4 object-contain" alt="" />
           <span>INFO GIZI MMG KEMENKES RI</span>
@@ -542,11 +542,11 @@
       <button id="resumeBtn" class="w-full py-3 rounded-2xl bg-gradient-to-r from-blue-600/80 via-sky-600/80 to-cyan-500/80 hover:from-blue-500 hover:to-cyan-400 text-white font-fredoka text-base mb-2.5 backdrop-blur-md border border-cyan-300/50 shadow-[0_4px_20px_rgba(2,132,199,0.35)] active:scale-95 transition-all cursor-pointer">
         LANJUTKAN [ESC]
       </button>
-      <button id="pauseRestartBtn" class="w-full py-2.5 rounded-xl bg-slate-900/70 hover:bg-slate-800/80 text-slate-200 font-fredoka text-sm backdrop-blur-md border border-slate-700/60 mb-2 flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer shadow-md">
+      <button id="pauseRestartBtn" class="w-full py-2.5 rounded-xl bg-slate-950/40 hover:bg-slate-900/60 text-slate-200 font-fredoka text-sm backdrop-blur-md border border-white/20 mb-2 flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer shadow-md">
         <img src="assets/refresh/v11/ui/icon_restart.png" class="w-4 h-4 object-contain drop-shadow" alt="" />
         <span>ULANG DARI AWAL</span>
       </button>
-      <button id="pauseMenuBtn" class="w-full py-2.5 rounded-xl bg-slate-900/70 hover:bg-slate-800/80 text-slate-200 font-fredoka text-sm backdrop-blur-md border border-slate-700/60 flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer shadow-md">
+      <button id="pauseMenuBtn" class="w-full py-2.5 rounded-xl bg-slate-950/40 hover:bg-rose-950/50 text-slate-200 hover:text-rose-200 font-fredoka text-sm backdrop-blur-md border border-white/20 hover:border-rose-400/60 flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer shadow-md">
         <span>MENU UTAMA</span>
         <svg class="w-4 h-4 inline drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       </button>
@@ -820,11 +820,11 @@
     </div>
 
     <!-- Dialogue Speech Bubble Card -->
-    <div id="dialogueCard" class="max-w-4xl w-full bg-slate-950/90 backdrop-blur-md border-2 border-cyan-400/60 rounded-3xl p-4 sm:p-5 shadow-2xl relative z-20 flex flex-col justify-between min-h-[120px]">
+    <div id="dialogueCard" class="max-w-4xl w-full bg-slate-950/50 backdrop-blur-xl border border-white/20 rounded-3xl p-4 sm:p-5 shadow-[0_8px_32px_rgba(0,0,0,0.5)] relative z-20 flex flex-col justify-between min-h-[120px]">
       <div>
         <div class="flex items-center justify-between mb-1.5">
           <span id="dialogueSpeakerName" class="font-fredoka text-lg sm:text-xl text-amber-300 drop-shadow">Tion</span>
-          <span id="dialogueLevelBadge" class="text-xs text-cyan-300 font-mono bg-cyan-950/80 border border-cyan-800/80 px-2.5 py-0.5 rounded-full">LEVEL 1</span>
+          <span id="dialogueLevelBadge" class="text-xs text-cyan-300 font-mono bg-cyan-500/20 border border-cyan-400/40 backdrop-blur-sm px-2.5 py-0.5 rounded-full shadow-sm">LEVEL 1</span>
         </div>
         <p id="dialogueText" class="text-sm sm:text-base text-slate-100 font-medium leading-relaxed min-h-[48px]">
           Siap Mang Abdul! 500 porsi paket gizi hangat aman terkunci di boks belakang!
@@ -832,11 +832,11 @@
       </div>
 
       <!-- Dialogue Action Buttons -->
-      <div class="flex items-center justify-end gap-2.5 mt-2 pt-2 border-t border-slate-800">
-        <button id="dialogueSkipBtn" class="py-1.5 px-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 font-fredoka text-xs border border-slate-700 active:scale-95 transition-all cursor-pointer">
+      <div class="flex items-center justify-end gap-2.5 mt-2 pt-2 border-t border-white/10">
+        <button id="dialogueSkipBtn" class="py-1.5 px-3.5 rounded-xl bg-slate-950/50 hover:bg-rose-950/50 text-slate-300 hover:text-rose-200 font-fredoka text-xs backdrop-blur-md border border-white/20 hover:border-rose-400/60 active:scale-95 transition-all cursor-pointer shadow-sm">
           LEWATI / SKIP ⏩
         </button>
-        <button id="dialogueNextBtn" class="py-1.5 px-6 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-fredoka text-sm sm:text-base shadow active:scale-95 transition-all cursor-pointer">
+        <button id="dialogueNextBtn" class="py-1.5 px-6 rounded-xl bg-gradient-to-r from-blue-600/80 to-cyan-500/80 hover:from-blue-500 hover:to-cyan-400 text-white font-fredoka text-sm sm:text-base shadow-[0_4px_16px_rgba(6,182,212,0.35)] backdrop-blur-md border border-cyan-300/50 active:scale-95 transition-all cursor-pointer">
           LANJUT ▶
         </button>
       </div>
