@@ -306,40 +306,48 @@
     <img id="gameLogo" src="assets/refresh/v11/sprites/logo.png" alt="" class="hidden" />
     <h1 id="gameLogoFallback" class="sr-only">MMG (My Mobil Gweh): Road To School</h1>
 
-    <!-- Pure Floating Glass UI in safe asphalt area below MMG logo -->
+    <!-- Pure Floating Glass UI in safe asphalt area below MMG logo (Matching Main Menu style) -->
     <div class="relative z-10 w-full max-w-sm flex flex-col items-center text-center my-auto sm:my-0 sm:mb-2">
-      <!-- Floating Glass Lore Capsule with High-Contrast Obsidian Glass -->
-      <div class="w-full bg-slate-950/85 backdrop-blur-xl border border-sky-400/40 rounded-2xl p-4 text-xs text-white leading-relaxed text-left space-y-2 shadow-[0_12px_40px_rgba(0,0,0,0.85)] mb-3">
-        <div class="flex items-center justify-between pb-1.5 border-b border-white/20">
-          <span class="text-sky-300 font-bold uppercase tracking-wider text-[11px] flex items-center gap-1.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
-            <svg class="w-4 h-4 inline text-sky-400 drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
-            Unit Antar Pangan & Gizi
-          </span>
-          <span class="text-amber-300 font-bold text-[10px] bg-amber-950/70 px-2 py-0.5 rounded-full border border-amber-500/40 shadow-sm">Cirebon - Kuningan</span>
+      <!-- Floating Glass Header Pill (Misi & Trayek) -->
+      <div class="mb-2 px-3.5 py-1.5 rounded-2xl bg-slate-950/50 backdrop-blur-md border border-white/20 text-xs font-mono shadow-[0_8px_25px_rgba(0,0,0,0.65)] flex items-center justify-between gap-2 w-full">
+        <div class="flex items-center gap-1.5 text-sky-300 font-bold uppercase tracking-wider text-[11px]">
+          <svg class="w-3.5 h-3.5 inline text-sky-400 drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+          <span>Unit Antar Pangan & Gizi</span>
         </div>
-        <p class="text-[11px] sm:text-xs leading-relaxed text-slate-100 drop-shadow-[0_1px_3px_rgba(0,0,0,0.95)]">
+        <div class="h-3 w-px bg-white/20"></div>
+        <span class="text-amber-300 font-bold text-[10px] bg-amber-500/20 border border-amber-400/40 px-2 py-0.5 rounded-full shadow-sm">Cirebon - Kuningan</span>
+      </div>
+
+      <!-- Floating Glass Kisah Mas Tion Capsule -->
+      <div class="w-full bg-slate-950/50 backdrop-blur-md border border-white/20 rounded-2xl p-3 text-xs text-white leading-relaxed text-left space-y-1.5 shadow-[0_8px_25px_rgba(0,0,0,0.65)] mb-2">
+        <p class="text-[11px] sm:text-xs leading-relaxed text-slate-100 drop-shadow-[0_1px_2px_rgba(0,0,0,0.95)]">
           <b class="text-cyan-300 font-bold">Kisah Mas Tion:</b> Driver muda tangguh armada MMG yang berjuang mengantar <b class="text-yellow-300 font-bold">500 porsi</b> paket gizi hangat demi Bu Yulie dan siswa-siswi <b class="text-white font-bold">SD, SMP, dan SMA Puspa Bangsa Cirebon</b>, didampingi petuah bijak sang legenda supir elf Pantura, <b class="text-emerald-300 font-bold">Mang Abdul</b>!
         </p>
-        <div class="flex items-center justify-between pt-2 border-t border-white/20 text-[10px] sm:text-[11px] font-semibold">
-          <span class="text-emerald-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">Tiba di <b>Sekolah Puspa Bangsa</b>: <b class="text-yellow-300">09:45 WIB!</b></span>
-          <span class="text-cyan-200 bg-slate-900/90 px-2 py-0.5 rounded border border-cyan-400/40 shadow-sm">Gas: <b>[D] / [→]</b> • Rem: <b>[A] / [←]</b></span>
+      </div>
+
+      <!-- Floating Glass Panduan Kontrol & Target Pill -->
+      <div class="mb-2 px-3 py-1.5 rounded-xl bg-sky-900/40 backdrop-blur-md border border-cyan-400/50 shadow-[0_8px_25px_rgba(6,182,212,0.35)] flex items-center justify-between text-xs font-mono w-full">
+        <div class="flex items-center gap-1.5 text-emerald-300 font-semibold drop-shadow text-[10px] sm:text-[11px]">
+          <svg class="w-3.5 h-3.5 inline text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Tiba di <b>Sekolah Puspa Bangsa</b>: <b class="text-yellow-300 font-bold">09:45 WIB!</b></span>
+        </div>
+        <div class="text-cyan-200 text-[10px] font-bold bg-sky-950/60 px-2 py-0.5 rounded border border-cyan-400/40 shrink-0">
+          Gas: <b>[D]/[→]</b> • Rem: <b>[A]/[←]</b>
         </div>
       </div>
 
-      <!-- High-contrast Disclaimer Pill -->
-      <div class="mb-3 px-3.5 py-1.5 rounded-full bg-slate-950/85 border border-slate-700/70 backdrop-blur-md shadow-md max-w-xs">
-        <p class="text-[9px] sm:text-[10px] text-slate-200 text-center font-medium drop-shadow">*Disclaimer: Game dan sekolah Puspa Bangsa (SD, SMP, SMA) adalah fiktif untuk hiburan dan edukasi gizi; tidak berafiliasi dengan institusi nyata.</p>
-      </div>
+      <!-- Subtle Disclaimer text with drop shadow -->
+      <p class="text-[9.5px] text-slate-200/90 mb-2 text-center max-w-xs drop-shadow-[0_1px_3px_rgba(0,0,0,0.95)] font-medium leading-tight">*Disclaimer: Game dan sekolah Puspa Bangsa (SD, SMP, SMA) adalah fiktif untuk hiburan dan edukasi gizi; tidak berafiliasi dengan institusi nyata.</p>
 
-      <!-- Pure Floating Glass Tap Button with drop shadow -->
-      <button id="startGameBtn" class="w-full py-3.5 px-6 rounded-2xl bg-blue-600/50 hover:bg-blue-500/70 backdrop-blur-md border border-sky-400/70 text-white font-fredoka text-lg sm:text-xl shadow-[0_8px_30px_rgba(2,132,199,0.6)] transform active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer">
+      <!-- Pure Floating Glass Tap Button with drop shadow (Matching Main Menu style) -->
+      <button id="startGameBtn" class="w-full py-3.5 px-5 rounded-2xl bg-blue-600/40 hover:bg-blue-500/55 backdrop-blur-md border border-sky-400/60 text-white font-fredoka text-lg sm:text-xl shadow-[0_8px_30px_rgba(2,132,199,0.55)] transform active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer">
         <span>MASUK KE MENU UTAMA (TAP TO START)</span>
         <svg class="w-5 h-5 inline drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
       </button>
 
-      <!-- High-contrast Tap Notice Pill -->
-      <div class="mt-2.5 px-3.5 py-1.5 rounded-full bg-slate-950/90 border border-cyan-400/50 backdrop-blur-md shadow-lg">
-        <p id="startTapNotice" class="text-[10px] sm:text-xs text-cyan-200 font-mono font-bold animate-pulse text-center drop-shadow">[ Sentuh layar atau klik tombol untuk mengaktifkan audio & masuk Menu Utama ]</p>
+      <!-- Floating Glass Tap Notice Pill (Matching Main Menu style) -->
+      <div class="w-full mt-2 py-2 px-3 rounded-xl bg-slate-950/40 backdrop-blur-sm border border-white/20 shadow-md">
+        <p id="startTapNotice" class="text-[10px] sm:text-xs text-cyan-200 font-mono animate-pulse text-center drop-shadow">[ Sentuh layar atau klik tombol untuk mengaktifkan audio & masuk Menu Utama ]</p>
       </div>
     </div>
   </div>
