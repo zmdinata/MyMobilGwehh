@@ -4,7 +4,35 @@ Dokumen ini mencatat seluruh kronologi pembaruan teknis, audit, dan evolusi fitu
 
 ---
 
-## 1. Snapshot Terkini — 2026-09-25 (Migrasi React 19 & Next.js 16 Engine)
+## 1. Snapshot Terkini — 2026-09-28 (Overhaul UI Aero-Glass, Ekonomi Dua Tahap, & Audio Romantis)
+
+### Ringkasan Pembaruan Utama:
+1. **Harmonisasi Menyeluruh UI/Frontend ke Tema "Floating Translucent Aero-Glass"**:
+   - Seluruh 9 modal dan komponen antarmuka pengguna dirombak total menggunakan token desain kaca transparan:
+     - `bg-slate-950/50 backdrop-blur-xl border border-white/20 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.5)]`
+     - Overlay transparan `bg-slate-950/35 backdrop-blur-md`
+     - Tombol navigasi responsif dengan efek rose hover `hover:bg-rose-950/50 hover:border-rose-400/60`
+     - Penghapusan 100% styling legacy pekat (`bg-slate-900`, `bg-slate-800`, `bg-slate-950/90`, `border-slate-700`).
+   - Komponen yang diperbarui: Welcome Page (`#startModal`), Main Menu (`#mainMenuModal`), Pilih Level (`#levelSelectModal`), Bengkel Garasi (`#garageModal`), Game Over (`#gameOverModal`), Victory Card (`#victoryModal`), Pause (`#pauseModal`), Dialogue (`#dialogueModal`), dan HUD Gameplay (pedal gas/rem, speedometer, timer, tombol audio & pause).
+2. **Proporsi Bodi & Ban Offroad Realistis (Anti-Gepeng & Grounding Lantai)**:
+   - Kalibrasi tinggi bodi dan roda untuk postur offroad kokoh di seluruh 5 skin dan 5 rim.
+   - Posisi truk pada live canvas preview di Garasi Zacky menapak persis di atas lantai background dengan bayangan ambient realistis.
+3. **Ekonomi Kustomisasi Dua Tahap Ketat (Strict Two-Stage Economy)**:
+   - Mekanisme progresif: Buka Level $\to$ Beli dengan Koin $\to$ Pasang Gratis Permanen.
+   - Penyimpanan data permanen `purchasedSkins` dan `purchasedRims` di `localStorage` dengan skema `garageEconomyVersion: 2`.
+4. **Sistem Audio WebAudio Storytelling Outro & Backsound Romantis Mas Tion & Bu Yulie**:
+   - Pemadaman seketika audio mobil (`silenceVehicleAudio`) saat menyentuh garis finish dengan penambahan *early return guard* di `loop()`.
+   - Sekuensing Fanfare Kemenangan ceria (1.0s) yang dilanjutkan secara mulus oleh Backsound Romantis lofi piano (Cmaj7 – Am9 – Fmaj7 – G6).
+   - Penguatan kenyaringan audio (>3x volume boost): bass gain `0.68`, melodi `0.48 – 0.60`.
+   - Filter kejernihan akustik `3400Hz` (`Q: 0.85`), lapisan dual-string chorus unison (`osc2` detuned `f * 1.0025`), dan resonansi sustain yang mengalun mulus dari dialog outro hingga ke Kartu Kemenangan.
+   - Redaman halus 0.3 detik (*smooth linear ramp down*) saat berpindah level atau keluar ke menu.
+5. **Verifikasi Kualitas**:
+   - **96/96 Unit Test Lulus 100% (0 Gagal)** via `npm test`.
+   - **Build Produksi Next.js Lulus 100% (0 Error, 0 Warning)** via `npm run build`.
+
+---
+
+## 2. Snapshot — 2026-09-25 (Migrasi React 19 & Next.js 16 Engine)
 
 ### Ringkasan Pembaruan Utama:
 1. **Migrasi Frontend Menyeluruh ke React 19 & Next.js 16 (Turbopack)**:

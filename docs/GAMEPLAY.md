@@ -71,18 +71,21 @@ Pemain dapat memodifikasi kendaraan di Garasi Zacky menggunakan koin gizi yang d
   - **Mesin (*Engine*)**: Meningkatkan daya dorong tanjakan curam dari `2200` hingga `3720`.
   - **Grip Ban (*Tires*)**: Mengurangi selip dan meningkatkan cengkeraman jalan dari `1.00x` hingga `1.57x`.
   - **Suspensi (*Suspension*)**: Menguatkan pegas $K$ (180 s.d. 256) dan damper $C$ (18.8 s.d. 26.4) serta torsi putaran udara (+3%/level) agar bodi mobil tidak mudah terpelanting.
-- **Kustomisasi Kosmetik (Skala Dinamis Level Unlock)**:
+- **Kustomisasi Kosmetik & Ekonomi Dua Tahap Ketat**:
+  - **Sistem Pembelian Progresif**: Buka Level $\to$ Beli dengan Koin $\to$ Pasang Gratis Permanen.
+  - **Proporsi Offroad Stance Realistis**: Bodi truk dan ban dinaikkan tingginya agar kokoh dan proporsional (anti-gepeng), menapak membumi di lantai bengkel dengan bayangan realistis.
   - 5 Varian Skin Bodi Truk:
     - *Standard MBG Box* (Unlock Lv 1): **0 Koin (Gratis)** — Standard Box
     - *Speedy Courier* (Unlock Lv 4): **580 Koin** (+5% Top Speed)
     - *Mountain 4x4* (Unlock Lv 8): **1.430 Koin** (+5% Tire Grip)
     - *Retro Classic* (Unlock Lv 12): **3.500 Koin** (+5% Shock Damping)
     - *Sport Tuned* (Unlock Lv 16): **9.500 Koin** (+10% Top Speed)
-  - 4 Varian Velg Roda:
+  - 5 Varian Velg Roda:
     - *Stock Steelie* (Unlock Lv 1): **0 Koin (Gratis)**
     - *Gold Racing Alloy* (Unlock Lv 5): **730 Koin**
     - *Mud Beadlock* (Unlock Lv 10): **2.200 Koin**
     - *White-Wall Cruiser* (Unlock Lv 15): **6.800 Koin**
+    - *Offroad Spoke* (Unlock Lv 18): **12.000 Koin**
 
 ---
 
@@ -134,4 +137,11 @@ Game ditenagai oleh mesin sintesis **Hybrid Web Audio API & Procedural Waveforms
 5. **Master Bus Loudness & Dynamic Brickwall Limiter**:
    - Master bus dilengkapi **DynamicsCompressorNode** (Threshold: -14 dB, Ratio: 8:1, Knee: 14 dB, Attack: 3ms, Release: 200ms) dengan gain makeup 1.35x.
    - Buffer pink noise prosedural dikalibrasi ulang (faktor redaman ditingkatkan dari 0.11 ke 0.35) untuk memastikan suara ban, angin, dan atmosfer terdengar jernih, lantang, dan bertenaga tanpa distorsi digital (clipping-free).
+
+6. **Audio Storytelling Outro & Backsound Romantis Mas Tion & Bu Yulie**:
+   - **Pemadaman Instan**: Suara mesin, ban, turbo, dan deru angin mati seketika mobil melintasi gerbang sekolah berkat *early return guard* pada game loop.
+   - **Sekuensing Bersih**: Fanfare kemenangan ceria (1.0s) dibunyikan singkat, disusul alunan Backsound Romantis lofi piano (Cmaj7 – Am9 – Fmaj7 – G6) dengan jeda 850ms agar nada tidak saling bertabrakan.
+   - **Peningkatan Kenyaringan (>3x Volume Boost)**: Bass gain dinaikkan ke `0.68` dan melodi arpeggio ke `0.48 – 0.60`.
+   - **Kejernihan & Resonansi Akustik**: Filter lowpass dinaikkan ke `3400Hz` (`Q: 0.85`), dipadukan dengan osilator sekunder *micro-detuned* (`f * 1.0025`) untuk efek chorus senar grand piano akustik dan peluruhan sustain panjang (`1.1s – 2.0s`) yang mengalun mulus hingga Kartu Kemenangan.
+   - **Fade-Out Halus**: Saat pemain melanjutkan ke level berikutnya atau ke menu utama, musik mereda halus 0.3 detik (*smooth linear ramp down*). Suara mesin hanya dinyalakan kembali saat balapan rute baru benar-benar dimulai.
 

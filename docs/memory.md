@@ -4,7 +4,7 @@ Snapshot teknis dan panduan operasional proyek. Jika terdapat diskrepansi antara
 
 ---
 
-## 1. Status Aktif — 2026-09-25
+## 1. Status Aktif — 2026-09-28
 
 - **Arsitektur Dual-Stack**:
   1. **Next.js 16 + React 19 (Modern Fullstack)**:
@@ -15,12 +15,13 @@ Snapshot teknis dan panduan operasional proyek. Jika terdapat diskrepansi antara
      - Jalankan: `npm run dev` (dev) atau `npm run build && npm start` (prod).
   2. **Standalone HTML5 Canvas (`index.html`)**:
      - Berfungsi penuh tanpa bundler/Node runtime (`python -m http.server 8000`).
+     - Desain visual diselaraskan 100% dengan tema **Floating Translucent Aero-Glass**.
      - Menjaga kompatibilitas 100% dengan tes regresi legacy.
 - **Engine Inti Bersama**:
   - `game_core.js` & `public/game_core.js` digunakan bersama oleh browser, React runtime, dan test runner Node.js (`test/*.test.mjs`).
-  - Query runtime: `game_core.js?v=20260925-gameplay11`.
+  - Query runtime: `game_core.js?v=20260928-gameplay12`.
 - **Hasil Pengujian**:
-  - **80 Unit Test Lulus 100% (0 Gagal)** dijalankan via `npm test` (`node --test test/*.test.mjs`).
+  - **96 Unit Test Lulus 100% (0 Gagal)** dijalankan via `npm test` (`node --test test/*.test.mjs`).
   - **Next.js Production Build Lulus 100% (0 Error, 0 Warning)** via `npm run build`.
 
 ---
@@ -238,4 +239,63 @@ Seluruh perubahan di atas diterapkan secara identik di:
    - Next.js (`app/page.jsx`) menyimpan seluruh progres ke `localStorage['mbg_savedata_react']`.
 
 ### D. Perbaikan Elevasi Lintasan (Level 8 Bounds Fix)
-- Ditambahkan pengaman elevasi `Math.max(150, Math.min(650, y))` di akhir `TerrainSystem.getHeight()`, menuntaskan kegagalan uji ketinggian level 8 sehingga **80/80 Unit Test Lulus 100% (0 Gagal)**.
+- Ditambahkan pengaman elevasi `Math.max(150, Math.min(650, y))` di akhir `TerrainSystem.getHeight()`, menuntaskan kegagalan uji ketinggian level 8 sehingga **96/96 Unit Test Lulus 100% (0 Gagal)**.
+
+---
+
+## 10. Harmonisasi Menyeluruh UI/Frontend: Tema "Floating Translucent Aero-Glass"
+
+Seluruh 9 modal, panel, dan komponen antarmuka pengguna diharmonisasi secara ketat merujuk pada standar estetika **Welcome Page** dan **Main Menu** guna menghadirkan kesan modern, bersih, elegan, dan menyatu dengan ilustrasi background:
+
+### A. Sistem Token Desain Tailwind (Canonical Aero-Glass Tokens)
+- **Kontainer Utama / Panel Kaca**: `bg-slate-950/50 backdrop-blur-xl border border-white/20 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.5)]`
+- **Lapisan Overlay Latar**: `bg-slate-950/35 backdrop-blur-md` (jernih dan membiarkan ilustrasi background tetap terlihat tanpa tertutup kegelapan pekat).
+- **Lencana Koin & Statistik**: `bg-amber-950/40 backdrop-blur-md border border-amber-400/50 text-amber-300`
+- **Tombol Tutup / Navigasi Keluar**: `bg-slate-900/60 hover:bg-rose-950/50 text-slate-200 hover:text-rose-200 backdrop-blur-md border border-white/20 hover:border-rose-400/60`
+- **Tombol Aksi Utama**: Translucent gradient (`bg-blue-600/40 hover:bg-blue-500/55 backdrop-blur-md border border-sky-400/60`) dengan bayangan neon lembut (`shadow-[0_8px_30px_rgba(2,132,199,0.55)]`).
+- **Larangan Keras Legacy Styling**: Dilarang menggunakan warna solid pekat `bg-slate-900`, `bg-slate-800`, `bg-slate-950/85`, `bg-slate-950/90`, atau border tebal kaku `border-slate-700`, `border-slate-800`.
+
+### B. Audit & Refactoring 9 Komponen Antarmuka:
+1. **Welcome Page (`#startModal`)**: Kapsul kaca transparan untuk Misi, Kisah Mas Tion, dan Panduan Kontrol di atas background panorama Gn. Ciremai.
+2. **Main Menu (`#mainMenuModal`)**: Tombol kaca melayang di safe whitespace aspal tanpa menutupi ilustrasi karakter Mas Tion & logo MMG.
+3. **Pilih Level (`#levelSelectModal`)**: Kontainer kaca lebar `max-w-6xl` dengan 20 kartu level frosted glass, live counter statistik (`X/20 Terbuka • ⭐ N`), glow cyan untuk level aktif, dan frosted obsidian untuk level terkunci.
+4. **Bengkel Garasi (`#garageModal`)**: Top bar frosted glass, panel velg kiri & skin kanan transparan dengan glow amber/cyan, preview truk membumi di lantai dengan bayangan realistis.
+5. **Game Over (`#gameOverModal`)**: Dirombak total dari kotak hitam pekat `bg-slate-950/90` menjadi kartu kaca transparan berona merah halus dengan stats box frosted glass dan tombol navigasi responsif rose-hover.
+6. **Victory Card (`#victoryModal`)**: Kartu kemenangan kaca transparan dengan pencahayaan glow cyan/amber, dynamic Nutri-Fact Card Kemenkes, rating bintang emas, dan tabungan koin.
+7. **Pause (`#pauseModal`)**: Modal jeda kaca melayang ringan dengan aset otentik `icon_pause.png`, ringkasan info gizi AKG, dan tombol jeda.
+8. **Dialogue Modal (`#dialogueModal`)**: Speech bubble kaca melayang `bg-slate-950/50 backdrop-blur-xl border-white/20` dengan badge lokasi dinamis dan tombol Next ber-glow cyan.
+9. **Gameplay HUD Elements**: Tombol audio & jeda kaca transparan, pedal gas dan rem glassmorphic dengan gradien tembus pandang (`to-slate-950/50`), speedometer digital, dan progress track bar terkalibrasi.
+
+---
+
+## 11. Proporsi Kendaraan Offroad Realistis & Ekonomi Dua Tahap Ketat
+
+### A. Kalibrasi Stance Offroad & Visual Wheel Grounding
+- **Anti-Gepeng**: Bodi truk dan ban dinaikkan tingginya di seluruh 5 varian skin (*Standard Box, Speedy Courier, Mountain 4x4, Retro Classic, Sport Tuned*) dan 5 desain velg (*Stock Steel, Gold Alloy, Mud Beadlock, White-Wall, Offroad Spoke*) untuk proporsi offroad kokoh yang proporsional.
+- **Penyelarasan Lantai Garasi**: Truk pada live canvas preview diletakkan persis menempel pada lantai background garasi dengan bayangan sasis realistis (*ambient ground shadow*) sesuai arah datang cahaya.
+
+### B. Sistem Ekonomi Dua Tahap Ketat (Strict Two-Stage Economy)
+1. **Tahap 1 (Level Unlock)**: Skin dan velg terbuka secara otomatis ketika pemain mencapai level tertentu.
+2. **Tahap 2 (Coin Purchase)**: Item yang terbuka tidak langsung bisa dipakai; pemain wajib membelinya terlebih dahulu menggunakan tabungan koin gizi yang dikumpulkan di lintasan.
+3. **Tahap 3 (Free Equip)**: Item yang sudah dibeli tersimpan permanen di `purchasedSkins` dan `purchasedRims` pada `localStorage['mbg_savedata']` (schema version: `garageEconomyVersion: 2`). Pemain bebas mengganti skin/velg kapan saja secara gratis (`Pasang` / `✓ Terpasang`).
+
+---
+
+## 12. Sistem Audio Storytelling Outro & Backsound Romantis Mas Tion & Bu Yulie
+
+### A. Eliminasi Kebocoran Audio Kendaraan (Race Condition Fix)
+- **Akar Masalah**: Panggilan `silenceVehicleAudio()` saat garis finish terinjak sebelumnya langsung tertimpa oleh `updateEngine()`, `updateSurfaceContact()`, dan `updateWindAndAmbient()` di mikrodetik yang sama dalam frame akhir `loop()`.
+- **Early Return Guard**: Ditambahkan `if (this.state !== 'PLAYING') return;` segera setelah `this.updateGameState(dt)` di dalam game loop, mencegah pembaruan audio mesin ketika kondisi kemenangan/kekalahan tercapai.
+- **Force Silence**: `silenceVehicleAudio()` menyetel `isEngineRunning = false` serta membatalkan seluruh *scheduled values* dan menyetel gain mesin, turbo, ban, angin, dan ambient ke 0 mutlak seketika.
+- **Intro Silence**: `startLevel()` memanggil `silenceVehicleAudio()` sehingga selama percakapan intro dialog, suara mesin tetap hening hingga gameplay aktif dimulai (`restartGame()`).
+
+### B. Arsitektur Backsound Romantis WebAudio API
+- **Progresi Harmoni Balada Lofi**: Mengalun pada progresi akor romantis 4 birama: **Cmaj7 – Am9 – Fmaj7 – G6/Gsus4**.
+- **Peningkatan Kenyaringan (>3x Volume Boost)**:
+  - Nada bass dinaikkan ke amplitudo `0.68` (fondasi bass hangat C3, A2, F2, G2).
+  - Nada melodi dan arpeggio dinaikkan ke `0.48 – 0.60` agar terdengar lantang dan berbobot di atas master compressor.
+- **Kejernihan Akustik (Brilliance Filter 3400Hz)**: Lowpass filter dinaikkan dari `1600Hz` ke `3400Hz` (`Q: 0.85`), menghasilkan denting piano yang bersih, renyah, dan berkilau (*sparkle*). Filter bass disesuaikan ke `1200Hz`.
+- **Lapisan Chorus Unison Ganda (Dual-String Resonance)**: Setiap nada melodi memiliki osilator sekunder (`osc2`) dengan *micro-detuning* halus (`f * 1.0025`), meniru getaran senar grand piano akustik atau lofi Rhodes keyboard yang tebal dan syahdu.
+- **Resonansi Sustain Pedal**: Durasi nada diperpanjang hingga `1.1s – 2.0s` dengan kurva peluruhan eksponensial alami, menciptakan alunan yang menyatu mulus antar birama.
+- **Sekuensing Bersih**: Garis finish terlewati $\to$ mesin hening total $\to$ Fanfare Kemenangan (1.0s) berbunyi $\to$ Backsound Romantis mulai mengalun lembut tepat saat fanfare mereda (jeda 850ms) $\to$ mengalun berkesinambungan (*seamless loop*) dari dialog outro hingga ke Kartu Kemenangan.
+- **Smooth Fade-Out (0.3s)**: `stopRomanticTheme()` menerapkan *smooth linear ramp down* 0.3 detik sebelum osilator dimatikan, menghilangkan suara letupan mendadak (*clipping pop*) saat berpindah level atau kembali ke menu utama.

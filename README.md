@@ -46,9 +46,11 @@ Buka browser di: [http://localhost:8000](http://localhost:8000)
 1. **Kampanye 20 Level Penuh Cerita**:
    - Peningkatan jarak bertahap dari 800m (Level 1) hingga 4500m (Level 20).
    - Dialog Visual Novel (Intro & Outro) di setiap level dengan karakter Mas Tion, Bu Yulie, Zacky, Husna, Mang Abdul, dan Pak RT.
-2. **Garasi Zacky (Upgrade Komponen & Kustomisasi)**:
+2. **Garasi Zacky (Upgrade Komponen & Kustomisasi Dua Tahap)**:
    - Tingkatkan **Mesin** (torsi & tanjakan), **Grip Ban** (traksi aspal & lumpur), dan **Suspensi** (pegas & peredam kejut) dari Level 1 hingga 20.
-   - Pilihan 5 varian skin bodi truk (*Standard Box, Speedy Courier, Mountain 4x4, Retro Classic, Sport Tuned*) dan 4 desain velg roda (*Stock Steelie, Gold Racing, Mud Beadlock, White-Wall*).
+   - Pilihan 5 varian skin bodi truk (*Standard Box, Speedy Courier, Mountain 4x4, Retro Classic, Sport Tuned*) dan 5 desain velg roda (*Stock Steelie, Gold Racing, Mud Beadlock, White-Wall, Offroad Spoke*).
+   - Sistem **Ekonomi Dua Tahap Ketat**: Buka Level $\to$ Beli dengan Koin $\to$ Pasang Gratis Permanen.
+   - Proporsi kendaraan **Offroad Stance Realistis** (anti-gepeng) dengan bayangan membumi di lantai garasi.
    - Live Canvas Preview truk di dalam bengkel modifikasi.
 3. **8 Bioma Dedikasi & Parallax Scrolling**:
    - Setiap segmen jalan memiliki ilustrasi latar belakang WebP resolusi tinggi tersendiri:
@@ -61,11 +63,15 @@ Buka browser di: [http://localhost:8000](http://localhost:8000)
      7. Kawasan Pemukiman Suburb
      8. Kompleks Sekolah Puspa Bangsa (Garis Finis)
    - Transisi mulus 200m dengan dynamic RGBA skybox lerping.
-4. **Antarmuka Modern Bebas "AI Slop"**:
+4. **Antarmuka Elegan "Floating Translucent Aero-Glass"**:
+   - Seluruh 9 modal dan komponen HUD dirombak ke tema kaca transparan frosted (`backdrop-blur-xl`, `border-white/20`, bayangan neon halus) tanpa border hitam pekat atau container gelap yang menutupi background.
    - Kontrol pedal sentuh **Glassmorphic Cyber-Chic** dengan haptic grip dots dan glow LED border.
    - Tanpa efek garis-garis scanlines yang mengganggu kejernihan grafis.
    - Logo resmi PNG resolusi tinggi terpasang rapi.
-5. **Ekonomi Koin Permanen**:
+5. **Sistem Audio WebAudio Canggih & Backsound Romantis Outro**:
+   - Pemadaman seketika seluruh suara mobil saat menyentuh garis finish untuk suasana outro yang tenang.
+   - Sekuensing Fanfare Kemenangan (1 detik) disusul **Backsound Romantis Asmara Mas Tion & Bu Yulie** (Cmaj7 – Am9 – Fmaj7 – G6) dengan kejernihan filter 3400Hz, dual-string chorus unison, dan resonansi sustain yang berlanjut mulus hingga Kartu Kemenangan.
+6. **Ekonomi Koin Permanen**:
    - Koin gizi yang dikumpulkan di jalanan otomatis tersimpan ke `localStorage`, bahkan saat mobil terguling atau kehabisan bensin.
 
 ---
@@ -77,7 +83,7 @@ Buka browser di: [http://localhost:8000](http://localhost:8000)
 | **Gas / Akselerasi** | `D`, `W`, `Panah Kanan`, `Panah Atas` | Pedal Kanan (**GAS**) |
 | **Rem / Mundur** | `A`, `S`, `Panah Kiri`, `Panah Bawah` | Pedal Kiri (**REM**) |
 | **Klakson Telolet** | `H` atau `Spasi` | Tombol Tengah (**TELOLET**) |
-| **Jeda (Pause)** | `Esc` | Tombol Jeda `⏸️` di HUD |
+| **Jeda (Pause)** | `Esc` | Tombol Jeda di HUD |
 | **Mulai Ulang (Restart)** | `R` | Tombol Ulangi di Layar Selesai |
 
 - **Dinamika Udara (Airborne & Stunts)**:
@@ -93,12 +99,14 @@ Seluruh logika fisika, aturan kampanye, dan integritas antarmuka diuji menggunak
 ```bash
 npm test
 ```
-**Hasil Aktual**: **83/83 Unit Test Lulus (0 Gagal)**, mencakup:
+**Hasil Aktual**: **96/96 Unit Test Lulus (0 Gagal)**, mencakup:
 - Deteksi airborne real-time, timer melayang, live badges, dan akumulasi bonus koin stunt.
 - Stunt wheelie & stoppie satu roda dengan validasi pendaratan aman.
 - Fisika suspensi pegas-redam ganda, weight transfer, dan landing shock absorption.
 - Simulasi end-to-end 20 level tanpa NaN atau crash pada 30, 60, dan 120 FPS.
-- Kelengkapan dialog visual novel dan kurva biaya upgrade garasi.
+- Harmonisasi antarmuka Floating Translucent Aero-Glass di seluruh modal dan HUD.
+- Sistem ekonomi dua tahap ketat (Level Unlock -> Coin Purchase -> Equip) dan kalibrasi render per-skin.
+- Sintesis audio WebAudio, pemadaman instan audio kendaraan outro, dan tema romantis.
 - Kompilasi produksi Next.js 16 (`npm run build`) berhasil 100% tanpa error.
 
 ---
