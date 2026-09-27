@@ -326,7 +326,11 @@ test('SoundSynthesizer - Safe instantiation in Node.js and API interface complet
 
   synth.pauseEngine();
   synth.resumeEngine();
+  synth.silenceVehicleAudio();
+  assert.doesNotThrow(() => synth.playRomanticTheme(), 'playRomanticTheme executes safely in Node');
+  assert.doesNotThrow(() => synth.stopRomanticTheme(), 'stopRomanticTheme executes safely in Node');
   synth.stopEngine();
   assert.equal(synth.isEngineRunning, false, 'stopEngine resets engine running state');
 });
+
 

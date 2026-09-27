@@ -2214,6 +2214,11 @@ export class SoundSynthesizer {
     this.noiseBuffer = null;
     this.lastHornTime = 0;
     this.lastSpringTime = 0;
+
+    // Romantic Outro Theme (Mas Tion & Bu Yulie)
+    this.isRomanticPlaying = false;
+    this.romanticTimer = null;
+    this.romanticNodes = [];
   }
 
   init() {
@@ -2789,14 +2794,158 @@ export class SoundSynthesizer {
     if (this.windGain) this.windGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.05);
   }
 
+  silenceVehicleAudio() {
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    try {
+      if (this.engineGain) {
+        this.engineGain.gain.cancelScheduledValues(now);
+        this.engineGain.gain.setValueAtTime(0, now);
+      }
+      if (this.turboGain) {
+        this.turboGain.gain.cancelScheduledValues(now);
+        this.turboGain.gain.setValueAtTime(0, now);
+      }
+      if (this.tireGain) {
+        this.tireGain.gain.cancelScheduledValues(now);
+        this.tireGain.gain.setValueAtTime(0, now);
+      }
+      if (this.windGain) {
+        this.windGain.gain.cancelScheduledValues(now);
+        this.windGain.gain.setValueAtTime(0, now);
+      }
+      if (this.ambientGain) {
+        this.ambientGain.gain.cancelScheduledValues(now);
+        this.ambientGain.gain.setValueAtTime(0, now);
+      }
+    } catch (_) {}
+  }
+
+  playRomanticTheme() {
+    if (!this.ctx || this.isMuted) return;
+    if (this.isRomanticPlaying) return;
+    this.isRomanticPlaying = true;
+    this.romanticNodes = [];
+
+    const playLoop = () => {
+      if (!this.isRomanticPlaying || !this.ctx) return;
+      const now = this.ctx.currentTime + 0.05;
+
+      const notes = [
+        // Measure 1: Cmaj7 (C3 bass + C-E-G-B-C arpeggio)
+        { f: 130.81, t: 0.0, d: 1.6, type: 'sine', v: 0.22 },
+        { f: 261.63, t: 0.0, d: 0.6, type: 'triangle', v: 0.15 },
+        { f: 329.63, t: 0.25, d: 0.6, type: 'triangle', v: 0.14 },
+        { f: 392.00, t: 0.5, d: 0.6, type: 'triangle', v: 0.15 },
+        { f: 493.88, t: 0.75, d: 0.6, type: 'triangle', v: 0.14 },
+        { f: 523.25, t: 1.0, d: 0.8, type: 'triangle', v: 0.16 },
+        { f: 392.00, t: 1.3, d: 0.5, type: 'triangle', v: 0.12 },
+        { f: 329.63, t: 1.6, d: 0.5, type: 'triangle', v: 0.12 },
+
+        // Measure 2: Am9 (A2 bass + A-C-E-G-B arpeggio)
+        { f: 110.00, t: 2.0, d: 1.6, type: 'sine', v: 0.22 },
+        { f: 220.00, t: 2.0, d: 0.6, type: 'triangle', v: 0.14 },
+        { f: 261.63, t: 2.25, d: 0.6, type: 'triangle', v: 0.14 },
+        { f: 329.63, t: 2.5, d: 0.6, type: 'triangle', v: 0.15 },
+        { f: 392.00, t: 2.75, d: 0.6, type: 'triangle', v: 0.15 },
+        { f: 493.88, t: 3.0, d: 0.8, type: 'triangle', v: 0.16 },
+        { f: 659.25, t: 3.3, d: 0.8, type: 'triangle', v: 0.14 },
+        { f: 523.25, t: 3.6, d: 0.6, type: 'triangle', v: 0.13 },
+
+        // Measure 3: Fmaj7 (F2 bass + F-A-C-E-G arpeggio)
+        { f: 87.31, t: 4.0, d: 1.6, type: 'sine', v: 0.22 },
+        { f: 174.61, t: 4.0, d: 0.6, type: 'triangle', v: 0.14 },
+        { f: 220.00, t: 4.25, d: 0.6, type: 'triangle', v: 0.14 },
+        { f: 261.63, t: 4.5, d: 0.6, type: 'triangle', v: 0.15 },
+        { f: 329.63, t: 4.75, d: 0.6, type: 'triangle', v: 0.15 },
+        { f: 392.00, t: 5.0, d: 0.8, type: 'triangle', v: 0.16 },
+        { f: 440.00, t: 5.3, d: 0.7, type: 'triangle', v: 0.15 },
+        { f: 329.63, t: 5.6, d: 0.6, type: 'triangle', v: 0.12 },
+
+        // Measure 4: G6 / Gsus4 (G2 bass + G-B-D-E-G-B arpeggio)
+        { f: 98.00, t: 6.0, d: 1.6, type: 'sine', v: 0.22 },
+        { f: 196.00, t: 6.0, d: 0.6, type: 'triangle', v: 0.14 },
+        { f: 246.94, t: 6.25, d: 0.6, type: 'triangle', v: 0.14 },
+        { f: 293.66, t: 6.5, d: 0.6, type: 'triangle', v: 0.15 },
+        { f: 329.63, t: 6.75, d: 0.6, type: 'triangle', v: 0.15 },
+        { f: 392.00, t: 7.0, d: 0.8, type: 'triangle', v: 0.16 },
+        { f: 493.88, t: 7.3, d: 0.7, type: 'triangle', v: 0.15 },
+        { f: 587.33, t: 7.6, d: 0.8, type: 'triangle', v: 0.14 }
+      ];
+
+      notes.forEach(n => {
+        try {
+          const startT = now + n.t;
+          const endT = startT + n.d;
+
+          const osc = this.ctx.createOscillator();
+          osc.type = n.type || 'triangle';
+          osc.frequency.setValueAtTime(n.f, startT);
+
+          const filter = this.ctx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(1600, startT);
+          filter.Q.setValueAtTime(1.0, startT);
+
+          const gain = this.ctx.createGain();
+          gain.gain.setValueAtTime(0.0001, startT);
+          gain.gain.linearRampToValueAtTime(n.v, startT + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, endT);
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.masterGain || this.ctx.destination);
+
+          osc.start(startT);
+          osc.stop(endT + 0.05);
+
+          this.romanticNodes.push({ osc, gain, endT });
+        } catch (_) {}
+      });
+
+      this.romanticNodes = this.romanticNodes.filter(item => item.endT > now);
+
+      if (this.isRomanticPlaying) {
+        this.romanticTimer = setTimeout(playLoop, 8000);
+      }
+    };
+
+    playLoop();
+  }
+
+  stopRomanticTheme() {
+    this.isRomanticPlaying = false;
+    if (this.romanticTimer) {
+      clearTimeout(this.romanticTimer);
+      this.romanticTimer = null;
+    }
+    if (this.romanticNodes && this.romanticNodes.length && this.ctx) {
+      const now = this.ctx.currentTime;
+      this.romanticNodes.forEach(item => {
+        try {
+          item.gain.gain.cancelScheduledValues(now);
+          item.gain.gain.setTargetAtTime(0.0001, now, 0.05);
+          item.osc.stop(now + 0.08);
+        } catch (_) {}
+      });
+      this.romanticNodes = [];
+    }
+  }
+
   resumeEngine() {
     if (!this.ctx || !this.engineGain || this.isMuted) return;
     const profile = VEHICLE_AUDIO_PROFILES[this.currentSkin] || VEHICLE_AUDIO_PROFILES.standard;
-    this.engineGain.gain.setTargetAtTime(profile.gainIdle, this.ctx.currentTime, 0.05);
+    const now = this.ctx.currentTime;
+    this.engineGain.gain.setTargetAtTime(profile.gainIdle, now, 0.05);
+    if (this.ambientGain) {
+      const cfg = BIOME_AUDIO_CONFIG[this.currentBiome] || BIOME_AUDIO_CONFIG.pantura;
+      this.ambientGain.gain.setTargetAtTime(cfg.gain, now, 0.1);
+    }
   }
 
   stopEngine() {
     this.pauseEngine();
+    this.stopRomanticTheme();
     this.isEngineRunning = false;
     this.stopEngineAudio();
   }
