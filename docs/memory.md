@@ -394,3 +394,57 @@ Diterapkan aturan styling komprehensif pada `@media screen and (orientation: lan
    - **Touch-Scroll Fallback**: Kontainer modal (`#victoryModal`, `#pauseModal`, `#gameOverModal`) dan kartu di dalamnya dijamin dengan `overflow-y: auto !important; -webkit-overflow-scrolling: touch !important; overscroll-behavior: contain;` sehingga pada layar sangat mini (<340px) kartu dapat digulir sentuh dengan sangat mulus.
 7. **Perlindungan Desktop 100%**:
    - Karena media query mensyaratkan `orientation: landscape` AND `max-height: 520px`, seluruh layar monitor PC, laptop, atau tablet (tinggi >= 600px) **tidak terpengaruh sama sekali** dan tetap menggunakan layout desktop yang luas.
+
+---
+
+## 15. Game Loop Lifecycle Self-Healing & Transisi Level Mulus (Level Transition Freeze Fix)
+
+### A. Gejala Bug & Analisis Akar Masalah (Root Cause)
+- **Gejala**:
+  - Saat pemain menyelesaikan sebuah level (misal Level 1), lalu mengklik tombol *"LEVEL SELANJUTNYA"* pada Victory Card atau berpindah level via *"PILIH LEVEL"*, kanvas game macet/stuck di garis finis level sebelumnya dan tidak mau bergerak ke level berikutnya.
+  - Namun, jika browser di-refresh (F5) lalu mengklik *"MULAI CERITA"*, level baru langsung berjalan normal.
+- **Akar Masalah Teknis**:
+  1. **Fatal Early-Exit pada Game Loop**:
+     Di dalam metode `loop(timestamp)` pada `index.html`:
+     ```javascript
+     if (this.state === 'PLAYING') {
+       this.vehicle.update(dt, this.inputs, this.terrain);
+       this.updateGameState(dt);
+       if (this.state !== 'PLAYING') return; // <-- EARLY EXIT FATAL
+     }
+     this.updateHUD();
+     this.renderer.render(...);
+     this.animFrameId = requestAnimationFrame(this.loop); // <-- TIDAK PERNAH TERCAPAI
+     ```
+     Ketika truk menyentuh garis finis, `updateGameState(dt)` memanggil `triggerVictory()` yang mengubah status game menjadi `this.state = 'VICTORY'`. Baris berikutnya `if (this.state !== 'PLAYING') return;` langsung menghentikan eksekusi fungsi `loop()`, sehingga baris `requestAnimationFrame(this.loop)` di akhir fungsi **tidak pernah dieksekusi**.
+     Akibatnya, siklus render browser mati permanen tepat di frame garis finis.
+  2. **Dead Animation Frame saat Transisi**:
+     Ketika pemain menekan tombol *"LEVEL SELANJUTNYA"*, fungsi `startLevel(nextLevel)` dijalankan untuk menginisialisasi rute dan kargo baru, namun karena loop animasi (`animFrameId`) sudah mati dan tidak ada yang membangunkannya kembali, kanvas tetap menampilkan frame beku garis finis level lama.
+  3. **Mengapa Refresh Browser Berhasil**:
+     Saat browser di-refresh (F5), kelas `Game` diinstansiasi ulang dari awal. Konstruktor memanggil `requestAnimationFrame(this.loop)`, sehingga loop hidup kembali.
+
+### B. Arsitektur Solusi Self-Healing (4-Point Healing Architecture)
+1. **Top-Level `requestAnimationFrame`**:
+   Pemanggilan `this.animFrameId = requestAnimationFrame(this.loop);` dipindahkan ke **baris paling awal** dari metode `loop(timestamp)`. Hal ini menjamin bahwa browser akan selalu menjadwalkan frame berikutnya tanpa terputus, apapun status game (`PLAYING`, `PAUSED`, `VICTORY`, `GAMEOVER`, `DIALOGUE`).
+2. **Eliminasi Fatal Early-Exit**:
+   Pernyataan `if (this.state !== 'PLAYING') return;` di dalam blok fisika dihapus total. Perhitungan fisika kendaraan tetap terlindungi oleh blok `if (this.state === 'PLAYING')`, sementara pipeline rendering kanvas dan HUD tetap berjalan mulus.
+3. **Watchdog `ensureLoopRunning()`**:
+   Ditambahkan mekanisme pengawas (*watchdog*) yang memeriksa apakah `this.animFrameId` sedang aktif:
+   ```javascript
+   ensureLoopRunning() {
+     if (!this.animFrameId) {
+       this.lastTime = performance.now();
+       this.animFrameId = requestAnimationFrame(this.loop);
+     }
+   }
+   ```
+   Dipanggil secara defensif di dalam `startLevel()`, `restartGame()`, dan saat keluar dari modal jeda/game over.
+4. **Inisialisasi Instan Garis Start & Kunci Kamera**:
+   Saat `startLevel(levelNumber)` dipanggil:
+   - Bioma dan ketinggian tanah level baru langsung di-generate seketika.
+   - Truk langsung di-reset dan ditempatkan di garis start ($x = 150\text{m}$, $y = \text{ground} - 34\text{px}$).
+   - Kamera langsung mengunci posisi truk di garis start baru tanpa glide liar dari garis finis lama.
+   - Status disetel ke `'DIALOGUE'` dan audio mesin beralih ke dengung idle lembut hingga pemain menyelesaikan dialog intro.
+- **Hasil Pengujian**:
+   - Transisi level dari Victory Card maupun Level Select berjalan 100% mulus instan tanpa freeze.
+   - 96/96 unit test lulus tanpa regresi.
