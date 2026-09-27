@@ -73,7 +73,7 @@ export default function LevelSelectModal({
                     : 'bg-slate-800/70 border-slate-700 hover:border-cyan-400/60 hover:bg-slate-800 cursor-pointer active:scale-95'
                 }`}
               >
-                <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center justify-between mb-1 shrink-0">
                   <span className="font-fredoka font-bold text-sm sm:text-base text-white">
                     Level {item.level}
                   </span>
@@ -90,13 +90,13 @@ export default function LevelSelectModal({
                   )}
                 </div>
 
-                <div className="text-[10px] sm:text-xs text-slate-400 font-mono flex items-center justify-between mt-2 pt-1 border-t border-slate-700/50">
-                  <span className="flex items-center gap-1">
-                    <Milestone className="w-3 h-3 text-slate-500" />
-                    <span>{item.dist}</span>
+                <div className="text-[10px] sm:text-xs text-slate-400 font-mono flex items-center justify-between mt-2 pt-1 border-t border-slate-700/50 shrink-0">
+                  <span className="flex items-center gap-1 truncate min-w-0">
+                    <Milestone className="w-3 h-3 text-slate-500 shrink-0" />
+                    <span className="truncate">{item.dist}</span>
                   </span>
                   {item.isUnlocked && (
-                    <span className="text-cyan-300 font-bold flex items-center gap-1">
+                    <span className="text-cyan-300 font-bold flex items-center gap-1 shrink-0">
                       <span>GAS</span>
                       <Play className="w-2.5 h-2.5 fill-cyan-300" />
                     </span>

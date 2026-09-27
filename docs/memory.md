@@ -448,3 +448,37 @@ Diterapkan aturan styling komprehensif pada `@media screen and (orientation: lan
 - **Hasil Pengujian**:
    - Transisi level dari Victory Card maupun Level Select berjalan 100% mulus instan tanpa freeze.
    - 96/96 unit test lulus tanpa regresi.
+
+---
+
+## 16. Overhaul Responsif Modal Pilih Level Mobile Landscape (Level Select Modal UI/UX)
+
+### A. Gejala Masalah & Analisis Visual
+- **Gejala**:
+  - Pada layar smartphone posisi mendatar (*landscape*, tinggi viewport 320px–420px), teks judul trayek level (misal *"Tugas Pagi Pertama: Ham..."*, *"Angin Pesisir & Senyum B..."*, *"Cieee Mas Tion! Semangat..."*) terpotong secara horizontal di bagian bawah (*sliced*) dan tertindih/tumpang tindih dengan badge menu gizi di bawahnya (`🍙 Nasi Pulen...`).
+- **Akar Masalah Teknis**:
+  1. **Vertical Flex Shrinkage pada Teks Ber-truncate**:
+     Setiap kartu level menggunakan kontainer `flex flex-col justify-between overflow-hidden`.
+     Elemen judul `<p class="text-[11px] sm:text-xs text-white font-bold truncate mb-1 drop-shadow-sm">` secara default memiliki `flex-shrink: 1`.
+     Ketika tinggi kartu dibatasi oleh viewport mobile landscape (~95px–105px per kartu), elemen-elemen di dalamnya (Header Level 1 + Bintang, Menu Gizi Badge, dan Bottom Bar Rute + Tombol GAS) meregang melebihi sisa tinggi vertikal kartu.
+     Akibatnya, flexbox menciutkan (*shrink*) tinggi kotak pembungkus `<p>` dari 16px menjadi hanya ~6px. Karena class `truncate` menyertakan `overflow: hidden`, teks judul terpotong tepat di tengah huruf (*bottom half of letters sliced off*), menciptakan ilusi teks tenggelam di balik badge menu gizi.
+  2. **Multi-Line Wrapping pada Rute & Kalori**:
+     Teks `Rute: 3.0km · ~650 kkal` berdampingan dengan tombol `GAS ▷` di kolom sempit (~140px) mengalami pembungkusan baris (*line wrapping*) menjadi 2 baris, menambah tinggi bottom bar menjadi ~36px dan semakin menekan ruang vertikal judul.
+  3. **Padding Kartu & Header Modal Terlalu Boros**:
+     Padding kartu `p-3 sm:p-3.5` (24px vertikal) serta header modal `w-10 h-10` dengan `mb-4 pb-3` (28px spasi) membuang lebih dari 50px area vertikal yang sangat berharga di layar landscape smartphone.
+
+### B. Solusi yang Diterapkan
+1. **Pencegahan Flex-Shrink (`shrink-0`) & Line Height Terkalibrasi**:
+   - Menambahkan class `shrink-0` dan `leading-snug` pada judul `<p>`, serta `title="${cfg.name}"` untuk tooltip saat disentuh/di-hover. Kotak judul kini dijamin tidak akan pernah menciut tingginya dan teks tampil 100% utuh tanpa terpotong.
+2. **Bottom Bar Single-Line Invariant**:
+   - Teks rute dan kalori diberikan `truncate min-w-0 font-medium`, sedangkan tombol `GAS ▷` diberikan `shrink-0 text-[10px] px-2 py-0.5`.
+   - Menjamin bottom bar selalu berada dalam 1 baris ramping setinggi ~18px tanpa pernah membungkus (*wrapping*).
+3. **Optimasi Media Query Mobile Landscape (`max-height: 520px`)**:
+   - Header modal dipadatkan: icon peta 28x28px, judul 14px, padding/margin bottom 4px.
+   - Progress badge (`3/20 Terbuka • ★ 6`) dipaksakan tampil ramping (`display: flex !important; font-size: 9.5px;`).
+   - `#levelGridContainer`: Menghapus batasan kaku `min-h-[300px]` dengan `min-height: 0 !important; gap: 6px !important;`.
+   - Kartu level: `padding: 6px 8px !important; min-height: 92px !important; border-radius: 12px !important;`.
+   - Scroll sentuh mulus dengan `-webkit-overflow-scrolling: touch; overscroll-behavior: contain;`.
+4. **Hasil**:
+   - Seluruh teks judul level, menu gizi, bintang, rute, dan tombol GAS tampil jernih, proporsional, dan terbaca 100% pada semua smartphone landscape.
+   - Lulus 96/96 unit test tanpa regresi.
