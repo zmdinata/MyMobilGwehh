@@ -10,7 +10,17 @@
   "icons": [
     {
       "src": "/assets/refresh/v11/sprites/logo.png",
-      "sizes": "192x192 512x512",
+      "sizes": "192x192 350x350 512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "350x350",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "350x350",
       "type": "image/png"
     }
   ]

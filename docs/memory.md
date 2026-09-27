@@ -322,3 +322,13 @@ Seluruh 9 modal, panel, dan komponen antarmuka pengguna diharmonisasi secara ket
 - **Dukungan Fullscreen & Orientation API**:
   - Tombol *"MASUK LAYAR PENUH (FULLSCREEN)"* memicu `document.documentElement.requestFullscreen()` dan `screen.orientation.lock('landscape')` untuk pengalaman web app native yang imersif di smartphone Android & iOS.
 - **100% Bebas Gangguan di Desktop**: Pada layar monitor, laptop, atau tablet dengan rasio landscape / lebar > 1024px, overlay enforcer tidak akan pernah muncul.
+
+### C. Pembaruan Favicon & Touch Icon Resmi MMG
+- **Sumber Master Logo**: Menggunakan logo resmi MMG (`assets/refresh/v11/sprites/logo.png`, resolusi 350x350px jernih dengan transparansi).
+- **Favicon Multi-Platform & Multi-Resolusi**:
+  - `index.html` & `public/index.html`: Didaftarkan `<link rel="icon">` (32x32, 192x192, 350x350), `<link rel="apple-touch-icon">`, dan `<link rel="shortcut icon">`.
+  - Berkas `public/favicon.ico` dan root `favicon.ico`: Dihasilkan sebagai ICO container valid 32-bit berisi payload PNG master.
+  - Berkas statis `public/favicon.png` dan `public/apple-touch-icon.png`.
+  - Next.js Metadata: `app/icon.png` (otomatis di-render oleh Turbopack Next.js 16) serta konfigurasi `icons` lengkap di `app/layout.jsx`.
+  - PWA Webmanifest: `public/app.webmanifest` mendefinisikan icon 192x192, 350x350, 512x512, serta favicon PNG dan ICO.
+- **Otomatisasi Sinkronisasi**: Skrip `scripts/sync_html.js` otomatis menjaga kelengkapan dan keselarasan seluruh berkas favicon saat proses `npm run build` dijalankan di Vercel.
